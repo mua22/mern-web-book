@@ -12,7 +12,7 @@ python -m pip install --user mkdocs mkdocs-material
 3. Start the site locally:
 
 ```bat
-python -m mkdocs serve
+python -m mkdocs serve --dev-addr=127.0.0.1:8000 --livereload
 ```
 
 4. Open your browser and visit:

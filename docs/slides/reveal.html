@@ -1,0 +1,131 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Slides — Reveal Presentation</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/theme/black.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.8.0/styles/github.min.css">
+  <style> body { margin: 0; } </style>
+</head>
+<body>
+
+<div class="reveal">
+  <div class="slides">
+
+    <section data-markdown>
+      <script type="text/template">
+# Web Architecture
+
+```mermaid
+flowchart LR
+    Browser[Client] -->|HTTP/HTTPS| LB[Load Balancer]
+    LB --> Web[Web / App Servers]
+    Web --> DB[(Database)]
+    Web --> Cache[(Cache)]
+    CDN[CDN] -.-> Browser
+```
+
+---
+
+## Notes
+
+- Use diagrams to explain how components interact.
+      </script>
+    </section>
+
+    <section data-markdown>
+      <script type="text/template">
+# Node & Express
+
+![Node.js](images/2400х1260-rw-blog-node-js.png)
+
+---
+
+## What is Node.js?
+
+- JavaScript runtime
+- Non-blocking I/O
+- Event-driven
+
+---
+
+## Basic Express App
+
+```js
+const express = require('express');
+const app = express();
+
+app.get('/', (req, res) => {
+  res.send('Hello');
+});
+```
+
+---
+
+```mermaid
+sequenceDiagram
+    participant C as Client
+    participant S as Server
+    C->>S: GET /api/
+    S-->>C: 200 OK
+```
+      </script>
+    </section>
+
+    <section data-markdown>
+      <script type="text/template">
+# React Basics
+
+## What is React?
+
+- Component-based
+- Declarative UI
+- Virtual DOM
+
+---
+
+## Simple Component
+
+```jsx
+function App() {
+  return <h1>Hello React</h1>;
+}
+```
+      </script>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/dist/plugin/markdown/markdown.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/dist/plugin/highlight/highlight.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>
+  // Initialize Reveal
+  Reveal.initialize({
+    hash: true,
+    plugins: [ RevealMarkdown, RevealHighlight ]
+  });
+
+  // Initialize mermaid after Reveal renders slides
+  function renderMermaid() {
+    if (window.mermaid) {
+      try { mermaid.initialize({ startOnLoad: false }); mermaid.init(); } catch (e) { console.warn('mermaid init failed', e); }
+    }
+  }
+
+  Reveal.on('ready', renderMermaid);
+  Reveal.on('slidechanged', renderMermaid);
+
+  // Also render any mermaid on initial load (safety)
+  document.addEventListener('DOMContentLoaded', () => setTimeout(renderMermaid, 50));
+</script>
+
+<!-- reveal.html removed — PDF listing is now used under docs/slides/index.md -->
+
+</body>
+</html>
