@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Block vs Inline Tags Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .subsection {
+            background: #f8f9fa;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+            border-radius: 5px;
+        }
+
+        .subsection h3 {
+            color: #764ba2;
+            margin-bottom: 10px;
+        }
+
+        .description {
+            color: #555;
+            margin-bottom: 15px;
+            font-size: 0.95em;
+        }
+
+        .demo-box {
+            background: white;
+            border: 2px solid #e0e0e0;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+        }
+
+        .demo-title {
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+            text-transform: uppercase;
+        }
+
+        /* Block Elements Demo */
+        .block-demo {
+            background: #e3f2fd;
+            border: 2px solid #2196f3;
+            padding: 10px;
+            margin-bottom: 10px;
+            color: #1565c0;
+        }
+
+        .block-example {
+            background: #fff3e0;
+            border: 2px solid #ff9800;
+            padding: 10px;
+            margin-bottom: 10px;
+            color: #e65100;
+        }
+
+        .block-sample {
+            background: #f3e5f5;
+            border: 2px solid #9c27b0;
+            padding: 10px;
+            margin-bottom: 10px;
+            color: #6a1b9a;
+        }
+
+        /* Inline Elements Demo */
+        .inline-demo {
+            padding: 20px;
+            background: #f5f5f5;
+            border-radius: 5px;
+            line-height: 2;
+        }
+
+        .inline-element {
+            background: #e0f2f1;
+            border: 1px solid #00897b;
+            padding: 2px 6px;
+            color: #00695c;
+            margin: 0 2px;
+            display: inline-block;
+            border-radius: 3px;
+        }
+
+        .code-block {
+            background: #263238;
+            color: #aed581;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+
+        .highlight-tag {
+            color: #ff6b9d;
+            font-weight: bold;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            background: white;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .comparison-table th {
+            background: #667eea;
+            color: white;
+            font-weight: bold;
+        }
+
+        .comparison-table tr:hover {
+            background: #f5f5f5;
+        }
+
+        footer {
+            background: #f5f5f5;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #ddd;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 0.85em;
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        .badge-block {
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+
+        .badge-inline {
+            background: #f3e5f5;
+            color: #6a1b9a;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📦 Block vs Inline Tags</h1>
+            <p>Understanding HTML Element Display Types</p>
+        </header>
+
+        <div class="content">
+            <!-- Block Elements Section -->
+            <div class="section">
+                <h2>Block Elements</h2>
+                <p class="description">
+                    Block elements take up the full width available and always start on a new line. They stack vertically on top of each other.
+                </p>
+
+                <div class="subsection">
+                    <h3>📋 Common Block Elements</h3>
+                    <p class="description">Common block-level HTML tags:</p>
+                    <ul style="margin-left: 20px; margin-bottom: 15px;">
+                        <li><span class="highlight-tag">&lt;div&gt;</span> - Generic container</li>
+                        <li><span class="highlight-tag">&lt;p&gt;</span> - Paragraph</li>
+                        <li><span class="highlight-tag">&lt;h1&gt; to &lt;h6&gt;</span> - Headings</li>
+                        <li><span class="highlight-tag">&lt;section&gt;</span> - Semantic section</li>
+                        <li><span class="highlight-tag">&lt;article&gt;</span> - Article content</li>
+                        <li><span class="highlight-tag">&lt;header&gt;</span> - Header section</li>
+                        <li><span class="highlight-tag">&lt;footer&gt;</span> - Footer section</li>
+                        <li><span class="highlight-tag">&lt;ul&gt;, &lt;ol&gt;</span> - Lists</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h3>🎨 Visual Demo - Block Elements</h3>
+                    <p class="description">Notice how each element takes full width and starts on a new line:</p>
+
+                    <div class="demo-box">
+                        <div class="demo-title">Output:</div>
+                        <div class="block-demo">This is a DIV element (Block)</div>
+                        <div class="block-example">This is a PARAGRAPH element (Block)</div>
+                        <div class="block-sample">This is another DIV element (Block)</div>
+                        <p style="margin-top: 10px; color: #666; font-size: 0.9em;">↑ Each element takes full width and stacks vertically</p>
+                    </div>
+
+                    <div class="code-block">
+&lt;div style="background: #e3f2fd; padding: 10px;"&gt;
+    This is a DIV element (Block)
+&lt;/div&gt;
+&lt;p style="background: #fff3e0; padding: 10px;"&gt;
+    This is a PARAGRAPH element (Block)
+&lt;/p&gt;
+&lt;div style="background: #f3e5f5; padding: 10px;"&gt;
+    This is another DIV element (Block)
+&lt;/div&gt;
+                    </div>
+                </div>
+            </div>
+
+            <!-- Inline Elements Section -->
+            <div class="section">
+                <h2>Inline Elements</h2>
+                <p class="description">
+                    Inline elements only take up as much width as necessary and do not start on a new line. They flow within text.
+                </p>
+
+                <div class="subsection">
+                    <h3>📋 Common Inline Elements</h3>
+                    <p class="description">Common inline HTML tags:</p>
+                    <ul style="margin-left: 20px; margin-bottom: 15px;">
+                        <li><span class="highlight-tag">&lt;span&gt;</span> - Generic inline container</li>
+                        <li><span class="highlight-tag">&lt;a&gt;</span> - Hyperlink</li>
+                        <li><span class="highlight-tag">&lt;strong&gt;</span> - Strong emphasis (bold)</li>
+                        <li><span class="highlight-tag">&lt;em&gt;</span> - Emphasis (italic)</li>
+                        <li><span class="highlight-tag">&lt;img&gt;</span> - Image</li>
+                        <li><span class="highlight-tag">&lt;button&gt;</span> - Button (inline-block)</li>
+                        <li><span class="highlight-tag">&lt;b&gt;</span> - Bold text</li>
+                        <li><span class="highlight-tag">&lt;i&gt;</span> - Italic text</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h3>🎨 Visual Demo - Inline Elements</h3>
+                    <p class="description">Notice how elements flow on the same line:</p>
+
+                    <div class="demo-box">
+                        <div class="demo-title">Output:</div>
+                        <div class="inline-demo">
+                            This is some text with <span class="inline-element">&lt;span&gt;</span> elements,
+                            <span class="inline-element">&lt;strong&gt;bold&lt;/strong&gt;</span> text,
+                            <span class="inline-element">&lt;em&gt;italic&lt;/em&gt;</span> text, and
+                            <span class="inline-element">&lt;a&gt;links&lt;/a&gt;</span> all flowing together on the same line.
+                        </div>
+                        <p style="margin-top: 10px; color: #666; font-size: 0.9em;">↑ All elements stay on the same line and only use necessary space</p>
+                    </div>
+
+                    <div class="code-block">
+This is some text with &lt;span&gt;span&lt;/span&gt; elements,
+&lt;strong&gt;bold&lt;/strong&gt; text, &lt;em&gt;italic&lt;/em&gt; text, and
+&lt;a href="#"&gt;links&lt;/a&gt; all flowing together on the same line.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Comparison Section -->
+            <div class="section">
+                <h2>Comparison Table</h2>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th><span class="badge badge-block">BLOCK</span></th>
+                            <th><span class="badge badge-inline">INLINE</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Width</td>
+                            <td>Takes full available width</td>
+                            <td>Only uses necessary width</td>
+                        </tr>
+                        <tr>
+                            <td>Line Break</td>
+                            <td>Starts and ends with new line</td>
+                            <td>No line breaks</td>
+                        </tr>
+                        <tr>
+                            <td>Margin/Padding</td>
+                            <td>All sides work (top, bottom, left, right)</td>
+                            <td>Left and right only (top/bottom ignored)</td>
+                        </tr>
+                        <tr>
+                            <td>Height/Width</td>
+                            <td>Can be set with CSS</td>
+                            <td>Cannot be set (ignored)</td>
+                        </tr>
+                        <tr>
+                            <td>Vertical Align</td>
+                            <td>Not applicable</td>
+                            <td>Can be aligned vertically with text</td>
+                        </tr>
+                        <tr>
+                            <td>Examples</td>
+                            <td>div, p, h1-h6, section, article</td>
+                            <td>span, a, strong, em, button</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Inline-Block Section -->
+            <div class="section">
+                <h2>Bonus: Inline-Block Elements</h2>
+                <p class="description">
+                    Inline-block elements combine properties of both block and inline elements. They flow inline but can have width, height, and all margin/padding properties.
+                </p>
+
+                <div class="subsection">
+                    <h3>🎨 Visual Demo - Inline-Block Elements</h3>
+                    <p class="description">Buttons are inline-block - they stay inline but can be styled like blocks:</p>
+
+                    <div class="demo-box">
+                        <div class="demo-title">Output:</div>
+                        <div style="padding: 20px; background: #f5f5f5; border-radius: 5px;">
+                            <button style="background: #667eea; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin: 5px; font-size: 1em;">Button 1</button>
+                            <button style="background: #667eea; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin: 5px; font-size: 1em;">Button 2</button>
+                            <button style="background: #667eea; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin: 5px; font-size: 1em;">Button 3</button>
+                            <p style="margin-top: 10px; color: #666; font-size: 0.9em;">↑ Buttons flow inline but have defined width and padding</p>
+                        </div>
+                    </div>
+
+                    <div class="code-block">
+&lt;button style="padding: 10px 20px; margin: 5px;"&gt;Button 1&lt;/button&gt;
+&lt;button style="padding: 10px 20px; margin: 5px;"&gt;Button 2&lt;/button&gt;
+&lt;button style="padding: 10px 20px; margin: 5px;"&gt;Button 3&lt;/button&gt;
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key Takeaways -->
+            <div class="section">
+                <h2>🎯 Key Takeaways</h2>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div class="subsection">
+                        <h3><span class="badge badge-block">BLOCK</span></h3>
+                        <ul style="margin-left: 20px;">
+                            <li>Full width containers</li>
+                            <li>New line before and after</li>
+                            <li>All margin/padding work</li>
+                            <li>Use for layout sections</li>
+                        </ul>
+                    </div>
+
+                    <div class="subsection">
+                        <h3><span class="badge badge-inline">INLINE</span></h3>
+                        <ul style="margin-left: 20px;">
+                            <li>Minimal width needed</li>
+                            <li>Flow within text</li>
+                            <li>Only left/right margins</li>
+                            <li>Use for text styling</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>💡 Tip: Use CSS <code>display: block;</code>, <code>display: inline;</code>, or <code>display: inline-block;</code> to change element behavior</p>
+            <p style="margin-top: 10px; opacity: 0.7;">HTML & CSS Learning Demo | 2026</p>
+        </footer>
+    </div>
+</body>
+</html>
