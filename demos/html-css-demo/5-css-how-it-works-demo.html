@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>How CSS Works — Demo</title>
+  <link rel="stylesheet" href="demo-common.css" />
+</head>
+<body>
+  <h1>How CSS Works & How to Add CSS to a Page</h1>
+  <p class="note">This page explains how CSS works with HTML and the <strong>three ways</strong> to add CSS: inline (style attribute), internal (<code>&lt;style&gt;</code> tag), and external stylesheet. It also covers <strong>relative paths</strong> when linking external CSS.</p>
+
+  <!-- ========== 1. How CSS works ========== -->
+  <section class="section">
+    <h2>1. How CSS works with HTML</h2>
+    <p class="note">CSS (Cascading Style Sheets) describes how HTML elements should look: colors, sizes, spacing, borders, etc. A CSS rule has a <strong>selector</strong> (which element) and <strong>properties</strong> (what style) with <strong>values</strong>.</p>
+
+    <div class="demo">
+      <strong>Example rule</strong>
+      <pre class="code"><code>p {
+  color: blue;
+  font-size: 18px;
+}</code></pre>
+      <p class="note" style="margin-top: 8px;">Meaning: select all <code>&lt;p&gt;</code> elements and set their text <code>color</code> to <code>blue</code> and <code>font-size</code> to <code>18px</code>.</p>
+      <div class="explain">
+        <strong>Explanation:</strong> The browser loads your HTML, then applies CSS rules to matching elements. Multiple rules can apply to the same element; “cascade” and “specificity” decide which wins. We use <strong>simple properties</strong> in this demo: <code>color</code>, <code>background-color</code>, <code>font-size</code>, <code>padding</code>, <code>margin</code>, <code>border</code>, <code>text-align</code>.
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 2. Class and id attributes ========== -->
+  <section class="section">
+    <h2>2. <code>class</code> and <code>id</code> attributes (in detail)</h2>
+    <p class="note">To target specific elements with CSS (or JavaScript), you add <code>class</code> or <code>id</code> to your HTML. Both are attributes you put on a tag; CSS uses them as selectors.</p>
+
+    <div class="demo">
+      <strong>The <code>class</code> attribute</strong>
+      <p class="note">A <code>class</code> is a label you can reuse on <strong>many elements</strong>. One element can have <strong>multiple classes</strong> (separated by spaces). Use it when several elements share the same style or behavior.</p>
+      <p class="note"><strong>CSS selector:</strong> a dot (<code>.</code>) plus the class name, e.g. <code>.warning</code> selects all elements with <code>class="warning"</code>.</p>
+
+      <strong>Output</strong>
+      <div class="render">
+        <p class="warning-text">This paragraph has class="warning-text".</p>
+        <p class="warning-text">Another paragraph with the same class — same style.</p>
+        <p class="warning-text highlight-box">This one has two classes: "warning-text" and "highlight-box".</p>
+      </div>
+
+      <strong>Code</strong>
+      <pre class="code"><code>&lt;p class="warning-text"&gt;This paragraph has class="warning-text".&lt;/p&gt;
+&lt;p class="warning-text"&gt;Another paragraph with the same class — same style.&lt;/p&gt;
+&lt;p class="warning-text highlight-box"&gt;This one has two classes.&lt;/p&gt;
+
+&lt;style&gt;
+  .warning-text { color: #b91c1c; font-weight: 600; }
+  .highlight-box { background: #fef2f2; padding: 8px; border: 1px solid #b91c1c; }
+&lt;/style&gt;</code></pre>
+
+      <div class="explain">
+        <strong>Explanation:</strong> <code>class="warning-text"</code> gives the element that class. The rule <code>.warning-text { ... }</code> applies to every element with that class. <code>class="warning-text highlight-box"</code> gives two classes — both rules apply. Class names can use letters, numbers, hyphens, underscores; avoid spaces (space separates multiple classes). Use <strong>lowercase</strong> and <strong>hyphens</strong> by convention (e.g. <code>my-class-name</code>).
+      </div>
+    </div>
+
+    <div class="demo" style="margin-top: 24px;">
+      <strong>The <code>id</code> attribute</strong>
+      <p class="note">An <code>id</code> identifies <strong>one unique element</strong> on the page. No two elements should share the same <code>id</code>. Use it for a specific section, a form field, or as a target for anchor links (<code>href="#my-id"</code>).</p>
+      <p class="note"><strong>CSS selector:</strong> a hash (<code>#</code>) plus the id value, e.g. <code>#main-title</code> selects the element with <code>id="main-title"</code>.</p>
+
+      <strong>Output</strong>
+      <div class="render">
+        <h3 id="main-title">This heading has id="main-title" (unique on the page).</h3>
+        <p id="intro-paragraph" style="background: #e0e7ff; padding: 10px; border-left: 4px solid #4338ca;">This paragraph has id="intro-paragraph".</p>
+        <p><a href="#main-title">Jump back to the heading</a> — <code>href="#main-title"</code> links to the element with that id.</p>
+      </div>
+
+      <strong>Code</strong>
+      <pre class="code"><code>&lt;h3 id="main-title"&gt;This heading has id="main-title".&lt;/h3&gt;
+&lt;p id="intro-paragraph"&gt;This paragraph has id="intro-paragraph".&lt;/p&gt;
+&lt;a href="#main-title"&gt;Jump back to the heading&lt;/a&gt;
+
+&lt;style&gt;
+  #main-title { color: #1e40af; }
+  #intro-paragraph { background: #e0e7ff; padding: 10px; }
+&lt;/style&gt;</code></pre>
+
+      <div class="explain">
+        <strong>Explanation:</strong> <code>id="main-title"</code> must appear only once on the page. The rule <code>#main-title { ... }</code> targets that single element. <code>href="#main-title"</code> in a link scrolls to the element with that id (anchor link). Id names follow the same conventions as class; they are case-sensitive. <strong>class</strong> = reusable; <strong>id</strong> = unique. Prefer <code>class</code> for styling; use <code>id</code> when you need a unique identifier (e.g. for links or JavaScript).
+      </div>
+    </div>
+
+    <div class="demo" style="margin-top: 24px;">
+      <strong>class vs id — quick comparison</strong>
+      <table style="border-collapse: collapse; width: 100%; max-width: 520px; margin-top: 8px;">
+        <thead>
+          <tr>
+            <th style="border: 1px solid #374151; padding: 6px 10px; text-align: left; background: #e5e7eb;">Attribute</th>
+            <th style="border: 1px solid #374151; padding: 6px 10px; text-align: left; background: #e5e7eb;">Reuse</th>
+            <th style="border: 1px solid #374151; padding: 6px 10px; text-align: left; background: #e5e7eb;">CSS selector</th>
+            <th style="border: 1px solid #374151; padding: 6px 10px; text-align: left; background: #e5e7eb;">Use for</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="border: 1px solid #374151; padding: 6px 10px;"><code>class</code></td>
+            <td style="border: 1px solid #374151; padding: 6px 10px;">Many elements can share</td>
+            <td style="border: 1px solid #374151; padding: 6px 10px;"><code>.class-name</code></td>
+            <td style="border: 1px solid #374151; padding: 6px 10px;">Shared styles, grouping</td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid #374151; padding: 6px 10px;"><code>id</code></td>
+            <td style="border: 1px solid #374151; padding: 6px 10px;">Must be unique per page</td>
+            <td style="border: 1px solid #374151; padding: 6px 10px;"><code>#id-value</code></td>
+            <td style="border: 1px solid #374151; padding: 6px 10px;">Anchor links, unique targets</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Styles for class/id examples above -->
+  <style>
+    .render .warning-text { color: #b91c1c; font-weight: 600; }
+    .render .highlight-box { background: #fef2f2; padding: 8px; border: 1px solid #b91c1c; }
+    .render #main-title { color: #1e40af; }
+  </style>
+
+  <!-- ========== 3. Inline: style attribute ========== -->
+  <section class="section">
+    <h2>3. Adding CSS: inline — <code>style</code> attribute</h2>
+    <p class="note">You can put CSS directly on one HTML element using the <code>style</code> attribute. The value is a list of <code>property: value;</code> pairs, separated by semicolons.</p>
+
+    <div class="demo">
+      <strong>Output</strong>
+      <div class="render">
+        <p style="color: #1d4ed8; font-size: 18px;">This paragraph is blue and larger (inline style).</p>
+        <p style="background-color: #fef3c7; padding: 10px; border: 1px solid #f59e0b;">This one has a yellow background, padding, and a border.</p>
+      </div>
+
+      <strong>Code</strong>
+      <pre class="code"><code>&lt;p style="color: #1d4ed8; font-size: 18px;"&gt;This paragraph is blue and larger (inline style).&lt;/p&gt;
+&lt;p style="background-color: #fef3c7; padding: 10px; border: 1px solid #f59e0b;"&gt;This one has a yellow background, padding, and a border.&lt;/p&gt;</code></pre>
+
+      <div class="explain">
+        <strong>Explanation:</strong> The <code>style</code> attribute applies only to that single element. No selector is needed — you are styling that tag directly. <strong>Pros:</strong> quick and obvious. <strong>Cons:</strong> hard to maintain, no reuse, mixes structure and presentation. Use sparingly (e.g. one-off overrides).
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 4. Internal: style tag ========== -->
+  <section class="section">
+    <h2>4. Adding CSS: internal — <code>&lt;style&gt;</code> tag</h2>
+    <p class="note">You can put CSS inside a <code>&lt;style&gt;</code> tag, usually in the <code>&lt;head&gt;</code>. Then you use <strong>selectors</strong> to target elements by tag name, class, or id. The styles apply to the whole page.</p>
+
+    <div class="demo">
+      <strong>Output</strong>
+      <div class="render">
+        <p class="highlight-text">This paragraph has class="highlight-text" and is styled by a rule inside &lt;style&gt;.</p>
+        <p class="highlight-text">Same class → same style (reuse).</p>
+      </div>
+
+      <strong>Code (in <code>&lt;head&gt;</code> or before <code>&lt;/body&gt;</code>)</strong>
+      <pre class="code"><code>&lt;style&gt;
+  .highlight-text {
+    color: #059669;
+    background-color: #d1fae5;
+    padding: 8px 12px;
+    border-left: 4px solid #059669;
+  }
+&lt;/style&gt;
+
+&lt;p class="highlight-text"&gt;This paragraph has class="highlight-text"…&lt;/p&gt;
+&lt;p class="highlight-text"&gt;Same class → same style (reuse).&lt;/p&gt;</code></pre>
+
+      <div class="explain">
+        <strong>Explanation:</strong> The <code>&lt;style&gt;</code> block contains normal CSS rules. Here <code>.highlight-text</code> is a <strong>class selector</strong> (the dot means “class”). Any element with <code>class="highlight-text"</code> gets these styles. <strong>Pros:</strong> one place for many elements, reuse. <strong>Cons:</strong> only affects this page; multi-page sites repeat the same CSS. For one page or demos, internal CSS is fine.
+      </div>
+    </div>
+  </section>
+
+  <!-- Style for the .highlight-text used in the render above (this page only) -->
+  <style>
+    .render .highlight-text {
+      color: #059669;
+      background-color: #d1fae5;
+      padding: 8px 12px;
+      border-left: 4px solid #059669;
+    }
+  </style>
+
+  <!-- ========== 5. External CSS ========== -->
+  <section class="section">
+    <h2>5. Adding CSS: external stylesheet</h2>
+    <p class="note">Keep CSS in a separate <code>.css</code> file and link it with <code>&lt;link rel="stylesheet" href="path/to/file.css"&gt;</code> in the <code>&lt;head&gt;</code>. Many HTML pages can share the same file.</p>
+
+    <div class="demo">
+      <strong>Code (in <code>&lt;head&gt;</code>)</strong>
+      <pre class="code"><code>&lt;link rel="stylesheet" href="demo-common.css" /&gt;</code></pre>
+      <p class="note" style="margin-top: 8px;">This very page uses that link — the layout, sections, code blocks, and notes come from <code>demo-common.css</code>.</p>
+      <div class="explain">
+        <strong>Explanation:</strong> <code>rel="stylesheet"</code> tells the browser the link is a CSS file. <code>href</code> is the path to the file. The path can be <strong>relative</strong> (from the current HTML file) or <strong>absolute</strong> (full URL). Relative paths are common for your own project files. See the next section for how relative paths work.
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 6. Relative paths ========== -->
+  <section class="section">
+    <h2>6. Relative paths: how <code>href</code> is resolved</h2>
+    <p class="note">A <strong>relative path</strong> is resolved from the <strong>location of the HTML file</strong> that contains the <code>&lt;link&gt;</code>. The browser “starts” in the same folder as that HTML file.</p>
+
+    <div class="demo">
+      <strong>Example folder structure</strong>
+      <pre class="code"><code>project/
+  index.html          ← your page is here
+  styles.css          ← same folder
+  css/
+    main.css           ← inside subfolder
+  assets/
+    theme.css          ← another subfolder</code></pre>
+
+      <strong>Paths from <code>index.html</code></strong>
+      <table style="border-collapse: collapse; width: 100%; max-width: 560px; margin-top: 12px;">
+        <thead>
+          <tr>
+            <th style="border: 1px solid #374151; padding: 6px 10px; text-align: left; background: #e5e7eb;">href value</th>
+            <th style="border: 1px solid #374151; padding: 6px 10px; text-align: left; background: #e5e7eb;">Finds file</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="border: 1px solid #374151; padding: 6px 10px;"><code>styles.css</code></td>
+            <td style="border: 1px solid #374151; padding: 6px 10px;">Same folder as <code>index.html</code> → <code>project/styles.css</code></td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid #374151; padding: 6px 10px;"><code>css/main.css</code></td>
+            <td style="border: 1px solid #374151; padding: 6px 10px;">Inside folder <code>css</code> → <code>project/css/main.css</code></td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid #374151; padding: 6px 10px;"><code>assets/theme.css</code></td>
+            <td style="border: 1px solid #374151; padding: 6px 10px;">Inside folder <code>assets</code> → <code>project/assets/theme.css</code></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="explain">
+        <strong>Same folder:</strong> use just the filename, e.g. <code>href="styles.css"</code>. <strong>Subfolder:</strong> use folder name then slash then file, e.g. <code>href="css/main.css"</code>.
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 7. Parent folder: ../ ========== -->
+  <section class="section">
+    <h2>7. Relative path: going up — <code>../</code></h2>
+    <p class="note"><code>..</code> means “parent folder”. So <code>../file.css</code> means “go up one folder, then find <code>file.css</code>”. Use this when your HTML is inside a subfolder but the CSS is in the parent (or another branch).</p>
+
+    <div class="demo">
+      <strong>Example folder structure</strong>
+      <pre class="code"><code>project/
+  styles.css           ← CSS is here (parent)
+  pages/
+    about.html         ← your page is here (inside pages/)</code></pre>
+
+      <strong>From <code>about.html</code> (inside <code>pages/</code>)</strong>
+      <pre class="code"><code>&lt;link rel="stylesheet" href="../styles.css" /&gt;</code></pre>
+      <p class="note" style="margin-top: 8px;"><code>../</code> = leave <code>pages/</code> and go to <code>project/</code>, then load <code>styles.css</code>.</p>
+
+      <strong>More levels</strong>
+      <ul style="margin: 8px 0 0 0; padding-left: 1.5em;">
+        <li><code>../styles.css</code> — up one folder, then <code>styles.css</code></li>
+        <li><code>../../styles.css</code> — up two folders, then <code>styles.css</code></li>
+        <li><code>../css/main.css</code> — up one folder, then into <code>css/</code>, then <code>main.css</code></li>
+      </ul>
+      <div class="explain">
+        <strong>Explanation:</strong> The path is always relative to the <strong>HTML file</strong> that contains the link. So when <code>about.html</code> is in <code>project/pages/</code>, <code>href="../styles.css"</code> points to <code>project/styles.css</code>. Use <code>../</code> once per folder level you need to go up.
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 8. Simple CSS properties recap ========== -->
+  <section class="section">
+    <h2>8. Simple CSS properties used in this demo</h2>
+    <p class="note">A quick reference for the properties we used. Values can be in px, em, %, or keywords depending on the property.</p>
+
+    <div class="demo">
+      <table style="border-collapse: collapse; width: 100%; max-width: 520px;">
+        <thead>
+          <tr>
+            <th style="border: 1px solid #374151; padding: 6px 10px; text-align: left; background: #e5e7eb;">Property</th>
+            <th style="border: 1px solid #374151; padding: 6px 10px; text-align: left; background: #e5e7eb;">What it does</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="border: 1px solid #374151; padding: 6px 10px;"><code>color</code></td>
+            <td style="border: 1px solid #374151; padding: 6px 10px;">Text color (e.g. <code>red</code>, <code>#1d4ed8</code>)</td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid #374151; padding: 6px 10px;"><code>background-color</code></td>
+            <td style="border: 1px solid #374151; padding: 6px 10px;">Background color of the element</td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid #374151; padding: 6px 10px;"><code>font-size</code></td>
+            <td style="border: 1px solid #374151; padding: 6px 10px;">Size of text (e.g. <code>16px</code>, <code>1.2em</code>)</td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid #374151; padding: 6px 10px;"><code>padding</code></td>
+            <td style="border: 1px solid #374151; padding: 6px 10px;">Space inside the element (e.g. <code>10px</code>, <code>8px 12px</code>)</td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid #374151; padding: 6px 10px;"><code>margin</code></td>
+            <td style="border: 1px solid #374151; padding: 6px 10px;">Space outside the element</td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid #374151; padding: 6px 10px;"><code>border</code></td>
+            <td style="border: 1px solid #374151; padding: 6px 10px;">Line around the element (e.g. <code>1px solid black</code>)</td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid #374151; padding: 6px 10px;"><code>text-align</code></td>
+            <td style="border: 1px solid #374151; padding: 6px 10px;">Horizontal alignment: <code>left</code>, <code>center</code>, <code>right</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ========== 8. Summary ========== -->
+  <section class="section">
+    <h2>8. Quick summary</h2>
+    <ul>
+      <li><strong>CSS</strong> = selector + properties and values. It controls how HTML elements look.</li>
+      <li><strong>Three ways to add CSS:</strong> (1) <code>style</code> attribute on one element (inline), (2) <code>&lt;style&gt;</code> tag on the page (internal), (3) <code>&lt;link rel="stylesheet" href="..."&gt;</code> to an external <code>.css</code> file.</li>
+      <li><strong>Relative path:</strong> resolved from the folder where the HTML file lives. <code>file.css</code> = same folder; <code>css/main.css</code> = subfolder; <code>../file.css</code> = parent folder.</li>
+      <li>Use external CSS for multi-page sites; use internal or inline for single-page or quick overrides.</li>
+    </ul>
+  </section>
+</body>
+</html>

@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HTML Table Tag — Demo</title>
+  <link rel="stylesheet" href="demo-common.css" />
+  <style>
+    /* Table demo: make cells and borders visible */
+    .render table { border-collapse: collapse; width: 100%; max-width: 400px; }
+    .render th, .render td { border: 1px solid #374151; padding: 6px 10px; text-align: left; }
+    .render th { background: #e5e7eb; font-weight: 600; }
+    .render .cell-highlight { background: #dbeafe; }
+  </style>
+</head>
+<body>
+  <h1><code>&lt;table&gt;</code> Tag — Demo</h1>
+  <p class="note">This page shows how to build HTML tables: basic structure, <strong>rowspan</strong> and <strong>colspan</strong>, headers, and other features. Each example shows the output and the code.</p>
+
+  <!-- ========== 1. Basic table structure ========== -->
+  <section class="section">
+    <h2>1. Basic table structure</h2>
+    <p class="note">A table is made of <code>&lt;table&gt;</code>, rows <code>&lt;tr&gt;</code>, and cells <code>&lt;td&gt;</code> (table data). Each row has the same number of cells (unless you use colspan/rowspan).</p>
+
+    <div class="demo">
+      <strong>Output</strong>
+      <div class="render">
+        <table>
+          <tr>
+            <td>Cell A1</td>
+            <td>Cell A2</td>
+          </tr>
+          <tr>
+            <td>Cell B1</td>
+            <td>Cell B2</td>
+          </tr>
+        </table>
+      </div>
+
+      <strong>Code</strong>
+      <pre class="code"><code>&lt;table&gt;
+  &lt;tr&gt;
+    &lt;td&gt;Cell A1&lt;/td&gt;
+    &lt;td&gt;Cell A2&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;Cell B1&lt;/td&gt;
+    &lt;td&gt;Cell B2&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;</code></pre>
+
+      <div class="explain">
+        <strong>Explanation:</strong> <code>&lt;tr&gt;</code> = table row. <code>&lt;td&gt;</code> = table data (one cell). Rows go top to bottom; cells in a row go left to right. The browser draws a grid. Use CSS <code>border-collapse: collapse</code> and borders on <code>th</code>/<code>td</code> to get clear lines.
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 2. Table with header row (thead, th) ========== -->
+  <section class="section">
+    <h2>2. Header row: <code>&lt;thead&gt;</code> and <code>&lt;th&gt;</code></h2>
+    <p class="note">Use <code>&lt;thead&gt;</code> for the header section and <code>&lt;th&gt;</code> for header cells instead of <code>&lt;td&gt;</code>. Put the body rows in <code>&lt;tbody&gt;</code>. This improves semantics and accessibility.</p>
+
+    <div class="demo">
+      <strong>Output</strong>
+      <div class="render">
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Score</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Ali</td>
+              <td>85</td>
+            </tr>
+            <tr>
+              <td>Sara</td>
+              <td>92</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <strong>Code</strong>
+      <pre class="code"><code>&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Name&lt;/th&gt;
+      &lt;th&gt;Score&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Ali&lt;/td&gt;
+      &lt;td&gt;85&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Sara&lt;/td&gt;
+      &lt;td&gt;92&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</code></pre>
+
+      <div class="explain">
+        <strong>Explanation:</strong> <code>&lt;th&gt;</code> means “header cell” — browsers often render it bold. <code>&lt;thead&gt;</code> groups the header row(s); <code>&lt;tbody&gt;</code> groups the data rows. Screen readers use this structure. You can also use <code>&lt;tfoot&gt;</code> for a footer row (e.g. totals).
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 3. colspan ========== -->
+  <section class="section">
+    <h2>3. <code>colspan</code>: merge cells across columns</h2>
+    <p class="note"><code>colspan="n"</code> makes one cell span <strong>n</strong> columns. The next cells in that row are skipped (the merged cell “uses up” their space).</p>
+
+    <div class="demo">
+      <strong>Output</strong>
+      <div class="render">
+        <table>
+          <tr>
+            <th colspan="2">Full-width header (colspan="2")</th>
+          </tr>
+          <tr>
+            <td>Col 1</td>
+            <td>Col 2</td>
+          </tr>
+        </table>
+      </div>
+
+      <strong>Code</strong>
+      <pre class="code"><code>&lt;table&gt;
+  &lt;tr&gt;
+    &lt;th colspan="2"&gt;Full-width header (colspan="2")&lt;/th&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;Col 1&lt;/td&gt;
+    &lt;td&gt;Col 2&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;</code></pre>
+
+      <div class="explain">
+        <strong>Explanation:</strong> <code>colspan="2"</code> means this single cell takes the space of two columns. So in that row you only need one <code>&lt;th&gt;</code>; the second column is already “used” by the span. Use <code>colspan</code> for section headers that sit above several columns (e.g. “Mid-term” over multiple subject columns).
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 4. rowspan ========== -->
+  <section class="section">
+    <h2>4. <code>rowspan</code>: merge cells across rows</h2>
+    <p class="note"><code>rowspan="n"</code> makes one cell span <strong>n</strong> rows. Rows below must have fewer cells in that column (the merged cell “uses up” one slot in each of those rows).</p>
+
+    <div class="demo">
+      <strong>Output</strong>
+      <div class="render">
+        <table>
+          <tr>
+            <th rowspan="3" class="cell-highlight">Side header (rowspan="3")</th>
+            <td>Row 1</td>
+          </tr>
+          <tr>
+            <td>Row 2</td>
+          </tr>
+          <tr>
+            <td>Row 3</td>
+          </tr>
+        </table>
+      </div>
+
+      <strong>Code</strong>
+      <pre class="code"><code>&lt;table&gt;
+  &lt;tr&gt;
+    &lt;th rowspan="3"&gt;Side header (rowspan="3")&lt;/th&gt;
+    &lt;td&gt;Row 1&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;Row 2&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;Row 3&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;</code></pre>
+
+      <div class="explain">
+        <strong>Explanation:</strong> <code>rowspan="3"</code> means this cell occupies three rows. In the first row you have two cells (the spanning cell + “Row 1”). In the second and third rows you only add one <code>&lt;td&gt;</code> each, because the first column is still “taken” by the rowspan. Use <code>rowspan</code> for row labels (e.g. “January” next to three sub-rows).
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 5. colspan + rowspan together ========== -->
+  <section class="section">
+    <h2>5. <code>colspan</code> and <code>rowspan</code> together</h2>
+    <p class="note">You can use both in the same table. Plan the grid: a cell that has <code>colspan="2" rowspan="2"</code> takes 2×2 cells; the rows below need one fewer cell in the first two columns.</p>
+
+    <div class="demo">
+      <strong>Output</strong>
+      <div class="render">
+        <table>
+          <tr>
+            <td colspan="2" rowspan="2" class="cell-highlight">Big cell (2×2)</td>
+            <td>C</td>
+          </tr>
+          <tr>
+            <td>F</td>
+          </tr>
+          <tr>
+            <td>G</td>
+            <td>H</td>
+            <td>I</td>
+          </tr>
+        </table>
+      </div>
+
+      <strong>Code</strong>
+      <pre class="code"><code>&lt;table&gt;
+  &lt;tr&gt;
+    &lt;td colspan="2" rowspan="2"&gt;Big cell (2×2)&lt;/td&gt;
+    &lt;td&gt;C&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;F&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;G&lt;/td&gt;
+    &lt;td&gt;H&lt;/td&gt;
+    &lt;td&gt;I&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;</code></pre>
+
+      <div class="explain">
+        <strong>Explanation:</strong> The first cell spans 2 columns and 2 rows, so it covers the top-left 2×2 area. Row 1 has one more cell (C). Row 2 has only one cell (F) — the first two columns are still covered by the big cell. Row 3 has three normal cells (G, H, I) because the span is finished. When mixing colspan and rowspan, count columns per row carefully so the grid adds up.
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 6. caption ========== -->
+  <section class="section">
+    <h2>6. <code>&lt;caption&gt;</code>: table title</h2>
+    <p class="note">Use <code>&lt;caption&gt;</code> inside <code>&lt;table&gt;</code> to give the table a title. It is usually shown above the table and helps screen readers and SEO.</p>
+
+    <div class="demo">
+      <strong>Output</strong>
+      <div class="render">
+        <table>
+          <caption>Student grades — Spring 2025</caption>
+          <thead>
+            <tr>
+              <th>Student</th>
+              <th>Grade</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Ali</td>
+              <td>A</td>
+            </tr>
+            <tr>
+              <td>Sara</td>
+              <td>B+</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <strong>Code</strong>
+      <pre class="code"><code>&lt;table&gt;
+  &lt;caption&gt;Student grades — Spring 2025&lt;/caption&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Student&lt;/th&gt;
+      &lt;th&gt;Grade&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;…&lt;/tbody&gt;
+&lt;/table&gt;</code></pre>
+
+      <div class="explain">
+        <strong>Explanation:</strong> <code>&lt;caption&gt;</code> should be the first child of <code>&lt;table&gt;</code>. You can move it below the table with CSS: <code>caption-side: bottom;</code>. One caption per table.
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 7. scope on th (accessibility) ========== -->
+  <section class="section">
+    <h2>7. <code>scope</code> on <code>&lt;th&gt;</code> (accessibility)</h2>
+    <p class="note">For screen readers, you can say whether a <code>&lt;th&gt;</code> is a header for its <strong>row</strong> or its <strong>column</strong> using <code>scope="col"</code> or <code>scope="row"</code>.</p>
+
+    <div class="demo">
+      <strong>Output</strong>
+      <div class="render">
+        <table>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Math</th>
+            <th scope="col">English</th>
+          </tr>
+          <tr>
+            <th scope="row">Ali</th>
+            <td>90</td>
+            <td>85</td>
+          </tr>
+          <tr>
+            <th scope="row">Sara</th>
+            <td>88</td>
+            <td>92</td>
+          </tr>
+        </table>
+      </div>
+
+      <strong>Code</strong>
+      <pre class="code"><code>&lt;tr&gt;
+  &lt;th scope="col"&gt;Name&lt;/th&gt;
+  &lt;th scope="col"&gt;Math&lt;/th&gt;
+  &lt;th scope="col"&gt;English&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+  &lt;th scope="row"&gt;Ali&lt;/th&gt;
+  &lt;td&gt;90&lt;/td&gt;
+  &lt;td&gt;85&lt;/td&gt;
+&lt;/tr&gt;</code></pre>
+
+      <div class="explain">
+        <strong>Explanation:</strong> <code>scope="col"</code> means this header applies to all cells in the column below (or to the right in RTL). <code>scope="row"</code> means it applies to the cells in the same row. Row headers are common when the first column is labels (e.g. names). This helps assistive technologies announce “Math, 90” instead of just “90”.
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 8. Summary ========== -->
+  <section class="section">
+    <h2>8. Quick summary</h2>
+    <ul>
+      <li><strong>Structure:</strong> <code>&lt;table&gt;</code> → <code>&lt;tr&gt;</code> (rows) → <code>&lt;td&gt;</code> (data) or <code>&lt;th&gt;</code> (header). Use <code>&lt;thead&gt;</code>, <code>&lt;tbody&gt;</code>, and optionally <code>&lt;tfoot&gt;</code>.</li>
+      <li><strong>colspan="n":</strong> one cell spans n columns; that row has fewer cells.</li>
+      <li><strong>rowspan="n":</strong> one cell spans n rows; the next n−1 rows have one fewer cell in that column.</li>
+      <li><strong>caption:</strong> table title, usually first inside <code>&lt;table&gt;</code>.</li>
+      <li><strong>scope:</strong> on <code>&lt;th&gt;</code>, use <code>scope="col"</code> or <code>scope="row"</code> for accessibility.</li>
+    </ul>
+  </section>
+</body>
+</html>
