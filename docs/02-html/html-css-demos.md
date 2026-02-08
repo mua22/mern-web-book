@@ -16,13 +16,13 @@ These demos form the foundation for modern frontend development and prepare you 
 
 All demos open in a new tab:
 
-- <a href="/demos/html-css-demo/1-inline-block.html" target="_blank" rel="noopener noreferrer">Inline vs Block Tags</a>
-- <a href="/demos/html-css-demo/2-combonation-tags-demo.html" target="_blank" rel="noopener noreferrer">List Tags: ul and ol</a>
-- <a href="/demos/html-css-demo/3-img-and-links-demo.html" target="_blank" rel="noopener noreferrer">Image and Hyperlink Tags</a>
-- <a href="/demos/html-css-demo/4-table-demo.html" target="_blank" rel="noopener noreferrer">Table Tag</a>
-- <a href="/demos/html-css-demo/5-css-how-it-works-demo.html" target="_blank" rel="noopener noreferrer">How CSS Works</a>
-- <a href="/demos/html-css-demo/6-alignment-demo.html" target="_blank" rel="noopener noreferrer">CSS Alignment</a>
-- <a href="/demos/html-css-demo/7-floating-demo.html" target="_blank" rel="noopener noreferrer">CSS Float</a>
-- <a href="/demos/html-css-demo/8-positioning-demo.html" target="_blank" rel="noopener noreferrer">CSS Positioning</a>
-- <a href="/demos/html-css-demo/9-flexbox-demo.html" target="_blank" rel="noopener noreferrer">CSS Flexbox</a>
+- <a href="../../demos/html-css-demo/1-inline-block.html" target="_blank" rel="noopener noreferrer">Inline vs Block Tags</a>
+- <a href="../../demos/html-css-demo/2-combonation-tags-demo.html" target="_blank" rel="noopener noreferrer">List Tags: ul and ol</a>
+- <a href="../../demos/html-css-demo/3-img-and-links-demo.html" target="_blank" rel="noopener noreferrer">Image and Hyperlink Tags</a>
+- <a href="../../demos/html-css-demo/4-table-demo.html" target="_blank" rel="noopener noreferrer">Table Tag</a>
+- <a href="../../demos/html-css-demo/5-css-how-it-works-demo.html" target="_blank" rel="noopener noreferrer">How CSS Works</a>
+- <a href="../../demos/html-css-demo/6-alignment-demo.html" target="_blank" rel="noopener noreferrer">CSS Alignment</a>
+- <a href="../../demos/html-css-demo/7-floating-demo.html" target="_blank" rel="noopener noreferrer">CSS Float</a>
+- <a href="../../demos/html-css-demo/8-positioning-demo.html" target="_blank" rel="noopener noreferrer">CSS Positioning</a>
+- <a href="../../demos/html-css-demo/9-flexbox-demo.html" target="_blank" rel="noopener noreferrer">CSS Flexbox</a>
 
