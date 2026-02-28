@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Click Event Demo</title>
+    <!-- Link to the shared demo CSS -->
+    <link rel="stylesheet" href="../demo-common.css" />
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>JavaScript Click Event Demo</h1>
+
+        <p>Below is a working example of how a JavaScript <b>click event</b> functions. Click the button to see it in
+            action!</p>
+
+        <!-- The interactive demo section -->
+        <div class="demo-area">
+            <button id="my-button" class="interactive-button">Click Me!</button>
+            <div id="output" class="interactive-output">Total clicks: 0</div>
+        </div>
+
+        <h2>How does this work?</h2>
+
+        <!-- The code snippet -->
+        <pre class="code"><code><span class="comment">// 1. Select the elements from the HTML page</span>
+<span class="keyword">const</span> <span class="variable">button</span> <span class="keyword">=</span> document.<span class="function">getElementById</span>(<span class="string">'my-button'</span>);
+<span class="keyword">const</span> <span class="variable">output</span> <span class="keyword">=</span> document.<span class="function">getElementById</span>(<span class="string">'output'</span>);
+
+<span class="comment">// 2. Create a variable to keep track of state</span>
+<span class="keyword">let</span> <span class="variable">clickCount</span> <span class="keyword">=</span> 0;
+
+<span class="comment">// 3. Add the Event Listener</span>
+<span class="variable">button</span>.<span class="function">addEventListener</span>(<span class="string">'click'</span>, () <span class="keyword">=></span> {
+    <span class="comment">// This code only runs when the button is actually clicked!</span>
+    <span class="variable">clickCount</span>++;
+    <span class="variable">output</span>.textContent <span class="keyword">=</span> <span class="string">`Total clicks: ${clickCount}`</span>;
+    <span class="variable">button</span>.textContent <span class="keyword">=</span> <span class="string">"Clicked again!"</span>;
+});</code></pre>
+
+        <!-- The explanation -->
+        <div class="explain">
+            <h3>Code Breakdown:</h3>
+            <ul>
+                <li><strong>Step 1:</strong> We use <code>document.getElementById()</code> to find the specific button
+                    and the text-output `div` on the page so JavaScript knows what to manipulate.</li>
+                <li><strong>Step 2:</strong> We declare a variable called <code>clickCount</code> starting at 0 to
+                    remember how many times the button is clicked.</li>
+                <li><strong>Step 3:</strong> We attach <code>.addEventListener('click', ...)</code> to the button. This
+                    tells the browser: "Whenever this button receives a click, run the function inside!".</li>
+                <li><strong>Inside the function:</strong> Every time the click happens, the code increases the count by
+                    1, and updates the text on the screen to show the new number. It also changes the text inside the
+                    button itself!</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // 1. Select the elements from the HTML page
+        const button = document.getElementById('my-button');
+        const output = document.getElementById('output');
+
+        // 2. Create a variable to keep track of state
+        let clickCount = 0;
+
+        // 3. Add the Event Listener
+        button.addEventListener('click', () => {
+            // This code only runs when the button is actually clicked!
+            clickCount++;
+            output.textContent = `Total clicks: ${clickCount}`;
+            button.textContent = "Clicked again!";
+        });
+    </script>
+
+</body>
+
+</html>
