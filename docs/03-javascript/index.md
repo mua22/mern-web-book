@@ -28,16 +28,10 @@ JavaScript is a powerful programming language that runs in web browsers and enab
 - Dynamic content updates
 
 ### Asynchronous JavaScript
-- Callbacks
-- Promises
-- Async/await
-- Fetch API for API calls
-
-### jQuery
-- DOM selection and manipulation
-- Event handling
-- AJAX requests
-- Animation and effects
+- Callbacks (the old way)
+- Promises (the better way)
+- Async/await (the modern way)
+- Using the Fetch API to get data from servers
 
 ## Getting Started
 

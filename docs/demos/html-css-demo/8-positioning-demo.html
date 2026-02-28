@@ -1,25 +1,57 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>CSS Positioning — Demo</title>
-  <link rel="stylesheet" href="demo-common.css" />
+  <link rel="stylesheet" href="../demo-common.css" />
   <style>
-    .render .pos-box { padding: 10px; margin: 4px; background: #dbeafe; border: 1px solid #3b82f6; }
-    .render .rel-parent { position: relative; height: 120px; border: 2px dashed #059669; background: #ecfdf5; }
-    .render .abs-child { position: absolute; right: 10px; bottom: 10px; background: #fef3c7; border-color: #f59e0b; }
-    .render .sticky-demo { position: sticky; top: 0; background: #fef3c7; padding: 8px; border: 1px solid #f59e0b; z-index: 1; }
+    .render .pos-box {
+      padding: 10px;
+      margin: 4px;
+      background: #dbeafe;
+      border: 1px solid #3b82f6;
+    }
+
+    .render .rel-parent {
+      position: relative;
+      height: 120px;
+      border: 2px dashed #059669;
+      background: #ecfdf5;
+    }
+
+    .render .abs-child {
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+      background: #fef3c7;
+      border-color: #f59e0b;
+    }
+
+    .render .sticky-demo {
+      position: sticky;
+      top: 0;
+      background: #fef3c7;
+      padding: 8px;
+      border: 1px solid #f59e0b;
+      z-index: 1;
+    }
   </style>
 </head>
+
 <body>
   <h1>CSS Positioning — Demo</h1>
-  <p class="note">This page covers <code>position</code> and related properties: <code>static</code>, <code>relative</code>, <code>absolute</code>, <code>fixed</code>, <code>sticky</code>. Each example shows output and code.</p>
+  <p class="note">This page covers <code>position</code> and related properties: <code>static</code>,
+    <code>relative</code>, <code>absolute</code>, <code>fixed</code>, <code>sticky</code>. Each example shows output and
+    code.</p>
 
   <!-- position: static -->
   <section class="section">
     <h2>1. <code>position: static</code> (default)</h2>
-    <p class="note">Every element has <code>position: static</code> by default. It stays in normal document flow. <code>top</code>, <code>right</code>, <code>bottom</code>, <code>left</code>, and <code>z-index</code> have no effect.</p>
+    <p class="note">Every element has <code>position: static</code> by default. It stays in normal document flow.
+      <code>top</code>, <code>right</code>, <code>bottom</code>, <code>left</code>, and <code>z-index</code> have no
+      effect.</p>
 
     <div class="demo">
       <strong>Output</strong>
@@ -37,7 +69,9 @@
   <!-- position: relative -->
   <section class="section">
     <h2>2. <code>position: relative</code></h2>
-    <p class="note">The element stays in normal flow, but <code>top</code>, <code>right</code>, <code>bottom</code>, <code>left</code> offset it from its <strong>original</strong> position. The space it would have taken is still reserved.</p>
+    <p class="note">The element stays in normal flow, but <code>top</code>, <code>right</code>, <code>bottom</code>,
+      <code>left</code> offset it from its <strong>original</strong> position. The space it would have taken is still
+      reserved.</p>
 
     <div class="demo">
       <strong>Output</strong>
@@ -53,7 +87,9 @@
   left: 20px;
 }</code></pre>
       <div class="explain">
-        <strong>Explanation:</strong> The element is offset from where it would normally be. Other elements don’t move — they still act as if the element is in its original spot. Often used to create a positioning context for <code>position: absolute</code> children, or for small visual tweaks.
+        <strong>Explanation:</strong> The element is offset from where it would normally be. Other elements don’t move —
+        they still act as if the element is in its original spot. Often used to create a positioning context for
+        <code>position: absolute</code> children, or for small visual tweaks.
       </div>
     </div>
   </section>
@@ -61,7 +97,10 @@
   <!-- position: absolute -->
   <section class="section">
     <h2>3. <code>position: absolute</code></h2>
-    <p class="note">The element is <strong>removed from normal flow</strong>. It is positioned relative to its nearest <strong>positioned ancestor</strong> (one with <code>position</code> other than <code>static</code>). If none exists, it uses the viewport. <code>top</code>, <code>right</code>, <code>bottom</code>, <code>left</code> define its edges.</p>
+    <p class="note">The element is <strong>removed from normal flow</strong>. It is positioned relative to its nearest
+      <strong>positioned ancestor</strong> (one with <code>position</code> other than <code>static</code>). If none
+      exists, it uses the viewport. <code>top</code>, <code>right</code>, <code>bottom</code>, <code>left</code> define
+      its edges.</p>
 
     <div class="demo">
       <strong>Output</strong>
@@ -80,7 +119,9 @@
   bottom: 10px;
 }</code></pre>
       <div class="explain">
-        <strong>Explanation:</strong> The absolute child is positioned relative to the <code>position: relative</code> parent. Without a positioned ancestor, it would use the &lt;html&gt; (viewport). The child no longer affects the layout of siblings. Use for overlays, badges, tooltips, dropdowns.
+        <strong>Explanation:</strong> The absolute child is positioned relative to the <code>position: relative</code>
+        parent. Without a positioned ancestor, it would use the &lt;html&gt; (viewport). The child no longer affects the
+        layout of siblings. Use for overlays, badges, tooltips, dropdowns.
       </div>
     </div>
   </section>
@@ -88,12 +129,15 @@
   <!-- position: fixed -->
   <section class="section">
     <h2>4. <code>position: fixed</code></h2>
-    <p class="note">The element is removed from flow and positioned relative to the <strong>viewport</strong>. It stays in the same place when the user scrolls. Use for fixed headers, footers, or “back to top” buttons.</p>
+    <p class="note">The element is removed from flow and positioned relative to the <strong>viewport</strong>. It stays
+      in the same place when the user scrolls. Use for fixed headers, footers, or “back to top” buttons.</p>
 
     <div class="demo">
       <strong>Output</strong>
       <div class="render" style="height: 100px; position: relative;">
-        <div class="pos-box" style="position: fixed; bottom: 20px; right: 20px; background: #fef3c7; border-color: #f59e0b;">fixed; bottom: 20px; right: 20px (relative to viewport)</div>
+        <div class="pos-box"
+          style="position: fixed; bottom: 20px; right: 20px; background: #fef3c7; border-color: #f59e0b;">fixed; bottom:
+          20px; right: 20px (relative to viewport)</div>
         <p>Scroll the page — this box stays fixed at bottom-right of the viewport.</p>
       </div>
       <strong>Code</strong>
@@ -103,7 +147,9 @@
   right: 20px;
 }</code></pre>
       <div class="explain">
-        <strong>Explanation:</strong> <code>position: fixed</code> ignores all ancestors. The element is always positioned relative to the browser window (viewport). It doesn’t move when you scroll. On mobile, be careful — fixed elements can behave differently when the address bar shows/hides.
+        <strong>Explanation:</strong> <code>position: fixed</code> ignores all ancestors. The element is always
+        positioned relative to the browser window (viewport). It doesn’t move when you scroll. On mobile, be careful —
+        fixed elements can behave differently when the address bar shows/hides.
       </div>
     </div>
   </section>
@@ -111,13 +157,20 @@
   <!-- position: sticky -->
   <section class="section">
     <h2>5. <code>position: sticky</code></h2>
-    <p class="note">A hybrid: the element acts like <code>relative</code> until it would scroll out of view, then it “sticks” like <code>fixed</code> until its container scrolls past. Requires <code>top</code>, <code>right</code>, <code>bottom</code>, or <code>left</code>.</p>
+    <p class="note">A hybrid: the element acts like <code>relative</code> until it would scroll out of view, then it
+      “sticks” like <code>fixed</code> until its container scrolls past. Requires <code>top</code>, <code>right</code>,
+      <code>bottom</code>, or <code>left</code>.</p>
 
     <div class="demo">
       <strong>Output</strong>
       <div class="render" style="max-height: 150px; overflow-y: auto;">
         <div class="sticky-demo">sticky; top: 0 — scroll below to see it stick</div>
-        <p>Line 1</p><p>Line 2</p><p>Line 3</p><p>Line 4</p><p>Line 5</p><p>Line 6</p>
+        <p>Line 1</p>
+        <p>Line 2</p>
+        <p>Line 3</p>
+        <p>Line 4</p>
+        <p>Line 5</p>
+        <p>Line 6</p>
       </div>
       <strong>Code</strong>
       <pre class="code"><code>.sticky {
@@ -125,7 +178,9 @@
   top: 0;
 }</code></pre>
       <div class="explain">
-        <strong>Explanation:</strong> The sticky element scrolls with the page until it reaches <code>top: 0</code> (or whatever you set). Then it sticks there. When its parent scrolls out of view, the sticky element goes with it. Great for sticky table headers, nav bars, or “sticky” CTAs.
+        <strong>Explanation:</strong> The sticky element scrolls with the page until it reaches <code>top: 0</code> (or
+        whatever you set). Then it sticks there. When its parent scrolls out of view, the sticky element goes with it.
+        Great for sticky table headers, nav bars, or “sticky” CTAs.
       </div>
     </div>
   </section>
@@ -133,13 +188,17 @@
   <!-- z-index -->
   <section class="section">
     <h2>6. <code>z-index</code> — stacking order</h2>
-    <p class="note">When elements overlap (e.g. absolute, fixed), <code>z-index</code> controls which one appears on top. Higher values go on top. Only works on <strong>positioned</strong> elements (<code>position</code> not <code>static</code>).</p>
+    <p class="note">When elements overlap (e.g. absolute, fixed), <code>z-index</code> controls which one appears on
+      top. Higher values go on top. Only works on <strong>positioned</strong> elements (<code>position</code> not
+      <code>static</code>).</p>
 
     <div class="demo">
       <strong>Output</strong>
       <div class="render" style="position: relative; height: 80px;">
         <div class="pos-box" style="position: absolute; left: 20px; top: 10px; z-index: 1;">z-index: 1</div>
-        <div class="pos-box" style="position: absolute; left: 40px; top: 25px; z-index: 3; background: #d1fae5; border-color: #059669;">z-index: 3 (on top)</div>
+        <div class="pos-box"
+          style="position: absolute; left: 40px; top: 25px; z-index: 3; background: #d1fae5; border-color: #059669;">
+          z-index: 3 (on top)</div>
         <div class="pos-box" style="position: absolute; left: 60px; top: 40px; z-index: 2;">z-index: 2</div>
       </div>
       <strong>Code</strong>
@@ -147,7 +206,9 @@
 .box2 { position: absolute; z-index: 3; }  /* on top */
 .box3 { position: absolute; z-index: 2; }</code></pre>
       <div class="explain">
-        <strong>Explanation:</strong> Default <code>z-index</code> is <code>auto</code>. You can use integers (e.g. 1, 10, 100). Negative values go behind. Stacking contexts (e.g. from <code>position</code>, <code>opacity</code>, <code>transform</code>) can affect which elements compare.
+        <strong>Explanation:</strong> Default <code>z-index</code> is <code>auto</code>. You can use integers (e.g. 1,
+        10, 100). Negative values go behind. Stacking contexts (e.g. from <code>position</code>, <code>opacity</code>,
+        <code>transform</code>) can affect which elements compare.
       </div>
     </div>
   </section>
@@ -164,4 +225,5 @@
     </ul>
   </section>
 </body>
+
 </html>

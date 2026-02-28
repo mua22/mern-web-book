@@ -1,24 +1,44 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>CSS Flexbox — Demo</title>
-  <link rel="stylesheet" href="demo-common.css" />
+  <link rel="stylesheet" href="../demo-common.css" />
   <style>
-    .render .flex-container { display: flex; border: 2px solid #374151; padding: 8px; margin: 8px 0; min-height: 60px; background: #f3f4f6; }
-    .render .flex-item { background: #dbeafe; border: 1px solid #3b82f6; padding: 8px; margin: 4px; }
-    .render .flex-item-tall { min-height: 50px; }
+    .render .flex-container {
+      display: flex;
+      border: 2px solid #374151;
+      padding: 8px;
+      margin: 8px 0;
+      min-height: 60px;
+      background: #f3f4f6;
+    }
+
+    .render .flex-item {
+      background: #dbeafe;
+      border: 1px solid #3b82f6;
+      padding: 8px;
+      margin: 4px;
+    }
+
+    .render .flex-item-tall {
+      min-height: 50px;
+    }
   </style>
 </head>
+
 <body>
   <h1>CSS Flexbox — Demo</h1>
-  <p class="note">This page covers Flexbox (Flexible Box Layout): <code>display: flex</code>, direction, wrap, justify-content, align-items, gap, and flex properties on children. Each example shows output and code.</p>
+  <p class="note">This page covers Flexbox (Flexible Box Layout): <code>display: flex</code>, direction, wrap,
+    justify-content, align-items, gap, and flex properties on children. Each example shows output and code.</p>
 
   <!-- display: flex -->
   <section class="section">
     <h2>1. <code>display: flex</code></h2>
-    <p class="note">On a container, <code>display: flex</code> makes its direct children <strong>flex items</strong>. By default they line up in a row, shrink to fit, and stretch vertically.</p>
+    <p class="note">On a container, <code>display: flex</code> makes its direct children <strong>flex items</strong>. By
+      default they line up in a row, shrink to fit, and stretch vertically.</p>
 
     <div class="demo">
       <strong>Output</strong>
@@ -34,7 +54,9 @@
   display: flex;
 }</code></pre>
       <div class="explain">
-        <strong>Explanation:</strong> The container becomes a flex container. Its direct children (flex items) are laid out in a row by default. The main axis is horizontal; the cross axis is vertical. Only direct children participate — grandchildren are not flex items.
+        <strong>Explanation:</strong> The container becomes a flex container. Its direct children (flex items) are laid
+        out in a row by default. The main axis is horizontal; the cross axis is vertical. Only direct children
+        participate — grandchildren are not flex items.
       </div>
     </div>
   </section>
@@ -42,7 +64,8 @@
   <!-- flex-direction -->
   <section class="section">
     <h2>2. <code>flex-direction</code></h2>
-    <p class="note">Controls the main axis direction. Values: <code>row</code> (default), <code>row-reverse</code>, <code>column</code>, <code>column-reverse</code>.</p>
+    <p class="note">Controls the main axis direction. Values: <code>row</code> (default), <code>row-reverse</code>,
+      <code>column</code>, <code>column-reverse</code>.</p>
 
     <div class="demo">
       <strong>Output</strong>
@@ -64,7 +87,9 @@
       <pre class="code"><code>.container { display: flex; flex-direction: row; }      /* default */
 .container { display: flex; flex-direction: column; }</code></pre>
       <div class="explain">
-        <strong>Explanation:</strong> <code>row</code> = main axis horizontal, left to right. <code>row-reverse</code> = right to left. <code>column</code> = main axis vertical, top to bottom. <code>column-reverse</code> = bottom to top.
+        <strong>Explanation:</strong> <code>row</code> = main axis horizontal, left to right. <code>row-reverse</code> =
+        right to left. <code>column</code> = main axis vertical, top to bottom. <code>column-reverse</code> = bottom to
+        top.
       </div>
     </div>
   </section>
@@ -72,7 +97,9 @@
   <!-- justify-content -->
   <section class="section">
     <h2>3. <code>justify-content</code> — main-axis alignment</h2>
-    <p class="note">Aligns flex items along the <strong>main axis</strong>. Values: <code>flex-start</code>, <code>flex-end</code>, <code>center</code>, <code>space-between</code>, <code>space-around</code>, <code>space-evenly</code>.</p>
+    <p class="note">Aligns flex items along the <strong>main axis</strong>. Values: <code>flex-start</code>,
+      <code>flex-end</code>, <code>center</code>, <code>space-between</code>, <code>space-around</code>,
+      <code>space-evenly</code>.</p>
 
     <div class="demo">
       <strong>Output</strong>
@@ -99,7 +126,10 @@
 .container { justify-content: center; }
 .container { justify-content: space-between; }  /* space between items, none at edges */</code></pre>
       <div class="explain">
-        <strong>Explanation:</strong> <code>flex-start</code> = pack at start. <code>flex-end</code> = pack at end. <code>center</code> = pack in the middle. <code>space-between</code> = equal space between items, no extra at edges. <code>space-around</code> = space around each item (half at edges). <code>space-evenly</code> = equal space everywhere.
+        <strong>Explanation:</strong> <code>flex-start</code> = pack at start. <code>flex-end</code> = pack at end.
+        <code>center</code> = pack in the middle. <code>space-between</code> = equal space between items, no extra at
+        edges. <code>space-around</code> = space around each item (half at edges). <code>space-evenly</code> = equal
+        space everywhere.
       </div>
     </div>
   </section>
@@ -107,7 +137,9 @@
   <!-- align-items -->
   <section class="section">
     <h2>4. <code>align-items</code> — cross-axis alignment</h2>
-    <p class="note">Aligns flex items along the <strong>cross axis</strong> (perpendicular to main). Values: <code>flex-start</code>, <code>flex-end</code>, <code>center</code>, <code>stretch</code> (default), <code>baseline</code>.</p>
+    <p class="note">Aligns flex items along the <strong>cross axis</strong> (perpendicular to main). Values:
+      <code>flex-start</code>, <code>flex-end</code>, <code>center</code>, <code>stretch</code> (default),
+      <code>baseline</code>.</p>
 
     <div class="demo">
       <strong>Output</strong>
@@ -129,7 +161,9 @@
 .container { align-items: center; }
 .container { align-items: stretch; }   /* default: fill cross axis */</code></pre>
       <div class="explain">
-        <strong>Explanation:</strong> When main axis is row, cross axis is vertical. <code>flex-start</code> = top; <code>flex-end</code> = bottom; <code>center</code> = middle; <code>stretch</code> = fill height. <code>baseline</code> = align by text baseline.
+        <strong>Explanation:</strong> When main axis is row, cross axis is vertical. <code>flex-start</code> = top;
+        <code>flex-end</code> = bottom; <code>center</code> = middle; <code>stretch</code> = fill height.
+        <code>baseline</code> = align by text baseline.
       </div>
     </div>
   </section>
@@ -137,7 +171,8 @@
   <!-- flex-wrap -->
   <section class="section">
     <h2>5. <code>flex-wrap</code></h2>
-    <p class="note">Whether flex items wrap to the next line when there’s not enough space. Values: <code>nowrap</code> (default), <code>wrap</code>, <code>wrap-reverse</code>.</p>
+    <p class="note">Whether flex items wrap to the next line when there’s not enough space. Values: <code>nowrap</code>
+      (default), <code>wrap</code>, <code>wrap-reverse</code>.</p>
 
     <div class="demo">
       <strong>Output (wrap)</strong>
@@ -155,7 +190,9 @@
   flex-wrap: wrap;
 }</code></pre>
       <div class="explain">
-        <strong>Explanation:</strong> <code>nowrap</code> = all items stay on one line (may shrink). <code>wrap</code> = items wrap to next line when needed. <code>wrap-reverse</code> = wrap in reverse order. Use <code>wrap</code> for responsive layouts.
+        <strong>Explanation:</strong> <code>nowrap</code> = all items stay on one line (may shrink). <code>wrap</code> =
+        items wrap to next line when needed. <code>wrap-reverse</code> = wrap in reverse order. Use <code>wrap</code>
+        for responsive layouts.
       </div>
     </div>
   </section>
@@ -163,7 +200,9 @@
   <!-- gap -->
   <section class="section">
     <h2>6. <code>gap</code></h2>
-    <p class="note">Adds space between flex items (and between rows when wrapped). Values: <code>gap: 10px</code>, <code>gap: 10px 20px</code> (row gap, column gap), or <code>row-gap</code> / <code>column-gap</code> separately.</p>
+    <p class="note">Adds space between flex items (and between rows when wrapped). Values: <code>gap: 10px</code>,
+      <code>gap: 10px 20px</code> (row gap, column gap), or <code>row-gap</code> / <code>column-gap</code> separately.
+    </p>
 
     <div class="demo">
       <strong>Output</strong>
@@ -180,7 +219,8 @@
   gap: 16px;
 }</code></pre>
       <div class="explain">
-        <strong>Explanation:</strong> <code>gap</code> adds space between items without using margins. Shorthand: <code>gap: row-gap column-gap</code>. One value applies to both. Supported in all modern browsers.
+        <strong>Explanation:</strong> <code>gap</code> adds space between items without using margins. Shorthand:
+        <code>gap: row-gap column-gap</code>. One value applies to both. Supported in all modern browsers.
       </div>
     </div>
   </section>
@@ -188,7 +228,8 @@
   <!-- flex-grow, flex-shrink, flex-basis -->
   <section class="section">
     <h2>7. <code>flex-grow</code>, <code>flex-shrink</code>, <code>flex-basis</code></h2>
-    <p class="note">On flex <strong>items</strong>, these control how items grow or shrink when there’s extra or less space. Shorthand: <code>flex: grow shrink basis</code>.</p>
+    <p class="note">On flex <strong>items</strong>, these control how items grow or shrink when there’s extra or less
+      space. Shorthand: <code>flex: grow shrink basis</code>.</p>
 
     <div class="demo">
       <strong>Output (flex: 1 1 0 — equal width)</strong>
@@ -214,7 +255,9 @@
 /* middle item twice as wide */
 .item-2 { flex: 2 1 0; }</code></pre>
       <div class="explain">
-        <strong>Explanation:</strong> <code>flex-grow: 1</code> = take equal share of extra space. <code>flex-shrink: 1</code> = shrink when needed. <code>flex-basis: 0</code> = start from zero, let grow/shrink control size. <code>flex: 1</code> is shorthand for <code>1 1 0</code>.
+        <strong>Explanation:</strong> <code>flex-grow: 1</code> = take equal share of extra space.
+        <code>flex-shrink: 1</code> = shrink when needed. <code>flex-basis: 0</code> = start from zero, let grow/shrink
+        control size. <code>flex: 1</code> is shorthand for <code>1 1 0</code>.
       </div>
     </div>
   </section>
@@ -222,7 +265,9 @@
   <!-- align-self -->
   <section class="section">
     <h2>8. <code>align-self</code> — override for one item</h2>
-    <p class="note">On a flex item, <code>align-self</code> overrides <code>align-items</code> for that item only. Values: <code>flex-start</code>, <code>flex-end</code>, <code>center</code>, <code>stretch</code>, <code>baseline</code>, <code>auto</code>.</p>
+    <p class="note">On a flex item, <code>align-self</code> overrides <code>align-items</code> for that item only.
+      Values: <code>flex-start</code>, <code>flex-end</code>, <code>center</code>, <code>stretch</code>,
+      <code>baseline</code>, <code>auto</code>.</p>
 
     <div class="demo">
       <strong>Output</strong>
@@ -237,7 +282,8 @@
       <pre class="code"><code>.item { align-self: center; }
 .item { align-self: flex-end; }</code></pre>
       <div class="explain">
-        <strong>Explanation:</strong> Use <code>align-self</code> when one item needs different cross-axis alignment than the others. <code>auto</code> uses the container’s <code>align-items</code>.
+        <strong>Explanation:</strong> Use <code>align-self</code> when one item needs different cross-axis alignment
+        than the others. <code>auto</code> uses the container’s <code>align-items</code>.
       </div>
     </div>
   </section>
@@ -245,7 +291,8 @@
   <!-- order -->
   <section class="section">
     <h2>9. <code>order</code></h2>
-    <p class="note">Controls the order of flex items. Default is <code>0</code>. Lower values appear first; higher values appear later.</p>
+    <p class="note">Controls the order of flex items. Default is <code>0</code>. Lower values appear first; higher
+      values appear later.</p>
 
     <div class="demo">
       <strong>Output</strong>
@@ -261,7 +308,8 @@
 .item-b { order: 1; }
 .item-c { order: 2; }</code></pre>
       <div class="explain">
-        <strong>Explanation:</strong> Order only affects visual display, not the DOM. Use for reordering without changing HTML (e.g. mobile-first layout). Values can be negative.
+        <strong>Explanation:</strong> Order only affects visual display, not the DOM. Use for reordering without
+        changing HTML (e.g. mobile-first layout). Values can be negative.
       </div>
     </div>
   </section>
@@ -269,12 +317,14 @@
   <!-- align-content -->
   <section class="section">
     <h2>10. <code>align-content</code> — multi-line cross-axis</h2>
-    <p class="note">When flex items wrap into multiple lines, <code>align-content</code> aligns those lines along the cross axis. Only applies when <code>flex-wrap: wrap</code> and there are multiple lines.</p>
+    <p class="note">When flex items wrap into multiple lines, <code>align-content</code> aligns those lines along the
+      cross axis. Only applies when <code>flex-wrap: wrap</code> and there are multiple lines.</p>
 
     <div class="demo">
       <strong>Output (align-content: space-between)</strong>
       <div class="render">
-        <div class="flex-container flex-item-tall" style="flex-wrap: wrap; align-content: space-between; height: 120px;">
+        <div class="flex-container flex-item-tall"
+          style="flex-wrap: wrap; align-content: space-between; height: 120px;">
           <div class="flex-item" style="width: 40%;">1</div>
           <div class="flex-item" style="width: 40%;">2</div>
           <div class="flex-item" style="width: 40%;">3</div>
@@ -287,7 +337,9 @@
   align-content: space-between;
 }</code></pre>
       <div class="explain">
-        <strong>Explanation:</strong> Same values as <code>justify-content</code>: <code>flex-start</code>, <code>center</code>, <code>space-between</code>, etc. Controls spacing between rows when there are multiple rows.
+        <strong>Explanation:</strong> Same values as <code>justify-content</code>: <code>flex-start</code>,
+        <code>center</code>, <code>space-between</code>, etc. Controls spacing between rows when there are multiple
+        rows.
       </div>
     </div>
   </section>
@@ -295,10 +347,14 @@
   <section class="section">
     <h2>11. Quick summary</h2>
     <ul>
-      <li><strong>Container:</strong> <code>display: flex</code>, <code>flex-direction</code>, <code>flex-wrap</code>, <code>justify-content</code>, <code>align-items</code>, <code>align-content</code>, <code>gap</code>.</li>
-      <li><strong>Items:</strong> <code>flex</code> (grow shrink basis), <code>align-self</code>, <code>order</code>.</li>
-      <li><code>justify-content</code> = main axis; <code>align-items</code> = cross axis (single line); <code>align-content</code> = cross axis (multi-line).</li>
+      <li><strong>Container:</strong> <code>display: flex</code>, <code>flex-direction</code>, <code>flex-wrap</code>,
+        <code>justify-content</code>, <code>align-items</code>, <code>align-content</code>, <code>gap</code>.</li>
+      <li><strong>Items:</strong> <code>flex</code> (grow shrink basis), <code>align-self</code>, <code>order</code>.
+      </li>
+      <li><code>justify-content</code> = main axis; <code>align-items</code> = cross axis (single line);
+        <code>align-content</code> = cross axis (multi-line).</li>
     </ul>
   </section>
 </body>
+
 </html>

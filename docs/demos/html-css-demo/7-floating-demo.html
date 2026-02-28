@@ -1,32 +1,59 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>CSS Float — Demo</title>
-  <link rel="stylesheet" href="demo-common.css" />
+  <link rel="stylesheet" href="../demo-common.css" />
   <style>
-    .render .float-box { padding: 12px; margin: 8px; background: #dbeafe; border: 1px solid #3b82f6; }
-    .render .float-left { float: left; width: 100px; }
-    .render .float-right { float: right; width: 100px; }
-    .render .clear-both { clear: both; }
-    .render .clearfix::after { content: ""; display: table; clear: both; }
+    .render .float-box {
+      padding: 12px;
+      margin: 8px;
+      background: #dbeafe;
+      border: 1px solid #3b82f6;
+    }
+
+    .render .float-left {
+      float: left;
+      width: 100px;
+    }
+
+    .render .float-right {
+      float: right;
+      width: 100px;
+    }
+
+    .render .clear-both {
+      clear: both;
+    }
+
+    .render .clearfix::after {
+      content: "";
+      display: table;
+      clear: both;
+    }
   </style>
 </head>
+
 <body>
   <h1>CSS Float — Demo</h1>
-  <p class="note">This page covers <code>float</code> and <code>clear</code>. Floats were once the main way to create layouts; now Flexbox and Grid are preferred. Floats are still useful for text wrapping around images. Each example shows output and code.</p>
+  <p class="note">This page covers <code>float</code> and <code>clear</code>. Floats were once the main way to create
+    layouts; now Flexbox and Grid are preferred. Floats are still useful for text wrapping around images. Each example
+    shows output and code.</p>
 
   <!-- float: left -->
   <section class="section">
     <h2>1. <code>float: left</code></h2>
-    <p class="note">A floated element is removed from normal flow and pushed to the left (or right). Content below wraps around it.</p>
+    <p class="note">A floated element is removed from normal flow and pushed to the left (or right). Content below wraps
+      around it.</p>
 
     <div class="demo">
       <strong>Output</strong>
       <div class="render">
         <div class="float-box float-left">float: left</div>
-        <p style="margin: 0;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. The floated box sits on the left and text wraps around it.</p>
+        <p style="margin: 0;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt
+          ut labore et dolore magna aliqua. The floated box sits on the left and text wraps around it.</p>
       </div>
       <strong>Code</strong>
       <pre class="code"><code>.box {
@@ -34,7 +61,9 @@
   width: 100px;
 }</code></pre>
       <div class="explain">
-        <strong>Explanation:</strong> <code>float: left</code> takes the element out of normal flow and moves it to the left. Block content that follows wraps around the right and bottom of the floated element. The floated element must have a width (or it will shrink-wrap).
+        <strong>Explanation:</strong> <code>float: left</code> takes the element out of normal flow and moves it to the
+        left. Block content that follows wraps around the right and bottom of the floated element. The floated element
+        must have a width (or it will shrink-wrap).
       </div>
     </div>
   </section>
@@ -48,7 +77,8 @@
       <strong>Output</strong>
       <div class="render">
         <div class="float-box float-right">float: right</div>
-        <p style="margin: 0;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. The box floats to the right and text wraps on the left. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+        <p style="margin: 0;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. The box floats to the right and
+          text wraps on the left. Ut enim ad minim veniam, quis nostrud exercitation.</p>
       </div>
       <strong>Code</strong>
       <pre class="code"><code>.box {
@@ -61,21 +91,25 @@
   <!-- clear -->
   <section class="section">
     <h2>3. <code>clear</code> — stop wrapping</h2>
-    <p class="note">Use <code>clear</code> on an element to force it below any preceding floats. Values: <code>left</code>, <code>right</code>, <code>both</code>, <code>none</code>.</p>
+    <p class="note">Use <code>clear</code> on an element to force it below any preceding floats. Values:
+      <code>left</code>, <code>right</code>, <code>both</code>, <code>none</code>.</p>
 
     <div class="demo">
       <strong>Output</strong>
       <div class="render">
         <div class="float-box float-left">float: left</div>
         <p style="margin: 0;">Text wraps here…</p>
-        <p class="clear-both" style="margin: 0; background: #fef3c7; padding: 8px;">This paragraph has clear: both — it starts below the float.</p>
+        <p class="clear-both" style="margin: 0; background: #fef3c7; padding: 8px;">This paragraph has clear: both — it
+          starts below the float.</p>
       </div>
       <strong>Code</strong>
       <pre class="code"><code>.below-float {
   clear: both;
 }</code></pre>
       <div class="explain">
-        <strong>Explanation:</strong> <code>clear: both</code> means “do not allow left or right floats beside me.” The element is pushed down below any floats. Use <code>clear: left</code> or <code>clear: right</code> if you only care about one side.
+        <strong>Explanation:</strong> <code>clear: both</code> means “do not allow left or right floats beside me.” The
+        element is pushed down below any floats. Use <code>clear: left</code> or <code>clear: right</code> if you only
+        care about one side.
       </div>
     </div>
   </section>
@@ -83,7 +117,8 @@
   <!-- clearfix -->
   <section class="section">
     <h2>4. Clearfix — contain floats inside a parent</h2>
-    <p class="note">When all children are floated, the parent “collapses” (height becomes 0) because floats are out of flow. Use a <strong>clearfix</strong> on the parent to make it wrap its floated children.</p>
+    <p class="note">When all children are floated, the parent “collapses” (height becomes 0) because floats are out of
+      flow. Use a <strong>clearfix</strong> on the parent to make it wrap its floated children.</p>
 
     <div class="demo">
       <strong>Output (parent has clearfix)</strong>
@@ -99,7 +134,10 @@
   clear: both;
 }</code></pre>
       <div class="explain">
-        <strong>Explanation:</strong> The clearfix adds a pseudo-element (::after) that clears both sides. Because it comes after the floats, it is pushed below them, and the parent stretches to include it. Modern alternative: <code>overflow: hidden</code> or <code>overflow: auto</code> on the parent (creates a block formatting context and contains floats).
+        <strong>Explanation:</strong> The clearfix adds a pseudo-element (::after) that clears both sides. Because it
+        comes after the floats, it is pushed below them, and the parent stretches to include it. Modern alternative:
+        <code>overflow: hidden</code> or <code>overflow: auto</code> on the parent (creates a block formatting context
+        and contains floats).
       </div>
     </div>
   </section>
@@ -107,7 +145,8 @@
   <!-- multiple floats -->
   <section class="section">
     <h2>5. Multiple floats</h2>
-    <p class="note">Multiple elements with <code>float: left</code> line up horizontally (like columns). When there’s not enough space, they wrap to the next line.</p>
+    <p class="note">Multiple elements with <code>float: left</code> line up horizontally (like columns). When there’s
+      not enough space, they wrap to the next line.</p>
 
     <div class="demo">
       <strong>Output</strong>
@@ -121,7 +160,8 @@
       <pre class="code"><code>.parent::after { content: ""; display: table; clear: both; }
 .child { float: left; width: 80px; }</code></pre>
       <div class="explain">
-        <strong>Explanation:</strong> Floated elements stack horizontally. The parent needs clearfix (or overflow: hidden) so it doesn’t collapse. For layout, Flexbox or Grid is usually better than floats.
+        <strong>Explanation:</strong> Floated elements stack horizontally. The parent needs clearfix (or overflow:
+        hidden) so it doesn’t collapse. For layout, Flexbox or Grid is usually better than floats.
       </div>
     </div>
   </section>
@@ -129,11 +169,15 @@
   <section class="section">
     <h2>6. Quick summary</h2>
     <ul>
-      <li><code>float: left</code> / <code>float: right</code> — removes element from flow; content wraps around it.</li>
-      <li><code>clear: left</code> / <code>right</code> / <code>both</code> — element starts below preceding floats.</li>
-      <li><strong>Clearfix:</strong> <code>.parent::after { content: ""; display: table; clear: both; }</code> — parent contains floated children.</li>
+      <li><code>float: left</code> / <code>float: right</code> — removes element from flow; content wraps around it.
+      </li>
+      <li><code>clear: left</code> / <code>right</code> / <code>both</code> — element starts below preceding floats.
+      </li>
+      <li><strong>Clearfix:</strong> <code>.parent::after { content: ""; display: table; clear: both; }</code> — parent
+        contains floated children.</li>
       <li>Floats are still useful for text wrapping (e.g. images in articles); for layout, prefer Flexbox or Grid.</li>
     </ul>
   </section>
 </body>
+
 </html>
