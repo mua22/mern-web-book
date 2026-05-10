@@ -10,7 +10,7 @@ Absolutely not. In this chapter, we will eliminate HTML boilerplate by introduci
 
 ---
 
-## 13.1 The Layout Paradigm
+## The Layout Paradigm
 
 Instead of copying and pasting the shell of the website into every single file, we will create a **Master Layout** file. This master file acts as the permanent, unmoving frame of our application (holding the Navbars and Footers).
 
@@ -18,19 +18,19 @@ Inside this master layout is a massive, dynamic hole. When the user visits `/abo
 
 ```mermaid
 graph TD
-    Layout[layout.ejs <br/> Navbar / Footer / CSS]
-    Home[home.ejs <br/> Unique Hero Text]
-    About[about.ejs <br/> Our Team Pictures]
-    
-    Home -.->|Injected into| Layout
-    About -.->|Injected into| Layout
-    
-    Layout --> Browser[Rendered on Screen]
+ Layout[layout.ejs <br/> Navbar / Footer / CSS]
+ Home[home.ejs <br/> Unique Hero Text]
+ About[about.ejs <br/> Our Team Pictures]
+ 
+ Home -.->|Injected into| Layout
+ About -.->|Injected into| Layout
+ 
+ Layout --> Browser[Rendered on Screen]
 ```
 
 ---
 
-## 13.2 Installation and Setup
+## Installation and Setup
 
 Like everything powerful in Node.js, `express-ejs-layouts` is a piece of **Middleware** downloaded from NPM.
 
@@ -54,9 +54,9 @@ app.set('view engine', 'ejs');
 app.use(expressLayouts);
 
 app.get('/', (req, res) => {
-    // 4. Render the page as normal. 
-    // The middleware magically intercepts this and wraps it in the layout!
-    res.render('home'); 
+ // 4. Render the page as normal. 
+ // The middleware magically intercepts this and wraps it in the layout!
+ res.render('home'); 
 });
 
 app.listen(3000, () => console.log('Server is running...'));
@@ -64,42 +64,42 @@ app.listen(3000, () => console.log('Server is running...'));
 
 ---
 
-## 13.3 Creating the Master Layout
+## Creating the Master Layout
 
 By default, the middleware specifically hunts for a file named `layout.ejs` in your `views` folder. Let's create it.
 
 Pay special attention to the `<%- body %>` tag. 
 
-*   Earlier, we learned that `<%= %>` (with an equals sign) safely prints raw text. 
-*   However, `<%- %>` (with a dash) tells EJS to render **Unescaped Raw HTML**. Because we are injecting entire pages of HTML code, we must use the dash!
+* Earlier, we learned that `<%= %>` (with an equals sign) safely prints raw text. 
+* However, `<%- %>` (with a dash) tells EJS to render **Unescaped Raw HTML**. Because we are injecting entire pages of HTML code, we must use the dash!
 
 ```html
 <!-- views/layout.ejs -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>My SSR Website</title>
-    <!-- We put our global CSS and Bootstrap links here ONE time! -->
-    <link rel="stylesheet" href="/css/styles.css">
+ <meta charset="UTF-8">
+ <title>My SSR Website</title>
+ <!-- We put our global CSS and Bootstrap links here ONE time! -->
+ <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-    
-    <!-- Permanent Navigation Bar -->
-    <nav style="background: black; color: white; padding: 10px;">
-        <a href="/">Home</a> | <a href="/about">About</a> | <a href="/shop">Shop</a>
-    </nav>
+ 
+ <!-- Permanent Navigation Bar -->
+ <nav style="background: black; color: white; padding: 10px;">
+ <a href="/">Home</a> | <a href="/about">About</a> | <a href="/shop">Shop</a>
+ </nav>
 
-    <!-- THE MAGIC HOLE -->
-    <!-- This is where all specific page content will be beautifully injected -->
-    <main style="padding: 20px;">
-        <%- body %>
-    </main>
+ <!-- THE MAGIC HOLE -->
+ <!-- This is where all specific page content will be beautifully injected -->
+ <main style="padding: 20px;">
+ <%- body %>
+ </main>
 
-    <!-- Permanent Footer -->
-    <footer>
-        <p>&copy; 2024 The MERN Ninja Academy. All rights reserved.</p>
-    </footer>
+ <!-- Permanent Footer -->
+ <footer>
+ <p>&copy; 2024 The MERN Ninja Academy. All rights reserved.</p>
+ </footer>
 
 </body>
 </html>
@@ -107,7 +107,7 @@ Pay special attention to the `<%- body %>` tag.
 
 ---
 
-## 13.4 Building the Unique Pages
+## Building the Unique Pages
 
 Now that the master shell is configured, building our individual pages becomes magically simple. 
 

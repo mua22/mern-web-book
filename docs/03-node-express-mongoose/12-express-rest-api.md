@@ -8,7 +8,7 @@ This is the ultimate culmination of your Node.js backend journey.
 
 ---
 
-## 12.1 What is a RESTful API?
+## What is a RESTful API?
 
 **REST** stands for *Representational State Transfer*. While it sounds incredibly academic, REST is simply a standardized set of rules (an architectural style) for how web applications should communicate over HTTP.
 
@@ -20,37 +20,37 @@ Here is the golden RESTful mapping matrix you must memorize:
 
 ```mermaid
 graph LR
-    subgraph HTTP Verb
-        GET
-        POST
-        PUT
-        DELETE
-    end
+ subgraph HTTP Verb
+ GET
+ POST
+ PUT
+ DELETE
+ end
 
-    subgraph URL Endpoint
-        E1[/api/users/]
-        E2[/api/users/:id]
-    end
+ subgraph URL Endpoint
+ E1[/api/users/]
+ E2[/api/users/:id]
+ end
 
-    subgraph Mongoose Action
-        READ[User.find()]
-        CREATE[User.create()]
-        UPDATE[User.findByIdAndUpdate()]
-        DEL[User.findByIdAndDelete()]
-    end
+ subgraph Mongoose Action
+ READ[User.find()]
+ CREATE[User.create()]
+ UPDATE[User.findByIdAndUpdate()]
+ DEL[User.findByIdAndDelete()]
+ end
 
-    GET --- E1 --> READ
-    POST --- E1 --> CREATE
-    GET --- E2 -.->|Find One| READ
-    PUT --- E2 --> UPDATE
-    DELETE --- E2 --> DEL
+ GET --- E1 --> READ
+ POST --- E1 --> CREATE
+ GET --- E2 -.->|Find One| READ
+ PUT --- E2 --> UPDATE
+ DELETE --- E2 --> DEL
 ```
 
 Notice the URLs are always plural nouns (`/users`), never verbs (`/getUsers`). The HTTP verb *is* the action. Let's implement this matrix!
 
 ---
 
-## 12.2 The Complete Architecture
+## The Complete Architecture
 
 To keep our enterprise application modular, we will utilize three files:
 1. `models/User.js`: Our Mongoose Schema.
@@ -61,7 +61,7 @@ Assume our `models/User.js` file is exactly the same as the previous chapter (re
 
 ---
 
-## 12.3 The REST Controller (Express meets Mongoose)
+## The REST Controller (Express meets Mongoose)
 
 When mapping endpoints, database queries take time to execute over the network. Therefore, every single route handler must be an `async` function wrapped in a `try / catch` block. If Mongoose fails to find a document or rejects an invalid email, we catch the error and send a clean JSON response back to the client.
 
@@ -71,81 +71,81 @@ const User = require('../models/User');
 
 // --- READ (GET /api/users) ---
 exports.getAllUsers = async (req, res) => {
-    try {
-        const users = await User.find();
-        res.status(200).json({ status: "Success", results: users.length, data: users });
-    } catch (err) {
-        res.status(500).json({ status: "Error", message: err.message });
-    }
+ try {
+ const users = await User.find();
+ res.status(200).json({ status: "Success", results: users.length, data: users });
+ } catch (err) {
+ res.status(500).json({ status: "Error", message: err.message });
+ }
 };
 
 // --- READ ONE (GET /api/users/:id) ---
 exports.getSingleUser = async (req, res) => {
-    try {
-        const user = await User.findById(req.params.id);
-        
-        // Critical: If the ID format is correct but the user doesn't exist, Mongoose returns null.
-        if (!user) {
-            return res.status(404).json({ status: "Fail", message: "User not found." });
-        }
-        res.status(200).json({ status: "Success", data: user });
-    } catch (err) {
-        // If they provide a malformed ID (not 24 characters), Mongoose throws an error.
-        res.status(400).json({ status: "Fail", message: "Invalid ID format" });
-    }
+ try {
+ const user = await User.findById(req.params.id);
+ 
+ // Critical: If the ID format is correct but the user doesn't exist, Mongoose returns null.
+ if (!user) {
+ return res.status(404).json({ status: "Fail", message: "User not found." });
+ }
+ res.status(200).json({ status: "Success", data: user });
+ } catch (err) {
+ // If they provide a malformed ID (not 24 characters), Mongoose throws an error.
+ res.status(400).json({ status: "Fail", message: "Invalid ID format" });
+ }
 };
 
 // --- CREATE (POST /api/users) ---
 exports.createUser = async (req, res) => {
-    try {
-        // We pass the incoming Form/JSON data (req.body) directly to Mongoose
-        const newUser = await User.create(req.body);
-        
-        res.status(201).json({ status: "Success", data: newUser });
-    } catch (err) {
-        // Validation Errors (e.g. missing username) get caught here
-        res.status(400).json({ status: "Fail", message: err.message });
-    }
+ try {
+ // We pass the incoming Form/JSON data (req.body) directly to Mongoose
+ const newUser = await User.create(req.body);
+ 
+ res.status(201).json({ status: "Success", data: newUser });
+ } catch (err) {
+ // Validation Errors (e.g. missing username) get caught here
+ res.status(400).json({ status: "Fail", message: err.message });
+ }
 };
 
 // --- UPDATE (PUT /api/users/:id) ---
 exports.updateUser = async (req, res) => {
-    try {
-        // new: true returns the updated document. runValidators ensures the new data is valid!
-        const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {
-            new: true,
-            runValidators: true 
-        });
+ try {
+ // new: true returns the updated document. runValidators ensures the new data is valid!
+ const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {
+ new: true,
+ runValidators: true 
+ });
 
-        if (!updatedUser) {
-            return res.status(404).json({ status: "Fail", message: "User not found." });
-        }
-        res.status(200).json({ status: "Success", data: updatedUser });
-    } catch (err) {
-        res.status(400).json({ status: "Fail", message: err.message });
-    }
+ if (!updatedUser) {
+ return res.status(404).json({ status: "Fail", message: "User not found." });
+ }
+ res.status(200).json({ status: "Success", data: updatedUser });
+ } catch (err) {
+ res.status(400).json({ status: "Fail", message: err.message });
+ }
 };
 
 // --- DELETE (DELETE /api/users/:id) ---
 exports.deleteUser = async (req, res) => {
-    try {
-        const deletedUser = await User.findByIdAndDelete(req.params.id);
-        
-        if (!deletedUser) {
-            return res.status(404).json({ status: "Fail", message: "User not found." });
-        }
-        
-        // 204 No Content signifies successful deletion
-        res.status(204).json({ status: "Success", data: null });
-    } catch (err) {
-        res.status(400).json({ status: "Fail", message: err.message });
-    }
+ try {
+ const deletedUser = await User.findByIdAndDelete(req.params.id);
+ 
+ if (!deletedUser) {
+ return res.status(404).json({ status: "Fail", message: "User not found." });
+ }
+ 
+ // 204 No Content signifies successful deletion
+ res.status(204).json({ status: "Success", data: null });
+ } catch (err) {
+ res.status(400).json({ status: "Fail", message: err.message });
+ }
 };
 ```
 
 ---
 
-## 12.4 The Router Setup
+## The Router Setup
 
 Now that our Controller flawlessly handles the massive data logic, parsing the `req` object, and utilizing Mongoose, our router file becomes incredibly tiny.
 
@@ -157,13 +157,13 @@ const userController = require('../controllers/userController');
 
 // The RESTful mapping in pure, readable format
 router.route('/')
-    .get(userController.getAllUsers)
-    .post(userController.createUser);
+ .get(userController.getAllUsers)
+ .post(userController.createUser);
 
 router.route('/:id')
-    .get(userController.getSingleUser)
-    .put(userController.updateUser)
-    .delete(userController.deleteUser);
+ .get(userController.getSingleUser)
+ .put(userController.updateUser)
+ .delete(userController.deleteUser);
 
 module.exports = router;
 ```

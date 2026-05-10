@@ -8,7 +8,7 @@ To make Node.js wait and listen, we have to turn it into a **Web Server**. In th
 
 ---
 
-## 3.1 The Client-Server Relationship (Request & Response)
+## The Client-Server Relationship (Request & Response)
 
 Before we write code, we must understand the fundamental conversation of the internet: the **Request-Response Cycle**. 
 
@@ -18,19 +18,19 @@ The computer receiving that message is the **Server**. Its job is to figure out 
 
 ```mermaid
 sequenceDiagram
-    participant Client as Web Browser (Client)
-    participant Server as Node.js App (Server)
+ participant Client as Web Browser (Client)
+ participant Server as Node.js App (Server)
 
-    Client->>Server: 1. HTTP Request (e.g., "GET /about")
-    Note right of Server: Server processes logic, <br/>reads files, queries database...
-    Server-->>Client: 2. HTTP Response (e.g., "200 OK" + HTML Content)
+ Client->>Server: 1. HTTP Request (e.g., "GET /about")
+ Note right of Server: Server processes logic, <br/>reads files, queries database...
+ Server-->>Client: 2. HTTP Response (e.g., "200 OK" + HTML Content)
 ```
 
 As MERN stack developers, our job is to write the code that lives inside that **Server** box. 
 
 ---
 
-## 3.2 Creating Your First Web Server
+## Creating Your First Web Server
 
 Node.js provides a built-in core module specifically designed to handle this internet traffic. It is called the `http` module. 
 
@@ -44,17 +44,17 @@ const http = require('http');
 
 // 2. Create the server
 const server = http.createServer((req, res) => {
-    // This callback function runs EVERY time a user visits the server!
-    console.log("A new request has arrived!");
-    
-    // Send a message back to the user's browser
-    res.end("Hello from the Node.js Server!");
+ // This callback function runs EVERY time a user visits the server!
+ console.log("A new request has arrived!");
+ 
+ // Send a message back to the user's browser
+ res.end("Hello from the Node.js Server!");
 });
 
 // 3. Tell the server to start listening for requests on Port 3000
 const PORT = 3000;
 server.listen(PORT, () => {
-    console.log(`Server is up and actively listening on http://localhost:${PORT}`);
+ console.log(`Server is up and actively listening on http://localhost:${PORT}`);
 });
 ```
 
@@ -71,28 +71,28 @@ Open your web browser and type `http://localhost:3000` into the address bar. You
 
 ---
 
-## 3.3 Dissecting `req` (Request) and `res` (Response)
+## Dissecting `req` (Request) and `res` (Response)
 
 In the code above, the `createServer()` function takes a callback with two incredibly important objects: `req` and `res`.
 
 ```mermaid
 graph LR
-    A[Incoming Network Traffic]
-    A -->|Turns into| REQ[req (Request Object)]
-    REQ -->|Contains| R1[Method: GET/POST]
-    REQ -->|Contains| R2[URL: /about]
-    REQ -->|Contains| R3[Headers & Data]
-    
-    RES[res (Response Object)] -->|Turns into| C[Outgoing Network Traffic]
-    RES -->|Requires| S1[Status Code: 200/404]
-    RES -->|Requires| S2[Content-Type: HTML/JSON]
-    RES -->|Requires| S3[Body content]
+ A[Incoming Network Traffic]
+ A -->|Turns into| REQ[req (Request Object)]
+ REQ -->|Contains| R1[Method: GET/POST]
+ REQ -->|Contains| R2[URL: /about]
+ REQ -->|Contains| R3[Headers & Data]
+ 
+ RES[res (Response Object)] -->|Turns into| C[Outgoing Network Traffic]
+ RES -->|Requires| S1[Status Code: 200/404]
+ RES -->|Requires| S2[Content-Type: HTML/JSON]
+ RES -->|Requires| S3[Body content]
 ```
 
-### 1. The `req` (Request) Object
+### The `req` (Request) Object
 The `req` object represents the incoming message from the user's browser. It is packed with useful information about *what* the user is asking for. If you `console.log(req.url)`, you can see exactly what page they are trying to visit!
 
-### 2. The `res` (Response) Object
+### The `res` (Response) Object
 The `res` object is your toolbox for crafting the reply. A proper HTTP reply needs more than just text; it needs metadata (headers).
 
 Let's upgrade our server to send a proper HTML response:
@@ -101,18 +101,18 @@ Let's upgrade our server to send a proper HTML response:
 const http = require('http');
 
 const server = http.createServer((req, res) => {
-    
-    // 1. Write the "Header" 
-    // Status 200 means "OK / Success". 
-    // Content-Type tells the browser to expect HTML, not plain text.
-    res.writeHead(200, { 'Content-Type': 'text/html' });
+ 
+ // 1. Write the "Header" 
+ // Status 200 means "OK / Success". 
+ // Content-Type tells the browser to expect HTML, not plain text.
+ res.writeHead(200, { 'Content-Type': 'text/html' });
 
-    // 2. Write the body of the response
-    res.write("<h1>Welcome to my amazing Node Server!</h1>");
-    res.write("<p>I am serving actual HTML now!</p>");
+ // 2. Write the body of the response
+ res.write("<h1>Welcome to my amazing Node Server!</h1>");
+ res.write("<p>I am serving actual HTML now!</p>");
 
-    // 3. End the response so the browser stops loading
-    res.end(); 
+ // 3. End the response so the browser stops loading
+ res.end(); 
 });
 
 server.listen(3000, () => console.log('Server listening on port 3000'));
@@ -120,7 +120,7 @@ server.listen(3000, () => console.log('Server listening on port 3000'));
 
 ---
 
-## 3.4 Routing: Handling Different Pages
+## Routing: Handling Different Pages
 
 Currently, our server is a bit dumb. Whether the user visits `localhost:3000/`, `localhost:3000/about`, or `localhost:3000/contact`, the server blindly sends back the exact same "Welcome" message.
 
@@ -132,34 +132,34 @@ Since we are using the raw `http` module, we have to build routing manually usin
 const http = require('http');
 
 const server = http.createServer((req, res) => {
-    
-    // Grab the URL the user is trying to visit
-    const url = req.url;
+ 
+ // Grab the URL the user is trying to visit
+ const url = req.url;
 
-    if (url === '/') {
-        res.writeHead(200, { 'Content-Type': 'text/html' });
-        res.write("<h1>Home Page</h1>");
-        res.end("<p>Welcome to our beautiful home page.</p>");
-    } 
-    else if (url === '/about') {
-        res.writeHead(200, { 'Content-Type': 'text/html' });
-        res.write("<h1>About Us</h1>");
-        res.end("<p>We are a team of MERN stack enthusiasts.</p>");
-    } 
-    else if (url === '/api/data') {
-        // We can even send back JSON data instead of HTML!
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        const myData = { name: "John", age: 25 };
-        // We must convert the JavaScript object to a JSON string
-        res.end(JSON.stringify(myData)); 
-    } 
-    else {
-        // What happens if they visit a page that doesn't exist?
-        // We send a 404 Status Code (Not Found)!
-        res.writeHead(404, { 'Content-Type': 'text/html' });
-        res.write("<h1>404 File Not Found</h1>");
-        res.end("<p>Sorry, that page does not exist!</p>");
-    }
+ if (url === '/') {
+ res.writeHead(200, { 'Content-Type': 'text/html' });
+ res.write("<h1>Home Page</h1>");
+ res.end("<p>Welcome to our beautiful home page.</p>");
+ } 
+ else if (url === '/about') {
+ res.writeHead(200, { 'Content-Type': 'text/html' });
+ res.write("<h1>About Us</h1>");
+ res.end("<p>We are a team of MERN stack enthusiasts.</p>");
+ } 
+ else if (url === '/api/data') {
+ // We can even send back JSON data instead of HTML!
+ res.writeHead(200, { 'Content-Type': 'application/json' });
+ const myData = { name: "John", age: 25 };
+ // We must convert the JavaScript object to a JSON string
+ res.end(JSON.stringify(myData)); 
+ } 
+ else {
+ // What happens if they visit a page that doesn't exist?
+ // We send a 404 Status Code (Not Found)!
+ res.writeHead(404, { 'Content-Type': 'text/html' });
+ res.write("<h1>404 File Not Found</h1>");
+ res.end("<p>Sorry, that page does not exist!</p>");
+ }
 });
 
 server.listen(3000, () => console.log('Server is running on port 3000'));
@@ -169,7 +169,7 @@ If you run this updated server, you now have a fully functional web application 
 
 ---
 
-## 3.5 The Limitations of the Raw `http` Module
+## The Limitations of the Raw `http` Module
 
 You have just built a server from scratch. That is a massive accomplishment! However, as a framework developer, you might be looking at the routing code above and thinking: *"Wow, if my application had 100 different pages, that massive chain of `if/else` statements would become an absolute nightmare to manage."*
 

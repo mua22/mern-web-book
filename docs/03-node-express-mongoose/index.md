@@ -55,18 +55,18 @@ app.use(express.json());
 
 // Routes
 app.get('/api/hello', (req, res) => {
-    res.json({ message: 'Hello from Express!' });
+ res.json({ message: 'Hello from Express!' });
 });
 
 app.post('/api/users', (req, res) => {
-    const user = req.body;
-    res.status(201).json({ message: 'User created', user });
+ const user = req.body;
+ res.status(201).json({ message: 'User created', user });
 });
 
 // Start server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+ console.log(`Server running on port ${PORT}`);
 });
 ```
 

@@ -6,7 +6,7 @@ It is time to put all of these puzzle pieces together. We are going to build a f
 
 ---
 
-## 14.1 The Application Architecture (MVC)
+## The Application Architecture (MVC)
 
 We are building a simple storefront called **"Ninja Gear"**. The user flow is straightforward:
 1. They visit the homepage (`/`) and see a beautiful grid of all available products.
@@ -17,24 +17,24 @@ Before writing any code, we must cleanly structure our folders in the terminal f
 ```bash
 # Our Directory Structure
 /ninja-gear-app
-  ├── /controllers
-  │   └── productController.js
-  ├── /models
-  │   └── Product.js
-  ├── /routes
-  │   └── productRoutes.js
-  ├── /views
-  │   ├── layout.ejs
-  │   ├── home.ejs
-  │   └── productDetail.ejs
-  └── server.js
+ ├── /controllers
+ │ └── productController.js
+ ├── /models
+ │ └── Product.js
+ ├── /routes
+ │ └── productRoutes.js
+ ├── /views
+ │ ├── layout.ejs
+ │ ├── home.ejs
+ │ └── productDetail.ejs
+ └── server.js
 ```
 
 *(Note: Ensure you have run `npm init -y` and `npm install express ejs express-ejs-layouts mongoose` before starting).*
 
 ---
 
-## 14.2 The Model (Mongoose)
+## The Model (Mongoose)
 
 First, we define what a "Product" actually looks like using Mongoose.
 
@@ -43,10 +43,10 @@ First, we define what a "Product" actually looks like using Mongoose.
 const mongoose = require('mongoose');
 
 const productSchema = new mongoose.Schema({
-    name: { type: String, required: true },
-    price: { type: Number, required: true },
-    description: { type: String, required: true },
-    imageUrl: { type: String, required: true }
+ name: { type: String, required: true },
+ price: { type: Number, required: true },
+ description: { type: String, required: true },
+ imageUrl: { type: String, required: true }
 });
 
 module.exports = mongoose.model('Product', productSchema);
@@ -54,7 +54,7 @@ module.exports = mongoose.model('Product', productSchema);
 
 ---
 
-## 14.3 The Controller (Business Logic)
+## The Controller (Business Logic)
 
 Next, we write the "Brain" of our application. The Controller queries MongoDB and then strictly hands that raw data payload over to EJS via `res.render()`. 
 
@@ -66,35 +66,35 @@ const Product = require('../models/Product');
 
 // Fetch all products for the homepage
 exports.getStoreHomepage = async (req, res) => {
-    try {
-        const products = await Product.find();
-        
-        // Render the home.ejs view, and pass the products array to it!
-        res.render('home', { title: "Ninja Gear Store", products: products });
-    } catch (err) {
-        // If the database fails, render a generic error page
-        res.render('error', { message: "Failed to load store." });
-    }
+ try {
+ const products = await Product.find();
+ 
+ // Render the home.ejs view, and pass the products array to it!
+ res.render('home', { title: "Ninja Gear Store", products: products });
+ } catch (err) {
+ // If the database fails, render a generic error page
+ res.render('error', { message: "Failed to load store." });
+ }
 };
 
 // Fetch a single product for the dynamic details page
 exports.getProductDetails = async (req, res) => {
-    try {
-        // Extract the Mongoose ID from the URL path (/product/64a7...)
-        const product = await Product.findById(req.params.id);
-        
-        if (!product) return res.status(404).send('Product Not Found!');
-        
-        res.render('productDetail', { title: product.name, product: product });
-    } catch (err) {
-        res.status(400).send('Invalid Product ID');
-    }
+ try {
+ // Extract the Mongoose ID from the URL path (/product/64a7...)
+ const product = await Product.findById(req.params.id);
+ 
+ if (!product) return res.status(404).send('Product Not Found!');
+ 
+ res.render('productDetail', { title: product.name, product: product });
+ } catch (err) {
+ res.status(400).send('Invalid Product ID');
+ }
 };
 ```
 
 ---
 
-## 14.4 The Routing
+## The Routing
 
 Now we connect the Router traffic cop. We attach the URL endpoints to the specific functions we just wrote in the Controller.
 
@@ -115,7 +115,7 @@ module.exports = router;
 
 ---
 
-## 14.5 The Views (EJS Layouts and Rendering)
+## The Views (EJS Layouts and Rendering)
 
 Here is where the magic of Server-Side Rendering truly shines.
 
@@ -127,24 +127,24 @@ We create our permanent wrapper using `express-ejs-layouts`. Notice how we injec
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title><%= title %></title>
-    <!-- Simple inline styling for demonstration purposes -->
-    <style>
-        body { font-family: sans-serif; margin: 0; background: #fdfdfd; }
-        nav { background: #E74C3C; color: white; padding: 15px; text-align: center;}
-        .container { max-width: 900px; margin: 20px auto; }
-    </style>
+ <title><%= title %></title>
+ <!-- Simple inline styling for demonstration purposes -->
+ <style>
+ body { font-family: sans-serif; margin: 0; background: #fdfdfd; }
+ nav { background: #E74C3C; color: white; padding: 15px; text-align: center;}
+ .container { max-width: 900px; margin: 20px auto; }
+ </style>
 </head>
 <body>
-    <nav>
-        <h1>⚔️ Ninja Gear Store ⚔️</h1>
-        <a href="/" style="color: white">Return to Storefront</a>
-    </nav>
-    
-    <div class="container">
-         <!-- THE DYNAMIC INJECTION HOLE -->
-        <%- body %> 
-    </div>
+ <nav>
+ <h1> Ninja Gear Store </h1>
+ <a href="/" style="color: white">Return to Storefront</a>
+ </nav>
+ 
+ <div class="container">
+ <!-- THE DYNAMIC INJECTION HOLE -->
+ <%- body %> 
+ </div>
 </body>
 </html>
 ```
@@ -155,21 +155,21 @@ The controller passed an array of products to this view. We use an EJS `<% for %
 ```html
 <!-- views/home.ejs -->
 <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-    
-    <!-- Render a card for EVERY product in the Array -->
-    <% for(let p of products) { %>
-        <div style="border: 1px solid #ccc; padding: 15px; width: 250px;">
-            <img src="<%= p.imageUrl %>" width="100%" alt="<%= p.name %>" />
-            
-            <h3><%= p.name %></h3>
-            <p><strong>$<%= p.price %></strong></p>
-            
-            <!-- Generate a dynamic URL specific to this product's database ID! -->
-            <a href="/product/<%= p._id %>">
-                <button style="background: black; color: white; width: 100%">View Item</button>
-            </a>
-        </div>
-    <% } %>
+ 
+ <!-- Render a card for EVERY product in the Array -->
+ <% for(let p of products) { %>
+ <div style="border: 1px solid #ccc; padding: 15px; width: 250px;">
+ <img src="<%= p.imageUrl %>" width="100%" alt="<%= p.name %>" />
+ 
+ <h3><%= p.name %></h3>
+ <p><strong>$<%= p.price %></strong></p>
+ 
+ <!-- Generate a dynamic URL specific to this product's database ID! -->
+ <a href="/product/<%= p._id %>">
+ <button style="background: black; color: white; width: 100%">View Item</button>
+ </a>
+ </div>
+ <% } %>
 
 </div>
 ```
@@ -180,22 +180,22 @@ When the user clicks the "View Item" button, the Controller isolates that specif
 ```html
 <!-- views/productDetail.ejs -->
 <div style="text-align: center;">
-    
-    <img src="<%= product.imageUrl %>" width="300px" style="border-radius: 10px;" />
-    
-    <h1 style="color: #E74C3C"><%= product.name %></h1>
-    <h2>$<%= product.price %></h2>
-    <p style="color: gray; padding: 20px;"><%= product.description %></p>
-    
-    <button style="background: green; color: white; padding: 15px 40px; font-size: 18px">
-        Add to Shopping Cart
-    </button>
+ 
+ <img src="<%= product.imageUrl %>" width="300px" style="border-radius: 10px;" />
+ 
+ <h1 style="color: #E74C3C"><%= product.name %></h1>
+ <h2>$<%= product.price %></h2>
+ <p style="color: gray; padding: 20px;"><%= product.description %></p>
+ 
+ <button style="background: green; color: white; padding: 15px 40px; font-size: 18px">
+ Add to Shopping Cart
+ </button>
 </div>
 ```
 
 ---
 
-## 14.6 Bringing It Together (`server.js`)
+## Bringing It Together (`server.js`)
 
 Our final step is to assemble the puzzle pieces inside the root of our Node application.
 
@@ -212,8 +212,8 @@ const app = express();
 
 // Database Connection
 mongoose.connect('mongodb://localhost:27017/ninjaGearDB')
-    .then(() => console.log('Database Connected Successfully!'))
-    .catch(err => console.log('Database Crash: ', err));
+ .then(() => console.log('Database Connected Successfully!'))
+ .catch(err => console.log('Database Crash: ', err));
 
 // View Engine & Layout Setup
 app.set('view engine', 'ejs');

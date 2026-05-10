@@ -6,7 +6,7 @@ But what if line 1 involves downloading a massive picture from the internet? If 
 
 This is where **Asynchronous JavaScript** comes in. It allows us to start a task, move on to other things while we wait, and then come back to finish it when the task is done.
 
-## 1. Callbacks (The Old Way)
+## Callbacks (The Old Way)
 
 A callback is just a function that you pass into another function as an argument, and it gets executed *later* when a certain task is complete.
 
@@ -16,7 +16,7 @@ We already saw callbacks when we used Event Listeners!
 // The function () => { ... } is a callback!
 // It doesn't run right away. It waits for the click.
 document.querySelector('button').addEventListener('click', () => {
-    console.log("I'm running later!");
+ console.log("I'm running later!");
 });
 ```
 
@@ -27,7 +27,7 @@ console.log("1. Starting...");
 
 // setTimeout takes a callback function and a time to wait (in ms)
 setTimeout(() => {
-    console.log("3. Finished waiting 2 seconds!");
+ console.log("3. Finished waiting 2 seconds!");
 }, 2000);
 
 console.log("2. Moving on without waiting...");
@@ -43,7 +43,7 @@ console.log("2. Moving on without waiting...");
 
 ---
 
-## 2. Promises (The Better Way)
+## Promises (The Better Way)
 
 To fix the messy callback problem, JavaScript introduced `Promises`. 
 
@@ -61,26 +61,26 @@ We handle Promises using `.then()` for success, and `.catch()` for errors.
 console.log("Ordering data...");
 
 fetch("https://jsonplaceholder.typicode.com/users/1")
-    .then((response) => {
-        // This runs if the request was successful
-        console.log("Got the response! Converting to JSON...");
-        return response.json(); // .json() also returns a Promise!
-    })
-    .then((userData) => {
-        // This runs after the JSON conversion is done
-        console.log("Here is the user:", userData.name);
-    })
-    .catch((error) => {
-        // This only runs if something went terribly wrong (like no internet)
-        console.error("Oh no! The order failed:", error);
-    });
+ .then((response) => {
+ // This runs if the request was successful
+ console.log("Got the response! Converting to JSON...");
+ return response.json(); // .json() also returns a Promise!
+ })
+ .then((userData) => {
+ // This runs after the JSON conversion is done
+ console.log("Here is the user:", userData.name);
+ })
+ .catch((error) => {
+ // This only runs if something went terribly wrong (like no internet)
+ console.error("Oh no! The order failed:", error);
+ });
 
 console.log("Doing other things while we wait...");
 ```
 
 ---
 
-## 3. Async / Await (The Modern Way)
+## Async / Await (The Modern Way)
 
 Promises were a massive improvement, but chaining all those `.then()` blocks could still get a little confusing.
 
@@ -94,22 +94,22 @@ Let's rewrite the exact same `fetch` example above using `async/await`:
 ```javascript
 // Because we have 'async', JavaScript knows this function has waiting inside it
 async function getUserInfo() {
-    console.log("Ordering data...");
+ console.log("Ordering data...");
 
-    try {
-        // 'await' tells JavaScript to pause THIS function until fetch finishes.
-        // It does NOT freeze the rest of the website!
-        const response = await fetch("https://jsonplaceholder.typicode.com/users/1");
-        
-        console.log("Got the response! Converting to JSON...");
-        const userData = await response.json();
-        
-        console.log("Here is the user:", userData.name);
-        
-    } catch (error) {
-        // We use standard try/catch blocks for errors now!
-        console.error("Oh no! The order failed:", error);
-    }
+ try {
+ // 'await' tells JavaScript to pause THIS function until fetch finishes.
+ // It does NOT freeze the rest of the website!
+ const response = await fetch("https://jsonplaceholder.typicode.com/users/1");
+ 
+ console.log("Got the response! Converting to JSON...");
+ const userData = await response.json();
+ 
+ console.log("Here is the user:", userData.name);
+ 
+ } catch (error) {
+ // We use standard try/catch blocks for errors now!
+ console.error("Oh no! The order failed:", error);
+ }
 }
 
 // Call the function

@@ -20,20 +20,20 @@ Let's analyze a simple object literal line-by-line to understand what is happeni
 // Line 1: We declare a constant variable named 'userRecord'.
 // Line 2: We open curly braces {} to define our object literal in memory.
 const userRecord = {
-  // Line 3: We define a property 'username' and assign it a primitive string value.
-  username: 'AliHassan',
-  
-  // Line 4: We define a property 'loginCount' and assign it a primitive number value.
-  loginCount: 5,
-  
-  // Line 5: We define a method 'incrementLogins'. Notice it's an anonymous function.
-  incrementLogins: function() {
-    // Line 6: We use the 'this' keyword to refer to the object itself, 
-    // retrieving the current loginCount and adding 1 to it.
-    this.loginCount += 1;
-    // Line 7: We log a message to the console to confirm the action.
-    console.log(`Login successful. Total logins: ${this.loginCount}`);
-  }
+ // Line 3: We define a property 'username' and assign it a primitive string value.
+ username: 'AliHassan',
+ 
+ // Line 4: We define a property 'loginCount' and assign it a primitive number value.
+ loginCount: 5,
+ 
+ // Line 5: We define a method 'incrementLogins'. Notice it's an anonymous function.
+ incrementLogins: function() {
+ // Line 6: We use the 'this' keyword to refer to the object itself, 
+ // retrieving the current loginCount and adding 1 to it.
+ this.loginCount += 1;
+ // Line 7: We log a message to the console to confirm the action.
+ console.log(`Login successful. Total logins: ${this.loginCount}`);
+ }
 }; // Line 9: The curly brace closes and the statement ends.
 
 // Line 11: We invoke the method using dot notation.
@@ -98,16 +98,16 @@ A Factory Function is simply any normal function that creates and returns a newl
 ```javascript
 // Line 1: We define a normal function that accepts two parameters.
 function createUserSession(username, accessLevel) {
-  // Line 2: The function returns a newly carved out Object Literal structure.
-  return {
-    // Line 3 & 4: We assign the passed parameters to the object's properties.
-    username: username,
-    accessLevel: accessLevel,
-    // Line 5: We define a reusable method directly on this object.
-    printAccess: function() {
-      console.log(`User ${this.username} has ${this.accessLevel} rights.`);
-    }
-  };
+ // Line 2: The function returns a newly carved out Object Literal structure.
+ return {
+ // Line 3 & 4: We assign the passed parameters to the object's properties.
+ username: username,
+ accessLevel: accessLevel,
+ // Line 5: We define a reusable method directly on this object.
+ printAccess: function() {
+ console.log(`User ${this.username} has ${this.accessLevel} rights.`);
+ }
+ };
 }
 
 // Line 14: We call the function just like any normal function.
@@ -135,16 +135,16 @@ The `new` keyword drastically changes how a function executes. Let's look at the
 ```javascript
 // Line 1: Capitalized function name denotes a Constructor.
 function ServerNode(ipAddress, port) {
-  // Line 2 & 3: We attach properties directly to the 'this' context. 
-  this.ipAddress = ipAddress;
-  this.port = port;
-  
-  // Line 5: We attach methods directly to the 'this' context as well.
-  this.ping = function() {
-    console.log(`Pinging ${this.ipAddress} on port ${this.port}...`);
-  };
-  
-  // Note: There is NO return statement here!
+ // Line 2 & 3: We attach properties directly to the 'this' context. 
+ this.ipAddress = ipAddress;
+ this.port = port;
+ 
+ // Line 5: We attach methods directly to the 'this' context as well.
+ this.ping = function() {
+ console.log(`Pinging ${this.ipAddress} on port ${this.port}...`);
+ };
+ 
+ // Note: There is NO return statement here!
 }
 
 // Line 13: We invoke the constructor using the 'new' keyword.
@@ -170,58 +170,58 @@ One of the most notoriously confusing concepts in JavaScript for university stud
 Let us codify the four golden rules of the `this` binding.
 
 1. **Method Invocation (Implicit Binding):**
-   If a function is called as a property of an object (e.g., `obj.method()`), `this` bounds to the object to the left of the dot.
+ If a function is called as a property of an object (e.g., `obj.method()`), `this` bounds to the object to the left of the dot.
 
-   ```javascript
-   const robot = {
-     name: 'Optimus',
-     printName() { console.log(this.name); } 
-   };
-   robot.printName(); // 'this' points to 'robot'. Outputs 'Optimus'.
-   ```
+ ```javascript
+ const robot = {
+ name: 'Optimus',
+ printName() { console.log(this.name); } 
+ };
+ robot.printName(); // 'this' points to 'robot'. Outputs 'Optimus'.
+ ```
 
 2. **Function Invocation (Default Binding):**
-   If a regular function is called entirely on its own, without any object or context (e.g., `standaloneFunction()`), the `this` keyword defaults to the global window object. If "strict mode" (`"use strict";`) is enabled, it defaults to `undefined`.
+ If a regular function is called entirely on its own, without any object or context (e.g., `standaloneFunction()`), the `this` keyword defaults to the global window object. If "strict mode" (`"use strict";`) is enabled, it defaults to `undefined`.
 
-   ```javascript
-   function sayHello() { console.log(this); }
-   sayHello(); // In strict mode, prints 'undefined'. 
-   ```
+ ```javascript
+ function sayHello() { console.log(this); }
+ sayHello(); // In strict mode, prints 'undefined'. 
+ ```
 
 3. **Constructor Invocation (New Binding):**
-   As we discussed previously, using the `new` keyword creates an empty object and permanently forces `this` to point to that newly created object.
+ As we discussed previously, using the `new` keyword creates an empty object and permanently forces `this` to point to that newly created object.
 
 4. **Explicit Binding (Call, Apply, Bind):**
-   JavaScript allows you to forcibly override the `this` context using built-in function methods. For example, `.call()` executes the function while forcing `this` to point to a specific argument.
+ JavaScript allows you to forcibly override the `this` context using built-in function methods. For example, `.call()` executes the function while forcing `this` to point to a specific argument.
 
-   ```javascript
-   const person1 = { name: 'Qasim' };
-   const person2 = { name: 'Hira' };
-   
-   function announce() { console.log(`My name is ${this.name}`); }
-   
-   announce.call(person1); // Outputs: 'My name is Qasim'
-   announce.call(person2); // Outputs: 'My name is Hira'
-   ```
+ ```javascript
+ const person1 = { name: 'Qasim' };
+ const person2 = { name: 'Hira' };
+ 
+ function announce() { console.log(`My name is ${this.name}`); }
+ 
+ announce.call(person1); // Outputs: 'My name is Qasim'
+ announce.call(person2); // Outputs: 'My name is Hira'
+ ```
 
 Understanding these four rules will allow you to confidently debug and architect complex application states without pulling your hair out over "undefined" errors.
 
 ---
 
-## 🧠 Knowledge Check: Self-Assessment
+## Knowledge Check: Self-Assessment
 
 Let's test everything you have learned in this module. Carefully read the code below and determine the output. Do not execute the code—mentally trace the Execution Context and the `this` binding rules we established above.
 
 ```javascript
 const company = {
-  name: 'TechHouse',
-  getCompanyInfo: function() {
-    console.log('Context 1:', this.name);
-    
-    setTimeout(function() {
-      console.log('Context 2:', this.name);
-    }, 100);
-  }
+ name: 'TechHouse',
+ getCompanyInfo: function() {
+ console.log('Context 1:', this.name);
+ 
+ setTimeout(function() {
+ console.log('Context 2:', this.name);
+ }, 100);
+ }
 };
 
 const extractedFunction = company.getCompanyInfo;

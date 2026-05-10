@@ -16,8 +16,8 @@ CSS saves a lot of work. It can control the layout of multiple web pages all at 
 
 ```css
 h1 {
-  color: blue;
-  font-size: 24px;
+ color: blue;
+ font-size: 24px;
 }
 ```
 

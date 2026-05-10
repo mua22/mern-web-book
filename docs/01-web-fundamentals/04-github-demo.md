@@ -1,12 +1,12 @@
-# 🌱 Introduction to Git & GitHub (Beginner Guide)
+# Introduction to Git & GitHub (Beginner Guide)
 
 This chapter introduces the basics of **Git**, **GitHub**, and **GitHub Desktop**. You’ll learn how version control works and how to manage your code like a professional developer.
 
 ---
 
-## 📌 What is Git?
+## What is Git?
 
-**Git** is a **version control system**.  
+**Git** is a **version control system**. 
 It helps you track changes in your code over time.
 
 ### Why use Git?
@@ -17,15 +17,15 @@ It helps you track changes in your code over time.
 ### Basic Git Commands
 
 ```bash
-git init        # Start a new Git repository
-git status      # Check file changes
-git add .       # Stage all files
-git commit -m "message"   # Save changes
+git init # Start a new Git repository
+git status # Check file changes
+git add . # Stage all files
+git commit -m "message" # Save changes
 ```
 
 ---
 
-## 🌐 What is GitHub?
+## What is GitHub?
 
 **GitHub** is an online platform where you store your Git repositories.
 
@@ -37,7 +37,7 @@ git commit -m "message"   # Save changes
 
 ---
 
-## 🖥️ What is GitHub Desktop?
+## What is GitHub Desktop?
 
 **GitHub Desktop** is a graphical app that lets you use Git **without typing commands**.
 
@@ -50,9 +50,9 @@ With GitHub Desktop you can:
 
 ---
 
-## 🔄 Core Git Concepts
+## Core Git Concepts
 
-### ✅ Commit
+### Commit
 A **commit** saves your changes with a message.
 
 > Think of it as taking a snapshot of your code.
@@ -64,31 +64,31 @@ A **commit** saves your changes with a message.
 
 ---
 
-### ⬆️ Push
+### Push
 **Push** sends your local commits to GitHub (online).
 
-**In GitHub Desktop:**  
+**In GitHub Desktop:** 
 Click **Push origin**
 
 ---
 
-### ⬇️ Pull
+### Pull
 **Pull** brings the latest changes from GitHub to your computer.
 
-**In GitHub Desktop:**  
+**In GitHub Desktop:** 
 Click **Fetch origin → Pull**
 
 ---
 
-### 🔍 Fetch
+### Fetch
 **Fetch** checks if new updates exist (without downloading them yet).
 
-**In GitHub Desktop:**  
+**In GitHub Desktop:** 
 Click **Fetch origin**
 
 ---
 
-## 🌿 Branching (Working on New Features Safely)
+## Branching (Working on New Features Safely)
 
 A **branch** is a separate version of your project.
 
@@ -110,7 +110,7 @@ Use branches to:
 
 ---
 
-## 🔀 Merging Branches
+## Merging Branches
 
 When your feature is ready, you **merge** it into `main`.
 
@@ -121,7 +121,7 @@ When your feature is ready, you **merge** it into `main`.
 
 ---
 
-## 🧭 Typical Workflow (Using GitHub Desktop)
+## Typical Workflow (Using GitHub Desktop)
 
 ```text
 1. Create / Open Repository
@@ -134,7 +134,7 @@ When your feature is ready, you **merge** it into `main`.
 
 ---
 
-## 🧠 Summary
+## Summary
 
 | Tool / Term | Purpose |
 |------------|--------|
@@ -149,11 +149,11 @@ When your feature is ready, you **merge** it into `main`.
 
 ---
 
-## 🚀 Practice Task
+## Practice Task
 
-1. Create a GitHub account  
-2. Install GitHub Desktop  
-3. Create a new repository  
-4. Add a file: `index.html`  
-5. Commit & Push  
-6. Create a new branch and modify the file  
+1. Create a GitHub account 
+2. Install GitHub Desktop 
+3. Create a new repository 
+4. Add a file: `index.html` 
+5. Commit & Push 
+6. Create a new branch and modify the file 

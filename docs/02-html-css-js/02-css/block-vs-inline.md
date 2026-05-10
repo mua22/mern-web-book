@@ -1,17 +1,17 @@
 # Block Tags vs Inline Tags
 
-A short, friendly guide to understanding the difference between block-level and inline-level HTML elements. 😊
+A short, friendly guide to understanding the difference between block-level and inline-level HTML elements. 
 
 ---
 
-## 1. Definition
+## Definition
 
 - Block elements (block-level): start on a new line and take up the full available width by default. Examples: `<div>`, `<p>`, `<h1>`–`<h6>`, `<ul>`, `<li>`.
 - Inline elements (inline-level): flow inside a line of text and only take as much width as their content. Examples: `<span>`, `<a>`, `<strong>`, `<img>`, `<em>`.
 
 ---
 
-## 2. Why this matters
+## Why this matters
 
 - Layout: block vs inline behavior affects how elements are stacked and how space is used on the page.
 - Semantics: choosing the right element conveys meaning (e.g., use `<p>` for paragraphs, not a `<span>`).
@@ -19,13 +19,13 @@ A short, friendly guide to understanding the difference between block-level and 
 
 ---
 
-## 3. Real-world analogy
+## Real-world analogy
 
 Think of a block element as a full-width bookshelf (one shelf per row) and an inline element as books placed next to each other on that shelf. Books (inline) sit side-by-side; a shelf (block) takes the full row.
 
 ---
 
-## 4. Examples
+## Examples
 
 ### Example — Block elements
 
@@ -33,9 +33,9 @@ Think of a block element as a full-width bookshelf (one shelf per row) and an in
 
 ```html
 <div style="background:#eef;padding:10px;">
-  <h1>Heading</h1>
-  <p>This paragraph is a block element — it starts on a new line.</p>
-  <p>Another paragraph appears below the first one.</p>
+ <h1>Heading</h1>
+ <p>This paragraph is a block element — it starts on a new line.</p>
+ <p>Another paragraph appears below the first one.</p>
 </div>
 ```
 
@@ -53,8 +53,8 @@ Think of a block element as a full-width bookshelf (one shelf per row) and an in
 
 ```html
 <p>
-  This is a <span style="color:crimson;">red span</span> inside a paragraph. 
-  Here is a <a href="#">link</a> and some <strong>bold text</strong>.
+ This is a <span style="color:crimson;">red span</span> inside a paragraph. 
+ Here is a <a href="#">link</a> and some <strong>bold text</strong>.
 </p>
 ```
 
@@ -73,13 +73,13 @@ Use `display` to change behavior. `inline-block` acts like an inline element but
 
 ```html
 <style>
-  .box { display: inline-block; width: 120px; height: 80px; background:#ddd; margin:6px; vertical-align:top; }
+ .box { display: inline-block; width: 120px; height: 80px; background:#ddd; margin:6px; vertical-align:top; }
 </style>
 
 <div>
-  <div class="box">Box 1</div>
-  <div class="box">Box 2</div>
-  <div class="box">Box 3</div>
+ <div class="box">Box 1</div>
+ <div class="box">Box 2</div>
+ <div class="box">Box 3</div>
 </div>
 ```
 
@@ -90,14 +90,14 @@ Use `display` to change behavior. `inline-block` acts like an inline element but
 
 ---
 
-## 5. Semantics and accessibility
+## Semantics and accessibility
 
 - Prefer semantic tags for meaning: use `<p>` for paragraphs, `<nav>` for navigation, `<button>` for actions. Styling should not replace proper semantic structure.
 - Screen readers and other assistive tech rely on semantic structure—using the correct element type improves accessibility.
 
 ---
 
-## 6. Quick CSS tips
+## Quick CSS tips
 
 - `display: block` — element behaves like a block.
 - `display: inline` — behaves inline (no width/height).
@@ -106,10 +106,10 @@ Use `display` to change behavior. `inline-block` acts like an inline element but
 
 ---
 
-## 7. Summary
+## Summary
 
 - Block elements start on a new line and usually fill horizontal space; inline elements sit within lines of text.
-- Use the proper tag for semantics and use CSS to fine-tune layout when needed. ✅
+- Use the proper tag for semantics and use CSS to fine-tune layout when needed. 
 
 ---
 
@@ -121,17 +121,17 @@ Example starter:
 
 ```html
 <nav>
-  <ul class="nav">
-    <li><a href="#">Home</a></li>
-    <li><a href="#">About</a></li>
-    <li><a href="#">Contact</a></li>
-  </ul>
+ <ul class="nav">
+ <li><a href="#">Home</a></li>
+ <li><a href="#">About</a></li>
+ <li><a href="#">Contact</a></li>
+ </ul>
 </nav>
 
 <style>
-  .nav { list-style:none; padding:0; margin:0; }
-  .nav li { display:inline-block; margin-right:12px; }
+ .nav { list-style:none; padding:0; margin:0; }
+ .nav li { display:inline-block; margin-right:12px; }
 </style>
 ```
 
-Try: convert the starter to use Flexbox instead of `inline-block` and add a hover background on links. Good luck! 🚀
+Try: convert the starter to use Flexbox instead of `inline-block` and add a hover background on links. Good luck! 

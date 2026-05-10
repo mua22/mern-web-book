@@ -45,7 +45,7 @@ const isStudent = true;
 
 // Functions
 function greet(name) {
-    return `Hello, ${name}!`;
+ return `Hello, ${name}!`;
 }
 
 // Arrow functions
@@ -56,7 +56,7 @@ document.getElementById("myDiv").textContent = greet(name);
 
 // Event handling
 document.getElementById("myButton").addEventListener("click", () => {
-    console.log("Button clicked!");
+ console.log("Button clicked!");
 });
 ```
 

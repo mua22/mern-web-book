@@ -8,34 +8,34 @@ In this chapter, we will separate the concerns of our application into three dis
 
 ---
 
-## 9.1 What is MVC?
+## What is MVC?
 
 MVC completely separates the three core responsibilities of a web application so that they never step on each other's toes. 
 
-*   **Model:** Handles all data, logic, and rules. It is the *only* part of the application allowed to talk to the database.
-*   **View:** Handles whatever the user actually sees on their screen (the UI). It is completely unaware of how the data was fetched.
-*   **Controller:** The brain or the "middleman." It receives the user's request, asks the Model for data, and physically hands that data over to the View to be rendered.
+* **Model:** Handles all data, logic, and rules. It is the *only* part of the application allowed to talk to the database.
+* **View:** Handles whatever the user actually sees on their screen (the UI). It is completely unaware of how the data was fetched.
+* **Controller:** The brain or the "middleman." It receives the user's request, asks the Model for data, and physically hands that data over to the View to be rendered.
 
 ```mermaid
 flowchart TD
-    Client[Web Browser] -->|1. HTTP Request| Router{Express Router}
-    
-    Router -->|2. Delegates to| Controller(Controller <br/> Business Logic)
-    
-    Controller -- 3. Requests Data --> Model[(Model <br/> Database Logic)]
-    Model -- 4. Returns Data --> Controller
-    
-    Controller -- 5. Passes Data --> View[View <br/> EJS / React]
-    View -- 6. Renders Final UI --> Controller
-    
-    Controller -->|7. HTTP Response| Client
+ Client[Web Browser] -->|1. HTTP Request| Router{Express Router}
+ 
+ Router -->|2. Delegates to| Controller(Controller <br/> Business Logic)
+ 
+ Controller -- 3. Requests Data --> Model[(Model <br/> Database Logic)]
+ Model -- 4. Returns Data --> Controller
+ 
+ Controller -- 5. Passes Data --> View[View <br/> EJS / React]
+ View -- 6. Renders Final UI --> Controller
+ 
+ Controller -->|7. HTTP Response| Client
 ```
 
 Let's look at how to structure these three pieces in a real Express application using clean coding examples.
 
 ---
 
-## 9.2 The Model (Data Logic)
+## The Model (Data Logic)
 
 The Model is strictly responsible for representing your data and communicating with the database. 
 
@@ -51,20 +51,20 @@ Let's create a dedicated `models/` folder and build a `User.js` model.
 
 // For now, let's simulate a database table using an array.
 const fakeDatabase = [
-    { id: 1, name: "Alice", role: "Admin" },
-    { id: 2, name: "Bob", role: "User" }
+ { id: 1, name: "Alice", role: "Admin" },
+ { id: 2, name: "Bob", role: "User" }
 ];
 
 class User {
-    // A simulated method to fetch all users from our "database"
-    static fetchAll() {
-        return fakeDatabase;
-    }
+ // A simulated method to fetch all users from our "database"
+ static fetchAll() {
+ return fakeDatabase;
+ }
 
-    // A simulated method to find one user
-    static findById(id) {
-        return fakeDatabase.find(user => user.id === id);
-    }
+ // A simulated method to find one user
+ static findById(id) {
+ return fakeDatabase.find(user => user.id === id);
+ }
 }
 
 module.exports = User;
@@ -73,7 +73,7 @@ Notice that the Model doesn't know anything about URLs, HTTP Requests, or EJS fi
 
 ---
 
-## 9.3 The View (Presentation Logic)
+## The View (Presentation Logic)
 
 The View is strictly responsible for the User Interface. We explored this in the previous chapter using EJS templates. 
 
@@ -87,21 +87,21 @@ Let's create `views/users.ejs`:
 <html>
 <head><title>All Users</title></head>
 <body>
-    <h1>System Directory</h1>
-    
-    <ul>
-        <!-- The View blindly trusts that a "users" array was given to it -->
-        <% for(let user of users) { %>
-            <li><%= user.name %> (Role: <%= user.role %>)</li>
-        <% } %>
-    </ul>
+ <h1>System Directory</h1>
+ 
+ <ul>
+ <!-- The View blindly trusts that a "users" array was given to it -->
+ <% for(let user of users) { %>
+ <li><%= user.name %> (Role: <%= user.role %>)</li>
+ <% } %>
+ </ul>
 </body>
 </html>
 ```
 
 ---
 
-## 9.4 The Controller (The Brain)
+## The Controller (The Brain)
 
 This is where the magic happens. The Controller acts as the manager. It imports the Model, it knows about the View, and it handles the actual `req` and `res` objects.
 
@@ -116,31 +116,31 @@ const User = require('../models/User');
 // 2. We define our logic as separate exported functions
 
 exports.getAllUsers = (req, res) => {
-    // 1. Ask the Model for all the data
-    const allUsers = User.fetchAll();
-    
-    // 2. Hand that data directly to the View and send the Response!
-    res.render('users', { users: allUsers });
+ // 1. Ask the Model for all the data
+ const allUsers = User.fetchAll();
+ 
+ // 2. Hand that data directly to the View and send the Response!
+ res.render('users', { users: allUsers });
 };
 
 exports.getUserProfile = (req, res) => {
-    // Extract the ID from the URL (Request)
-    const requestedId = parseInt(req.params.id);
-    
-    // Ask the Model to find this specific person
-    const singleUser = User.findById(requestedId);
+ // Extract the ID from the URL (Request)
+ const requestedId = parseInt(req.params.id);
+ 
+ // Ask the Model to find this specific person
+ const singleUser = User.findById(requestedId);
 
-    if (singleUser) {
-        res.render('profile', { user: singleUser });
-    } else {
-        res.status(404).send("User not found!");
-    }
+ if (singleUser) {
+ res.render('profile', { user: singleUser });
+ } else {
+ res.status(404).send("User not found!");
+ }
 };
 ```
 
 ---
 
-## 9.5 Bringing it Together: The Router
+## Bringing it Together: The Router
 
 If the Controller is the brain, the Router is the traffic cop. Its only job is to look at the URL and point to the correct Controller function. 
 

@@ -1,14 +1,14 @@
 
 # Technology Overview for Web Development
 
-## 1. Introduction
+## Introduction
 Modern web applications are built using a combination of client-side technologies, server-side technologies, and databases. This overview explains the role of each major technology and how they fit together, with special focus on the MERN stack.
 
 ---
 
-## 2. Client-Side Technologies (Frontend)
+## Client-Side Technologies (Frontend)
 
-### 2.1 HTML – Structure of the Web
+### HTML – Structure of the Web
 HTML (HyperText Markup Language) defines the **structure** of a web page.
 
 **Role of HTML:**
@@ -20,7 +20,7 @@ HTML alone cannot provide styling or interactivity.
 
 ---
 
-### 2.2 CSS – Presentation and Styling
+### CSS – Presentation and Styling
 CSS (Cascading Style Sheets) controls the **look and feel** of web pages.
 
 **Role of CSS:**
@@ -32,7 +32,7 @@ CSS improves usability and visual appeal.
 
 ---
 
-### 2.3 JavaScript – Behavior and Interactivity
+### JavaScript – Behavior and Interactivity
 JavaScript adds **logic and interactivity** to web pages.
 
 **Role of JavaScript:**
@@ -51,9 +51,9 @@ JS[JavaScript<br>Logic] --> UI
 
 ---
 
-## 3. jQuery, Bootstrap & Modern Frontend Libraries
+## jQuery, Bootstrap & Modern Frontend Libraries
 
-### 3.1 jQuery – Simplified JavaScript
+### jQuery – Simplified JavaScript
 jQuery is a JavaScript library designed to simplify DOM manipulation.
 
 **Why jQuery was popular:**
@@ -67,7 +67,7 @@ jQuery is a JavaScript library designed to simplify DOM manipulation.
 
 ---
 
-### 3.2 Bootstrap & UI Libraries
+### Bootstrap & UI Libraries
 Bootstrap is a CSS framework that provides pre-built components.
 
 **Why use Bootstrap-like libraries:**
@@ -84,7 +84,7 @@ These libraries reduce development time but may limit design flexibility.
 
 ---
 
-### 3.3 React – Modern Frontend Framework
+### React – Modern Frontend Framework
 React is a JavaScript library for building **component-based user interfaces**.
 
 **Why React is used:**
@@ -105,9 +105,9 @@ API --> ReactUI
 
 ---
 
-## 4. Server-Side Technologies (Backend)
+## Server-Side Technologies (Backend)
 
-### 4.1 Role of a Server
+### Role of a Server
 The server handles **business logic**, **authentication**, and **data access**.
 
 **Server Responsibilities:**
@@ -128,7 +128,7 @@ Server --> Client
 
 ---
 
-### 4.2 Server-Side Language Options
+### Server-Side Language Options
 Different programming languages can be used on the server.
 
 **Common Options:**
@@ -148,9 +148,9 @@ MERN uses JavaScript on both client and server for consistency.
 
 ---
 
-## 5. Databases
+## Databases
 
-### 5.1 What is a Database?
+### What is a Database?
 A database stores application data in an organized manner.
 
 **Examples of Data Stored:**
@@ -161,7 +161,7 @@ A database stores application data in an organized manner.
 
 ---
 
-### 5.2 Types of Databases
+### Types of Databases
 
 #### Relational Databases (SQL)
 - Structured tables with rows and columns
@@ -191,5 +191,5 @@ Database -->|Results| App
 
 ---
 
-## 6. Summary
+## Summary
 HTML, CSS, and JavaScript form the foundation of frontend development. Libraries like jQuery and Bootstrap simplify development, while React handles complex user interfaces. The server manages logic and communication with databases, which store application data. Together, these technologies enable full-stack web development using the MERN stack.

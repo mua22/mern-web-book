@@ -9,8 +9,8 @@ Before HTML5, developers had to use WAI-ARIA (Web Accessibility Initiative - Acc
 ```html
 <!-- The Old Way (HTML4 + ARIA) -->
 <div role="navigation">
-    <div role="heading" aria-level="2">Menu</div>
-    <!-- links... -->
+ <div role="heading" aria-level="2">Menu</div>
+ <!-- links... -->
 </div>
 ```
 
@@ -19,8 +19,8 @@ HTML5 semantic tags have these ARIA roles built-in implicitly. The cardinal rule
 ```html
 <!-- The Modern HTML5 Way -->
 <nav>
-    <h2>Menu</h2>
-    <!-- links... -->
+ <h2>Menu</h2>
+ <!-- links... -->
 </nav>
 ```
 Only use ARIA attributes (`aria-expanded`, `aria-hidden`, `aria-live`) when you are building complex, dynamic JavaScript widgets (like a custom tab-switcher) that native HTML cannot represent.
@@ -34,8 +34,8 @@ You can build a fully functional, accessible, toggleable accordion using just HT
 
 ```html
 <details>
-    <summary>Click here to view the hidden content</summary>
-    <p>This paragraph is hidden by default. When the user clicks the summary, the browser automatically reveals this text without any JavaScript.</p>
+ <summary>Click here to view the hidden content</summary>
+ <p>This paragraph is hidden by default. When the user clicks the summary, the browser automatically reveals this text without any JavaScript.</p>
 </details>
 ```
 *Note: The `<summary>` tag must be the first child of the `<details>` element.*
@@ -51,21 +51,21 @@ This is a common point of confusion for developers:
 
 ```html
 <main>
-    <article>
-        <header>
-            <h1>Understanding React Hooks</h1>
-        </header>
-        
-        <section>
-            <h2>1. What is useState?</h2>
-            <p>...</p>
-        </section>
+ <article>
+ <header>
+ <h1>Understanding React Hooks</h1>
+ </header>
+ 
+ <section>
+ <h2>1. What is useState?</h2>
+ <p>...</p>
+ </section>
 
-        <section>
-            <h2>2. What is useEffect?</h2>
-            <p>...</p>
-        </section>
-    </article>
+ <section>
+ <h2>2. What is useEffect?</h2>
+ <p>...</p>
+ </section>
+ </article>
 </main>
 ```
 
@@ -78,9 +78,9 @@ Used to supply contact information for its nearest `<article>` or `<body>` ances
 
 ```html
 <footer>
-    <address>
-        Contact the author at <a href="mailto:john@example.com">john@example.com</a>.
-    </address>
+ <address>
+ Contact the author at <a href="mailto:john@example.com">john@example.com</a>.
+ </address>
 </footer>
 ```
 
@@ -89,7 +89,7 @@ Used to wrap independent content (images, code snippets, diagrams) with an optio
 
 ```html
 <figure>
-    <img src="architecture-diagram.jpg" alt="MERN Stack Architecture Diagram">
-    <figcaption>Figure 1: The flow of data in a standard MERN application.</figcaption>
+ <img src="architecture-diagram.jpg" alt="MERN Stack Architecture Diagram">
+ <figcaption>Figure 1: The flow of data in a standard MERN application.</figcaption>
 </figure>
 ```

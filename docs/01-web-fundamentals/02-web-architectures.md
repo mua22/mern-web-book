@@ -1,13 +1,13 @@
 # Categories of Web Applications & Web Architectures
 
-## 1. Introduction
+## Introduction
 Web applications can be classified based on how content is managed and how systems are architected. Understanding these categories and architectures is critical before building scalable MERN stack applications.
 
 ---
 
-## 2. Categories of Web Applications
+## Categories of Web Applications
 
-### 2.1 Document-Centric Web Applications
+### Document-Centric Web Applications
 Document-centric applications focus on delivering static or semi-static content.
 
 **Characteristics:**
@@ -29,7 +29,7 @@ WebServer --> HTML_Documents
 
 ---
 
-### 2.2 Social Web Applications
+### Social Web Applications
 Social web applications emphasize interaction, collaboration, and user-generated content.
 
 **Characteristics:**
@@ -52,7 +52,7 @@ Backend --> Frontend
 
 ---
 
-### 2.3 Semantic Web Applications
+### Semantic Web Applications
 Semantic web applications aim to make data machine-understandable.
 
 **Characteristics:**
@@ -73,9 +73,9 @@ KnowledgeGraph --> IntelligentApps
 
 ---
 
-## 3. Web Architectures
+## Web Architectures
 
-### 3.1 Layered Architecture
+### Layered Architecture
 A general architectural pattern where responsibilities are separated into layers.
 
 **Common Layers:**
@@ -92,7 +92,7 @@ DA --> DB[(Database)]
 
 ---
 
-### 3.2 One-Tier Architecture
+### One-Tier Architecture
 All components exist on a single machine.
 
 **Characteristics:**
@@ -111,7 +111,7 @@ Application --> Data
 
 ---
 
-### 3.3 Two-Tier Architecture
+### Two-Tier Architecture
 Client communicates directly with the database server.
 
 **Characteristics:**
@@ -129,7 +129,7 @@ Server --> Database
 
 ---
 
-### 3.4 Three-Tier Architecture
+### Three-Tier Architecture
 Most common architecture for web applications.
 
 **Tiers:**
@@ -150,7 +150,7 @@ Server --> DB[(MongoDB)]
 
 ---
 
-### 3.5 N-Layered Architecture
+### N-Layered Architecture
 An extension of three-tier architecture with more specialized layers.
 
 **Examples of Layers:**
@@ -174,5 +174,5 @@ Services --> Database
 
 ---
 
-## 4. Summary
+## Summary
 Understanding web application categories and architectures helps developers choose the right design approach. MERN stack typically follows a three-tier or N-layered architecture for scalable and maintainable applications.

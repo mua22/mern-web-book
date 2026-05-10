@@ -1,12 +1,12 @@
 
 # Overview of Web Platforms
 
-## 1. Introduction
+## Introduction
 The web platform is the foundation on which modern web applications are built. It consists of technologies, standards, and protocols that enable communication between clients (browsers) and servers. Understanding these basics is essential before moving into MERN stack development.
 
 ---
 
-## 2. Web Terminologies
+## Web Terminologies
 
 ### Client
 A client is typically a web browser (Chrome, Firefox, Edge) that sends requests to a server and displays responses.
@@ -27,7 +27,7 @@ An Application Programming Interface allows different software systems to commun
 
 ---
 
-## 3. Web Communication Protocol (HTTP)
+## Web Communication Protocol (HTTP)
 
 ### What is HTTP?
 HTTP (HyperText Transfer Protocol) is the protocol used for communication between clients and servers on the web.
@@ -35,10 +35,10 @@ HTTP (HyperText Transfer Protocol) is the protocol used for communication betwee
 ### Request–Response Cycle
 ```mermaid
 sequenceDiagram
-    participant Browser
-    participant Server
-    Browser->>Server: HTTP Request
-    Server-->>Browser: HTTP Response
+ participant Browser
+ participant Server
+ Browser->>Server: HTTP Request
+ Server-->>Browser: HTTP Response
 ```
 
 ### Common HTTP Methods
@@ -57,7 +57,7 @@ sequenceDiagram
 
 ---
 
-## 4. Web Generations
+## Web Generations
 
 ### Web 1.0 – Read Only
 - Static pages
@@ -82,7 +82,7 @@ B --> C[Web 3.0<br>Decentralized]
 
 ---
 
-## 5. Web Standards & Constraints
+## Web Standards & Constraints
 
 ### Web Standards
 Standards are defined by organizations like **W3C** and ensure compatibility across browsers.
@@ -113,5 +113,5 @@ Server -->|JSON Responses| Client
 
 ---
 
-## 6. Summary
+## Summary
 This overview builds the foundation for understanding how web applications work. These concepts directly apply to MERN stack development, where React handles the frontend, Node.js and Express manage HTTP communication, and MongoDB stores application data.

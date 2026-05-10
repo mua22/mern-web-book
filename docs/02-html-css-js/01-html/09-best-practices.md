@@ -6,11 +6,11 @@ A senior engineer doesn't just write HTML that "works." They write HTML that per
 
 Google uses Core Web Vitals to rank websites based on actual user experience metrics. Your HTML structure directly impacts these scores.
 
-### 1. Largest Contentful Paint (LCP)
+### Largest Contentful Paint (LCP)
 LCP measures how long it takes for the largest visual element (usually a hero image or an `<h1>`) to render.
 **HTML Fix:** Preload your LCP image in the `<head>`, and never use `loading="lazy"` on images that appear "above the fold" (visible immediately on load).
 
-### 2. Cumulative Layout Shift (CLS)
+### Cumulative Layout Shift (CLS)
 CLS measures visual stability. Have you ever gone to click a button, but an image suddenly loads, pushing the button down, making you click an ad instead? That is a layout shift.
 **HTML Fix:** Always explicitly define `width` and `height` attributes on `<img>` and `<iframe>` tags. This reserves the exact space in the DOM before the asset even downloads.
 
@@ -28,18 +28,18 @@ To get "Rich Snippets" (like star ratings or cooking times directly in Google se
 ```html
 <script type="application/ld+json">
 {
-  "@context": "https://schema.org/",
-  "@type": "Book",
-  "name": "MERN Web Technologies",
-  "author": {
-    "@type": "Person",
-    "name": "Usman"
-  },
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "4.9",
-    "reviewCount": "150"
-  }
+ "@context": "https://schema.org/",
+ "@type": "Book",
+ "name": "MERN Web Technologies",
+ "author": {
+ "@type": "Person",
+ "name": "Usman"
+ },
+ "aggregateRating": {
+ "@type": "AggregateRating",
+ "ratingValue": "4.9",
+ "reviewCount": "150"
+ }
 }
 </script>
 ```
@@ -60,7 +60,7 @@ You can modify this behavior using the `tabindex` attribute.
 ```html
 <!-- Custom interactive element added to the tab order -->
 <div class="custom-dropdown" tabindex="0" role="combobox" aria-expanded="false">
-    Select Option
+ Select Option
 </div>
 ```
 

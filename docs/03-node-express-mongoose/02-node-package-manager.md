@@ -8,7 +8,7 @@ In this chapter, we will explore what NPM is, how it revolutionizes the way deve
 
 ---
 
-## 2.1 What is NPM?
+## What is NPM?
 
 At its core, **NPM is the world's largest software registry.** 
 
@@ -25,20 +25,20 @@ Here is a visual representation of how the NPM ecosystem operates when you decid
 
 ```mermaid
 sequenceDiagram
-    participant Developer as Developer's PC
-    participant CLI as NPM CLI
-    participant Registry as NPM Registry
+ participant Developer as Developer's PC
+ participant CLI as NPM CLI
+ participant Registry as NPM Registry
 
-    Developer->>CLI: Types `npm install <package>`
-    CLI->>Registry: "Hey, do you have a package named <package>?"
-    Registry-->>CLI: "Yes! Here are the files and versions."
-    CLI->>Developer: Downloads package into `node_modules` folder
-    CLI->>Developer: Updates `package.json` to remember it
+ Developer->>CLI: Types `npm install <package>`
+ CLI->>Registry: "Hey, do you have a package named <package>?"
+ Registry-->>CLI: "Yes! Here are the files and versions."
+ CLI->>Developer: Downloads package into `node_modules` folder
+ CLI->>Developer: Updates `package.json` to remember it
 ```
 
 ---
 
-## 2.2 The Heart of the Project: `package.json`
+## The Heart of the Project: `package.json`
 
 Every modern JavaScript project relies on a critical file called `package.json`. Think of this file as the **manifest** or the **resume** of your project. It contains metadata about your app (its name, version, author) and, most importantly, a list of every single external NPM package your project needs to function.
 
@@ -58,16 +58,16 @@ After running this, an `package.json` file will appear in your folder. It looks 
 
 ```json
 {
-  "name": "my-awesome-app",
-  "version": "1.0.0",
-  "description": "Learning how NPM works",
-  "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "Future MERN Developer",
-  "license": "ISC"
+ "name": "my-awesome-app",
+ "version": "1.0.0",
+ "description": "Learning how NPM works",
+ "main": "app.js",
+ "scripts": {
+ "test": "echo \"Error: no test specified\" && exit 1"
+ },
+ "keywords": [],
+ "author": "Future MERN Developer",
+ "license": "ISC"
 }
 ```
 
@@ -75,7 +75,7 @@ This simple JSON file makes your project highly organized and portable.
 
 ---
 
-## 2.3 Installing Packages (Dependencies)
+## Installing Packages (Dependencies)
 
 Let's put NPM to use! Suppose we want to write a script that generates a universally unique identifier (UUID) for a user. Writing a truly random, collision-free UUID function from scratch is hard. Let's use NPM instead.
 
@@ -97,7 +97,7 @@ Look at your `package.json` now. You'll see a new section at the bottom:
 
 ```json
 "dependencies": {
-  "uuid": "^9.0.1"
+ "uuid": "^9.0.1"
 }
 ```
 
@@ -121,7 +121,7 @@ Run `node app.js`, and you will see a perfectly generated UUID!
 
 ---
 
-## 2.4 The `node_modules` Folder and Portability
+## The `node_modules` Folder and Portability
 
 When you ran `npm install`, NPM created a folder called `node_modules`. 
 
@@ -129,13 +129,13 @@ The `node_modules` folder is notorious in the developer community for being incr
 
 ```mermaid
 graph TD
-    A[Your Project] --> B(node_modules folder)
-    B --> C[uuid package]
-    B --> D[express package]
-    B --> E[mongoose package]
-    D --> F[body-parser package <br/>(a dependency of express)]
-    D --> G[cookie package]
-    F --> H[bytes package]
+ A[Your Project] --> B(node_modules folder)
+ B --> C[uuid package]
+ B --> D[express package]
+ B --> E[mongoose package]
+ D --> F[body-parser package <br/>(a dependency of express)]
+ D --> G[cookie package]
+ F --> H[bytes package]
 ```
 
 ### The Golden Rule of `node_modules`
@@ -151,7 +151,7 @@ NPM will read your `package.json` file, look at the `dependencies` list, and aut
 
 ---
 
-## 2.5 Regular Dependencies vs. Dev Dependencies
+## Regular Dependencies vs. Dev Dependencies
 
 Not all packages are created equal. Some packages are required for your app to run in production (like a framework or database connector). Other packages are only useful to you, the developer, while you are writing the code (like testing libraries or code formatters).
 
@@ -169,10 +169,10 @@ Your `package.json` will now categorize it nicely:
 
 ```json
 "dependencies": {
-  "uuid": "^9.0.1"
+ "uuid": "^9.0.1"
 },
 "devDependencies": {
-  "nodemon": "^3.0.0"
+ "nodemon": "^3.0.0"
 }
 ```
 
@@ -180,7 +180,7 @@ When you deploy your app to a live server for actual users, the server will igno
 
 ---
 
-## 2.6 Automating Workflows with NPM Scripts
+## Automating Workflows with NPM Scripts
 
 Typing long commands in the terminal can get tedious. Thankfully, your `package.json` comes with a highly useful `scripts` object. It allows you to create custom alias commands.
 
@@ -188,9 +188,9 @@ Let's modify our `package.json` scripts section to use the `nodemon` package we 
 
 ```json
 "scripts": {
-  "start": "node app.js",
-  "dev": "nodemon app.js",
-  "test": "echo \"Running some automated testing!\""
+ "start": "node app.js",
+ "dev": "nodemon app.js",
+ "test": "echo \"Running some automated testing!\""
 }
 ```
 
@@ -201,16 +201,16 @@ Now, instead of typing complex paths or flags, you can just return to your termi
 
 ```mermaid
 flowchart LR
-    A[Typing: npm run dev] --> B(NPM checks package.json)
-    B --> C{Finds 'dev' key}
-    C --> D[Executes: nodemon app.js]
+ A[Typing: npm run dev] --> B(NPM checks package.json)
+ B --> C{Finds 'dev' key}
+ C --> D[Executes: nodemon app.js]
 ```
 
 By leveraging NPM scripts, you can automate testing, building, and running your application, making your developer experience significantly smoother.
 
 ---
 
-## 2.7 Understanding Semantic Versioning (SemVer)
+## Understanding Semantic Versioning (SemVer)
 
 When you look at your `package.json`, you might notice that the version numbers look like `^9.0.1`. They aren't just random decimals; they follow a strict universal standard called **Semantic Versioning** (or SemVer).
 
@@ -219,11 +219,11 @@ A version number is divided into three pieces, separated by dots: **MAJOR.MINOR.
 Here is what changing each number tells you about the package update:
 
 1. **PATCH (9.0.x)**: The author fixed a bug. The code works exactly the same way, but it is now safer or less buggy.
-   * *Example:* A library had a minor security flaw, and the author released `9.0.2` to patch it.
+ * *Example:* A library had a minor security flaw, and the author released `9.0.2` to patch it.
 2. **MINOR (9.x.0)**: The author added a brand new feature, but it **does not break** any of the existing code (it is backwards-compatible). All your old code will still work perfectly.
-   * *Example:* The author added an optional `generateShortUUID()` function alongside the normal ones. Welcome to `9.1.0`.
+ * *Example:* The author added an optional `generateShortUUID()` function alongside the normal ones. Welcome to `9.1.0`.
 3. **MAJOR (x.0.0)**: The author made massive structural changes that **will break** your existing code if you update. Functions might be renamed, deleted, or their underlying logic completely altered.
-   * *Example:* The author deleted the `uuidv4()` function entirely in favor of a new class-based system. This warrants a jump to `10.0.0`.
+ * *Example:* The author deleted the `uuidv4()` function entirely in favor of a new class-based system. This warrants a jump to `10.0.0`.
 
 ### The Caret (`^`) and Tilde (`~`)
 In your `package.json`, you'll often see a caret (`^`) before the version number (like `^9.0.1`). This is an auto-update instruction for NPM:

@@ -13,13 +13,13 @@ In the previous chapter, we left off with Constructor functions. They standardiz
 ```javascript
 // A standard Constructor Function
 function Animal(name, species) {
-  this.name = name;
-  this.species = species;
-  
-  // A method attached directly to 'this'
-  this.makeSound = function() {
-    console.log(`${this.name} makes a noise.`);
-  };
+ this.name = name;
+ this.species = species;
+ 
+ // A method attached directly to 'this'
+ this.makeSound = function() {
+ console.log(`${this.name} makes a noise.`);
+ };
 }
 
 const dog = new Animal('Buddy', 'Dog');
@@ -43,14 +43,14 @@ Let's refactor our `Animal` constructor.
 ```javascript
 // Line 1: We define our constructor, focusing purely on UNIQUE state.
 function Animal(name, species) {
-  // Line 3: Name and species denote unique data, so they stay on 'this'.
-  this.name = name;
-  this.species = species;
+ // Line 3: Name and species denote unique data, so they stay on 'this'.
+ this.name = name;
+ this.species = species;
 }
 
 // Line 8: We attach the shared method onto the constructor's prototype.
 Animal.prototype.makeSound = function() {
-  console.log(`${this.name} makes a noise.`);
+ console.log(`${this.name} makes a noise.`);
 };
 
 // Line 13: We instantiate the objects.
@@ -79,13 +79,13 @@ Because `lion` and `tiger` share the exact same prototype reference, our memory 
 
 There is immense confusion regarding two extremely similar sounding terms: `__proto__` and `.prototype`. Let's lay this debate to rest theoretically and mechanically.
 
-### 1. The Internal Slot: `[[Prototype]]` / `__proto__`
+### The Internal Slot: `[[Prototype]]` / `__proto__`
 
 Every single object in JavaScript (whether created literally, by a factory, or a constructor) has a hidden internal slot defined in the ECMAScript specification as `[[Prototype]]`. Browsers exposed this slot via the `__proto__` getter/setter property.
 
 The `__proto__` property is the actual, tangible pipeline that points from a child object up to its parent object. It is the literal chain link.
 
-### 2. The Blueprint Property: `.prototype`
+### The Blueprint Property: `.prototype`
 
 The `.prototype` property only exists natively on **Functions** (specifically, normal and constructor functions, not arrow functions). It has zero effect on the function itself. Its entire purpose is to provide the blueprint for the `__proto__` linkage when the function is invoked with the `new` keyword.
 
@@ -110,18 +110,18 @@ We must manually weave the prototype chain using the `Object.create()` method.
 ```javascript
 /* --- LEVEL 1: The Base Parent --- */
 function Vehicle(engineType) {
-  this.engineType = engineType;
+ this.engineType = engineType;
 }
 Vehicle.prototype.startEngine = function() {
-  console.log(`Starting ${this.engineType} engine...`);
+ console.log(`Starting ${this.engineType} engine...`);
 };
 
 /* --- LEVEL 2: The Child --- */
 function Car(engineType, brand) {
-  // Line 11: We execute the Vehicle constructor inside this context, 
-  // ensuring the 'this' context inherits the base state properties.
-  Vehicle.call(this, engineType);
-  this.brand = brand;
+ // Line 11: We execute the Vehicle constructor inside this context, 
+ // ensuring the 'this' context inherits the base state properties.
+ Vehicle.call(this, engineType);
+ this.brand = brand;
 }
 
 // Line 17: We link the prototypes! Object.create() returns a brand new 
@@ -133,13 +133,13 @@ Car.prototype = Object.create(Vehicle.prototype);
 Car.prototype.constructor = Car;
 
 Car.prototype.drive = function() {
-  console.log(`Driving a ${this.brand} car.`);
+ console.log(`Driving a ${this.brand} car.`);
 };
 
 /* --- EXECUTION --- */
 const myCorolla = new Car('V4', 'Toyota');
 myCorolla.startEngine(); // Output: Starting V4 engine...
-myCorolla.drive();       // Output: Driving a Toyota car.
+myCorolla.drive(); // Output: Driving a Toyota car.
 ```
 
 **Step-by-Step Breakdown of Resolution:**
@@ -158,21 +158,21 @@ If the search reached `Object.prototype` (the absolute top of the chain) and sti
 
 ---
 
-## 🧠 Knowledge Check: Self-Assessment
+## Knowledge Check: Self-Assessment
 
 Can you trace the prototype chain perfectly? Read the code below and determine exactly what the output will be based on the mechanical lookup rules we just covered.
 
 ```javascript
 function Employee(name) {
-  this.name = name;
+ this.name = name;
 }
 
 Employee.prototype.getRole = function() {
-  return "General Employee";
+ return "General Employee";
 };
 
 function Manager(name) {
-  Employee.call(this, name);
+ Employee.call(this, name);
 }
 
 // Setting up the chain
@@ -181,7 +181,7 @@ Manager.prototype.constructor = Manager;
 
 // Overriding the method
 Manager.prototype.getRole = function() {
-  return "Regional Manager";
+ return "Regional Manager";
 };
 
 const boss = new Manager("Sarmad");
@@ -215,17 +215,17 @@ Regional Manager
 ### Step-by-Step Breakdown
 
 1. **`console.log(boss.name);`**
-   The constructor `Employee.call(this, name)` ensured that the `name` property was created directly on the instance inside the Heap memory. Therefore, `boss` owns `name`, and this prints `Sarmad`.
+ The constructor `Employee.call(this, name)` ensured that the `name` property was created directly on the instance inside the Heap memory. Therefore, `boss` owns `name`, and this prints `Sarmad`.
 
 2. **`console.log(boss.getRole());`**
-   The engine checks the `boss` object. It finds no method. It traverses `__proto__` up to `Manager.prototype`. It finds `getRole` returning `"Regional Manager"`. The engine terminates the search and executes it.
+ The engine checks the `boss` object. It finds no method. It traverses `__proto__` up to `Manager.prototype`. It finds `getRole` returning `"Regional Manager"`. The engine terminates the search and executes it.
 
 3. **`delete boss.getRole;` followed by `console.log(boss.getRole());`**
-   This is the trap. The `delete` keyword in JavaScript behaves very rigidly: it *only* attempts to delete a property if it exists strictly on the specified physical object level.
+ This is the trap. The `delete` keyword in JavaScript behaves very rigidly: it *only* attempts to delete a property if it exists strictly on the specified physical object level.
 
-   It looks at the `boss` instance itself in the Heap memory and attempts to delete `getRole`. However, `boss` **does not have** a `getRole` property directly on it—the method is living identically on `Manager.prototype`. Because `delete` cannot reach up the prototype chain to destroy inherited methods, the statement silently fails (or strictly does nothing).
+ It looks at the `boss` instance itself in the Heap memory and attempts to delete `getRole`. However, `boss` **does not have** a `getRole` property directly on it—the method is living identically on `Manager.prototype`. Because `delete` cannot reach up the prototype chain to destroy inherited methods, the statement silently fails (or strictly does nothing).
 
-   When we call `boss.getRole()` the second time, the engine performs the exact same traversal path as before, hitting `Manager.prototype` and printing `"Regional Manager"` again!
+ When we call `boss.getRole()` the second time, the engine performs the exact same traversal path as before, hitting `Manager.prototype` and printing `"Regional Manager"` again!
 
 If you wanted to actually destroy the method for all managers, you would have to target the prototype explicitly: `delete Manager.prototype.getRole;`. Which then would cause `boss.getRole()` to traverse even higher, hitting `Employee.prototype` and printing `"General Employee"`!
 

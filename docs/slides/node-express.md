@@ -22,7 +22,7 @@ const express = require('express');
 const app = express();
 
 app.get('/', (req, res) => {
-  res.send('Hello');
+ res.send('Hello');
 });
 ```
 
@@ -32,8 +32,8 @@ app.get('/', (req, res) => {
 
 ```mermaid
 sequenceDiagram
-    participant C as Client
-    participant S as Server
-    C->>S: GET /api/
-    S-->>C: 200 OK
+ participant C as Client
+ participant S as Server
+ C->>S: GET /api/
+ S-->>C: 200 OK
 ```

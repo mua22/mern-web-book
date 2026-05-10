@@ -10,7 +10,7 @@ In this chapter, we will build our first Express server, learn how to handle ele
 
 ---
 
-## 5.1 The `nodemon` Revolution: Why and How?
+## The `nodemon` Revolution: Why and How?
 
 Before we write our Express app, we need to solve the most annoying problem in backend development. 
 
@@ -36,19 +36,19 @@ Once installed, we configure it inside our `package.json` file using an NPM scri
 
 ```json
 {
-  "name": "my-express-app",
-  "version": "1.0.0",
-  "main": "server.js",
-  "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server.js"
-  },
-  "dependencies": {
-    "express": "^4.18.2"
-  },
-  "devDependencies": {
-    "nodemon": "^3.0.1"
-  }
+ "name": "my-express-app",
+ "version": "1.0.0",
+ "main": "server.js",
+ "scripts": {
+ "start": "node server.js",
+ "dev": "nodemon server.js"
+ },
+ "dependencies": {
+ "express": "^4.18.2"
+ },
+ "devDependencies": {
+ "nodemon": "^3.0.1"
+ }
 }
 ```
 
@@ -60,7 +60,7 @@ Nodemon takes over your terminal. Every time you press `Ctrl + S` to save your c
 
 ---
 
-## 5.2 Building Your First Express Server
+## Building Your First Express Server
 
 Let's begin by installing the Express package:
 
@@ -81,13 +81,13 @@ const app = express();
 
 // 3. Define a Route (When the user visits the homepage, do this)
 app.get('/', (req, res) => {
-    res.send("<h1>Hello from Express.js!</h1>");
+ res.send("<h1>Hello from Express.js!</h1>");
 });
 
 // 4. Start listening on a port
 const PORT = 3000;
 app.listen(PORT, () => {
-    console.log(`Express server is actively listening on Port ${PORT}!`);
+ console.log(`Express server is actively listening on Port ${PORT}!`);
 });
 ```
 
@@ -95,7 +95,7 @@ Look how clean that is! No `res.writeHead`, no `res.end`, just `app.get` and `re
 
 ---
 
-## 5.3 Elegant Routing in Express
+## Elegant Routing in Express
 
 In the raw `http` module, routing was handled by massive, confusing `if/else` checks against `req.url`. Express completely eliminates that.
 
@@ -103,12 +103,12 @@ Express uses routing blocks mapped directly to HTTP Verbs (`app.get()`, `app.pos
 
 ```mermaid
 flowchart TD
-    Req[Incoming HTTP Request] --> ExpressRouter{Express Router}
-    
-    ExpressRouter -->|GET /| Home[app.get('/', ...)]
-    ExpressRouter -->|GET /about| About[app.get('/about', ...)]
-    ExpressRouter -->|POST /users| CreateUser[app.post('/users', ...)]
-    ExpressRouter -->|No Match Found| Fallback[Default 404 Route]
+ Req[Incoming HTTP Request] --> ExpressRouter{Express Router}
+ 
+ ExpressRouter -->|GET /| Home[app.get('/', ...)]
+ ExpressRouter -->|GET /about| About[app.get('/about', ...)]
+ ExpressRouter -->|POST /users| CreateUser[app.post('/users', ...)]
+ ExpressRouter -->|No Match Found| Fallback[Default 404 Route]
 ```
 
 Let's see this elegant routing architecture in code:
@@ -119,23 +119,23 @@ const app = express();
 
 // A Route for the Home Page
 app.get('/', (req, res) => {
-    res.send("Welcome to the Home Page!");
+ res.send("Welcome to the Home Page!");
 });
 
 // A Route for the About Page
 app.get('/about', (req, res) => {
-    res.send("Welcome to the About Page!");
+ res.send("Welcome to the About Page!");
 });
 
 // A Route to Create a User (Note: This is a POST method!)
 app.post('/api/users', (req, res) => {
-    res.send("User successfully created in the imaginary database!");
+ res.send("User successfully created in the imaginary database!");
 });
 
 // What happens if they visit a route that doesn't exist? (The 404 Catcher)
 app.use((req, res) => {
-    // We explicitly set the HTTP status to 404
-    res.status(404).send("<h2>404 Error: Page Not Found</h2>");
+ // We explicitly set the HTTP status to 404
+ res.status(404).send("<h2>404 Error: Page Not Found</h2>");
 });
 
 app.listen(3000, () => console.log('Server running on port 3000'));
@@ -145,7 +145,7 @@ Notice the architecture: we simply state the verb we expect (`app.get`) and the 
 
 ---
 
-## 5.4 The Arsenal of Express Responses
+## The Arsenal of Express Responses
 
 One of the most annoying parts of the raw `http` module was manually setting Headers using `res.writeHead(200, { 'Content-Type': 'application/json' })` and aggressively running `JSON.stringify()` on all our data.
 
@@ -153,19 +153,19 @@ Express completely automates this. It provides a massive arsenal of response met
 
 Here are the most common response methods you will use in your MERN journey:
 
-### 1. `res.send()` (The All-Rounder)
+### `res.send()` (The All-Rounder)
 Pass it a string, an array, or an object. If you pass an HTML string, Express automatically sets the header to `text/html`.
 
-### 2. `res.json()` (The API Standard)
+### `res.json()` (The API Standard)
 Pass it a raw JavaScript object or array. Express forcefully converts it to a standard JSON string and ensures the header is strictly set to `application/json`. This is the gold standard when building APIs for your React applications.
 
-### 3. `res.sendFile()` (Shipping Assets)
+### `res.sendFile()` (Shipping Assets)
 Need to send an entire `index.html` file, a PDF, or an image? You don't need to manually read the file stream using the `fs` module. Just provide the absolute path!
 
-### 4. `res.redirect()` (Traffic Control)
+### `res.redirect()` (Traffic Control)
 If a user tries to access a protected page, or if they successfully submit a login form, you can instantly bounce them to a completely different URL.
 
-### 5. `res.sendStatus()` (Silent Signals)
+### `res.sendStatus()` (Silent Signals)
 Sometimes, you don't need to send data back. You just need to tell the front end that a background action (like a "Like" button click or a database delete) succeeded or failed.
 
 ---
@@ -176,27 +176,27 @@ Let's look at all of these powerful options in a single coding example:
 const path = require('path'); // Built-in Node module for building file paths
 
 app.get('/api/animals', (req, res) => {
-    const animals = [{ name: "Lion" }, { name: "Penguin" }];
-    
-    // 1. Send JSON data cleanly (Notice how we securely chain status codes!)
-    res.status(200).json(animals); 
+ const animals = [{ name: "Lion" }, { name: "Penguin" }];
+ 
+ // 1. Send JSON data cleanly (Notice how we securely chain status codes!)
+ res.status(200).json(animals); 
 });
 
 app.get('/old-page', (req, res) => {
-    // 2. Redirect the user to the new page automatically
-    res.redirect('/new-page');
+ // 2. Redirect the user to the new page automatically
+ res.redirect('/new-page');
 });
 
 app.get('/view-image', (req, res) => {
-    // 3. Send a physical file from the hard drive. 
-    // We use path.join to create a safe, absolute path to the file.
-    const imagePath = path.join(__dirname, 'cat.png');
-    res.sendFile(imagePath);
+ // 3. Send a physical file from the hard drive. 
+ // We use path.join to create a safe, absolute path to the file.
+ const imagePath = path.join(__dirname, 'cat.png');
+ res.sendFile(imagePath);
 });
 
 app.post('/api/like-button', (req, res) => {
-    // 4. Send a naked 200 OK status with NO body block attached
-    res.sendStatus(200);
+ // 4. Send a naked 200 OK status with NO body block attached
+ res.sendStatus(200);
 });
 ```
 

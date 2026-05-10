@@ -33,7 +33,7 @@ You can trigger native device applications directly from an anchor tag.
 
 Images account for over 60% of the bytes downloaded on an average webpage. Unoptimized images destroy performance and SEO.
 
-### 1. Lazy Loading and Decoding
+### Lazy Loading and Decoding
 You can drastically improve initial page load times by delaying the loading of images that are off-screen.
 
 - `loading="lazy"`: Tells the browser not to request the image until the user scrolls near it.
@@ -43,34 +43,34 @@ You can drastically improve initial page load times by delaying the loading of i
 <img src="massive-hero.jpg" alt="Hero landscape" loading="lazy" decoding="async">
 ```
 
-### 2. Resolution Switching with `srcset`
+### Resolution Switching with `srcset`
 Serving a 4K image to a mobile phone is a massive waste of bandwidth. The `srcset` attribute allows you to provide multiple resolutions of the same image. The browser calculates the device's screen width and pixel density, and automatically downloads the optimal file.
 
 ```html
 <img src="small.jpg" 
-     srcset="small.jpg 400w, 
-             medium.jpg 800w, 
-             large.jpg 1200w" 
-     sizes="(max-width: 600px) 400px, 
-            (max-width: 900px) 800px, 
-            1200px" 
-     alt="A responsive landscape">
+ srcset="small.jpg 400w, 
+ medium.jpg 800w, 
+ large.jpg 1200w" 
+ sizes="(max-width: 600px) 400px, 
+ (max-width: 900px) 800px, 
+ 1200px" 
+ alt="A responsive landscape">
 ```
 *The `sizes` attribute tells the browser exactly how wide the image will be rendered on the screen at different breakpoints, allowing it to make the calculation before the CSS even loads.*
 
-### 3. Art Direction with `<picture>`
+### Art Direction with `<picture>`
 Sometimes, simply scaling down an image ruins the composition (the main subject becomes too small to see). The `<picture>` element allows "Art Direction"—serving completely different, cropped images based on screen size.
 
 ```html
 <picture>
-  <!-- Serve a tightly cropped square image on mobile -->
-  <source media="(max-width: 599px)" srcset="mobile-crop.jpg">
-  
-  <!-- Serve a wide panoramic image on desktop -->
-  <source media="(min-width: 600px)" srcset="desktop-panorama.jpg">
-  
-  <!-- Fallback for older browsers -->
-  <img src="desktop-panorama.jpg" alt="Company Team">
+ <!-- Serve a tightly cropped square image on mobile -->
+ <source media="(max-width: 599px)" srcset="mobile-crop.jpg">
+ 
+ <!-- Serve a wide panoramic image on desktop -->
+ <source media="(min-width: 600px)" srcset="desktop-panorama.jpg">
+ 
+ <!-- Fallback for older browsers -->
+ <img src="desktop-panorama.jpg" alt="Company Team">
 </picture>
 ```
 Using `<picture>` and `srcset` ensures your application is blazingly fast on mobile networks while remaining crisp on high-end desktop displays.

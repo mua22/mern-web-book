@@ -8,17 +8,17 @@ Here is what the DOM tree looks like when your browser parses a basic HTML page:
 
 ```mermaid
 graph TD
-    A[Document] --> B[html]
-    B --> C[head]
-    B --> D[body]
-    C --> E[title]
-    C --> F[meta]
-    D --> G["h1 (id='main-title')"]
-    D --> H["p (class='text-content')"]
-    D --> I["button (id='submit-btn')"]
+ A[Document] --> B[html]
+ B --> C[head]
+ B --> D[body]
+ C --> E[title]
+ C --> F[meta]
+ D --> G["h1 (id='main-title')"]
+ D --> H["p (class='text-content')"]
+ D --> I["button (id='submit-btn')"]
 ```
 
-## 1. Selecting Elements (Finding things on the page)
+## Selecting Elements (Finding things on the page)
 
 Before you can change an element, you have to find it. JavaScript gives us several different tools ("Selectors") to find elements based on how they are written in HTML.
 
@@ -60,7 +60,7 @@ const allParagraphs = document.querySelectorAll(".text-content");
 
 ---
 
-## 2. Modifying Elements (Changing things)
+## Modifying Elements (Changing things)
 
 Now that we have selected an element, what can we do with it? We can change its text, its HTML, and even its CSS styles!
 
@@ -106,7 +106,7 @@ navMenu.classList.toggle("dark-mode");
 
 ---
 
-## 3. Creating and Removing Elements
+## Creating and Removing Elements
 
 Sometimes you need to create brand new elements out of thin air and insert them into the page.
 

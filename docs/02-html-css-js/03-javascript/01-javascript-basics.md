@@ -2,13 +2,13 @@
 
 Welcome to JavaScript! This guide will walk you through the very basics of the language. We'll start simple and build up your knowledge step by step.
 
-## 1. Variables, Data Types, and Operators
+## Variables, Data Types, and Operators
 
 ### Variables: Storing Information
 Think of a variable as a labeled box where you can store data. In modern JavaScript, we use `let` and `const` to create (declare) these boxes.
 
-*   `let`: Use this when you expect the value inside the box to change later.
-*   `const`: Use this when the value should remain constant (never change).
+* `let`: Use this when you expect the value inside the box to change later.
+* `const`: Use this when the value should remain constant (never change).
 
 ```javascript
 // Using let (can change)
@@ -23,25 +23,25 @@ const myName = "Alice";
 ### Data Types: Kinds of Information
 What kind of things can we put in those boxes?
 
-1.  **Numbers**: Just regular numbers (e.g., `42`, `3.14`).
-2.  **Strings**: Text, wrapped in quotes (e.g., `"Hello World!"`, `'JavaScript'`).
-3.  **Booleans**: True or False values (e.g., `true`, `false`).
-4.  **Undefined**: A variable that has been declared but not assigned a value yet.
-5.  **Null**: A special value meaning "nothing" or "empty".
+1. **Numbers**: Just regular numbers (e.g., `42`, `3.14`).
+2. **Strings**: Text, wrapped in quotes (e.g., `"Hello World!"`, `'JavaScript'`).
+3. **Booleans**: True or False values (e.g., `true`, `false`).
+4. **Undefined**: A variable that has been declared but not assigned a value yet.
+5. **Null**: A special value meaning "nothing" or "empty".
 
 ```javascript
-let score = 100;           // Number
-let playerName = "Mario";  // String
-let isGameOver = false;    // Boolean
-let nextLevel;             // Undefined (no value yet)
-let bonusPoints = null;    // Null (explicitly set to nothing)
+let score = 100; // Number
+let playerName = "Mario"; // String
+let isGameOver = false; // Boolean
+let nextLevel; // Undefined (no value yet)
+let bonusPoints = null; // Null (explicitly set to nothing)
 ```
 
 ### Operators: Doing the Math
 We use operators to perform actions on variables and values.
 
-*   **Math Operators**: `+` (add), `-` (subtract), `*` (multiply), `/` (divide).
-*   **Comparison Operators**: `>` (greater than), `<` (less than), `===` (equal to).
+* **Math Operators**: `+` (add), `-` (subtract), `*` (multiply), `/` (divide).
+* **Comparison Operators**: `>` (greater than), `<` (less than), `===` (equal to).
 
 ```javascript
 let a = 10;
@@ -54,7 +54,7 @@ let isGreater = a > b; // true
 let isSameName = myName === "Alice"; // true
 ```
 
-## 2. Control Flow (Making Decisions and Repeating code)
+## Control Flow (Making Decisions and Repeating code)
 
 ### If/Else: Making Decisions
 Sometimes you only want code to run *if* a certain condition is true. We use `if` and `else` statements for this.
@@ -63,9 +63,9 @@ Sometimes you only want code to run *if* a certain condition is true. We use `if
 let temperature = 30;
 
 if (temperature > 25) {
-    console.log("It's a hot day!");
+ console.log("It's a hot day!");
 } else {
-    console.log("The weather is nice.");
+ console.log("The weather is nice.");
 }
 ```
 
@@ -75,11 +75,11 @@ If you want to do the same thing multiple times, you use a loop. The most common
 ```javascript
 // This loop will run 5 times, counting from 0 to 4
 for (let i = 0; i < 5; i++) {
-    console.log("Counting: " + i);
+ console.log("Counting: " + i);
 }
 ```
 
-## 3. Functions (Reusable Blocks of Code)
+## Functions (Reusable Blocks of Code)
 
 A function is a block of code designed to perform a particular task. You write it once, and you can use it as many times as you like.
 
@@ -87,12 +87,12 @@ A function is a block of code designed to perform a particular task. You write i
 ```javascript
 // 1. Defining the function
 function greetUser(userName) {
-    console.log("Hello, " + userName + "!");
+ console.log("Hello, " + userName + "!");
 }
 
 // 2. Calling (using) the function
 greetUser("Alice"); // Outputs: Hello, Alice!
-greetUser("Bob");   // Outputs: Hello, Bob!
+greetUser("Bob"); // Outputs: Hello, Bob!
 ```
 
 ### Arrow Functions
@@ -101,7 +101,7 @@ Arrow functions are a newer, shorter way to write functions in JavaScript. They 
 ```javascript
 // The same greet function, written as an arrow function
 const greetUserArrow = (userName) => {
-    console.log("Hello, " + userName + "!");
+ console.log("Hello, " + userName + "!");
 };
 
 greetUserArrow("Charlie"); // Outputs: Hello, Charlie!
@@ -112,7 +112,7 @@ const addNumbers = (x, y) => x + y;
 let result = addNumbers(10, 20); // result is 30
 ```
 
-## 4. Arrays and Objects (Storing Collections of Data)
+## Arrays and Objects (Storing Collections of Data)
 
 ### Arrays: Lists of Things
 An array is a special variable that can hold more than one value at a time. Think of it like a shopping list.
@@ -135,15 +135,15 @@ An object is a collection of named properties. Think of it like a dictionary def
 ```javascript
 // An object describing a person
 let person = {
-    firstName: "John",
-    lastName: "Doe",
-    age: 30,
-    isStudent: false
+ firstName: "John",
+ lastName: "Doe",
+ age: 30,
+ isStudent: false
 };
 
 // Accessing object properties
 console.log(person.firstName); // John
-console.log(person.age);       // 30
+console.log(person.age); // 30
 
 // Changing a property
 person.age = 31;

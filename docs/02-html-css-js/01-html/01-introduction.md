@@ -21,10 +21,10 @@ To understand HTML deeply, you must understand how a browser interprets it. When
 
 ```mermaid
 graph LR
-    A[Bytes] --> B[Characters]
-    B --> C[Tokens]
-    C --> D[Nodes]
-    D --> E[DOM Tree]
+ A[Bytes] --> B[Characters]
+ B --> C[Tokens]
+ C --> D[Nodes]
+ D --> E[DOM Tree]
 ```
 
 Every single HTML tag becomes a JavaScript object in the DOM that takes up memory and processing power. Writing bloat-free HTML directly impacts the performance of your application.
@@ -46,18 +46,18 @@ Here is a robust, modern snippet that goes beyond simple tags, utilizing attribu
 ```html
 <!-- A semantically rich article snippet -->
 <article lang="en" id="post-42" data-author="usman">
-    <header>
-        <h1 class="post-title">Deep Dive into the DOM</h1>
-        <p>Published on <time datetime="2026-10-12T08:00:00Z">October 12th, 2026</time></p>
-    </header>
-    
-    <div class="post-content">
-        <p>Understanding the <strong>Critical Rendering Path</strong> is essential for web performance optimization.</p>
-    </div>
-    
-    <footer>
-        <a href="/author/usman" rel="author">Read more by Usman</a>
-    </footer>
+ <header>
+ <h1 class="post-title">Deep Dive into the DOM</h1>
+ <p>Published on <time datetime="2026-10-12T08:00:00Z">October 12th, 2026</time></p>
+ </header>
+ 
+ <div class="post-content">
+ <p>Understanding the <strong>Critical Rendering Path</strong> is essential for web performance optimization.</p>
+ </div>
+ 
+ <footer>
+ <a href="/author/usman" rel="author">Read more by Usman</a>
+ </footer>
 </article>
 ```
 Notice the use of the `data-*` attribute (`data-author`), the `datetime` attribute on the `<time>` tag, and the `rel="author"` attribute on the anchor tag. These are the details that elevate standard HTML into professional, machine-readable markup.

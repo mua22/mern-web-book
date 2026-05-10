@@ -10,13 +10,13 @@ These text tracks are typically written in WebVTT (Web Video Text Tracks) format
 
 ```html
 <video controls width="800">
-    <source src="course-intro.mp4" type="video/mp4">
-    
-    <!-- English Captions (Default) -->
-    <track src="captions-en.vtt" kind="captions" srclang="en" label="English" default>
-    
-    <!-- Spanish Subtitles -->
-    <track src="subs-es.vtt" kind="subtitles" srclang="es" label="Español">
+ <source src="course-intro.mp4" type="video/mp4">
+ 
+ <!-- English Captions (Default) -->
+ <track src="captions-en.vtt" kind="captions" srclang="en" label="English" default>
+ 
+ <!-- Spanish Subtitles -->
+ <track src="subs-es.vtt" kind="subtitles" srclang="es" label="Español">
 </video>
 ```
 - `kind="captions"`: Intended for deaf audiences. Includes dialogue and sound effects (e.g., "[Door slams]").
@@ -28,8 +28,8 @@ The `<canvas>` element is a blank drawing board. By itself, it does nothing. It 
 
 ```html
 <canvas id="gameBoard" width="800" height="600">
-    <!-- Fallback content for screen readers or unsupported browsers -->
-    Your browser does not support the canvas element.
+ <!-- Fallback content for screen readers or unsupported browsers -->
+ Your browser does not support the canvas element.
 </canvas>
 ```
 *Note: The canvas is essentially a raster image. It is inherently inaccessible to screen readers. If you draw a chart on a canvas, you must provide the raw data in an accessible HTML `<table>` visually hidden nearby.*
@@ -64,7 +64,7 @@ While `<iframe>` is used for HTML documents, the `<object>` tag is a more generi
 ```html
 <!-- Embedding a PDF directly into the page -->
 <object data="syllabus.pdf" type="application/pdf" width="100%" height="600px">
-    <p>It appears you don't have a PDF plugin for this browser. <a href="syllabus.pdf">Click here to download the PDF.</a></p>
+ <p>It appears you don't have a PDF plugin for this browser. <a href="syllabus.pdf">Click here to download the PDF.</a></p>
 </object>
 ```
 The fallback content inside the `<object>` tag is critical for a good user experience if the browser cannot render the embedded type.

@@ -8,7 +8,7 @@ If routing is the skeleton of an Express application, middleware is the muscular
 
 ---
 
-## 7.1 What is Middleware?
+## What is Middleware?
 
 Think of your Express application as an assembly line in a factory.
 
@@ -23,18 +23,18 @@ Each of these "workers" is a **Middleware function**.
 
 ```mermaid
 flowchart LR
-    Incoming[Incoming HTTP Request] --> M1[Middleware 1 <br/> e.g. Logger]
-    M1 --> M2[Middleware 2 <br/> e.g. Body Parser]
-    M2 --> M3[Middleware 3 <br/> e.g. Auth Checker]
-    M3 --> Route[Route Handler <br/> app.get, app.post]
-    Route --> Outgoing[Outgoing Response]
+ Incoming[Incoming HTTP Request] --> M1[Middleware 1 <br/> e.g. Logger]
+ M1 --> M2[Middleware 2 <br/> e.g. Body Parser]
+ M2 --> M3[Middleware 3 <br/> e.g. Auth Checker]
+ M3 --> Route[Route Handler <br/> app.get, app.post]
+ Route --> Outgoing[Outgoing Response]
 ```
 
 Middleware functions are functions that have access to the `req` object, the `res` object, and a special third function called `next`.
 
 ---
 
-## 7.2 Writing Your First Custom Middleware
+## Writing Your First Custom Middleware
 
 Let's build a simple worker for our assembly line. We want to write a piece of code that prints the time and the HTTP method every time a request hits our server, *regardless* of which page the user is visiting.
 
@@ -46,20 +46,20 @@ const app = express();
 
 // --- Our Custom Middleware ---
 app.use((req, res, next) => {
-    const time = new Date().toLocaleTimeString();
-    console.log(`[${time}] A ${req.method} request arrived at ${req.url}`);
-    
-    // CRITICAL: We must tell the conveyor belt to keep moving!
-    next(); 
+ const time = new Date().toLocaleTimeString();
+ console.log(`[${time}] A ${req.method} request arrived at ${req.url}`);
+ 
+ // CRITICAL: We must tell the conveyor belt to keep moving!
+ next(); 
 });
 
 // --- Our Route Handlers ---
 app.get('/', (req, res) => {
-    res.send("Home Page");
+ res.send("Home Page");
 });
 
 app.get('/about', (req, res) => {
-    res.send("About Page");
+ res.send("About Page");
 });
 
 app.listen(3000, () => console.log('Server is running...'));
@@ -70,7 +70,7 @@ If you forget to call `next()`, the Request gets completely stuck on the conveyo
 
 ---
 
-## 7.3 Solving the Payload Problem (Body Parsers)
+## Solving the Payload Problem (Body Parsers)
 
 Now that we understand the concept of the assembly line, let's solve the problem of reading `POST` data.
 
@@ -93,19 +93,19 @@ app.use(express.urlencoded({ extended: true }));
 
 // --- Our Route Handler ---
 app.post('/api/register', (req, res) => {
-    // Because of the express.json() middleware above, 
-    // the complex raw data has magically been parsed and attached to req.body!
-    
-    const submittedUsername = req.body.username;
-    const submittedPassword = req.body.password;
+ // Because of the express.json() middleware above, 
+ // the complex raw data has magically been parsed and attached to req.body!
+ 
+ const submittedUsername = req.body.username;
+ const submittedPassword = req.body.password;
 
-    console.log(`Registering user: ${submittedUsername}`);
+ console.log(`Registering user: ${submittedUsername}`);
 
-    // We successfully read the data, now respond!
-    res.status(201).json({ 
-        message: "Registration successful!",
-        user: submittedUsername
-    });
+ // We successfully read the data, now respond!
+ res.status(201).json({ 
+ message: "Registration successful!",
+ user: submittedUsername
+ });
 });
 
 app.listen(3000, () => console.log('Server running...'));
@@ -115,7 +115,7 @@ It is that simple. One single line of middleware (`app.use(express.json())`) com
 
 ---
 
-## 7.4 Third-Party Middlewares (The NPM Ecosystem)
+## Third-Party Middlewares (The NPM Ecosystem)
 
 Because the Express middleware architecture is so robust, a massive ecosystem of third-party middlewares exists on NPM. You don't have to write your own assembly line workers for common tasks; you just download them!
 

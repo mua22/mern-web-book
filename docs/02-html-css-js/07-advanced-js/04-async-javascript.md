@@ -21,7 +21,7 @@ In the early days of JavaScript, the only way to handle asynchronous execution w
 ```javascript
 // Line 1: We define our callback logic.
 function handleData() {
-  console.log('The requested data has successfully arrived!');
+ console.log('The requested data has successfully arrived!');
 }
 
 console.log('Initiating network request...');
@@ -49,13 +49,13 @@ Callbacks work perfectly fine for single operations. But what if you have depend
 ```javascript
 // The infamous Pyramid of Doom
 getUserID(function(id) {
-  getPermissions(id, function(permissions) {
-    getDashboard(permissions, function(dashboardData) {
-      renderDOM(dashboardData, function(result) {
-         console.log('Finally finished nesting!', result);
-      });
-    });
-  });
+ getPermissions(id, function(permissions) {
+ getDashboard(permissions, function(dashboardData) {
+ renderDOM(dashboardData, function(result) {
+ console.log('Finally finished nesting!', result);
+ });
+ });
+ });
 });
 ```
 
@@ -80,21 +80,21 @@ Let's rewrite our Callback Hell using the Promise architecture.
 ```javascript
 // Assuming getUserID returns a Promise.
 getUserID()
-  // Line 3: .then() executes specifically when the Promise is Fulfilled.
-  .then(function(id) {
-    // Line 5: We return the NEXT Promise back into the chain.
-    return getPermissions(id);
-  })
-  .then(function(permissions) {
-    return getDashboard(permissions);
-  })
-  .then(function(dashboardData) {
-    console.log('Finished without nesting horizontally!', dashboardData);
-  })
-  // Line 14: .catch() catches ANY error that occurs anywhere in the entire chain above!
-  .catch(function(error) {
-    console.error('Operation failed at some step:', error);
-  });
+ // Line 3: .then() executes specifically when the Promise is Fulfilled.
+ .then(function(id) {
+ // Line 5: We return the NEXT Promise back into the chain.
+ return getPermissions(id);
+ })
+ .then(function(permissions) {
+ return getDashboard(permissions);
+ })
+ .then(function(dashboardData) {
+ console.log('Finished without nesting horizontally!', dashboardData);
+ })
+ // Line 14: .catch() catches ANY error that occurs anywhere in the entire chain above!
+ .catch(function(error) {
+ console.error('Operation failed at some step:', error);
+ });
 ```
 
 **Mechanical Breakdown:**
@@ -120,20 +120,20 @@ We will now rewrite our network flow one final time using `async/await`.
 // Line 1: We must mark the enclosing function with the 'async' keyword. 
 // This signals the engine to expect asynchronous pauses inside.
 async function initializeDashboard() {
-  // Line 4: We wrap our logic in a standard synchronous try/catch block!
-  try {
-    // Line 6: The 'await' keyword literally pauses the function's execution
-    // until the Promise settles. No .then() blocks needed!
-    const id = await getUserID();
-    const permissions = await getPermissions(id);
-    const dashboardData = await getDashboard(permissions);
-    
-    console.log('Finished elegantly!', dashboardData);
-    
-  } catch (error) {
-    // Line 15: If any await rejects, execution snaps immediately into the catch block.
-    console.error('Operation failed:', error);
-  }
+ // Line 4: We wrap our logic in a standard synchronous try/catch block!
+ try {
+ // Line 6: The 'await' keyword literally pauses the function's execution
+ // until the Promise settles. No .then() blocks needed!
+ const id = await getUserID();
+ const permissions = await getPermissions(id);
+ const dashboardData = await getDashboard(permissions);
+ 
+ console.log('Finished elegantly!', dashboardData);
+ 
+ } catch (error) {
+ // Line 15: If any await rejects, execution snaps immediately into the catch block.
+ console.error('Operation failed:', error);
+ }
 }
 
 initializeDashboard();
@@ -152,16 +152,16 @@ The keyword `await` pauses *only that specific async function*. The JavaScript e
 
 Now that we understand the syntax, we must look under the hood. How does the Engine manage to resume these `await` instructions, handle DOM clicks, and execute `setTimeout` callbacks if there is only one Call Stack? It does this through a highly orchestrated triad: **The Call Stack, the Web APIs, and the Task Queues.**
 
-### 1. The Call Stack
+### The Call Stack
 
 This is where the engine actually executes your code. It works on a LIFO (Last In, First Out) principle. If the Call Stack is currently running a massive `while(true)` loop, absolutely nothing else can happen. It is completely blocked.
 
-### 2. The Web APIs (The Background Workers)
+### The Web APIs (The Background Workers)
 
 Items like `setTimeout`, `fetch`, and DOM event listeners are **not** native JavaScript engine features! They are APIs built into the Web Browser (or the C++ core of Node.js).
 When JavaScript wants to perform an async task, it literally hands the callback over to the Web API and says, "I'm popping this off my Call Stack. You hold onto it, do the background work, and let me know when you're done."
 
-### 3. The Callback Queues
+### The Callback Queues
 
 When a Web API finishes its background task (e.g., 2 seconds pass, or data arrives), it DOES NOT force the callback back onto the Call Stack. Doing so would interrupt whatever JavaScript is currently executing. Instead, the Web API politely places the callback into a waiting line known as a **Task Queue**.
 
@@ -185,7 +185,7 @@ To make matters slightly more complex, there isn't just one queue. There are two
 
 ---
 
-## 🧠 Knowledge Check: The Ultimate Challenge
+## Knowledge Check: The Ultimate Challenge
 
 This is the quintessential interview question for senior JavaScript developers. You must trace the Call Stack and the two Queues flawlessly. Do not execute the code—mentally map it.
 
@@ -193,13 +193,13 @@ This is the quintessential interview question for senior JavaScript developers. 
 console.log('Script Start'); // Task 1
 
 setTimeout(function() {
-  console.log('Timeout Complete'); // Task 2
+ console.log('Timeout Complete'); // Task 2
 }, 0);
 
 Promise.resolve().then(function() {
-  console.log('Promise Resolved 1'); // Task 3
+ console.log('Promise Resolved 1'); // Task 3
 }).then(function() {
-  console.log('Promise Resolved 2'); // Task 4
+ console.log('Promise Resolved 2'); // Task 4
 });
 
 console.log('Script End'); // Task 5
@@ -230,28 +230,28 @@ Timeout Complete
 ### The Step-by-Step Mechanical Trace
 
 1. **`console.log('Script Start')`**
-   - Executed synchronously on the Call Stack. **[Prints: Script Start]**
+ - Executed synchronously on the Call Stack. **[Prints: Script Start]**
 
 2. **`setTimeout(...)`**
-   - The engine sends this to the Web API with a 0ms delay. The Web API immediately completes and places the callback into the **Macrotask Queue**.
+ - The engine sends this to the Web API with a 0ms delay. The Web API immediately completes and places the callback into the **Macrotask Queue**.
 
 3. **`Promise.resolve().then(...)`**
-   - The Promise resolves instantly. The engine pushes `Task 3` into the VIP **Microtask Queue**.
+ - The Promise resolves instantly. The engine pushes `Task 3` into the VIP **Microtask Queue**.
 
 4. **`console.log('Script End')`**
-   - Executed synchronously on the Call Stack. **[Prints: Script End]**
+ - Executed synchronously on the Call Stack. **[Prints: Script End]**
 
 5. **Synchronous Execution Finishes.**
-   - The Call Stack is now completely empty. The Event Loop awakens and begins its check.
+ - The Call Stack is now completely empty. The Event Loop awakens and begins its check.
 
 6. **The Microtask Queue Check.**
-   - The Event Loop checks the VIP Microtask queue. It finds `Task 3`. It pushes it to the stack. **[Prints: Promise Resolved 1]**
-   - Executing `Task 3` immediately queues `Task 4` into the Microtask Queue via the chained `.then()`.
-   - The Event Loop checks the Microtask Queue again. It is NOT empty. It finds `Task 4`. It pushes it to the stack. **[Prints: Promise Resolved 2]**
-   - The Event Loop checks the Microtask Queue again. It is finally empty.
+ - The Event Loop checks the VIP Microtask queue. It finds `Task 3`. It pushes it to the stack. **[Prints: Promise Resolved 1]**
+ - Executing `Task 3` immediately queues `Task 4` into the Microtask Queue via the chained `.then()`.
+ - The Event Loop checks the Microtask Queue again. It is NOT empty. It finds `Task 4`. It pushes it to the stack. **[Prints: Promise Resolved 2]**
+ - The Event Loop checks the Microtask Queue again. It is finally empty.
 
 7. **The Macrotask Queue Check.**
-   - Since the Call Stack and Microtask Queues are clear, the Event Loop drops down to the Macrotask Queue. It finds the `setTimeout` callback (`Task 2`). It pushes it to the stack. **[Prints: Timeout Complete]**
+ - Since the Call Stack and Microtask Queues are clear, the Event Loop drops down to the Macrotask Queue. It finds the `setTimeout` callback (`Task 2`). It pushes it to the stack. **[Prints: Timeout Complete]**
 
 This deep mechanical tracing separates average developers from master architects! Understanding this flow guarantees you can debug complex React state cycles, Node.js server bottlenecks, and race conditions with complete confidence.
 

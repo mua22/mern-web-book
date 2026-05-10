@@ -11,9 +11,9 @@ Headings (`<h1>` to `<h6>`) must strictly form an outline of your document.
 ```html
 <!-- Correct Outline -->
 <h1>Building a REST API</h1>
-  <h2>1. Setup</h2>
-    <h3>1.1 Installing Express</h3>
-  <h2>2. Routing</h2>
+ <h2>1. Setup</h2>
+ <h3>1.1 Installing Express</h3>
+ <h2>2. Routing</h2>
 ```
 
 ## Meaningful Inline Formatting
@@ -33,7 +33,7 @@ Used for extended quotations that take up an entire block. The `cite` attribute 
 
 ```html
 <blockquote cite="https://developer.mozilla.org/en-US/docs/Web/HTML">
-    <p>HTML is the most basic building block of the Web. It defines the meaning and structure of web content.</p>
+ <p>HTML is the most basic building block of the Web. It defines the meaning and structure of web content.</p>
 </blockquote>
 ```
 
@@ -71,8 +71,8 @@ For developer documentation (like this book), HTML has highly specific semantic 
 
 <p>The system should return the following output:</p>
 <pre><samp>
-drwxr-xr-x   5 root  wheel   160 Oct 12 09:00 .
-drwxr-xr-x  10 root  wheel   320 Oct 11 18:30 ..
+drwxr-xr-x 5 root wheel 160 Oct 12 09:00 .
+drwxr-xr-x 10 root wheel 320 Oct 11 18:30 ..
 </samp></pre>
 
 <p>In our script, the variable <var>x</var> stores the integer result.</p>

@@ -10,7 +10,7 @@ In this chapter, we explore how to capture dynamic data directly from the URL, a
 
 ---
 
-## 6.1 Route Parameters: Capturing Dynamic Data
+## Route Parameters: Capturing Dynamic Data
 
 Imagine you are building an e-commerce website. A user clicks on a pair of shoes, and their browser makes a request to fetch the details. The URL looks like this: `http://localhost:3000/api/products/482`.
 
@@ -21,12 +21,12 @@ To define a route parameter, you simply prefix a word with a colon (`:`).
 ```javascript
 // server.js
 app.get('/api/products/:productId', (req, res) => {
-    
-    // Express automatically grabs whatever the user typed after /products/
-    const id = req.params.productId;
-    
-    // In a real application, you would use this 'id' to query MongoDB
-    res.json({ message: `Fetching the product with ID: ${id}` });
+ 
+ // Express automatically grabs whatever the user typed after /products/
+ const id = req.params.productId;
+ 
+ // In a real application, you would use this 'id' to query MongoDB
+ res.json({ message: `Fetching the product with ID: ${id}` });
 });
 ```
 
@@ -35,19 +35,19 @@ You can even extract multiple route parameters sequentially!
 ```javascript
 // Fetching a specific photo belonging to a specific user
 app.get('/api/users/:userId/photos/:photoId', (req, res) => {
-    const { userId, photoId } = req.params; // Using Object Destructuring
+ const { userId, photoId } = req.params; // Using Object Destructuring
 
-    res.json({
-        message: "Photo Fetched!",
-        user: userId,
-        photo: photoId
-    });
+ res.json({
+ message: "Photo Fetched!",
+ user: userId,
+ photo: photoId
+ });
 });
 ```
 
 ---
 
-## 6.2 Query Strings: Capturing Optional Filters
+## Query Strings: Capturing Optional Filters
 
 Sometimes, you don't need a specific item. You need a list of items, but you want them *filtered* or *sorted*. For example, fetching all shirts, but sorting them from lowest price to highest.
 
@@ -57,15 +57,15 @@ Given a URL like: `http://localhost:3000/api/shirts?color=blue&sort=asc&limit=10
 
 ```javascript
 app.get('/api/shirts', (req, res) => {
-    
-    // Express parses everything after the '?' into a clean object!
-    const color = req.query.color; // 'blue'
-    const sort = req.query.sort;   // 'asc'
-    const limit = req.query.limit; // '10'
+ 
+ // Express parses everything after the '?' into a clean object!
+ const color = req.query.color; // 'blue'
+ const sort = req.query.sort; // 'asc'
+ const limit = req.query.limit; // '10'
 
-    res.json({
-        message: `Returning ${limit} ${color} shirts sorted by ${sort}.`
-    });
+ res.json({
+ message: `Returning ${limit} ${color} shirts sorted by ${sort}.`
+ });
 });
 ```
 
@@ -73,7 +73,7 @@ app.get('/api/shirts', (req, res) => {
 
 ---
 
-## 6.3 The "God File" Problem
+## The "God File" Problem
 
 Let's say our application manages Users, Products, and Reviews. Each of these entities requires full CRUD operations (Create, Read, Update, Delete).
 
@@ -100,7 +100,7 @@ By the time you finish, `server.js` will be hundreds of lines long. It becomes i
 
 ---
 
-## 6.4 The Solution: `express.Router`
+## The Solution: `express.Router`
 
 Express gives us a tool called `express.Router()`. 
 
@@ -108,15 +108,15 @@ You can think of a Router as a "mini-app" or a separate bucket that solely exist
 
 ```mermaid
 graph TD
-    App[server.js <br> Main Application]
-    App -->|'/api/users/*'| UR[userRoutes.js <br> Express Router]
-    App -->|'/api/products/*'| PR[productRoutes.js <br> Express Router]
-    
-    UR -->|GET /| U1[Fetch All Users]
-    UR -->|POST /| U2[Create User]
-    
-    PR -->|GET /| P1[Fetch All Products]
-    PR -->|DELETE /:id| P2[Delete A Product]
+ App[server.js <br> Main Application]
+ App -->|'/api/users/*'| UR[userRoutes.js <br> Express Router]
+ App -->|'/api/products/*'| PR[productRoutes.js <br> Express Router]
+ 
+ UR -->|GET /| U1[Fetch All Users]
+ UR -->|POST /| U2[Create User]
+ 
+ PR -->|GET /| P1[Fetch All Products]
+ PR -->|DELETE /:id| P2[Delete A Product]
 ```
 
 ### Step 1: Create the Router File
@@ -135,15 +135,15 @@ const router = express.Router();
 // We will define the base URL later in server.js!
 
 router.get('/', (req, res) => {
-    res.json({ message: "Fetching all users..." });
+ res.json({ message: "Fetching all users..." });
 });
 
 router.post('/', (req, res) => {
-    res.status(201).json({ message: "User successfully created!" });
+ res.status(201).json({ message: "User successfully created!" });
 });
 
 router.get('/:id', (req, res) => {
-    res.json({ message: `Fetching user details for ID: ${req.params.id}` });
+ res.json({ message: `Fetching user details for ID: ${req.params.id}` });
 });
 
 // Finally, export the router so server.js can import it
@@ -169,7 +169,7 @@ const userRoutes = require('./routes/userRoutes');
 app.use('/api/users', userRoutes);
 
 app.listen(3000, () => {
-    console.log("Modular app listening on port 3000");
+ console.log("Modular app listening on port 3000");
 });
 ```
 

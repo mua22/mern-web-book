@@ -8,7 +8,7 @@ In this chapter, we explore the "M" in the MERN stack: **MongoDB**.
 
 ---
 
-## 10.1 SQL vs. NoSQL (Why MongoDB?)
+## SQL vs. NoSQL (Why MongoDB?)
 
 For decades, the undisputed king of databases was the **Relational Database** (SQL databases like MySQL or PostgreSQL). SQL databases are essentially massive Excel spreadsheets. They use rigid Tables consisting of strictly predefined columns and rows.
 
@@ -19,23 +19,23 @@ Instead of rigid Tables and Rows, MongoDB embraces flexibility. What makes Mongo
 
 ---
 
-## 10.2 Translating the Terminology
+## Translating the Terminology
 
 If you have any prior experience with SQL (Relational) databases, here is a quick translation guide to MongoDB's NoSQL terminology:
 
 ```mermaid
 graph LR
-    subgraph SQL World
-        DB1[(Database)] --> T[Table]
-        T --> R[Row]
-        T --> C[Column]
-    end
-    
-    subgraph MongoDB World
-        DB2[(Database)] --> Col[Collection]
-        Col --> Doc[Document]
-        Col --> F[Field]
-    end
+ subgraph SQL World
+ DB1[(Database)] --> T[Table]
+ T --> R[Row]
+ T --> C[Column]
+ end
+ 
+ subgraph MongoDB World
+ DB2[(Database)] --> Col[Collection]
+ Col --> Doc[Document]
+ Col --> F[Field]
+ end
 ```
 
 1. **Database**: Same concept. The overarching container for your application's data.
@@ -45,23 +45,23 @@ graph LR
 
 ---
 
-## 10.3 The Anatomy of a MongoDB Document
+## The Anatomy of a MongoDB Document
 
 Let's look at what a Document actually looks like when stored inside a MongoDB Collection. It looks remarkably identical to a JavaScript Object!
 
 ```json
 {
-  "_id": "64a7f05c3b9d140e9c8a4d7a",
-  "username": "MernNinja",
-  "email": "ninja@mern.com",
-  "age": 28,
-  "isAdmin": true,
-  "hobbies": ["Coding", "Gaming", "Pizza"],
-  "address": {
-      "city": "New York",
-      "zipcode": "10001"
-  },
-  "createdAt": "2024-05-12T08:30:00Z"
+ "_id": "64a7f05c3b9d140e9c8a4d7a",
+ "username": "MernNinja",
+ "email": "ninja@mern.com",
+ "age": 28,
+ "isAdmin": true,
+ "hobbies": ["Coding", "Gaming", "Pizza"],
+ "address": {
+ "city": "New York",
+ "zipcode": "10001"
+ },
+ "createdAt": "2024-05-12T08:30:00Z"
 }
 ```
 
@@ -76,7 +76,7 @@ Notice the `hobbies` field is a true Array, and the `address` field is a deeply 
 
 ---
 
-## 10.4 Where Does MongoDB Live? (MongoDB Atlas)
+## Where Does MongoDB Live? (MongoDB Atlas)
 
 Historically, you had to install MongoDB directly onto your laptop, run a complex background service, and manage the hardware yourself. 
 

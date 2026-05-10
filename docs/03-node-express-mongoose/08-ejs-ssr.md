@@ -8,21 +8,21 @@ In this chapter, we will learn how to build traditional SSR applications using a
 
 ---
 
-## 8.1 What is a Templating Engine?
+## What is a Templating Engine?
 
 If you try to write a dynamic HTML page using only `res.send()`, you will quickly find yourself writing horrific code that looks like this:
 
 ```javascript
 // DO NOT DO THIS!
 app.get('/profile', (req, res) => {
-    const username = "MernNinja";
-    res.send(`
-        <html>
-            <body>
-                <h1>Welcome back, ${username}!</h1>
-            </body>
-        </html>
-    `);
+ const username = "MernNinja";
+ res.send(`
+ <html>
+ <body>
+ <h1>Welcome back, ${username}!</h1>
+ </body>
+ </html>
+ `);
 });
 ```
 
@@ -32,15 +32,15 @@ This is where a **Templating Engine** comes in. A templating engine allows you t
 
 ```mermaid
 flowchart LR
-    Data[(Raw JS Data)] --> Engine{Templating Engine <br/> (EJS)}
-    Template[EJS Template File <br/> HTML with placeholders] --> Engine
-    Engine -->|stitches together| HTML[Final Pure HTML String]
-    HTML --> Browser[Delivered to Browser]
+ Data[(Raw JS Data)] --> Engine{Templating Engine <br/> (EJS)}
+ Template[EJS Template File <br/> HTML with placeholders] --> Engine
+ Engine -->|stitches together| HTML[Final Pure HTML String]
+ HTML --> Browser[Delivered to Browser]
 ```
 
 ---
 
-## 8.2 Setting up EJS (Embedded JavaScript)
+## Setting up EJS (Embedded JavaScript)
 
 There are many Node.js templating engines (Pug, Handlebars, Nunjucks), but EJS is the most loved by beginners because it requires almost zero new syntax. If you know HTML and you know basic JavaScript, you already know EJS!
 
@@ -72,7 +72,7 @@ Create a folder named `views` right next to your `server.js` file. Inside it, cr
 
 ---
 
-## 8.3 The Data Lifecycle: From Server to EJS
+## The Data Lifecycle: From Server to EJS
 
 To understand how data flows into your templates, let's look at the complete lifecycle of an EJS render.
 
@@ -85,8 +85,8 @@ To understand how data flows into your templates, let's look at the complete lif
 ### The Syntax of EJS
 EJS uses special "squid" tags to inject JavaScript directly into HTML. You must remember the distinct difference between the two primary tags:
 
-*   **`<% %>` (Scriptlet Tag):** Used for **Control Flow** (Logic). If you want to write an `if` statement or a `for` loop, you use this tag. **It does NOT print anything to the screen.**
-*   **`<%= %>` (Output Tag):** Used to **Print Data**. Whatever variables or equations are inside this tag will be evaluated, converted to text, and printed directly into the HTML tree.
+* **`<% %>` (Scriptlet Tag):** Used for **Control Flow** (Logic). If you want to write an `if` statement or a `for` loop, you use this tag. **It does NOT print anything to the screen.**
+* **`<%= %>` (Output Tag):** Used to **Print Data**. Whatever variables or equations are inside this tag will be evaluated, converted to text, and printed directly into the HTML tree.
 
 Let's write a comprehensive `views/profile.ejs` file to demonstrate variables, if-statements, and loops:
 
@@ -95,34 +95,34 @@ Let's write a comprehensive `views/profile.ejs` file to demonstrate variables, i
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>My EJS Profile</title>
+ <title>My EJS Profile</title>
 </head>
 <body>
-    <!-- 1. The Output Tag (Printing data) -->
-    <h1>Welcome back, <%= username %>!</h1>
-    
-    <!-- You can execute basic JS math or methods inside the output tag -->
-    <p>Your name in uppercase is: <%= username.toUpperCase() %></p>
+ <!-- 1. The Output Tag (Printing data) -->
+ <h1>Welcome back, <%= username %>!</h1>
+ 
+ <!-- You can execute basic JS math or methods inside the output tag -->
+ <p>Your name in uppercase is: <%= username.toUpperCase() %></p>
 
-    <!-- 2. The Scriptlet Tag (Control Flow: If Statements) -->
-    <!-- Notice how we must open AND close the tags around the standard HTML -->
-    <% if (isAdmin) { %>
-        <div style="background-color: yellow; border: 1px solid red;">
-            <p style="color: red;">Warning: You have Admin Privileges.</p>
-        </div>
-    <% } else { %>
-        <p>You are a standard user.</p>
-    <% } %>
+ <!-- 2. The Scriptlet Tag (Control Flow: If Statements) -->
+ <!-- Notice how we must open AND close the tags around the standard HTML -->
+ <% if (isAdmin) { %>
+ <div style="background-color: yellow; border: 1px solid red;">
+ <p style="color: red;">Warning: You have Admin Privileges.</p>
+ </div>
+ <% } else { %>
+ <p>You are a standard user.</p>
+ <% } %>
 
-    <h3>Your Recent Orders:</h3>
-    <ul>
-        <!-- 3. The Scriptlet Tag (Control Flow: For Loops) -->
-        <% for(let i = 0; i < orders.length; i++) { %>
-            <li>
-                Order ID: <%= orders[i].id %> - Cost: $<%= orders[i].price %>
-            </li>
-        <% } %>
-    </ul>
+ <h3>Your Recent Orders:</h3>
+ <ul>
+ <!-- 3. The Scriptlet Tag (Control Flow: For Loops) -->
+ <% for(let i = 0; i < orders.length; i++) { %>
+ <li>
+ Order ID: <%= orders[i].id %> - Cost: $<%= orders[i].price %>
+ </li>
+ <% } %>
+ </ul>
 </body>
 </html>
 ```
@@ -132,19 +132,19 @@ Now, let's go back to our `server.js` route handler and feed this template the e
 ```javascript
 // server.js
 app.get('/profile', (req, res) => {
-    // 1. Fetch our data (Suppose this came from a database)
-    const userProfile = {
-        username: "MernNinja",
-        isAdmin: true,
-        orders: [
-            { id: "A1", price: 45.00 },
-            { id: "B2", price: 12.50 },
-            { id: "C3", price: 99.99 }
-        ]
-    };
+ // 1. Fetch our data (Suppose this came from a database)
+ const userProfile = {
+ username: "MernNinja",
+ isAdmin: true,
+ orders: [
+ { id: "A1", price: 45.00 },
+ { id: "B2", price: 12.50 },
+ { id: "C3", price: 99.99 }
+ ]
+ };
 
-    // 2. Render the EJS file and pass the data object as the SECOND argument!
-    res.render('profile', userProfile);
+ // 2. Render the EJS file and pass the data object as the SECOND argument!
+ res.render('profile', userProfile);
 });
 ```
 
@@ -152,13 +152,13 @@ When you visit `/profile`, the output tags (`<%= username %>`) are magically rep
 
 ---
 
-## 8.4 Form Handling (The `POST` Request Lifecycle)
+## Form Handling (The `POST` Request Lifecycle)
 
 The primary reason we build server-rendered websites is to allow users to submit information back to us using HTML forms. 
 
 Let's combine everything we've learned—Routing, Middlewares, and EJS—to build a completely functioning form submission system.
 
-### 1. The Form Middleware (Crucial Step)
+### The Form Middleware (Crucial Step)
 
 If a user submits an HTML form, the data is NOT sent as a nicely formatted JSON object. It is sent as a raw URL-encoded string. To tell our Express assembly line how to parse HTML form submissions, we must activate a specific middleware.
 
@@ -174,7 +174,7 @@ app.use(express.urlencoded({ extended: true })); // parses HTML <form> data!
 app.use(express.json()); // parses standard JSON APIs
 ```
 
-### 2. The Form View (`views/register.ejs`)
+### The Form View (`views/register.ejs`)
 
 We create a simple EJS file containing our registration form. Pay very close attention to the `method` and `action` attributes on the `<form>` tag, and the `name` attributes on the inputs!
 
@@ -184,46 +184,46 @@ We create a simple EJS file containing our registration form. Pay very close att
 
 <!-- Action: Where to send the data. Method: How to send the data (POST) -->
 <form action="/submit-registration" method="POST">
-    
-    <label>Username:</label>
-    <!-- The "name" attribute is what the server will use as the Object Key! -->
-    <input type="text" name="username" required>
-    
-    <br><br>
+ 
+ <label>Username:</label>
+ <!-- The "name" attribute is what the server will use as the Object Key! -->
+ <input type="text" name="username" required>
+ 
+ <br><br>
 
-    <label>Password:</label>
-    <input type="password" name="password" required>
-    
-    <br><br>
-    
-    <button type="submit">Register Now</button>
+ <label>Password:</label>
+ <input type="password" name="password" required>
+ 
+ <br><br>
+ 
+ <button type="submit">Register Now</button>
 </form>
 ```
 
-### 3. The Route Handlers
+### The Route Handlers
 
 We now need TWO routes. One `GET` route to serve the blank form to the user, and one `POST` route to catch the data when they click the submit button.
 
 ```javascript
 // Route 1: Show the form to the user
 app.get('/register', (req, res) => {
-    res.render('register'); // Sends views/register.ejs
+ res.render('register'); // Sends views/register.ejs
 });
 
 // Route 2: Catch the data sent from the form!
 // Notice the path matches the "action" attribute on the HTML form
 app.post('/submit-registration', (req, res) => {
-    
-    // Because of our express.urlencoded() middleware, 
-    // the data is beautifully organized inside req.body!
-    const { username, password } = req.body;
-    
-    console.log(`Received secure registration for: ${username}`);
+ 
+ // Because of our express.urlencoded() middleware, 
+ // the data is beautifully organized inside req.body!
+ const { username, password } = req.body;
+ 
+ console.log(`Received secure registration for: ${username}`);
 
-    // In a real app, we would save this to MongoDB here.
-    
-    // Send back a success page!
-    res.send(`<h1>Registration went perfectly, ${username}!</h1>`);
+ // In a real app, we would save this to MongoDB here.
+ 
+ // Send back a success page!
+ res.send(`<h1>Registration went perfectly, ${username}!</h1>`);
 });
 ```
 

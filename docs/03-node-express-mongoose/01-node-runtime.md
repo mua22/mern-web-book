@@ -8,7 +8,7 @@ In this chapter, we will demystify what Node.js actually is, peek under its hood
 
 ---
 
-## 1.1 What Exactly *is* Node.js?
+## What Exactly *is* Node.js?
 
 Let's clear up a common misconception right away: **Node.js is not a programming language, and it is not a framework.** 
 
@@ -28,7 +28,7 @@ Because Node.js isn't restricted by the browser's security limits, it uses C++ b
 
 ---
 
-## 1.2 The Magic of Node: Asynchronous and Non-Blocking I/O
+## The Magic of Node: Asynchronous and Non-Blocking I/O
 
 If there is one concept you need to deeply understand about Node.js, it is this: **Node.js is asynchronous and non-blocking by default.**
 
@@ -54,7 +54,7 @@ Because Node.js works this way, it is exceptionally good at handling thousands o
 
 ---
 
-## 1.3 Running Your First Node.js Code
+## Running Your First Node.js Code
 
 Let's see this in action. First, you need to ensure Node.js is installed on your machine. You can download it from [nodejs.org](https://nodejs.org/). 
 
@@ -87,7 +87,7 @@ While the REPL is fun, we usually write code in files. Create a new file called 
 console.log("Starting the Node.js application...");
 
 setTimeout(() => {
-    console.log("This message is delayed by 2 seconds (Asynchronous!).");
+ console.log("This message is delayed by 2 seconds (Asynchronous!).");
 }, 2000);
 
 console.log("Application has finished executing.");
@@ -110,7 +110,7 @@ Notice what happened here! The "Application has finished executing." line printe
 
 ---
 
-## 1.4 The Global Object vs. Window
+## The Global Object vs. Window
 
 If you are coming from front-end JavaScript, you are very familiar with the `window` object. The `window` represents the browser window, giving you access to things like `document` (the DOM), `alert()`, or `localStorage`.
 
@@ -139,7 +139,7 @@ console.log("Current File:", __filename);
 
 ---
 
-## 1.5 Introduction to Modules (CommonJS)
+## Introduction to Modules (CommonJS)
 
 As your applications grow, you cannot keep all your code in a single `app.js` file. Imagine a massive textbook printed on a single, continuous scroll of paper—it would be impossible to navigate! We need to break our code up into manageable "chapters" or files.
 
@@ -165,9 +165,9 @@ const PI = 3.14159;
 // To expose them to the rest of our application, 
 // we attach them to 'module.exports'
 module.exports = {
-    add: add,
-    subtract: subtract,
-    PI: PI
+ add: add,
+ subtract: subtract,
+ PI: PI
 };
 ```
 
@@ -191,7 +191,7 @@ When you run `node app.js`, Node.js goes to `calculator.js`, executes it, grabs 
 
 ---
 
-## 1.6 Built-in Core Modules
+## Built-in Core Modules
 
 To keep Node.js lightweight, it doesn't bundle every possible feature directly into the base language. Instead, it provides a rich library of **Core Modules** that come pre-installed, but you have to actively `require()` them if you want to use them.
 

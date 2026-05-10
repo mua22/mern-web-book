@@ -21,10 +21,10 @@ Instead of writing custom CSS for every element, you apply Bootstrap's predefine
 
 <!-- A simple Bootstrap Grid -->
 <div class="container">
-  <div class="row">
-    <div class="col-md-6">Left Column</div>
-    <div class="col-md-6">Right Column</div>
-  </div>
+ <div class="row">
+ <div class="col-md-6">Left Column</div>
+ <div class="col-md-6">Right Column</div>
+ </div>
 </div>
 ```
 

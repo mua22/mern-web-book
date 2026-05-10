@@ -19,12 +19,12 @@ Let's do a side-by-side comparison. First, the old way we learned in Module 2:
 ```javascript
 /* --- The ES5 Constructor Way --- */
 function User(name, role) {
-  this.name = name;
-  this.role = role;
+ this.name = name;
+ this.role = role;
 }
 
 User.prototype.login = function() {
-  console.log(`${this.name} has logged in.`);
+ console.log(`${this.name} has logged in.`);
 };
 
 const oldUser = new User('Bilal', 'Admin');
@@ -35,17 +35,17 @@ Now, let's write the exact same logic using ES6 Class syntax:
 ```javascript
 /* --- The ES6 Class Way --- */
 class UserClass {
-  // Line 3: The constructor method strictly replaces the old function body.
-  constructor(name, role) {
-    this.name = name;
-    this.role = role;
-  }
+ // Line 3: The constructor method strictly replaces the old function body.
+ constructor(name, role) {
+ this.name = name;
+ this.role = role;
+ }
 
-  // Line 9: Methods are declared directly inside the class block.
-  // There is no need to type UserClass.prototype.login anymore!
-  login() {
-    console.log(`${this.name} has logged in.`);
-  }
+ // Line 9: Methods are declared directly inside the class block.
+ // There is no need to type UserClass.prototype.login anymore!
+ login() {
+ console.log(`${this.name} has logged in.`);
+ }
 }
 
 const newUser = new UserClass('Fatima', 'SuperAdmin');
@@ -68,17 +68,17 @@ The true beauty of the `class` syntax shines when we implement multi-level inher
 ```javascript
 // A child class inheriting from the UserClass parent
 class PremiumUser extends UserClass {
-  constructor(name, role, perks) {
-    // Line 4: The 'super' keyword calls the parent's constructor. 
-    // This perfectly replicates `User.call(this, name, role)`.
-    super(name, role);
-    this.perks = perks;
-  }
+ constructor(name, role, perks) {
+ // Line 4: The 'super' keyword calls the parent's constructor. 
+ // This perfectly replicates `User.call(this, name, role)`.
+ super(name, role);
+ this.perks = perks;
+ }
 
-  // Overriding a method effortlessly
-  login() {
-    console.log(`${this.name} logged in with ${this.perks} perks!`);
-  }
+ // Overriding a method effortlessly
+ login() {
+ console.log(`${this.name} logged in with ${this.perks} perks!`);
+ }
 }
 ```
 
@@ -101,31 +101,31 @@ ES6 introduced Arrow Functions (`() => {}`). While they save a few keystrokes, t
 
 ```javascript
 const dashboard = {
-  theme: 'Dark Mode',
-  
-  // A regular method attached to an object
-  renderRegular: function() {
-    // Inside this regular method, 'this' points to the 'dashboard' object.
-    
-    setTimeout(function() {
-      // The Engine executes this regular callback globally. 
-      // 'this' defaults to the window object!
-      console.log('Regular Timeout:', this.theme); 
-    }, 100);
-  },
+ theme: 'Dark Mode',
+ 
+ // A regular method attached to an object
+ renderRegular: function() {
+ // Inside this regular method, 'this' points to the 'dashboard' object.
+ 
+ setTimeout(function() {
+ // The Engine executes this regular callback globally. 
+ // 'this' defaults to the window object!
+ console.log('Regular Timeout:', this.theme); 
+ }, 100);
+ },
 
-  renderArrow: function() {
-    setTimeout(() => {
-      // The Engine executes this arrow callback globally.
-      // However, the arrow function "remembers" its Lexical Scope.
-      // It inherits 'this' directly from 'renderArrow'!
-      console.log('Arrow Timeout:', this.theme);
-    }, 100);
-  }
+ renderArrow: function() {
+ setTimeout(() => {
+ // The Engine executes this arrow callback globally.
+ // However, the arrow function "remembers" its Lexical Scope.
+ // It inherits 'this' directly from 'renderArrow'!
+ console.log('Arrow Timeout:', this.theme);
+ }, 100);
+ }
 };
 
 dashboard.renderRegular(); // Output: Regular Timeout: undefined
-dashboard.renderArrow();   // Output: Arrow Timeout: Dark Mode
+dashboard.renderArrow(); // Output: Arrow Timeout: Dark Mode
 ```
 
 **Common Pitfall: Event Listeners**
@@ -173,8 +173,8 @@ While using the identical syntax (`...`), the Rest parameter does the exact oppo
 ```javascript
 // We can pass infinite arguments. Rest condenses them into 'numbers'.
 function calculateAverage(...numbers) {
-  const sum = numbers.reduce((acc, current) => acc + current, 0);
-  return sum / numbers.length;
+ const sum = numbers.reduce((acc, current) => acc + current, 0);
+ return sum / numbers.length;
 }
 
 console.log(calculateAverage(10, 20, 30, 40)); // 25
@@ -189,37 +189,37 @@ const user = 'Tariq';
 const balance = 5000;
 
 const emailHTML = `
-  <div>
-    <h1>Welcome back, ${user}!</h1>
-    <p>Your current account balance is: Rs. ${balance}</p>
-  </div>
+ <div>
+ <h1>Welcome back, ${user}!</h1>
+ <p>Your current account balance is: Rs. ${balance}</p>
+ </div>
 `;
 ```
 
 ---
 
-## 🧠 Knowledge Check: Self-Assessment
+## Knowledge Check: Self-Assessment
 
 Can you balance the dynamic mechanics of prototype classes and the lexical scoping of arrow functions at the same time? Read the following code snippet and determine exactly what is outputted to the console.
 
 ```javascript
 class Tracker {
-  constructor(name) {
-    this.trackerName = name;
-    this.logs = ['Start', 'Initialize'];
-  }
+ constructor(name) {
+ this.trackerName = name;
+ this.logs = ['Start', 'Initialize'];
+ }
 
-  printLogs() {
-    this.logs.forEach(function(entry) {
-      console.log(`[${this.trackerName}] Log: ${entry}`);
-    });
-  }
+ printLogs() {
+ this.logs.forEach(function(entry) {
+ console.log(`[${this.trackerName}] Log: ${entry}`);
+ });
+ }
 
-  printLogsModern() {
-    this.logs.forEach((entry) => {
-      console.log(`[${this.trackerName}] Log: ${entry}`);
-    });
-  }
+ printLogsModern() {
+ this.logs.forEach((entry) => {
+ console.log(`[${this.trackerName}] Log: ${entry}`);
+ });
+ }
 }
 
 const sys = new Tracker('SystemAlpha');

@@ -20,12 +20,12 @@ While modern vanilla JavaScript (ES6+) has adopted many features that made jQuer
 ```javascript
 // Vanilla JS
 document.getElementById('myButton').addEventListener('click', function() {
-    document.getElementById('myDiv').style.display = 'none';
+ document.getElementById('myDiv').style.display = 'none';
 });
 
 // jQuery
 $('#myButton').click(function() {
-    $('#myDiv').hide();
+ $('#myDiv').hide();
 });
 ```
 

@@ -14,7 +14,7 @@ Including `<!DOCTYPE html>` ensures your browser operates in **Full Standards Mo
 
 The `<head>` element contains metadata. It is the control center for how the document behaves.
 
-### 1. Character Encoding and the Viewport
+### Character Encoding and the Viewport
 ```html
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,7 +22,7 @@ The `<head>` element contains metadata. It is the control center for how the doc
 - **UTF-8**: If this is missing or placed too late in the `<head>`, the browser might have to restart parsing the document when it encounters a special character, causing a massive performance hit. It should be in the first 1024 bytes of the document.
 - **Viewport**: The `initial-scale=1.0` sets the CSS pixel ratio to 1:1 with device-independent pixels, forming the absolute foundation of Responsive Web Design.
 
-### 2. Advanced SEO and Social Meta Tags
+### Advanced SEO and Social Meta Tags
 Standard titles and descriptions are not enough today. You must use Open Graph (Facebook/LinkedIn) and Twitter Cards to control how your page looks when shared on social media.
 
 ```html
@@ -40,7 +40,7 @@ Standard titles and descriptions are not enough today. You must use Open Graph (
 <meta name="twitter:card" content="summary_large_image">
 ```
 
-### 3. Security: Content Security Policy (CSP)
+### Security: Content Security Policy (CSP)
 You can drastically reduce the risk of Cross-Site Scripting (XSS) attacks by defining a CSP in your meta tags (though doing it via HTTP headers is preferred).
 
 ```html
@@ -48,7 +48,7 @@ You can drastically reduce the risk of Cross-Site Scripting (XSS) attacks by def
 <meta http-equiv="Content-Security-Policy" content="script-src 'self';">
 ```
 
-### 4. Performance Optimization via `<link>`
+### Performance Optimization via `<link>`
 The `<link>` tag is not just for stylesheets. It can proactively tell the browser to fetch assets to speed up load times.
 
 ```html
@@ -62,7 +62,7 @@ The `<link>` tag is not just for stylesheets. It can proactively tell the browse
 <link rel="dns-prefetch" href="https://api.external-service.com">
 ```
 
-### 5. Loading Scripts (`async` vs `defer`)
+### Loading Scripts (`async` vs `defer`)
 When the browser hits a `<script>` tag in the `<head>`, it pauses HTML parsing entirely to download and execute the script. This is known as "render-blocking."
 
 To fix this, modern developers use `defer` or `async`:
