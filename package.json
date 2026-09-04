@@ -1,0 +1,28 @@
+{
+  "name": "mern-web-book",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Online book for Web Technologies (CSC336) and Advanced Web Technologies (CSC337), built with MkDocs Material.",
+  "scripts": {
+    "setup": "python -m pip install -r requirements.txt",
+    "docs:dev": "mkdocs serve",
+    "docs:dev:host": "mkdocs serve -a 0.0.0.0:8000",
+    "start": "npm run docs:dev",
+    "docs:build": "mkdocs build --strict",
+    "docs:build:clean": "npm run docs:clean && npm run docs:build",
+    "docs:deploy": "mkdocs gh-deploy --force --clean",
+    "docs:clean": "rimraf site",
+    "topics:web-technologies": "python .claude/skills/list-web-technologies-topics/scripts/extract_topics.py",
+    "topics:advanced-web-technologies": "python .claude/skills/list-advanced-web-technologies-topics/scripts/extract_topics.py",
+    "topics:all": "npm run topics:web-technologies && npm run topics:advanced-web-technologies"
+  },
+  "devDependencies": {
+    "rimraf": "^6.0.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mua22/mern-web-book.git"
+  },
+  "author": "Usman Akram",
+  "license": "MIT"
+}
