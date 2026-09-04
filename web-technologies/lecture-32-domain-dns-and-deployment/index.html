@@ -1,0 +1,3091 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="An online textbook for Web Technologies (CSC336) and Advanced Web Technologies (CSC337), built lecture-by-lecture from the official COMSATS course plans.">
+      
+      
+        <meta name="author" content="Usman Akram">
+      
+      
+        <link rel="canonical" href="https://mua22.github.io/mern-web-book/web-technologies/lecture-32-domain-dns-and-deployment/">
+      
+      
+        <link rel="prev" href="../lecture-31-common-web-attacks-and-defenses/">
+      
+      
+        <link rel="next" href="../../advanced-web-technologies/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/logo.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Lecture 32: Domain, DNS and Deployment - Web Dev Book — CSC336 & CSC337</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+  
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+  
+  <style>:root{--md-admonition-icon--note:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M20%2011h3v2h-3zM1%2011h3v2H1zM13%201v3h-2V1zM4.92%203.5l2.13%202.14-1.42%201.41L3.5%204.93zm12.03%202.13%202.12-2.13%201.43%201.43-2.13%202.12zM12%206a6%206%200%200%201%206%206c0%202.22-1.21%204.16-3%205.2V19a1%201%200%200%201-1%201h-4a1%201%200%200%201-1-1v-1.8c-1.79-1.04-3-2.98-3-5.2a6%206%200%200%201%206-6m2%2015v1a1%201%200%200%201-1%201h-2a1%201%200%200%201-1-1v-1zm-3-3h2v-2.13c1.73-.44%203-2.01%203-3.87a4%204%200%200%200-4-4%204%204%200%200%200-4%204c0%201.86%201.27%203.43%203%203.87z%22/%3E%3C/svg%3E');--md-admonition-icon--tip:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M12%203%201%209l4%202.18v6L12%2021l7-3.82v-6l2-1.09V17h2V9zm6.82%206L12%2012.72%205.18%209%2012%205.28zM17%2016l-5%202.72L7%2016v-3.73L12%2015l5-2.73z%22/%3E%3C/svg%3E');--md-admonition-icon--warning:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M12%202%201%2021h22M12%206l7.53%2013H4.47M11%2010v4h2v-4m-2%206v2h2v-2%22/%3E%3C/svg%3E');--md-admonition-icon--example:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M19%203H5c-1.1%200-2%20.9-2%202v14c0%201.1.9%202%202%202h14c1.1%200%202-.9%202-2V5c0-1.1-.9-2-2-2m-8%205H9v2c0%201.1-.9%202-2%202%201.1%200%202%20.9%202%202v2h2v2H9c-1.1%200-2-.9-2-2v-1c0-1.1-.9-2-2-2v-2c1.1%200%202-.9%202-2V8c0-1.1.9-2%202-2h2zm8%205c-1.1%200-2%20.9-2%202v1c0%201.1-.9%202-2%202h-2v-2h2v-2c0-1.1.9-2%202-2-1.1%200-2-.9-2-2V8h-2V6h2c1.1%200%202%20.9%202%202v1c0%201.1.9%202%202%202z%22/%3E%3C/svg%3E');}</style>
+
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="deep-purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#lecture-32-domain-dns-and-deployment" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Web Dev Book — CSC336 &amp; CSC337" class="md-header__button md-logo" aria-label="Web Dev Book — CSC336 & CSC337" data-md-component="logo">
+      
+  <img src="../../assets/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Web Dev Book — CSC336 & CSC337
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Lecture 32: Domain, DNS and Deployment
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="deep-purple"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="deep-purple"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Web Technologies (CSC336)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../advanced-web-technologies/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Advanced Web Technologies (CSC337)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../tags/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Tags
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://usmanlive.com" class="md-tabs__link">
+        
+  
+  
+    
+  
+  usmanlive.com
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Web Dev Book — CSC336 &amp; CSC337" class="md-nav__button md-logo" aria-label="Web Dev Book — CSC336 & CSC337" data-md-component="logo">
+      
+  <img src="../../assets/logo.svg" alt="logo">
+
+    </a>
+    Web Dev Book — CSC336 & CSC337
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Web Technologies (CSC336)
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Web Technologies (CSC336)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unit 1 — Foundations of the Web
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Unit 1 — Foundations of the Web
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-01-introduction-to-web-development/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Introduction to Web Development
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-02-tiered-web-architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Tiered Web Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unit 2 — Markup Languages
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Unit 2 — Markup Languages
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-03-html-html5-fundamentals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. HTML and HTML5 Fundamentals
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-04-semantic-html-and-forms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Semantic HTML and Forms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unit 3 — Styling with CSS
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Unit 3 — Styling with CSS
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-05-css-fundamentals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. CSS Fundamentals
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-06-css-box-model-and-display/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. The CSS Box Model and Display
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-07-css-positioning-and-stacking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. CSS Positioning and Stacking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-08-css3-features/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. CSS3 Features
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-09-flexbox-and-grid-layout/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Flexbox and Grid Layout
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-10-responsive-design-and-frameworks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Responsive Design and Frameworks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_5" id="__nav_2_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unit 4 — Modern JavaScript (ES6+)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Unit 4 — Modern JavaScript (ES6+)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-11-core-javascript-es6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Core JavaScript (ES6+)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-12-array-methods-and-processing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Array Methods and Processing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-13-dom-manipulation-and-events/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. DOM Manipulation and Events
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-14-regular-expressions-and-json/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. Regular Expressions and JSON
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-15-async-javascript-promises-fetch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15. Async JavaScript, Promises and Fetch
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_6" id="__nav_2_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unit 5 — Server-Side Development
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Unit 5 — Server-Side Development
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-16-introduction-to-server-side-programming/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16. Introduction to Server-Side Programming
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-17-midterm-review/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17. Midterm Review
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-18-request-handling-and-routing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    18. Request Handling and Routing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-19-http-status-codes-and-headers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    19. HTTP Status Codes and Headers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-20-cookies-and-sessions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20. Cookies and Sessions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-21-middleware/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    21. Middleware
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-22-database-connectivity-postgresql-mongodb/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    22. Database Connectivity: PostgreSQL / MongoDB
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-23-object-relational-mapping/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    23. Object-Relational Mapping
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-24-response-generation-with-templates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    24. Response Generation with Templates
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-25-rest-api-development-and-authentication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    25. REST API Development and Authentication
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_7" id="__nav_2_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unit 6 — Front-End Development with React
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Unit 6 — Front-End Development with React
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-26-introduction-to-react/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    26. Introduction to React.js
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-27-components-props-and-events/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    27. Components, Props and Events
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-28-hooks-and-state-management/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    28. Hooks and State Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-29-routing-and-api-integration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    29. Routing and API Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_8" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_8" id="__nav_2_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unit 7 — Security and Deployment
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_8_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Unit 7 — Security and Deployment
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-30-application-security-basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    30. Application Security Basics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-31-common-web-attacks-and-defenses/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    31. Common Web Attacks and Defenses
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    32. Domain, DNS and Deployment
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    32. Domain, DNS and Deployment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#in-this-lecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        In This Lecture
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#domain-names-and-registrars" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Domain Names and Registrars
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dns-the-internets-phone-book" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DNS: The Internet's Phone Book
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="DNS: The Internet&#39;s Phone Book">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-dns-resolution-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How DNS Resolution Works
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ttl-time-to-live" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TTL (Time to Live)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hosting-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hosting Options
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deploying-your-mern-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deploying Your MERN Application
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deploying Your MERN Application">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#build-and-environment-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Build and Environment Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploying-the-frontend-eg-to-vercel-or-netlify" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deploying the Frontend (e.g., to Vercel or Netlify)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploying-the-backend-eg-to-render" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deploying the Backend (e.g., to Render)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reverse-proxies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reverse Proxies
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#basic-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Basic Monitoring
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#try-it-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try It Yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Takeaways
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-to-go-from-here" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where to Go From Here
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../advanced-web-technologies/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced Web Technologies (CSC337)
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tags
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://usmanlive.com" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    usmanlive.com
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#in-this-lecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        In This Lecture
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#domain-names-and-registrars" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Domain Names and Registrars
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dns-the-internets-phone-book" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DNS: The Internet's Phone Book
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="DNS: The Internet&#39;s Phone Book">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-dns-resolution-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How DNS Resolution Works
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ttl-time-to-live" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TTL (Time to Live)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hosting-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hosting Options
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deploying-your-mern-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deploying Your MERN Application
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deploying Your MERN Application">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#build-and-environment-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Build and Environment Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploying-the-frontend-eg-to-vercel-or-netlify" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deploying the Frontend (e.g., to Vercel or Netlify)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploying-the-backend-eg-to-render" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deploying the Backend (e.g., to Render)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reverse-proxies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reverse Proxies
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#basic-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Basic Monitoring
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#try-it-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try It Yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Takeaways
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-to-go-from-here" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where to Go From Here
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <a href="../../tags/#tag:dns" class="md-tag">DNS</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../tags/#tag:deployment" class="md-tag">Deployment</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../tags/#tag:devops" class="md-tag">DevOps</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../tags/#tag:domains" class="md-tag">Domains</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../tags/#tag:hosting" class="md-tag">Hosting</a>
+      
+    
+  </nav>
+
+
+
+<h1 id="lecture-32-domain-dns-and-deployment">Lecture 32: Domain, DNS and Deployment<a class="headerlink" href="#lecture-32-domain-dns-and-deployment" title="Permanent link">&para;</a></h1>
+<p>You've built a full-stack MERN application over this semester. This final lecture covers
+the last step: taking that application off your laptop and putting it on the Internet
+where anyone in the world can use it. You'll learn how domain names and DNS work, what
+your hosting options are, and how to actually deploy a React frontend and an Express
+backend.</p>
+<h2 id="in-this-lecture">In This Lecture<a class="headerlink" href="#in-this-lecture" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Understand domain names, registrars, and the main DNS record types (A, AAAA, CNAME,
+  MX, TXT)</li>
+<li>Understand how DNS resolution actually works, what TTL means, and how nameservers are
+  configured</li>
+<li>Compare hosting options: shared hosting, VPS, PaaS, and serverless</li>
+<li>Deploy a frontend and a backend, configure environment variables and builds, and learn
+  the basics of reverse proxies, SSL, and monitoring</li>
+</ul>
+<h2 id="domain-names-and-registrars">Domain Names and Registrars<a class="headerlink" href="#domain-names-and-registrars" title="Permanent link">&para;</a></h2>
+<p>A <strong>domain name</strong> is the human-readable address of a website, like <code>example.com</code>,
+that stands in for a numeric <strong>IP address</strong> (like <code>93.184.216.34</code>) that computers
+actually use to find each other on the network. Domain names exist because remembering
+<code>example.com</code> is far easier for people than remembering strings of numbers.</p>
+<p>Domain names are organized hierarchically, read right to left:</p>
+<ul>
+<li><code>.com</code> is a <strong>top-level domain (TLD)</strong> — the rightmost part. Others include <code>.org</code>,
+  <code>.net</code>, <code>.edu</code>, and country-specific ones like <code>.pk</code> or <code>.uk</code>.</li>
+<li><code>example</code> is the <strong>second-level domain</strong> — the name you actually register.</li>
+<li><code>www</code> (or any other prefix) is a <strong>subdomain</strong> — an optional label in front, used to
+  organize different parts of a service (e.g., <code>api.example.com</code>, <code>blog.example.com</code>).</li>
+</ul>
+<p>You cannot register a domain name directly from some central authority. Instead, you go
+through a <strong>registrar</strong> — a company accredited to sell domain registrations, such as
+Namecheap, GoDaddy, or Google Domains. Registrars handle the paperwork of reserving a
+domain name for you (usually for one year at a time, renewable), but they don't host
+your website's content — that's a separate job, covered later in this lecture.</p>
+<div class="admonition note">
+<p class="admonition-title">Domains and hosting are two separate purchases</p>
+<p>A very common point of confusion for beginners: buying a domain name from a
+registrar does not, by itself, put a website online. You still need a <strong>server</strong> (or
+a hosting service) somewhere to actually store and run your application, and you
+need to tell your domain where that server is — which is exactly what DNS does.</p>
+</div>
+<h2 id="dns-the-internets-phone-book">DNS: The Internet's Phone Book<a class="headerlink" href="#dns-the-internets-phone-book" title="Permanent link">&para;</a></h2>
+<p><strong>DNS (Domain Name System)</strong> is the system that translates human-readable domain names
+into the IP addresses computers need to actually connect to each other. It's often
+described as "the Internet's phone book" — you look up a name, and it gives you a
+number.</p>
+<p>DNS information is organized into <strong>DNS records</strong>, stored on servers called <strong>DNS
+nameservers</strong>, grouped into <strong>zones</strong> (one zone per domain, typically). Here are the
+record types you'll use most often:</p>
+<table>
+<thead>
+<tr>
+<th>Record type</th>
+<th>Purpose</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>A</strong></td>
+<td>Maps a domain/subdomain to an IPv4 address</td>
+<td><code>example.com</code> → <code>93.184.216.34</code></td>
+</tr>
+<tr>
+<td><strong>AAAA</strong></td>
+<td>Maps a domain/subdomain to an IPv6 address (the newer, longer address format)</td>
+<td><code>example.com</code> → <code>2606:2800:220:1:...</code></td>
+</tr>
+<tr>
+<td><strong>CNAME</strong></td>
+<td>Maps a domain/subdomain to <em>another domain name</em>, instead of directly to an IP</td>
+<td><code>www.example.com</code> → <code>example.com</code></td>
+</tr>
+<tr>
+<td><strong>MX</strong></td>
+<td>Specifies which mail servers handle email for the domain, and in what priority order</td>
+<td><code>example.com</code> → <code>mail.example.com</code> (priority 10)</td>
+</tr>
+<tr>
+<td><strong>TXT</strong></td>
+<td>Holds arbitrary text, often used to verify domain ownership or configure email security policies (like SPF/DKIM)</td>
+<td><code>example.com</code> → <code>"v=spf1 include:_spf.google.com ~all"</code></td>
+</tr>
+</tbody>
+</table>
+<p>A <strong>CNAME</strong> record is especially useful for the deployments you'll do in this lecture:
+hosting platforms like Vercel or Netlify commonly ask you to point a subdomain (like
+<code>www.yourapp.com</code>) at <em>their</em> domain via a CNAME, rather than giving you a fixed IP
+address to use in an A record — because their own infrastructure's IP addresses can
+change behind the scenes.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>You generally cannot put a CNAME record on the "bare"/"root" domain itself (e.g.
+<code>example.com</code> with no subdomain) alongside other records like MX — this is a
+historical DNS rule. Most hosting platforms provide a workaround (often called
+"ALIAS" or "ANAME" records, or platform-specific instructions) for pointing a root
+domain at them.</p>
+</div>
+<h3 id="how-dns-resolution-works">How DNS Resolution Works<a class="headerlink" href="#how-dns-resolution-works" title="Permanent link">&para;</a></h3>
+<p>When you type <code>example.com</code> into your browser, a chain of lookups happens before your
+computer even sends the first request to the actual website. This process is called
+<strong>DNS resolution</strong>.</p>
+<pre class="mermaid"><code>sequenceDiagram
+    participant Browser
+    participant Resolver as Recursive DNS Resolver&lt;br/&gt;(e.g., your ISP or 8.8.8.8)
+    participant Root as Root Nameserver
+    participant TLD as .com TLD Nameserver
+    participant Auth as Authoritative Nameserver&lt;br/&gt;(for example.com)
+
+    Browser-&gt;&gt;Resolver: Where is example.com?
+    Resolver-&gt;&gt;Root: Where is example.com?
+    Root-&gt;&gt;Resolver: Ask the .com nameservers
+    Resolver-&gt;&gt;TLD: Where is example.com?
+    TLD-&gt;&gt;Resolver: Ask example.com's nameservers
+    Resolver-&gt;&gt;Auth: Where is example.com?
+    Auth-&gt;&gt;Resolver: It's at 93.184.216.34 (an A record)
+    Resolver-&gt;&gt;Browser: 93.184.216.34
+    Browser-&gt;&gt;Browser: Connects directly to 93.184.216.34</code></pre>
+<p>A few important pieces of vocabulary from this diagram:</p>
+<ul>
+<li>A <strong>recursive DNS resolver</strong> is the server that does the legwork of this whole chain
+  on your behalf — often run by your Internet provider, or a public option like Google's
+  <code>8.8.8.8</code> or Cloudflare's <code>1.1.1.1</code>.</li>
+<li>The <strong>authoritative nameserver</strong> for a domain is the server that holds the actual,
+  official DNS records for that specific domain — this is what you configure when you
+  set up your domain's DNS.</li>
+<li><strong>Nameserver configuration</strong> happens at your registrar: you tell the registrar which
+  nameservers are authoritative for your domain (often the registrar's own default
+  nameservers, or a different provider's, such as Cloudflare's, if you choose to manage
+  DNS there instead).</li>
+</ul>
+<h3 id="ttl-time-to-live">TTL (Time to Live)<a class="headerlink" href="#ttl-time-to-live" title="Permanent link">&para;</a></h3>
+<p>Every DNS record has a <strong>TTL (Time to Live)</strong> value, measured in seconds, which tells
+resolvers how long they are allowed to <strong>cache</strong> (temporarily store and reuse) that
+answer before asking again. A TTL of <code>3600</code> means "this answer is valid for one hour;
+don't bother re-checking with the authoritative nameserver more often than that."</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>example.com.    3600    IN    A    93.184.216.34
+</span></code></pre></div>
+<p>TTL is a trade-off:</p>
+<ul>
+<li>A <strong>high TTL</strong> (e.g., 24 hours) reduces load on nameservers and speeds up repeated
+  lookups, but means changes you make take longer to reach everyone, since cached
+  resolvers keep serving the old answer until it expires.</li>
+<li>A <strong>low TTL</strong> (e.g., 5 minutes) means changes propagate faster, at the cost of more
+  frequent lookups.</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>If you know you're about to change a DNS record — for example, moving your site to a
+new host — lower the TTL a day or two in advance. That way, when you make the actual
+change, resolvers around the world pick up the new value quickly instead of serving
+a stale, cached answer for hours.</p>
+</div>
+<h2 id="hosting-options">Hosting Options<a class="headerlink" href="#hosting-options" title="Permanent link">&para;</a></h2>
+<p>Once your domain points somewhere, something has to actually run your application and
+answer those requests. There are several broad categories of hosting, each with a
+different balance of control, effort, and cost.</p>
+<pre class="mermaid"><code>flowchart LR
+    Shared["Shared Hosting&lt;br/&gt;(least control, least effort)"] --&gt; VPS["VPS&lt;br/&gt;(more control)"] --&gt; PaaS["PaaS&lt;br/&gt;(managed, developer-friendly)"] --&gt; Serverless["Serverless&lt;br/&gt;(no server management)"]</code></pre>
+<ul>
+<li><strong>Shared hosting</strong> puts your website on a server alongside many other, unrelated
+  websites, all sharing the same computing resources. It's cheap and simple (often just
+  uploading files via FTP), but you have very little control over the server
+  environment, and one site's traffic spike can, in poorly managed setups, affect
+  others on the same machine. It's mostly used for simple static sites or basic PHP
+  applications these days, and is a poor fit for a Node.js/Express + MongoDB app.</li>
+<li><strong>VPS (Virtual Private Server)</strong> gives you your own isolated slice of a physical
+  server, with full administrator/root access, from providers like DigitalOcean, Linode,
+  or AWS EC2. You install and configure everything yourself — the operating system
+  updates, Node.js, a database, a web server, security patches — which gives you
+  maximum flexibility, but also maximum responsibility.</li>
+<li><strong>PaaS (Platform as a Service)</strong> manages the server infrastructure for you. You mostly
+  just provide your code (often by connecting a GitHub repository), and the platform
+  handles provisioning servers, installing dependencies, and restarting your app if it
+  crashes. Examples include <strong>Render</strong>, <strong>Railway</strong>, and <strong>Heroku</strong>. This is the
+  sweet spot for most student projects and many real startups: far less setup than a
+  VPS, while still running your actual backend code continuously.</li>
+<li><strong>Serverless</strong> hosting takes managed infrastructure even further: instead of a server
+  that runs continuously, your code runs only in response to individual requests/events,
+  automatically scaling up and down (even down to zero when nobody's using it).
+  Examples include AWS Lambda and Vercel/Netlify's serverless functions. You pay only
+  for actual usage, but each function invocation is typically short-lived and stateless,
+  which shapes how you can write your backend code (e.g., you generally can't keep a
+  long-lived, persistent database connection open the same way you would on a VPS or
+  PaaS).</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Control</th>
+<th>Setup effort</th>
+<th>Good for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Shared hosting</td>
+<td>Low</td>
+<td>Very low</td>
+<td>Simple static sites, basic PHP sites</td>
+</tr>
+<tr>
+<td>VPS</td>
+<td>Full</td>
+<td>High</td>
+<td>Full control, custom server setups, learning ops</td>
+</tr>
+<tr>
+<td>PaaS</td>
+<td>Medium</td>
+<td>Low</td>
+<td>Most student/startup full-stack apps</td>
+</tr>
+<tr>
+<td>Serverless</td>
+<td>Low (by design)</td>
+<td>Low, but different mental model</td>
+<td>Spiky/unpredictable traffic, event-driven code</td>
+</tr>
+</tbody>
+</table>
+<h2 id="deploying-your-mern-application">Deploying Your MERN Application<a class="headerlink" href="#deploying-your-mern-application" title="Permanent link">&para;</a></h2>
+<p>With the concepts in place, here's the practical workflow for shipping a typical MERN
+project: a React frontend and an Express backend, deployed separately, each to a
+platform suited for it.</p>
+<pre class="mermaid"><code>flowchart LR
+    Dev["Write code locally"] --&gt; Push["git push to GitHub"]
+    Push --&gt; BuildFE["Frontend platform&lt;br/&gt;builds React app&lt;br/&gt;(e.g., Vercel/Netlify)"]
+    Push --&gt; BuildBE["Backend platform&lt;br/&gt;builds Express app&lt;br/&gt;(e.g., Render)"]
+    BuildFE --&gt; LiveFE["Frontend live&lt;br/&gt;on CDN"]
+    BuildBE --&gt; LiveBE["Backend live&lt;br/&gt;as a running server"]
+    LiveFE &lt;-- "API calls (HTTPS)" --&gt; LiveBE</code></pre>
+<h3 id="build-and-environment-configuration">Build and Environment Configuration<a class="headerlink" href="#build-and-environment-configuration" title="Permanent link">&para;</a></h3>
+<p>Before deploying, understand the difference between your <strong>development</strong> environment
+and your <strong>production</strong> environment.</p>
+<p>In development, React's dev server (<code>npm start</code> / <code>npm run dev</code>) serves your app with
+helpful but heavy features like hot-reloading and unminified code, meant for a fast
+feedback loop while coding — not for real users. For production, you instead create a
+<strong>build</strong>: a command that compiles your React code into a small set of static,
+optimized HTML/CSS/JS files.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Creates an optimized, static production build in a &quot;build&quot; or &quot;dist&quot; folder</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>npm<span class="w"> </span>run<span class="w"> </span>build
+</span></code></pre></div>
+<p>Your backend also needs <strong>environment variables</strong> configured for production — the same
+<code>.env</code>-based approach from Lecture 30, but now the real values (a production database
+URL, a real JWT secret, third-party API keys) are entered into your hosting platform's
+dashboard, not committed to your repository.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># .env.example — committed to the repo as documentation, not real secrets</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nv">DATABASE_URL</span><span class="o">=</span>your-production-mongodb-uri
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="nv">JWT_SECRET</span><span class="o">=</span>your-jwt-secret
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="nv">NODE_ENV</span><span class="o">=</span>production
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="nv">PORT</span><span class="o">=</span><span class="m">5000</span>
+</span></code></pre></div>
+<h3 id="deploying-the-frontend-eg-to-vercel-or-netlify">Deploying the Frontend (e.g., to Vercel or Netlify)<a class="headerlink" href="#deploying-the-frontend-eg-to-vercel-or-netlify" title="Permanent link">&para;</a></h3>
+<p>Platforms like <strong>Vercel</strong> and <strong>Netlify</strong> specialize in hosting frontend applications
+(and serverless functions). The typical flow is:</p>
+<ol>
+<li>Push your React project to a GitHub repository.</li>
+<li>Connect that repository to Vercel/Netlify through their dashboard.</li>
+<li>Configure the <strong>build command</strong> (usually <code>npm run build</code>) and the <strong>output
+   directory</strong> (usually <code>build</code> for Create React App, or <code>dist</code> for Vite).</li>
+<li>The platform automatically builds and deploys your app, and gives you a live URL
+   (e.g., <code>your-app.vercel.app</code>) immediately.</li>
+<li>Optionally, connect your own custom domain by adding the DNS records (typically a
+   CNAME, as discussed earlier) that the platform tells you to add at your registrar.</li>
+</ol>
+<p>From then on, every time you push new commits to your connected branch, the platform
+automatically rebuilds and redeploys your site — this pattern is called <strong>continuous
+deployment</strong>.</p>
+<h3 id="deploying-the-backend-eg-to-render">Deploying the Backend (e.g., to Render)<a class="headerlink" href="#deploying-the-backend-eg-to-render" title="Permanent link">&para;</a></h3>
+<p>Your Express API needs somewhere that keeps a server process running continuously (to
+handle incoming requests, maintain a database connection, etc.), which is why it's
+usually deployed to a PaaS like <strong>Render</strong> or <strong>Railway</strong> rather than a static-file
+host like Vercel or Netlify.</p>
+<ol>
+<li>Push your Express project to GitHub (as a separate repository, or a separate folder
+   in the same repository, depending on how you organized your project).</li>
+<li>Connect the repository to Render and create a new "Web Service."</li>
+<li>Configure the <strong>start command</strong> (usually <code>node server.js</code> or <code>npm start</code>) and any
+   required <strong>environment variables</strong> (your database URL, JWT secret, etc.) in the
+   platform's dashboard.</li>
+<li>Render builds and starts your server, giving you a live URL (e.g.,
+   <code>your-api.onrender.com</code>) with HTTPS already configured.</li>
+<li>Update your deployed frontend's configuration to point its API requests at this live
+   backend URL, instead of <code>localhost</code>.</li>
+</ol>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Free tiers on platforms like Render often "spin down" your backend after a period of
+inactivity to save resources, and then take a noticeable few seconds to "wake up" on
+the next request. This is normal for a free/student project, but it's not what you'd
+want for a paying product with real users — that's what paid tiers (which keep your
+service running continuously) are for.</p>
+</div>
+<h3 id="reverse-proxies">Reverse Proxies<a class="headerlink" href="#reverse-proxies" title="Permanent link">&para;</a></h3>
+<p>A <strong>reverse proxy</strong> is a server that sits in front of your actual application server,
+receiving all incoming requests first and then forwarding them to the right place. Most
+hosting platforms (and many production setups you'd configure yourself on a VPS, using
+software like <strong>Nginx</strong>) use one, even if you never interact with it directly.</p>
+<pre class="mermaid"><code>flowchart LR
+    Client[Browser] --&gt; Proxy["Reverse Proxy&lt;br/&gt;(e.g., Nginx)"]
+    Proxy --&gt; App1["App Server Instance 1"]
+    Proxy --&gt; App2["App Server Instance 2"]</code></pre>
+<p>Reverse proxies commonly handle several jobs at once:</p>
+<ul>
+<li><strong>Terminating SSL/TLS</strong> — the proxy manages the HTTPS certificate and encrypted
+  connection with the browser, then talks to your actual application server over plain,
+  unencrypted HTTP on the same private machine/network — simplifying certificate
+  management to one place.</li>
+<li><strong>Load balancing</strong> — distributing incoming requests across multiple running copies of
+  your app server (as you saw in the N-tier diagram back in Lecture 2), for better
+  performance and reliability.</li>
+<li><strong>Serving static files directly</strong>, without bothering your application server with
+  requests for images, CSS, or JS files.</li>
+</ul>
+<p>When you deploy to a PaaS like Render, the platform runs a reverse proxy for you behind
+the scenes — issuing and renewing your HTTPS certificate automatically, so you don't
+have to configure TLS by hand, as noted back in Lecture 30.</p>
+<h3 id="basic-monitoring">Basic Monitoring<a class="headerlink" href="#basic-monitoring" title="Permanent link">&para;</a></h3>
+<p>Once your app is live, you need some way of knowing whether it's actually working —
+this is called <strong>monitoring</strong>. At a basic level, monitoring can be as simple as:</p>
+<ul>
+<li><strong>Uptime monitoring</strong> — a service (like UptimeRobot, or built into many PaaS
+  dashboards) that periodically pings your app and alerts you if it stops responding.</li>
+<li><strong>Logs</strong> — the output your server prints (<code>console.log</code>, error messages) so you can
+  see what happened around the time of a problem. Most hosting platforms give you a
+  dashboard to view these live logs without needing direct server access.</li>
+<li><strong>Error tracking</strong> — tools like Sentry that automatically capture and report
+  unhandled exceptions from your running application, with details like the stack trace
+  and which user/request triggered it.</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Even for a class project, check your hosting platform's logs dashboard right after
+deploying, and again the next day. It's the fastest way to catch a crash, a missing
+environment variable, or a database connection issue that isn't obvious just from
+clicking around the live site yourself.</p>
+</div>
+<h2 id="try-it-yourself">Try It Yourself<a class="headerlink" href="#try-it-yourself" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Using a DNS lookup tool (such as running <code>nslookup example.com</code> or <code>dig example.com</code>
+   in a terminal, or an online tool like <code>dnschecker.org</code>), look up the A record, MX
+   records, and TXT records for a real domain of your choice. Identify the TTL value for
+   at least one record.</li>
+<li>Deploy the frontend and backend of a MERN project you built this semester: push the
+   React app to Vercel or Netlify, and the Express API to Render or Railway. Update the
+   frontend's API base URL to point at your live backend, and confirm the two can talk
+   to each other over the Internet, not just on <code>localhost</code>.</li>
+</ol>
+<h2 id="key-takeaways">Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permanent link">&para;</a></h2>
+<ul>
+<li>A <strong>domain name</strong> is a human-readable stand-in for an IP address, purchased through a
+  <strong>registrar</strong> — but buying a domain does not by itself host your application.</li>
+<li><strong>DNS</strong> translates domain names to IP addresses using records like <strong>A</strong> (IPv4),
+  <strong>AAAA</strong> (IPv6), <strong>CNAME</strong> (alias to another domain), <strong>MX</strong> (mail servers), and
+  <strong>TXT</strong> (arbitrary text/verification data).</li>
+<li><strong>DNS resolution</strong> is a chain of lookups from recursive resolver to root, to TLD, to
+  authoritative nameserver; <strong>TTL</strong> controls how long each answer is cached along the
+  way.</li>
+<li>Hosting ranges from <strong>shared hosting</strong> (cheap, low control) to <strong>VPS</strong> (full control,
+  full responsibility) to <strong>PaaS</strong> (managed, developer-friendly — the best fit for most
+  student MERN projects) to <strong>serverless</strong> (event-driven, scales to zero).</li>
+<li>Deploying a MERN app typically means a <strong>build</strong> step for the React frontend
+  (deployed to something like Vercel/Netlify) and a continuously running Express server
+  (deployed to something like Render), each configured with production <strong>environment
+  variables</strong>.</li>
+<li>A <strong>reverse proxy</strong> sits in front of your app to handle SSL termination, load
+  balancing, and static file serving — most PaaS platforms run one for you
+  automatically, issuing HTTPS certificates without manual configuration.</li>
+<li>Basic <strong>monitoring</strong> — uptime checks, logs, and error tracking — is what tells you
+  whether your live application is actually working.</li>
+</ul>
+<h2 id="where-to-go-from-here">Where to Go From Here<a class="headerlink" href="#where-to-go-from-here" title="Permanent link">&para;</a></h2>
+<p>Congratulations — you've reached the end of Web Technologies (CSC336). Over this
+semester you went from the basics of how the web works all the way to building,
+securing, and deploying a complete full-stack MERN application. That is a genuinely
+substantial achievement, and the concepts you've learned here — client-server
+architecture, REST APIs, authentication and authorization, and now security and
+deployment — form the foundation of virtually all modern web development, regardless of
+which specific framework you use next.</p>
+<p>This course deliberately kept things practical and introductory. If you're curious about
+what a production-grade version of everything you've built here looks like — more
+advanced architecture patterns, deeper security practices (like the CSP policies and
+TLS internals we only touched on), and modern frameworks like Next.js that blend
+frontend and backend together — that's exactly what the <strong>Advanced Web Technologies
+(CSC337)</strong> course covers. We hope to see you there.</p>
+
+
+
+
+
+
+
+  
+    
+  
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 4, 2026 21:02:03 UTC">September 4, 2026</span>
+  </span>
+
+    
+    
+    
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../lecture-31-common-web-attacks-and-defenses/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 31. Common Web Attacks and Defenses">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                31. Common Web Attacks and Defenses
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../advanced-web-technologies/" class="md-footer__link md-footer__link--next" aria-label="Next: Overview">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Overview
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; Usman Akram — <a href="https://usmanlive.com">usmanlive.com</a>
+    </div>
+  
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/mua22/mern-web-book" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://usmanlive.com" target="_blank" rel="noopener" title="usmanlive.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M351.9 280H161c2.9 64.5 17.2 123.9 37.5 167.4 11.4 24.5 23.7 41.8 35.1 52.4 11.2 10.5 18.9 12.2 22.9 12.2s11.7-1.7 22.9-12.2c11.4-10.6 23.7-28 35.1-52.4 20.3-43.5 34.6-102.9 37.5-167.4zm-191-48h190.9c-2.8-64.5-17.1-123.9-37.4-167.4-11.4-24.4-23.7-41.8-35.1-52.4C268.1 1.7 260.4 0 256.4 0s-11.7 1.7-22.9 12.2c-11.4 10.6-23.7 28-35.1 52.4-20.3 43.5-34.6 102.9-37.5 167.4m-48 0c3.5-85.6 25.6-165.1 57.9-217.3C78.7 47.3 10.9 131.2 1.5 232zM1.5 280c9.4 100.8 77.2 184.7 169.3 217.3-32.3-52.2-54.4-131.7-57.9-217.3zm398.4 0c-3.5 85.6-25.6 165.1-57.9 217.3 92.1-32.7 159.9-116.5 169.3-217.3zm111.4-48C501.9 131.2 434.1 47.3 342 14.7c32.3 52.2 54.4 131.7 57.9 217.3z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.indexes", "navigation.top", "navigation.footer", "navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.prune", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "header.autohide"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
