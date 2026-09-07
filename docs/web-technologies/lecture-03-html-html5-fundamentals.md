@@ -78,6 +78,10 @@ and open it in any browser to see it work:
 </html>
 ```
 
+Rendered in a browser, the `<head>` content is invisible and only the `<body>` shows:
+
+![Rendered output: a bold "Hello, Web!" heading followed by a paragraph of text](../assets/img/lecture-03/doc-structure.png)
+
 Let's go through each part:
 
 - **`<!DOCTYPE html>`** — This must be the very first line. It is not a tag in the usual
@@ -127,6 +131,12 @@ are called **void elements** (also commonly called "self-closing" elements):
 <input type="text">
 ```
 
+![Rendered output: a line break, a horizontal divider, a broken-image icon showing its alt text because cat.jpg doesn't exist, and an empty text input box](../assets/img/lecture-03/void-elements.png)
+
+Notice the broken-image icon: `cat.jpg` doesn't actually exist in this example, so the
+browser falls back to showing the `alt` text right where the image would have been — a
+preview of why `alt` matters, covered properly in the Images section below.
+
 | Element | What it does |
 |---|---|
 | `<br>` | A single line break within text — forces the following content onto a new line |
@@ -171,15 +181,10 @@ next to other elements *before any CSS is applied at all*:
 <p>This word is <strong>important</strong>, and this is a <a href="#">link</a> in the middle of a sentence.</p>
 ```
 
-```mermaid
-flowchart TD
-    subgraph Block["Block-level: each takes a full new line"]
-        direction TB
-        B1["&lt;h1&gt;Page Title&lt;/h1&gt;"]
-        B2["&lt;p&gt;Paragraph one&lt;/p&gt;"]
-        B3["&lt;p&gt;Paragraph two&lt;/p&gt;"]
-    end
-```
+Here's the same code, rendered in a browser — notice the heading and both paragraphs each
+claim a full line, while `<strong>` and `<a>` sit *inside* the last paragraph's line:
+
+![Rendered output: a large "Page Title" heading, then two paragraphs each on their own line, then a final paragraph where "important" is bold and "link" is an underlined hyperlink flowing in the middle of the sentence](../assets/img/lecture-03/block-inline.png)
 
 | | Block-level | Inline |
 |---|---|---|
@@ -237,6 +242,13 @@ Not every attribute takes a value. A **boolean attribute** is either present (me
 <button disabled>Can't click me</button>
 ```
 
+Here is everything from this section rendered together — the link, an `<abbr>` using
+`title` (hover it in a real browser to see the tooltip), a `style`-colored paragraph, and
+the three boolean-attribute form controls (notice the pre-checked checkbox and the
+grayed-out disabled button):
+
+![Rendered output: a "Visit COMSATS" link, a sentence with a dotted-underlined "W3C" abbreviation, a red "Urgent" paragraph, a text input with placeholder "required field", a pre-checked checkbox labeled Subscribe, and a grayed-out disabled button reading "Can't click me"](../assets/img/lecture-03/attributes-demo.png)
+
 Writing `required="required"` is also valid HTML5 (some developers do this for clarity in
 JSX/React code, which you'll meet later in this course), but the bare `required` form
 shown above is what you'll see most often in plain HTML.
@@ -283,6 +295,8 @@ HTML provides six levels of headings, `<h1>` through `<h6>`, from most to least 
 <h3>Sub-section Heading</h3>
 ```
 
+![Rendered output: three headings of decreasing size and boldness, from "Chapter Title" (largest) to "Sub-section Heading" (smallest)](../assets/img/lecture-03/headings.png)
+
 !!! note "Only one `<h1>` per page"
     Use `<h1>` for the main title of the page, and step down through `<h2>`, `<h3>`, and so
     on for sub-headings. Skipping levels (going from `<h1>` straight to `<h4>`) or using
@@ -307,6 +321,10 @@ Common text-formatting elements:
 | `<sub>` / `<sup>` | Subscript / superscript | `H<sub>2</sub>O`, `x<sup>2</sup>` |
 | `<br>` | Line break | `Line one<br>Line two` |
 | `<hr>` | Horizontal rule (divider line) | `<hr>` |
+
+All of these rendered together:
+
+![Rendered output: bold "Warning" followed by italic "really" important; bold text and italic text; yellow-highlighted "highlighted" text and small "terms apply" text; H with a subscript 2 and O, and x with a superscript 2; "Line one" and "Line two" on separate lines; then a horizontal divider](../assets/img/lecture-03/text-formatting.png)
 
 ## Hyperlinks: Absolute vs. Relative URLs
 
@@ -336,6 +354,10 @@ There are two kinds of URLs you can put in `href`:
   <a href="../index.html">Back to home (one folder up)</a>
   ```
 
+All four links rendered together (an absolute link followed by three relative ones):
+
+![Rendered output: four blue underlined links stacked vertically, reading "HTML on Wikipedia", "About Us", "Contact (in a subfolder)", and "Back to home (one folder up)"](../assets/img/lecture-03/links.png)
+
 !!! tip "When to use which"
     Use absolute URLs for links leaving your site, and relative URLs for links that stay
     within your own site. Relative URLs have a big advantage: if you move your entire
@@ -357,6 +379,8 @@ key attributes:
 ```html
 <img src="images/logo.png" alt="COMSATS logo" width="200" height="80">
 ```
+
+![Rendered output: a 200 by 80 pixel image showing a dark blue box with the word COMSATS in white text](../assets/img/lecture-03/images.png)
 
 - `src` (source) — the path to the image file, which can be relative or absolute, just like
   a link's `href`.
@@ -381,6 +405,12 @@ HTML5 introduced native elements for playing media, without needing any external
     Your browser does not support the video element.
 </video>
 ```
+
+Even without a real, playable file behind `song.mp3`/`movie.mp4`, the browser still draws
+its native player controls, because `controls` is a boolean attribute that only depends on
+being present — not on whether a file actually loads:
+
+![Rendered output: a native audio player control bar with play button, timestamp, seek bar, volume, and menu; below it, a native video player showing a black video area with the same style of control bar](../assets/img/lecture-03/audio-video.png)
 
 - The `controls` attribute makes the browser show a built-in play/pause/volume bar.
 - The `<source>` child element specifies the actual file; you can list several `<source>`
@@ -416,6 +446,13 @@ header cell), and `<td>` (table data cell):
     </tbody>
 </table>
 ```
+
+![Rendered output: a table with header row Name, Course, Grade, and two data rows for Ali (CSC336, A) and Sara (CSC336, A+), with light gray gridlines added for clarity](../assets/img/lecture-03/tables.png)
+
+!!! note
+    Plain HTML tables have no visible gridlines by default — the borders in the screenshot
+    above were added with a little CSS purely so the structure is easy to see. You will
+    learn to style tables (and everything else) with CSS starting in the next unit.
 
 - `<thead>` groups the header row(s); `<tbody>` groups the actual data rows. Both are
   optional but recommended for clarity and styling.
@@ -464,6 +501,10 @@ key-value data):
     <dd>The language used to style web pages.</dd>
 </dl>
 ```
+
+All three list types rendered together — unordered, then ordered, then description:
+
+![Rendered output: a bulleted list of HTML, CSS, JavaScript; a numbered list of three steps; and a description list pairing the terms HTML and CSS with their definitions](../assets/img/lecture-03/lists.png)
 
 - `<dl>` — description list (the container)
 - `<dt>` — description term (the word being defined)
