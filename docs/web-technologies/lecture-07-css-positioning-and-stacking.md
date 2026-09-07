@@ -50,14 +50,11 @@ other positioning schemes.
 CSS offers four ways to move an element out of normal flow: `relative`, `absolute`,
 `fixed`, and `sticky`.
 
-```mermaid
-flowchart TD
-    P["position property"] --> S["static (default)<br/>normal flow, offsets ignored"]
-    P --> R["relative<br/>shifted from its own normal spot,<br/>space still reserved"]
-    P --> A["absolute<br/>removed from flow,<br/>placed relative to nearest positioned ancestor"]
-    P --> F["fixed<br/>removed from flow,<br/>placed relative to the viewport, stays on scroll"]
-    P --> ST["sticky<br/>normal flow until a scroll threshold,<br/>then behaves like fixed"]
-```
+Rather than a diagram, the clearest way to see what each value actually does is to render
+each one and compare it against normal flow directly. Each panel below uses the exact
+offset values shown in this lecture's code examples:
+
+![Rendered output: five labeled panels stacked vertically. The first shows three boxes A, B, C in normal static flow. The second shows position relative with a dashed outline marking Box B's original reserved slot next to the solid Box B shifted 10px down and 20px right, while Box C stays put. The third shows a bordered container with position relative and a pink absolute box pinned to its top-right corner, outside normal flow. The fourth shows a mock browser viewport with a purple floating button resting in the bottom-right corner, representing position fixed. The fifth shows a mock scrollable section with a blue sticky heading bar resting at the top, representing position sticky before its scroll threshold is reached](../assets/img/lecture-07/position-values-comparison.png)
 
 ### `relative`
 
@@ -162,6 +159,10 @@ This is why you will very often see a pattern like this:
 </div>
 ```
 
+Rendered in a browser, the badge sits pinned to the card's own top-right corner:
+
+![Rendered output: a white rounded card with the text "Card content goes here." and a small green rounded "New" badge pinned to the card's top-right corner](../assets/img/lecture-07/card-badge.png)
+
 Here, `.card` is given `position: relative` for the sole purpose of becoming the containing
 block for `.badge`, so the badge sits in the corner of the card instead of the corner of
 the entire browser window.
@@ -190,6 +191,11 @@ one with the **higher `z-index`** is drawn on top.
   z-index: 2; /* drawn on top of .back */
 }
 ```
+
+Rendered in a browser, with the two boxes overlapping by design, `.front` visibly covers
+part of `.back` because its `z-index` is higher:
+
+![Rendered output: two overlapping rounded rectangles, a blue box labeled ".back (z-index: 1)" partially covered by an orange box labeled ".front (z-index: 2)" sitting on top of it](../assets/img/lecture-07/z-index-stacking.png)
 
 !!! warning "z-index only works on positioned elements"
     `z-index` has no effect on elements whose `position` is `static` (the default). The
@@ -238,6 +244,11 @@ also (mis)used floats to build entire multi-column page layouts.
 </div>
 ```
 
+Rendered in a browser (with a placeholder image standing in for `photo.jpg`), the paragraph
+text wraps along the right side of the floated image instead of starting below it:
+
+![Rendered output: a blue rectangular placeholder image labeled "A photo" floated to the left, with a paragraph of text wrapping around its right side and continuing below it once the image's height is cleared](../assets/img/lecture-07/float-wrap.png)
+
 A floated element is taken out of normal flow horizontally: it shifts to the left or right
 edge of its container, and other inline content flows around it.
 
@@ -259,6 +270,11 @@ Applying a class like `.clearfix` (using the `clear` property) to the parent for
 account for the height of its floated children again. The `clear` property tells an element
 "do not sit beside a floated element on this side — move below it instead," which is what
 makes this trick work.
+
+The difference is easy to miss in prose but obvious once rendered side by side — the same
+container and floated children, with and without `.clearfix` applied:
+
+![Rendered output: two bordered containers each holding two orange floated boxes labeled Floated child 1 and Floated child 2. The top container, without clearfix, has its border collapsed to a thin sliver above the floated boxes, which spill out below it. The bottom container, with clearfix applied, has its border stretched down to fully enclose both floated boxes](../assets/img/lecture-07/clearfix-before-after.png)
 
 !!! warning "Floats vs. modern layout"
     Floats are still found in a lot of existing code, and it's worth understanding them for
