@@ -57,6 +57,8 @@ Flexbox always involves two roles:
 Just adding `display: flex` already does something useful: the items line up in a row,
 side by side, instead of stacking vertically the way plain `<div>`s normally do.
 
+![Rendered output: a navigation bar with a blue "MySite" logo box followed by three green "Home", "About", "Contact" boxes, all lined up in a single horizontal row](../assets/img/lecture-09/flex-nav-intro.png)
+
 ### The main axis and the cross axis
 
 Flexbox thinks in terms of two axes, and this is the single most important idea to
@@ -66,15 +68,9 @@ understand before the individual properties make sense:
   horizontal (left to right).
 - The **cross axis** is perpendicular to the main axis. By default this is vertical.
 
-```mermaid
-flowchart LR
-    subgraph Container["flex container (flex-direction: row)"]
-        direction LR
-        I1["item 1"] --> I2["item 2"] --> I3["item 3"]
-    end
-    Container -.->|"main axis →"| MA[" "]
-    Container -.->|"cross axis ↓"| CA[" "]
-```
+Here is a real `display: flex` row with the two axes marked directly on it:
+
+![Rendered output: a flex container holding three blue boxes labeled item 1, item 2, item 3 laid out in a row; a green horizontal line below the row labeled "main axis" with a right-pointing arrow, and a red vertical line to the left labeled "cross axis" with a down-pointing arrow](../assets/img/lecture-09/main-cross-axis.png)
 
 Every alignment property in Flexbox lines up along *one* of these two axes — which is why
 `flex-direction` (which chooses the main axis) is usually the first property you set.
@@ -95,6 +91,10 @@ other property.
 }
 ```
 
+All four values, rendered side by side with the same three items:
+
+![Rendered output: four labeled flex containers, each with blue, green, and orange boxes numbered item 1, item 2, item 3 — row shows them left to right, row-reverse shows them right to left, column shows them stacked top to bottom, and column-reverse shows them stacked bottom to top](../assets/img/lecture-09/flex-direction-comparison.png)
+
 ### `justify-content` — alignment along the main axis
 
 ```css
@@ -109,6 +109,11 @@ other property.
 }
 ```
 
+All six values, rendered with the same three items so the spacing differences are easy to
+compare directly:
+
+![Rendered output: six labeled flex rows, each with the same blue, green, and orange boxes but different justify-content values — flex-start packs them at the left, flex-end packs them at the right, center packs them in the middle, space-between spreads them with the first and last touching the edges, space-around gives each item equal space on both sides, and space-evenly makes every gap including the edges exactly equal](../assets/img/lecture-09/justify-content-comparison.png)
+
 ### `align-items` — alignment along the cross axis
 
 ```css
@@ -122,6 +127,11 @@ other property.
 }
 ```
 
+Here the three items deliberately have different heights, so each value's effect on the
+cross axis (vertical, since the main axis is still the default row) is unmistakable:
+
+![Rendered output: four labeled flex rows with three items of different heights (short, medium, tall) — stretch makes all three items fill the full container height, flex-start aligns their tops, flex-end aligns their bottoms, and center aligns their vertical centers](../assets/img/lecture-09/align-items-comparison.png)
+
 !!! tip "The famous centering trick"
     To perfectly center something both horizontally and vertically — historically one of the
     most annoying things to do in CSS — you only need three lines:
@@ -132,6 +142,8 @@ other property.
       align-items: center;
     }
     ```
+
+    ![Rendered output: a single box reading "Centered!" sitting exactly in the middle, both horizontally and vertically, of a larger dashed-border container](../assets/img/lecture-09/centering-trick.png)
 
 ### `flex-wrap`
 
@@ -146,6 +158,11 @@ necessary. `flex-wrap` lets items move onto new lines instead.
   /* flex-wrap: wrap-reverse; wraps, but new lines stack in reverse order */
 }
 ```
+
+The same five fixed-width items in the same narrow container, once with `nowrap` (the
+default) and once with `wrap`:
+
+![Rendered output: two labeled flex containers holding five fixed-width colored items — with flex-wrap: nowrap the fifth item is squeezed past the edge of the dashed container border, while with flex-wrap: wrap the same five items break cleanly onto two lines, three on the first line and two on the second](../assets/img/lecture-09/flex-wrap-demo.png)
 
 ### `flex-grow`, `flex-shrink`, and `flex-basis`
 
@@ -180,6 +197,11 @@ whatever space is left, resulting in equal-width columns:
 If one item should be twice as wide as the others, give it `flex-grow: 2` while the rest
 keep `flex-grow: 1` — Flexbox splits the leftover space in that 2:1:1 ratio.
 
+Three rendered examples: items with different starting sizes (`flex-basis`) growing by the
+same amount, the equal-column `flex: 1` pattern, and the 2:1:1 growth ratio:
+
+![Rendered output: three labeled flex rows — the first has three items with different flex-basis values (100px, 200px, 300px) that keep their relative size difference after growing; the second has three equally-sized columns from flex: 1 on every item; the third has three items where the first is visibly about twice as wide as the other two, from flex-grow: 2 versus flex-grow: 1](../assets/img/lecture-09/flex-grow-shrink-basis.png)
+
 ## CSS Grid: Rows, Columns, and the `fr` Unit
 
 **CSS Grid** is a layout system for arranging items into rows *and* columns at the same
@@ -202,6 +224,11 @@ time — a true two-dimensional grid, unlike Flexbox's single row-or-column mode
   gap: 16px; /* space between rows and columns */
 }
 ```
+
+Four items in a 3-column grid: the first three fill row one, and the fourth automatically
+flows onto row two, leaving the rest of that row empty since there is no fifth or sixth item:
+
+![Rendered output: a grid with a light gray background showing four numbered colored cells — three cells across the top row and one cell in the bottom-left, each 200 by 150 pixels with visible gaps between them](../assets/img/lecture-09/grid-basic-demo.png)
 
 ### The `fr` unit
 
@@ -226,6 +253,11 @@ letting columns resize proportionally with the browser window.
 }
 ```
 
+All three column patterns, rendered at the same overall width so the proportions are
+directly comparable:
+
+![Rendered output: three labeled grid layouts of the same total width — the first splits into three equal columns, the second splits into two columns where the left one is twice as wide as the right, and the third has a fixed 250-pixel sidebar column next to a wide flexible main column](../assets/img/lecture-09/fr-unit-comparison.png)
+
 ### `gap`
 
 `gap` sets the spacing between grid cells in one declaration (you can also use
@@ -240,6 +272,8 @@ letting columns resize proportionally with the browser window.
 ```
 
 `repeat(3, 1fr)` is shorthand for `1fr 1fr 1fr` — useful when you have many columns.
+
+![Rendered output: a grid with a gray background showing six numbered colored cells arranged in three equal columns and two rows, with a clearly visible 20 pixel gap of background color between every cell](../assets/img/lecture-09/grid-gap-repeat-demo.png)
 
 ## Grid Line Placement, Spanning, and Named Areas
 
@@ -256,6 +290,11 @@ end at.
 }
 ```
 
+`item-a` explicitly spans the first two columns of row one; the remaining items are left
+to auto-place themselves into whatever grid cells are left:
+
+![Rendered output: a 3-column, 2-row grid where the blue item-a cell stretches across the first two columns of the top row, a green item-b fills the remaining top-right cell, and three more cells (orange, purple, red) fill the entire bottom row](../assets/img/lecture-09/grid-line-placement.png)
+
 ### Spanning multiple cells
 
 The `span` keyword is a shorter way to say "cover this many tracks" without counting exact
@@ -270,6 +309,8 @@ line numbers.
 
 This is extremely common for "featured" cards in a photo gallery or dashboard, where one
 item is meant to stand out by being visibly larger than the rest.
+
+![Rendered output: a 4-column photo-gallery-style grid where one large blue "featured" cell occupies a 2 by 2 block in the top-left, while eight smaller numbered cells fill in around it](../assets/img/lecture-09/grid-span-demo.png)
 
 ### Named grid areas
 
@@ -299,6 +340,8 @@ Each quoted string in `grid-template-areas` represents one row, and each word in
 represents one column's content in that row. Repeating a name (like `header header`) makes
 that area span both columns. This is one of the most readable ways to build a classic page
 layout, because you can *see* the shape of the page directly in the CSS.
+
+![Rendered output: a classic page layout with a full-width blue header bar across the top, a green sidebar column on the left, an orange main content area on the right, and a full-width purple footer bar across the bottom](../assets/img/lecture-09/named-grid-areas.png)
 
 ```mermaid
 flowchart TB
@@ -352,6 +395,11 @@ contents.
   align-items: center;
 }
 ```
+
+Both techniques rendered together: Grid lays out the sidebar and main columns, while
+Flexbox spreads the logo, nav links, and button apart inside the header at the top of main:
+
+![Rendered output: a two-column page skeleton with a green sidebar on the left; the right column contains a blue header bar with "Logo" pinned to the left, three nav links in the middle, and a white "Sign In" button pinned to the right, followed below by an orange main content block](../assets/img/lecture-09/flex-grid-together.png)
 
 ## Try It Yourself
 
