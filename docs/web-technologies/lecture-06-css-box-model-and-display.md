@@ -36,19 +36,12 @@ of four layers, nested inside each other like Russian dolls:
 4. **Margin** — transparent space *outside* the border, separating this element from its
    neighbours. Margin is never filled with background colour — it's just empty space.
 
-```mermaid
-flowchart TD
-    subgraph Margin[" MARGIN "]
-      direction TB
-      subgraph Border[" BORDER "]
-        direction TB
-        subgraph Padding[" PADDING "]
-          direction TB
-          Content["CONTENT<br/>(text, image, etc.)"]
-        end
-      end
-    end
-```
+Here is a small demo built from those same four layers, each given its own background colour
+so the nesting is easy to see (the border layer below is drawn wider than the 2px it will
+actually be styled with further down, purely so it shows up as a visible band in the
+screenshot):
+
+![Rendered output: four nested colored rectangles labeled MARGIN (outermost, cream), BORDER (orange band), PADDING (green band), and CONTENT (innermost, blue, showing "width: 300px / height: 150px")](../assets/img/lecture-06/box-model-layers.png)
 
 You control each layer with its own set of CSS properties:
 
@@ -118,6 +111,11 @@ the actual gap.
 You might expect a 50px gap (30px + 20px) between these two boxes, but because of margin
 collapsing, the actual gap is only **30px** — the larger of the two.
 
+Rendered in a browser (background colours added to the two boxes purely so their edges are
+easy to spot):
+
+![Rendered output: a teal box labeled "First box (margin-bottom: 30px)" stacked above an orange box labeled "Second box (margin-top: 20px)", with a single 30px gap between them rather than a 50px gap](../assets/img/lecture-06/margin-collapsing.png)
+
 !!! warning "Margin collapsing only happens vertically"
     Margin collapsing applies only to the **top and bottom** margins of block-level
     elements in normal document flow. It does **not** happen with left/right margins, and
@@ -166,6 +164,12 @@ the width you specified.
 /* actual rendered width = exactly 300px */
 ```
 
+Here are both boxes rendered side by side — same `width: 300px`, same `padding: 20px`, same
+`border: 2px solid black`, differing only in `box-sizing`. Notice the `content-box` box is
+visibly wider on screen than the `border-box` box, even though both were told `width: 300px`:
+
+![Rendered output: two boxes side by side, the left one labeled "box-sizing: content-box" measuring visibly wider on screen (344px) than the right one labeled "box-sizing: border-box" (exactly 300px), despite both being given the same width, padding, and border values](../assets/img/lecture-06/box-sizing-comparison.png)
+
 !!! tip "border-box is the practical default for real projects"
     Because `border-box` makes sizing much more predictable, most real-world style sheets
     start with this reset, which applies `border-box` to every element on the page:
@@ -207,6 +211,19 @@ sensible limit on wide monitors.
   overflow: hidden;   /* clips content that doesn't fit — extra content is not shown */
 }
 ```
+
+Here is the same 200×100 box with more text than it can hold, rendered twice — once with
+`overflow: visible` (the default) and once with `overflow: hidden` — so you can see the
+difference directly:
+
+![Rendered output: two identical 200 by 100 pixel boxes with the same overflowing paragraph of text; the left box labeled "overflow: visible" lets the extra lines spill out below its border, still readable; the right box labeled "overflow: hidden" clips the extra lines off cleanly at the border](../assets/img/lecture-06/overflow-comparison.png)
+
+!!! note "About `scroll` and `auto`"
+    A static screenshot can't show a scrollbar in action. `overflow: scroll` and
+    `overflow: auto` both clip the content exactly like `hidden` does visually, but they
+    also add a scrollbar so the user can scroll down to reach the hidden part — `scroll`
+    always shows the scrollbar, `auto` only shows it when the content actually overflows.
+    Try both live in a real browser to see the scrollbar appear.
 
 Common values:
 
@@ -278,13 +295,9 @@ layout.
 }
 ```
 
-```mermaid
-flowchart LR
-    A["display: block"] --> A1["Full width, new line,<br/>width/height respected"]
-    B["display: inline"] --> B1["Flows in text, no new line,<br/>width/height ignored"]
-    C["display: inline-block"] --> C1["Flows in text, no new line,<br/>width/height respected"]
-    D["display: none"] --> D1["Removed from layout,<br/>takes up zero space"]
-```
+All four values, rendered together and compared directly:
+
+![Rendered output: four labeled sections — "display: block" showing three full-width teal bars stacked on their own lines; "display: inline" showing three orange highlighted spans flowing inside a sentence; "display: inline-block" showing three green boxes with a fixed size sitting side by side; and "display: none" showing the text "Visible before Visible after" with no gap where a hidden element sits in the markup](../assets/img/lecture-06/display-comparison.png)
 
 ## Borders, Shadows, and Consistent Spacing
 
