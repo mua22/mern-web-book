@@ -49,6 +49,10 @@ image, anything with a box around it.
 }
 ```
 
+Rendered in a browser, the three shapes side by side:
+
+![Rendered output: a purple rounded rectangle labeled "border-radius: 12px", a green perfect circle labeled "border-radius: 50%", and a blue rounded box with one square corner labeled "20px 20px 20px 0"](../assets/img/lecture-08/border-radius-shapes.png)
+
 !!! note "Percentages vs. pixels"
     A pixel value (`12px`) rounds by a fixed amount. A percentage (`50%`) rounds relative to
     the element's own size — that is the trick used to turn a square image into a circle.
@@ -73,6 +77,10 @@ radial (spreading out from a center point).
 }
 ```
 
+All three gradients rendered together:
+
+![Rendered output: a blue-to-cyan linear gradient box labeled ".banner", a radial gradient box fading from white in the center to dark gray at the edges labeled ".spotlight", and an orange-to-red diagonal linear gradient box labeled ".diagonal"](../assets/img/lecture-08/gradients-linear-radial-diagonal.png)
+
 You can add as many color "stops" as you like, and even control where each color starts:
 
 ```css
@@ -87,6 +95,10 @@ You can add as many color "stops" as you like, and even control where each color
   );
 }
 ```
+
+Rendered, the five color stops blend smoothly from red through to violet:
+
+![Rendered output: a horizontal bar gradient blending from red to yellow to green to blue to violet, left to right](../assets/img/lecture-08/gradient-rainbow-stops.png)
 
 ### Shadows
 
@@ -107,6 +119,12 @@ h1 {
 }
 ```
 
+The `.card`'s default `box-shadow` next to its `:hover` end state (bigger, softer shadow), and the `text-shadow`'d heading:
+
+![Rendered output: two white rounded cards, the left with a small soft drop shadow labeled "Default" and the right with a larger, more spread-out drop shadow labeled "On hover (end state)"](../assets/img/lecture-08/box-shadow-default-hover.png)
+
+![Rendered output: bold black heading text "Shadowed Heading" with a soft dark drop shadow offset down and to the right](../assets/img/lecture-08/text-shadow-heading.png)
+
 `rgba()` is a color function that adds a fourth value — **alpha**, or transparency — on top
 of the usual red, green, and blue. `rgba(0, 0, 0, 0.2)` is black at 20% opacity, which is
 why it reads as a soft gray shadow rather than a harsh black block.
@@ -114,6 +132,8 @@ why it reads as a soft gray shadow rather than a harsh black block.
 !!! tip "Multiple shadows"
     You can stack shadows by separating them with commas: `box-shadow: 0 1px 2px #000, 0 0 20px gold;`
     draws a subtle drop shadow and a glow at the same time.
+
+    ![Rendered output: a white rounded box sitting on a light gray background, with a thin dark drop shadow directly beneath it and a soft gold glow spreading outward around its edges](../assets/img/lecture-08/multiple-shadows-glow.png)
 
 ### Opacity
 
@@ -125,6 +145,10 @@ invisible) to `1` (fully solid).
   opacity: 0.5; /* 50% transparent */
 }
 ```
+
+A full-opacity box next to the same box at `opacity: 0.5` — notice the text inside fades along with the background:
+
+![Rendered output: two identical red boxes reading "opacity: 1" and "opacity: 0.5", the second visibly lighter and more washed-out including its white text](../assets/img/lecture-08/opacity-comparison.png)
 
 !!! warning "opacity affects children too"
     `opacity` makes *everything inside* the element transparent, including its text. If you
@@ -162,6 +186,10 @@ since it does not cause other elements to jump around.
 }
 ```
 
+An untransformed original square next to each transformed version, for comparison:
+
+![Rendered output: six purple squares in a row — the first plain and untransformed, then the same square rotated 15 degrees, scaled up 20%, translated right and down, skewed 10 degrees, and finally all three combined](../assets/img/lecture-08/transforms-2d-comparison.png)
+
 These are all **2D transforms** — they move an element around a flat, two-dimensional
 surface (left/right, up/down, and rotating in that same flat plane).
 
@@ -183,6 +211,10 @@ the "viewer" is from the 3D scene.
   transform: rotateY(0deg);
 }
 ```
+
+The card at its default `rotateY(25deg)` angle next to its `:hover` end state (`rotateY(0deg)`, flat-on) — the `perspective: 800px` on the parent `.scene` is what makes the default state look tilted in 3D instead of just squashed:
+
+![Rendered output: two rounded gradient cards reading "rotateY(25deg)" and "rotateY(0deg)" — the left card appears subtly tilted in 3D perspective, the right sits flat facing the viewer](../assets/img/lecture-08/transform-3d-perspective-card.png)
 
 | Function | What it does |
 |---|---|
@@ -208,6 +240,10 @@ button:hover {
 }
 ```
 
+A static screenshot cannot show the smooth animated change itself — that part you have to see by actually hovering the button in a real browser — but it can show the two endpoints the transition moves between: the default button, and the `:hover` styles applied directly as the end state (darker blue, slightly scaled up):
+
+![Rendered output: two blue rounded "Click Me" buttons, the left a lighter royal blue at normal size labeled "Default", the right a darker navy blue and slightly larger labeled "On hover (end state)"](../assets/img/lecture-08/transition-button-default-hover.png)
+
 The `transition` shorthand takes: `property | duration | timing-function | delay`. Using
 `all` instead of naming a property (`transition: all 0.3s;`) animates every property that
 changes, which is convenient but can be slower to render on complex pages.
@@ -230,6 +266,10 @@ sequence — multiple steps, or an animation that plays automatically without a 
   /* name | duration | timing-function | iteration-count */
 }
 ```
+
+Like the transition above, the actual looping motion only shows up in a live browser. What a still image *can* show is the three keyframe positions the ball passes through on every cycle:
+
+![Rendered output: three orange circles labeled "0% (translateY(0))", "50% (translateY(-20px))", and "100% (translateY(0))" — the middle circle sitting noticeably higher than the other two](../assets/img/lecture-08/keyframe-bounce-frames.png)
 
 You define the `@keyframes` rule once, naming it (`bounce`), then attach it to any element
 with the `animation` property. `infinite` means it loops forever; you could instead write
@@ -327,6 +367,10 @@ the page:
 }
 ```
 
+The same `.button` rule, rendered twice, with nothing changed except the value of `--main-color` in scope — proof that the variable, not a separate style rule, is what controls the rendered color:
+
+![Rendered output: two rounded buttons both labeled "Button" using identical styling — the left purple, captioned "--main-color: #6c5ce7 (default)", the right green, captioned "--main-color overridden to #00b894 -- same .button rule, new rendered color"](../assets/img/lecture-08/custom-properties-demo.png)
+
 You read a custom property's value with the `var()` function. Unlike a preprocessor variable
 (such as one in Sass), a CSS custom property is a **live, real value in the browser** — you
 can even change it at runtime with JavaScript, and every element using `var(--main-color)`
@@ -361,6 +405,8 @@ design**, which you will study in depth in Lecture 10.
 }
 ```
 
+A static screenshot cannot demonstrate a media query doing its job — the whole point is that the layout changes as the viewport width changes. This is one you need to see by actually resizing a real browser window (or dragging the responsive-mode device toolbar in DevTools) and watching `.container` snap between its narrow and wide styles as it crosses the `768px` threshold.
+
 ### Feature queries
 
 A **feature query**, written with `@supports`, applies CSS only if the visitor's browser
@@ -379,6 +425,8 @@ while providing a fallback for older browsers.
   }
 }
 ```
+
+Every modern browser used to view this book already supports `display: grid`, so a screenshot here would only ever show the `@supports` branch winning — it cannot honestly demonstrate the fallback path an older browser would take. Trust the mechanism: `@supports` checks real, current browser support before applying its block, the same way `@media` checks real, current viewport size.
 
 ### Vendor prefixes
 
