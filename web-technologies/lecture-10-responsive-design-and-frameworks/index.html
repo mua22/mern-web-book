@@ -2827,6 +2827,12 @@ layout genuinely responsive rather than just "resized."</p>
 </span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="w">  </span><span class="k">width</span><span class="p">:</span><span class="w"> </span><span class="mi">90</span><span class="kt">%</span><span class="p">;</span><span class="w"> </span><span class="c">/* always 90% of its parent&#39;s width, whatever that is */</span>
 </span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="p">}</span>
 </span></code></pre></div>
+<p>The same page rendered at a wide desktop width and at a narrow mobile width shows why fluid
+units matter: the dark <code>.hero</code> block always spans the full browser width and 60% of the
+browser height, and the light <code>.card</code> box always spans 90% of its own container, in both
+cases:</p>
+<p><img alt="Rendered output: a dark hero block reading &quot;.hero — width: 100vw; height: 60vh;&quot; filling the full browser width, with a light blue card below it reading &quot;.card — width: 90% of its parent&quot;, shown at a wide desktop width" src="../../assets/img/lecture-10/fluid-units-wide.png" /></p>
+<p><img alt="Rendered output: the same dark hero block and light card, now much narrower and re-wrapped because the browser window itself is narrow, at a narrow mobile width" src="../../assets/img/lecture-10/fluid-units-narrow.png" /></p>
 <div class="admonition tip">
 <p class="admonition-title">Why rem instead of px for text?</p>
 <p>Some users increase their browser's default font size for accessibility reasons (poor
@@ -2860,6 +2866,11 @@ value you put inside a <code>min-width</code> or <code>max-width</code> media qu
 </span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="w">  </span><span class="p">}</span>
 </span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="p">}</span>
 </span></code></pre></div>
+<p>Applying this exact CSS to a <code>.container</code> holding three cards shows the collapse in action:
+a wide screen lays the cards out in a row, and a narrow screen — below the 768px breakpoint —
+stacks them into a single column instead:</p>
+<p><img alt="Rendered output: three light blue cards labeled Card 1, Card 2, and Card 3 arranged side by side in a single row, at a wide desktop width above the 768px breakpoint" src="../../assets/img/lecture-10/media-query-wide.png" /></p>
+<p><img alt="Rendered output: the same three cards now stacked one above the other in a single column, at a narrow mobile width below the 768px breakpoint" src="../../assets/img/lecture-10/media-query-narrow.png" /></p>
 <p>There is no single "correct" set of breakpoints — they should match your actual content,
 not a fixed rulebook. That said, most frameworks (including Bootstrap, which you will see
 below) converge on a similar rough set of common device widths: around 576px (large
@@ -2872,6 +2883,11 @@ horizontal scrolling — one of the most common beginner mistakes. The fix is si
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="k">height</span><span class="p">:</span><span class="w"> </span><span class="kc">auto</span><span class="p">;</span>
 </span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="p">}</span>
 </span></code></pre></div>
+<p>Here the same 800×400px image sits inside a container fixed at 60% of the page width — the
+image scales down to fit the container at both a wide and a narrow page width, instead of
+overflowing it:</p>
+<p><img alt="Rendered output: an 800 by 400 pixel placeholder image inside a dashed-border container that is 60% of the page width, at a wide desktop width where the image renders large" src="../../assets/img/lecture-10/responsive-image-wide.png" /></p>
+<p><img alt="Rendered output: the same image and dashed container, now much smaller because the page itself is narrow, at a narrow mobile width where the image has scaled down to match" src="../../assets/img/lecture-10/responsive-image-narrow.png" /></p>
 <p><code>max-width: 100%</code> means the image never grows wider than its parent container, while
 <code>height: auto</code> keeps its aspect ratio correct as it shrinks. This one rule is often applied
 globally near the top of a stylesheet.</p>
@@ -2961,6 +2977,11 @@ numbers add up to 12 for a full row.</p>
 </span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 </span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 </span></code></pre></div>
+<p>Rendered with real Bootstrap CSS loaded from the CDN link above, the two columns sit side by
+side at their assigned 8/12 and 4/12 widths on a wide screen, then stack full-width on a
+narrow screen below the <code>md</code> breakpoint — Bootstrap's built-in mobile-first behavior:</p>
+<p><img alt="Rendered output: two Bootstrap grid columns side by side, a wider &quot;Main content&quot; box using 8 of 12 columns and a narrower &quot;Sidebar&quot; box using 4 of 12 columns, at a wide desktop width" src="../../assets/img/lecture-10/bootstrap-grid-wide.png" /></p>
+<p><img alt="Rendered output: the same two boxes now stacked full-width one above the other, at a narrow mobile width below the md breakpoint" src="../../assets/img/lecture-10/bootstrap-grid-narrow.png" /></p>
 <p>The <code>md</code> in <code>col-md-8</code> is a <strong>breakpoint prefix</strong> — it means "use 8 columns' width starting
 at the medium breakpoint and up." Below that breakpoint, columns you don't size explicitly
 stack full-width automatically, which is Bootstrap's built-in mobile-first behavior.</p>
@@ -3010,6 +3031,9 @@ stack full-width automatically, which is Bootstrap's built-in mobile-first behav
 </span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>  <span class="p">&lt;</span><span class="nt">a</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;navbar-brand&quot;</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">&gt;</span>MySite<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
 </span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="p">&lt;/</span><span class="nt">nav</span><span class="p">&gt;</span>
 </span></code></pre></div>
+<p>Rendered with Bootstrap's CSS applied, these three lines of HTML alone produce a fully
+styled button, card, and navbar — none of the visual polish comes from custom CSS:</p>
+<p><img alt="Rendered output: a filled blue &quot;Save Changes&quot; button, below it a bordered card with a bold &quot;Card Title&quot;, body text, and a gray &quot;Read more&quot; button, and below that a light gray navbar reading &quot;MySite&quot;" src="../../assets/img/lecture-10/bootstrap-components.png" /></p>
 <h3 id="bootstrap-utilities">Bootstrap utilities<a class="headerlink" href="#bootstrap-utilities" title="Permanent link">&para;</a></h3>
 <p>Alongside full components, Bootstrap also includes small single-purpose utility classes for
 common adjustments like spacing, text alignment, and color — similar in spirit to
@@ -3022,6 +3046,10 @@ Tailwind's approach, just with a smaller set of classes.</p>
 </span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="cm">       text-center: centers text --&gt;</span>
 </span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 </span></code></pre></div>
+<p>Rendered (with a dashed border added just to make the flex container's edges visible), the
+"Left item" and "Right item" spans sit at opposite ends of the row, spaced apart by
+<code>justify-content-between</code>:</p>
+<p><img alt="Rendered output: a light blue box with a dashed border containing &quot;Left item&quot; text at the far left edge and &quot;Right item&quot; text at the far right edge" src="../../assets/img/lecture-10/bootstrap-utilities.png" /></p>
 <h2 id="tailwind-css-utility-class-structure">Tailwind CSS: Utility-Class Structure<a class="headerlink" href="#tailwind-css-utility-class-structure" title="Permanent link">&para;</a></h2>
 <p>Tailwind takes the opposite approach: instead of shipping finished components, it gives you
 a very large set of small utility classes, and you build your own look by combining them
@@ -3032,6 +3060,9 @@ directly in your markup.</p>
 </span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>  Save Changes
 </span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
 </span></code></pre></div>
+<p>Rendered with the Tailwind Play CDN loaded, that single class list produces a fully styled
+button with no separate CSS file at all:</p>
+<p><img alt="Rendered output: a filled blue rounded button with a drop shadow reading &quot;Save Changes&quot; in bold white text" src="../../assets/img/lecture-10/tailwind-button.png" /></p>
 <p>Reading that one class list top to bottom already tells you exactly what the button looks
 like, without switching to a separate CSS file:</p>
 <table>
@@ -3083,6 +3114,15 @@ the exact same mobile-first idea as Bootstrap's <code>col-md-8</code>, just spel
 </span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>  <span class="cm">&lt;!-- full width by default, one-third width from the &quot;lg&quot; breakpoint up --&gt;</span>
 </span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 </span></code></pre></div>
+<p>The <code>flex flex-col md:flex-row</code> example, rendered with three boxes inside it, stacks in a
+column on a narrow screen and switches to a row once the screen reaches the <code>md</code> breakpoint:</p>
+<p><img alt="Rendered output: three light blue boxes labeled Box 1, Box 2, and Box 3 arranged side by side in a row, at a wide desktop width above the md breakpoint" src="../../assets/img/lecture-10/tailwind-flex-wide.png" /></p>
+<p><img alt="Rendered output: the same three boxes now stacked one above the other in a single column, at a narrow mobile width below the md breakpoint" src="../../assets/img/lecture-10/tailwind-flex-narrow.png" /></p>
+<p>The <code>w-full lg:w-1/3</code> example, rendered inside a gray wrapper so the surrounding space is
+visible, fills nearly the entire wrapper on a narrow screen but shrinks to about a third of
+it once the screen reaches the <code>lg</code> breakpoint:</p>
+<p><img alt="Rendered output: a light blue box nearly filling a wider gray background bar, with the box taking up roughly a third of the bar's width, at a wide desktop width above the lg breakpoint" src="../../assets/img/lecture-10/tailwind-width-wide.png" /></p>
+<p><img alt="Rendered output: the same light blue box now filling almost the entire gray background bar, at a narrow mobile width below the lg breakpoint" src="../../assets/img/lecture-10/tailwind-width-narrow.png" /></p>
 <div class="admonition tip">
 <p class="admonition-title">Reading Tailwind classes</p>
 <p>Most Tailwind class names follow a <code>property-value</code> pattern (<code>text-center</code>, <code>p-4</code>,
@@ -3105,6 +3145,10 @@ class alongside Bootstrap's and override just the parts you want to change:</p>
 </span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="w">  </span><span class="k">letter-spacing</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="kt">px</span><span class="p">;</span>
 </span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="p">}</span>
 </span></code></pre></div>
+<p>Rendered together, Bootstrap's <code>.btn.btn-primary</code> styling (color, padding, rounded
+corners) and the custom <code>.my-cta-button</code> rule (uppercase, letter-spacing) both apply to
+the same button:</p>
+<p><img alt="Rendered output: a filled blue rounded Bootstrap button reading &quot;GET STARTED&quot; in uppercase letters with extra letter-spacing" src="../../assets/img/lecture-10/bootstrap-custom-class.png" /></p>
 <p>Because <code>.my-cta-button</code> is your own class, its rule can add new styles on top of
 whatever <code>.btn.btn-primary</code> already sets, as long as it's loaded after Bootstrap's CSS
 (or is specific enough to win).</p>
@@ -3131,6 +3175,9 @@ custom CSS and combine it with Tailwind's utilities on the same element:</p>
 </span></code></pre></div>
 <div class="language-html highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;text-blue-600 font-bold brand-underline&quot;</span><span class="p">&gt;</span>New!<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
 </span></code></pre></div>
+<p>Rendered together, Tailwind's <code>text-blue-600 font-bold</code> utilities and the custom
+<code>.brand-underline</code> CSS rule both apply to the same span:</p>
+<p><img alt="Rendered output: bold blue text reading &quot;New!&quot; with a wavy underline beneath it" src="../../assets/img/lecture-10/tailwind-custom-class.png" /></p>
 </div>
 </div>
 </div>
@@ -3189,7 +3236,7 @@ project look like <em>your</em> project instead of a generic template.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 4, 2026 21:02:03 UTC">September 4, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 7, 2026 05:28:47 UTC">September 7, 2026</span>
   </span>
 
     

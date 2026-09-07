@@ -2822,6 +2822,7 @@ them.</p>
 </span></code></pre></div>
 <p>Just adding <code>display: flex</code> already does something useful: the items line up in a row,
 side by side, instead of stacking vertically the way plain <code>&lt;div&gt;</code>s normally do.</p>
+<p><img alt="Rendered output: a navigation bar with a blue &quot;MySite&quot; logo box followed by three green &quot;Home&quot;, &quot;About&quot;, &quot;Contact&quot; boxes, all lined up in a single horizontal row" src="../../assets/img/lecture-09/flex-nav-intro.png" /></p>
 <h3 id="the-main-axis-and-the-cross-axis">The main axis and the cross axis<a class="headerlink" href="#the-main-axis-and-the-cross-axis" title="Permanent link">&para;</a></h3>
 <p>Flexbox thinks in terms of two axes, and this is the single most important idea to
 understand before the individual properties make sense:</p>
@@ -2830,13 +2831,8 @@ understand before the individual properties make sense:</p>
   horizontal (left to right).</li>
 <li>The <strong>cross axis</strong> is perpendicular to the main axis. By default this is vertical.</li>
 </ul>
-<pre class="mermaid"><code>flowchart LR
-    subgraph Container["flex container (flex-direction: row)"]
-        direction LR
-        I1["item 1"] --&gt; I2["item 2"] --&gt; I3["item 3"]
-    end
-    Container -.-&gt;|"main axis →"| MA[" "]
-    Container -.-&gt;|"cross axis ↓"| CA[" "]</code></pre>
+<p>Here is a real <code>display: flex</code> row with the two axes marked directly on it:</p>
+<p><img alt="Rendered output: a flex container holding three blue boxes labeled item 1, item 2, item 3 laid out in a row; a green horizontal line below the row labeled &quot;main axis&quot; with a right-pointing arrow, and a red vertical line to the left labeled &quot;cross axis&quot; with a down-pointing arrow" src="../../assets/img/lecture-09/main-cross-axis.png" /></p>
 <p>Every alignment property in Flexbox lines up along <em>one</em> of these two axes — which is why
 <code>flex-direction</code> (which chooses the main axis) is usually the first property you set.</p>
 <h2 id="flexbox-properties">Flexbox Properties<a class="headerlink" href="#flexbox-properties" title="Permanent link">&para;</a></h2>
@@ -2850,6 +2846,8 @@ other property.</p>
 </span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">  </span><span class="c">/* flex-direction: column-reverse; bottom to top */</span>
 </span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="p">}</span>
 </span></code></pre></div>
+<p>All four values, rendered side by side with the same three items:</p>
+<p><img alt="Rendered output: four labeled flex containers, each with blue, green, and orange boxes numbered item 1, item 2, item 3 — row shows them left to right, row-reverse shows them right to left, column shows them stacked top to bottom, and column-reverse shows them stacked bottom to top" src="../../assets/img/lecture-09/flex-direction-comparison.png" /></p>
 <h3 id="justify-content-alignment-along-the-main-axis"><code>justify-content</code> — alignment along the main axis<a class="headerlink" href="#justify-content-alignment-along-the-main-axis" title="Permanent link">&para;</a></h3>
 <div class="language-css highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">.</span><span class="nc">container</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">flex</span><span class="p">;</span>
@@ -2861,6 +2859,9 @@ other property.</p>
 </span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">  </span><span class="c">/* justify-content: space-evenly;  perfectly equal gaps everywhere */</span>
 </span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="p">}</span>
 </span></code></pre></div>
+<p>All six values, rendered with the same three items so the spacing differences are easy to
+compare directly:</p>
+<p><img alt="Rendered output: six labeled flex rows, each with the same blue, green, and orange boxes but different justify-content values — flex-start packs them at the left, flex-end packs them at the right, center packs them in the middle, space-between spreads them with the first and last touching the edges, space-around gives each item equal space on both sides, and space-evenly makes every gap including the edges exactly equal" src="../../assets/img/lecture-09/justify-content-comparison.png" /></p>
 <h3 id="align-items-alignment-along-the-cross-axis"><code>align-items</code> — alignment along the cross axis<a class="headerlink" href="#align-items-alignment-along-the-cross-axis" title="Permanent link">&para;</a></h3>
 <div class="language-css highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">.</span><span class="nc">container</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">flex</span><span class="p">;</span>
@@ -2871,6 +2872,9 @@ other property.</p>
 </span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">  </span><span class="c">/* align-items: center;      items align to the vertical center */</span>
 </span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="p">}</span>
 </span></code></pre></div>
+<p>Here the three items deliberately have different heights, so each value's effect on the
+cross axis (vertical, since the main axis is still the default row) is unmistakable:</p>
+<p><img alt="Rendered output: four labeled flex rows with three items of different heights (short, medium, tall) — stretch makes all three items fill the full container height, flex-start aligns their tops, flex-end aligns their bottoms, and center aligns their vertical centers" src="../../assets/img/lecture-09/align-items-comparison.png" /></p>
 <div class="admonition tip">
 <p class="admonition-title">The famous centering trick</p>
 <p>To perfectly center something both horizontally and vertically — historically one of the
@@ -2881,6 +2885,7 @@ most annoying things to do in CSS — you only need three lines:
 </span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">  </span><span class="k">align-items</span><span class="p">:</span><span class="w"> </span><span class="kc">center</span><span class="p">;</span>
 </span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="p">}</span>
 </span></code></pre></div></p>
+<p><img alt="Rendered output: a single box reading &quot;Centered!&quot; sitting exactly in the middle, both horizontally and vertically, of a larger dashed-border container" src="../../assets/img/lecture-09/centering-trick.png" /></p>
 </div>
 <h3 id="flex-wrap"><code>flex-wrap</code><a class="headerlink" href="#flex-wrap" title="Permanent link">&para;</a></h3>
 <p>By default, Flexbox tries to squeeze every item onto a single line, shrinking them if
@@ -2892,6 +2897,9 @@ necessary. <code>flex-wrap</code> lets items move onto new lines instead.</p>
 </span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">  </span><span class="c">/* flex-wrap: wrap-reverse; wraps, but new lines stack in reverse order */</span>
 </span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="p">}</span>
 </span></code></pre></div>
+<p>The same five fixed-width items in the same narrow container, once with <code>nowrap</code> (the
+default) and once with <code>wrap</code>:</p>
+<p><img alt="Rendered output: two labeled flex containers holding five fixed-width colored items — with flex-wrap: nowrap the fifth item is squeezed past the edge of the dashed container border, while with flex-wrap: wrap the same five items break cleanly onto two lines, three on the first line and two on the second" src="../../assets/img/lecture-09/flex-wrap-demo.png" /></p>
 <h3 id="flex-grow-flex-shrink-and-flex-basis"><code>flex-grow</code>, <code>flex-shrink</code>, and <code>flex-basis</code><a class="headerlink" href="#flex-grow-flex-shrink-and-flex-basis" title="Permanent link">&para;</a></h3>
 <p>These three properties are set on the <strong>flex items</strong>, not the container, and control how
 each individual item shares the available space.</p>
@@ -2918,6 +2926,9 @@ whatever space is left, resulting in equal-width columns:</p>
 </span></code></pre></div>
 <p>If one item should be twice as wide as the others, give it <code>flex-grow: 2</code> while the rest
 keep <code>flex-grow: 1</code> — Flexbox splits the leftover space in that 2:1:1 ratio.</p>
+<p>Three rendered examples: items with different starting sizes (<code>flex-basis</code>) growing by the
+same amount, the equal-column <code>flex: 1</code> pattern, and the 2:1:1 growth ratio:</p>
+<p><img alt="Rendered output: three labeled flex rows — the first has three items with different flex-basis values (100px, 200px, 300px) that keep their relative size difference after growing; the second has three equally-sized columns from flex: 1 on every item; the third has three items where the first is visibly about twice as wide as the other two, from flex-grow: 2 versus flex-grow: 1" src="../../assets/img/lecture-09/flex-grow-shrink-basis.png" /></p>
 <h2 id="css-grid-rows-columns-and-the-fr-unit">CSS Grid: Rows, Columns, and the <code>fr</code> Unit<a class="headerlink" href="#css-grid-rows-columns-and-the-fr-unit" title="Permanent link">&para;</a></h2>
 <p><strong>CSS Grid</strong> is a layout system for arranging items into rows <em>and</em> columns at the same
 time — a true two-dimensional grid, unlike Flexbox's single row-or-column model.</p>
@@ -2935,6 +2946,9 @@ time — a true two-dimensional grid, unlike Flexbox's single row-or-column mode
 </span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">  </span><span class="k">gap</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="kt">px</span><span class="p">;</span><span class="w"> </span><span class="c">/* space between rows and columns */</span>
 </span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="p">}</span>
 </span></code></pre></div>
+<p>Four items in a 3-column grid: the first three fill row one, and the fourth automatically
+flows onto row two, leaving the rest of that row empty since there is no fifth or sixth item:</p>
+<p><img alt="Rendered output: a grid with a light gray background showing four numbered colored cells — three cells across the top row and one cell in the bottom-left, each 200 by 150 pixels with visible gaps between them" src="../../assets/img/lecture-09/grid-basic-demo.png" /></p>
 <h3 id="the-fr-unit">The <code>fr</code> unit<a class="headerlink" href="#the-fr-unit" title="Permanent link">&para;</a></h3>
 <p>Writing exact pixel widths for every column is inflexible. The <strong><code>fr</code></strong> unit (short for
 "fraction") represents a fraction of the <em>remaining free space</em> in the grid container,
@@ -2954,6 +2968,9 @@ letting columns resize proportionally with the browser window.</p>
 </span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="w">  </span><span class="k">grid-template-columns</span><span class="p">:</span><span class="w"> </span><span class="mi">250</span><span class="kt">px</span><span class="w"> </span><span class="mi">1</span><span class="n">fr</span><span class="p">;</span><span class="w"> </span><span class="c">/* a fixed sidebar + a flexible main area */</span>
 </span><span id="__span-11-14"><a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a><span class="p">}</span>
 </span></code></pre></div>
+<p>All three column patterns, rendered at the same overall width so the proportions are
+directly comparable:</p>
+<p><img alt="Rendered output: three labeled grid layouts of the same total width — the first splits into three equal columns, the second splits into two columns where the left one is twice as wide as the right, and the third has a fixed 250-pixel sidebar column next to a wide flexible main column" src="../../assets/img/lecture-09/fr-unit-comparison.png" /></p>
 <h3 id="gap"><code>gap</code><a class="headerlink" href="#gap" title="Permanent link">&para;</a></h3>
 <p><code>gap</code> sets the spacing between grid cells in one declaration (you can also use
 <code>row-gap</code> and <code>column-gap</code> separately if you want different spacing in each direction).</p>
@@ -2964,6 +2981,7 @@ letting columns resize proportionally with the browser window.</p>
 </span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="p">}</span>
 </span></code></pre></div>
 <p><code>repeat(3, 1fr)</code> is shorthand for <code>1fr 1fr 1fr</code> — useful when you have many columns.</p>
+<p><img alt="Rendered output: a grid with a gray background showing six numbered colored cells arranged in three equal columns and two rows, with a clearly visible 20 pixel gap of background color between every cell" src="../../assets/img/lecture-09/grid-gap-repeat-demo.png" /></p>
 <h2 id="grid-line-placement-spanning-and-named-areas">Grid Line Placement, Spanning, and Named Areas<a class="headerlink" href="#grid-line-placement-spanning-and-named-areas" title="Permanent link">&para;</a></h2>
 <h3 id="placing-items-on-grid-lines">Placing items on grid lines<a class="headerlink" href="#placing-items-on-grid-lines" title="Permanent link">&para;</a></h3>
 <p>A grid is made of numbered <strong>grid lines</strong> — the boundaries between rows and columns,
@@ -2974,6 +2992,9 @@ end at.</p>
 </span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="w">  </span><span class="k">grid-row</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
 </span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="p">}</span>
 </span></code></pre></div>
+<p><code>item-a</code> explicitly spans the first two columns of row one; the remaining items are left
+to auto-place themselves into whatever grid cells are left:</p>
+<p><img alt="Rendered output: a 3-column, 2-row grid where the blue item-a cell stretches across the first two columns of the top row, a green item-b fills the remaining top-right cell, and three more cells (orange, purple, red) fill the entire bottom row" src="../../assets/img/lecture-09/grid-line-placement.png" /></p>
 <h3 id="spanning-multiple-cells">Spanning multiple cells<a class="headerlink" href="#spanning-multiple-cells" title="Permanent link">&para;</a></h3>
 <p>The <code>span</code> keyword is a shorter way to say "cover this many tracks" without counting exact
 line numbers.</p>
@@ -2984,6 +3005,7 @@ line numbers.</p>
 </span></code></pre></div>
 <p>This is extremely common for "featured" cards in a photo gallery or dashboard, where one
 item is meant to stand out by being visibly larger than the rest.</p>
+<p><img alt="Rendered output: a 4-column photo-gallery-style grid where one large blue &quot;featured&quot; cell occupies a 2 by 2 block in the top-left, while eight smaller numbered cells fill in around it" src="../../assets/img/lecture-09/grid-span-demo.png" /></p>
 <h3 id="named-grid-areas">Named grid areas<a class="headerlink" href="#named-grid-areas" title="Permanent link">&para;</a></h3>
 <p>Instead of counting lines, you can give regions of the grid names and draw the layout
 visually right inside your CSS using <code>grid-template-areas</code>.</p>
@@ -3008,6 +3030,7 @@ visually right inside your CSS using <code>grid-template-areas</code>.</p>
 represents one column's content in that row. Repeating a name (like <code>header header</code>) makes
 that area span both columns. This is one of the most readable ways to build a classic page
 layout, because you can <em>see</em> the shape of the page directly in the CSS.</p>
+<p><img alt="Rendered output: a classic page layout with a full-width blue header bar across the top, a green sidebar column on the left, an orange main content area on the right, and a full-width purple footer bar across the bottom" src="../../assets/img/lecture-09/named-grid-areas.png" /></p>
 <pre class="mermaid"><code>flowchart TB
     subgraph Grid["grid-template-areas layout"]
         H["header (spans both columns)"]
@@ -3078,6 +3101,9 @@ contents.</p>
 </span><span id="__span-16-12"><a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a><span class="w">  </span><span class="k">align-items</span><span class="p">:</span><span class="w"> </span><span class="kc">center</span><span class="p">;</span>
 </span><span id="__span-16-13"><a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a><span class="p">}</span>
 </span></code></pre></div>
+<p>Both techniques rendered together: Grid lays out the sidebar and main columns, while
+Flexbox spreads the logo, nav links, and button apart inside the header at the top of main:</p>
+<p><img alt="Rendered output: a two-column page skeleton with a green sidebar on the left; the right column contains a blue header bar with &quot;Logo&quot; pinned to the left, three nav links in the middle, and a white &quot;Sign In&quot; button pinned to the right, followed below by an orange main content block" src="../../assets/img/lecture-09/flex-grid-together.png" /></p>
 <h2 id="try-it-yourself">Try It Yourself<a class="headerlink" href="#try-it-yourself" title="Permanent link">&para;</a></h2>
 <ol>
 <li>Build a horizontal navigation bar using Flexbox: a logo on the left, three links in the
@@ -3125,7 +3151,7 @@ contents.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 4, 2026 21:02:03 UTC">September 4, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 7, 2026 05:51:31 UTC">September 7, 2026</span>
   </span>
 
     

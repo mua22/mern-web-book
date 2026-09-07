@@ -2736,12 +2736,10 @@ other positioning schemes.</p>
 <h2 id="the-positioning-schemes">The Positioning Schemes<a class="headerlink" href="#the-positioning-schemes" title="Permanent link">&para;</a></h2>
 <p>CSS offers four ways to move an element out of normal flow: <code>relative</code>, <code>absolute</code>,
 <code>fixed</code>, and <code>sticky</code>.</p>
-<pre class="mermaid"><code>flowchart TD
-    P["position property"] --&gt; S["static (default)&lt;br/&gt;normal flow, offsets ignored"]
-    P --&gt; R["relative&lt;br/&gt;shifted from its own normal spot,&lt;br/&gt;space still reserved"]
-    P --&gt; A["absolute&lt;br/&gt;removed from flow,&lt;br/&gt;placed relative to nearest positioned ancestor"]
-    P --&gt; F["fixed&lt;br/&gt;removed from flow,&lt;br/&gt;placed relative to the viewport, stays on scroll"]
-    P --&gt; ST["sticky&lt;br/&gt;normal flow until a scroll threshold,&lt;br/&gt;then behaves like fixed"]</code></pre>
+<p>Rather than a diagram, the clearest way to see what each value actually does is to render
+each one and compare it against normal flow directly. Each panel below uses the exact
+offset values shown in this lecture's code examples:</p>
+<p><img alt="Rendered output: five labeled panels stacked vertically. The first shows three boxes A, B, C in normal static flow. The second shows position relative with a dashed outline marking Box B's original reserved slot next to the solid Box B shifted 10px down and 20px right, while Box C stays put. The third shows a bordered container with position relative and a pink absolute box pinned to its top-right corner, outside normal flow. The fourth shows a mock browser viewport with a purple floating button resting in the bottom-right corner, representing position fixed. The fifth shows a mock scrollable section with a blue sticky heading bar resting at the top, representing position sticky before its scroll threshold is reached" src="../../assets/img/lecture-07/position-values-comparison.png" /></p>
 <h3 id="relative"><code>relative</code><a class="headerlink" href="#relative" title="Permanent link">&para;</a></h3>
 <p><code>position: relative</code> keeps the element in normal document flow — its original space is
 still reserved, as if it hadn't moved — but then shifts it visually using the offset
@@ -2822,6 +2820,8 @@ far to shift from an edge. They only apply to elements whose <code>position</cod
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Card content goes here.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
 </span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 </span></code></pre></div>
+<p>Rendered in a browser, the badge sits pinned to the card's own top-right corner:</p>
+<p><img alt="Rendered output: a white rounded card with the text &quot;Card content goes here.&quot; and a small green rounded &quot;New&quot; badge pinned to the card's top-right corner" src="../../assets/img/lecture-07/card-badge.png" /></p>
 <p>Here, <code>.card</code> is given <code>position: relative</code> for the sole purpose of becoming the containing
 block for <code>.badge</code>, so the badge sits in the corner of the card instead of the corner of
 the entire browser window.</p>
@@ -2846,6 +2846,9 @@ one with the <strong>higher <code>z-index</code></strong> is drawn on top.</p>
 </span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">  </span><span class="k">z-index</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="c">/* drawn on top of .back */</span>
 </span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="p">}</span>
 </span></code></pre></div>
+<p>Rendered in a browser, with the two boxes overlapping by design, <code>.front</code> visibly covers
+part of <code>.back</code> because its <code>z-index</code> is higher:</p>
+<p><img alt="Rendered output: two overlapping rounded rectangles, a blue box labeled &quot;.back (z-index: 1)&quot; partially covered by an orange box labeled &quot;.front (z-index: 2)&quot; sitting on top of it" src="../../assets/img/lecture-07/z-index-stacking.png" /></p>
 <div class="admonition warning">
 <p class="admonition-title">z-index only works on positioned elements</p>
 <p><code>z-index</code> has no effect on elements whose <code>position</code> is <code>static</code> (the default). The
@@ -2885,6 +2888,9 @@ also (mis)used floats to build entire multi-column page layouts.</p>
 </span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>  instead of starting below it.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
 </span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 </span></code></pre></div>
+<p>Rendered in a browser (with a placeholder image standing in for <code>photo.jpg</code>), the paragraph
+text wraps along the right side of the floated image instead of starting below it:</p>
+<p><img alt="Rendered output: a blue rectangular placeholder image labeled &quot;A photo&quot; floated to the left, with a paragraph of text wrapping around its right side and continuing below it once the image's height is cleared" src="../../assets/img/lecture-07/float-wrap.png" /></p>
 <p>A floated element is taken out of normal flow horizontally: it shifts to the left or right
 edge of its container, and other inline content flows around it.</p>
 <h3 id="clearing-floats">Clearing Floats<a class="headerlink" href="#clearing-floats" title="Permanent link">&para;</a></h3>
@@ -2901,6 +2907,9 @@ height in normal flow. This is sometimes called the <strong>collapsing parent pr
 account for the height of its floated children again. The <code>clear</code> property tells an element
 "do not sit beside a floated element on this side — move below it instead," which is what
 makes this trick work.</p>
+<p>The difference is easy to miss in prose but obvious once rendered side by side — the same
+container and floated children, with and without <code>.clearfix</code> applied:</p>
+<p><img alt="Rendered output: two bordered containers each holding two orange floated boxes labeled Floated child 1 and Floated child 2. The top container, without clearfix, has its border collapsed to a thin sliver above the floated boxes, which spill out below it. The bottom container, with clearfix applied, has its border stretched down to fully enclose both floated boxes" src="../../assets/img/lecture-07/clearfix-before-after.png" /></p>
 <div class="admonition warning">
 <p class="admonition-title">Floats vs. modern layout</p>
 <p>Floats are still found in a lot of existing code, and it's worth understanding them for
@@ -2977,7 +2986,7 @@ today.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 4, 2026 21:02:03 UTC">September 4, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 7, 2026 05:31:40 UTC">September 7, 2026</span>
   </span>
 
     

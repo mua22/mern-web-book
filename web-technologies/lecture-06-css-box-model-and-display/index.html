@@ -2801,17 +2801,11 @@ of four layers, nested inside each other like Russian dolls:</p>
 <li><strong>Margin</strong> — transparent space <em>outside</em> the border, separating this element from its
    neighbours. Margin is never filled with background colour — it's just empty space.</li>
 </ol>
-<pre class="mermaid"><code>flowchart TD
-    subgraph Margin[" MARGIN "]
-      direction TB
-      subgraph Border[" BORDER "]
-        direction TB
-        subgraph Padding[" PADDING "]
-          direction TB
-          Content["CONTENT&lt;br/&gt;(text, image, etc.)"]
-        end
-      end
-    end</code></pre>
+<p>Here is a small demo built from those same four layers, each given its own background colour
+so the nesting is easy to see (the border layer below is drawn wider than the 2px it will
+actually be styled with further down, purely so it shows up as a visible band in the
+screenshot):</p>
+<p><img alt="Rendered output: four nested colored rectangles labeled MARGIN (outermost, cream), BORDER (orange band), PADDING (green band), and CONTENT (innermost, blue, showing &quot;width: 300px / height: 150px&quot;)" src="../../assets/img/lecture-06/box-model-layers.png" /></p>
 <p>You control each layer with its own set of CSS properties:</p>
 <div class="language-css highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">.</span><span class="nc">box</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="c">/* content size */</span>
@@ -2864,6 +2858,9 @@ the actual gap.</p>
 </span></code></pre></div>
 <p>You might expect a 50px gap (30px + 20px) between these two boxes, but because of margin
 collapsing, the actual gap is only <strong>30px</strong> — the larger of the two.</p>
+<p>Rendered in a browser (background colours added to the two boxes purely so their edges are
+easy to spot):</p>
+<p><img alt="Rendered output: a teal box labeled &quot;First box (margin-bottom: 30px)&quot; stacked above an orange box labeled &quot;Second box (margin-top: 20px)&quot;, with a single 30px gap between them rather than a 50px gap" src="../../assets/img/lecture-06/margin-collapsing.png" /></p>
 <div class="admonition warning">
 <p class="admonition-title">Margin collapsing only happens vertically</p>
 <p>Margin collapsing applies only to the <strong>top and bottom</strong> margins of block-level
@@ -2901,6 +2898,10 @@ the width you specified.</p>
 </span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="p">}</span>
 </span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="c">/* actual rendered width = exactly 300px */</span>
 </span></code></pre></div>
+<p>Here are both boxes rendered side by side — same <code>width: 300px</code>, same <code>padding: 20px</code>, same
+<code>border: 2px solid black</code>, differing only in <code>box-sizing</code>. Notice the <code>content-box</code> box is
+visibly wider on screen than the <code>border-box</code> box, even though both were told <code>width: 300px</code>:</p>
+<p><img alt="Rendered output: two boxes side by side, the left one labeled &quot;box-sizing: content-box&quot; measuring visibly wider on screen (344px) than the right one labeled &quot;box-sizing: border-box&quot; (exactly 300px), despite both being given the same width, padding, and border values" src="../../assets/img/lecture-06/box-sizing-comparison.png" /></p>
 <div class="admonition tip">
 <p class="admonition-title">border-box is the practical default for real projects</p>
 <p>Because <code>border-box</code> makes sizing much more predictable, most real-world style sheets
@@ -2934,6 +2935,18 @@ sensible limit on wide monitors.</p>
 </span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">  </span><span class="k">overflow</span><span class="p">:</span><span class="w"> </span><span class="kc">hidden</span><span class="p">;</span><span class="w">   </span><span class="c">/* clips content that doesn&#39;t fit — extra content is not shown */</span>
 </span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="p">}</span>
 </span></code></pre></div>
+<p>Here is the same 200×100 box with more text than it can hold, rendered twice — once with
+<code>overflow: visible</code> (the default) and once with <code>overflow: hidden</code> — so you can see the
+difference directly:</p>
+<p><img alt="Rendered output: two identical 200 by 100 pixel boxes with the same overflowing paragraph of text; the left box labeled &quot;overflow: visible&quot; lets the extra lines spill out below its border, still readable; the right box labeled &quot;overflow: hidden&quot; clips the extra lines off cleanly at the border" src="../../assets/img/lecture-06/overflow-comparison.png" /></p>
+<div class="admonition note">
+<p class="admonition-title">About <code>scroll</code> and <code>auto</code></p>
+<p>A static screenshot can't show a scrollbar in action. <code>overflow: scroll</code> and
+<code>overflow: auto</code> both clip the content exactly like <code>hidden</code> does visually, but they
+also add a scrollbar so the user can scroll down to reach the hidden part — <code>scroll</code>
+always shows the scrollbar, <code>auto</code> only shows it when the content actually overflows.
+Try both live in a real browser to see the scrollbar appear.</p>
+</div>
 <p>Common values:</p>
 <table>
 <thead>
@@ -3004,11 +3017,8 @@ layout.</p>
 </span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">  </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="p">;</span>
 </span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="p">}</span>
 </span></code></pre></div>
-<pre class="mermaid"><code>flowchart LR
-    A["display: block"] --&gt; A1["Full width, new line,&lt;br/&gt;width/height respected"]
-    B["display: inline"] --&gt; B1["Flows in text, no new line,&lt;br/&gt;width/height ignored"]
-    C["display: inline-block"] --&gt; C1["Flows in text, no new line,&lt;br/&gt;width/height respected"]
-    D["display: none"] --&gt; D1["Removed from layout,&lt;br/&gt;takes up zero space"]</code></pre>
+<p>All four values, rendered together and compared directly:</p>
+<p><img alt="Rendered output: four labeled sections — &quot;display: block&quot; showing three full-width teal bars stacked on their own lines; &quot;display: inline&quot; showing three orange highlighted spans flowing inside a sentence; &quot;display: inline-block&quot; showing three green boxes with a fixed size sitting side by side; and &quot;display: none&quot; showing the text &quot;Visible before Visible after&quot; with no gap where a hidden element sits in the markup" src="../../assets/img/lecture-06/display-comparison.png" /></p>
 <h2 id="borders-shadows-and-consistent-spacing">Borders, Shadows, and Consistent Spacing<a class="headerlink" href="#borders-shadows-and-consistent-spacing" title="Permanent link">&para;</a></h2>
 <h3 id="borders">Borders<a class="headerlink" href="#borders" title="Permanent link">&para;</a></h3>
 <p>A border needs three pieces of information: width, style, and colour.</p>
@@ -3117,7 +3127,7 @@ values in <code>:root</code>, and every element using <code>var(--space-md)</cod
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 4, 2026 21:02:03 UTC">September 4, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 7, 2026 05:36:16 UTC">September 7, 2026</span>
   </span>
 
     

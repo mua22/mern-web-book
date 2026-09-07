@@ -2689,6 +2689,9 @@ include <code>&lt;a&gt;</code>, <code>&lt;span&gt;</code>, <code>&lt;strong&gt;<
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>This sentence has an <span class="p">&lt;</span><span class="nt">strong</span><span class="p">&gt;</span>inline bold word<span class="p">&lt;/</span><span class="nt">strong</span><span class="p">&gt;</span> and an
 </span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">&gt;</span>inline link<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span> sitting right in the flow of the text.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
 </span></code></pre></div>
+<p>Rendered in a browser, the two paragraphs each claim their own line, while the bold word
+and the link sit inside the flow of the third paragraph's line:</p>
+<p><img alt="Rendered output: two paragraphs stacked on separate lines, followed by a third paragraph where &quot;inline bold word&quot; is bold and &quot;inline link&quot; is an underlined blue hyperlink sitting in the middle of the sentence" src="../../assets/img/lecture-04/block-inline.png" /></p>
 <div class="admonition note">
 <p class="admonition-title">Why this distinction matters</p>
 <p>Understanding block vs. inline is essential once you start styling pages with CSS
@@ -2709,6 +2712,9 @@ containers for exactly this:</p>
 </span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
 </span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>The price is <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;highlight-price&quot;</span><span class="p">&gt;</span>$25<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span> today only.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
 </span></code></pre></div>
+<p>Rendered in a browser with no CSS at all, the <code>class</code> names have zero visual effect — the
+"card" div and the highlighted span look exactly like ordinary, unstyled text:</p>
+<p><img alt="Rendered output: a plain sentence about content wrapped in a div, followed by a plain sentence reading &quot;The price is $25 today only.&quot; with no visible box or highlight color anywhere" src="../../assets/img/lecture-04/div-span.png" /></p>
 <p>Neither <code>&lt;div&gt;</code> nor <code>&lt;span&gt;</code> tells the browser, a search engine, or a screen reader
 anything about <em>what kind</em> of content is inside them — they are pure containers, useful
 when no more specific (semantic) element fits. This is exactly the problem semantic
@@ -2736,6 +2742,13 @@ page:</p>
 </span></code></pre></div>
 </div>
 </div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">No screenshot here on purpose</p>
+<p>Rendered in a real browser with no CSS, both versions above produce nothing but a
+stack of empty, invisible containers — there is no visible content inside them to show
+in a screenshot. That invisibility is exactly the point: the tag name changes what the
+markup <em>means</em>, not how it looks.</p>
 </div>
 <p>Both versions might look <em>identical</em> in the browser once styled with CSS — semantic
 elements do not automatically look different. The difference is that the second version
@@ -2811,6 +2824,9 @@ readers — exactly what role each section plays.</p>
 </span><span id="__span-4-28"><a id="__codelineno-4-28" name="__codelineno-4-28" href="#__codelineno-4-28"></a>    <span class="p">&lt;/</span><span class="nt">footer</span><span class="p">&gt;</span>
 </span><span id="__span-4-29"><a id="__codelineno-4-29" name="__codelineno-4-29" href="#__codelineno-4-29"></a><span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
 </span></code></pre></div>
+<p>Rendered in a browser, semantic elements have no built-in visual styling of their own —
+the page is plain, but every section is genuinely there in the markup:</p>
+<p><img alt="Rendered output: a plain page showing a large &quot;My Tech Blog&quot; heading, a row of three links (Home, About, Contact), a &quot;Why Semantic HTML Matters&quot; heading with a paragraph, a smaller &quot;Related Posts&quot; heading with a bulleted list of two links, and a copyright line at the bottom" src="../../assets/img/lecture-04/semantic-skeleton.png" /></p>
 <p>Notice that <code>&lt;section&gt;</code> and <code>&lt;article&gt;</code> are similar. Use <code>&lt;article&gt;</code> when the content makes
 sense entirely on its own, even if copied to a completely different site (a blog post, a
 product listing). Use <code>&lt;section&gt;</code> for a grouping of related content that is <em>part of</em> the
@@ -2846,6 +2862,9 @@ element.</p>
 </span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>    <span class="p">&lt;</span><span class="nt">button</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;submit&quot;</span><span class="p">&gt;</span>Log In<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
 </span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
 </span></code></pre></div>
+<p>Rendered in a browser, with no CSS to force the fields onto separate lines, the labels and
+inputs simply flow together left to right like any other inline content:</p>
+<p><img alt="Rendered output: &quot;Username:&quot; label next to an empty text box, then &quot;Password:&quot; label next to another empty text box, then a &quot;Log In&quot; button, all sitting on a single line" src="../../assets/img/lecture-04/login-form.png" /></p>
 <h3 id="the-action-and-method-attributes">The <code>action</code> and <code>method</code> Attributes<a class="headerlink" href="#the-action-and-method-attributes" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong><code>action</code></strong> — the URL that the form's data will be sent to when submitted. If omitted,
@@ -2905,6 +2924,12 @@ what kind of control the browser displays and what kind of data it expects:</p>
 </span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;submit&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;Send&quot;</span><span class="p">&gt;</span>
 </span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;hidden&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;formVersion&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;2&quot;</span><span class="p">&gt;</span>
 </span></code></pre></div>
+<p>Rendered in a browser, each <code>type</code> produces a genuinely different native control — this is
+one of the clearest illustrations of how much the browser does for you with plain HTML:</p>
+<p><img alt="Rendered output: a stack of distinct form controls — a text box with placeholder &quot;Full name&quot;, an email box, a plain password box, a number box, a date picker showing dd/mm/yyyy, a checked checkbox, two radio buttons labeled Male and Female, a &quot;Choose File&quot; button, a slider, a black color swatch, and a &quot;Send&quot; button; the hidden input produces no visible control at all" src="../../assets/img/lecture-04/input-types.png" /></p>
+<p>A little extra CSS (<code>display: block</code> on every <code>&lt;input&gt;</code>) was added purely so each type
+stacks on its own line for a legible screenshot — the input elements, types, and attributes
+themselves are exactly as shown in the code above.</p>
 <table>
 <thead>
 <tr>
@@ -2974,6 +2999,8 @@ starts typing, and it is not a substitute for a <code>&lt;label&gt;</code>.</p>
 </span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>    <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;csc241&quot;</span><span class="p">&gt;</span>Object Oriented Programming<span class="p">&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
 </span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="p">&lt;/</span><span class="nt">select</span><span class="p">&gt;</span>
 </span></code></pre></div>
+<p>Rendered in a browser, the dropdown shows the <code>selected</code> option's text by default:</p>
+<p><img alt="Rendered output: a &quot;Choose a course:&quot; label next to a dropdown box currently showing &quot;Advanced Web Technologies&quot;" src="../../assets/img/lecture-04/select-dropdown.png" /></p>
 <p>The <code>selected</code> attribute pre-selects an option; the <code>value</code> attribute is what gets sent to
 the server (which can differ from the visible text).</p>
 <p><strong><code>&lt;textarea&gt;</code></strong> creates a multi-line text box — unlike <code>&lt;input type="text"&gt;</code>, which is
@@ -2981,6 +3008,9 @@ always one line:</p>
 <div class="language-html highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;message&quot;</span><span class="p">&gt;</span>Message:<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
 </span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="p">&lt;</span><span class="nt">textarea</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;message&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;message&quot;</span> <span class="na">rows</span><span class="o">=</span><span class="s">&quot;5&quot;</span> <span class="na">cols</span><span class="o">=</span><span class="s">&quot;40&quot;</span><span class="p">&gt;</span>Type here...<span class="p">&lt;/</span><span class="nt">textarea</span><span class="p">&gt;</span>
 </span></code></pre></div>
+<p>Rendered in a browser, the <code>rows</code>/<code>cols</code> attributes size the visible box, and the text
+between the tags appears pre-filled inside it:</p>
+<p><img alt="Rendered output: a &quot;Message:&quot; label next to a multi-line text box, five rows tall, pre-filled with the text &quot;Type here...&quot; and a resize handle in the bottom-right corner" src="../../assets/img/lecture-04/textarea.png" /></p>
 <p>Note that the default text goes <em>between</em> the opening and closing tags, not in a <code>value</code>
 attribute.</p>
 <p><strong><code>&lt;button&gt;</code></strong> creates a clickable button and is more flexible than <code>&lt;input type="submit"&gt;</code>
@@ -2989,6 +3019,9 @@ because it can contain other HTML (like an icon) inside it:</p>
 </span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="p">&lt;</span><span class="nt">button</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;reset&quot;</span><span class="p">&gt;</span>Clear Form<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
 </span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="p">&lt;</span><span class="nt">button</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;button&quot;</span><span class="p">&gt;</span>Just a Button (does nothing by itself)<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
 </span></code></pre></div>
+<p>All three render as ordinary clickable buttons — nothing about their appearance reveals
+which <code>type</code> they are; only their behavior differs when clicked inside a real form:</p>
+<p><img alt="Rendered output: three gray buttons side by side, reading &quot;Submit&quot;, &quot;Clear Form&quot;, and &quot;Just a Button (does nothing by itself)&quot;" src="../../assets/img/lecture-04/buttons.png" /></p>
 <ul>
 <li><code>type="submit"</code> (the default inside a form) submits the form.</li>
 <li><code>type="reset"</code> clears all fields back to their default values.</li>
@@ -3014,6 +3047,11 @@ do simple validation automatically, with zero JavaScript required.</p>
 </span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>    <span class="p">&lt;</span><span class="nt">button</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;submit&quot;</span><span class="p">&gt;</span>Register<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
 </span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
 </span></code></pre></div>
+<p>Rendered in a browser, the fields themselves look like any other text/number input:</p>
+<p><img alt="Rendered output: &quot;Username (required):&quot; label next to a text box, &quot;CNIC (format 00000-0000000-0):&quot; label wrapping to a new line above an empty text box, &quot;Age (18–60):&quot; label next to a small number box, and a &quot;Register&quot; button" src="../../assets/img/lecture-04/validation-form.png" /></p>
+<p>The validation messages themselves are not visible in a static screenshot — a small warning
+bubble like "Please fill out this field" or "Please match the requested format" only
+appears in a real browser when you try to submit the form with invalid or missing data.</p>
 <ul>
 <li><strong><code>required</code></strong> — the field cannot be left empty. The browser blocks submission and shows
   a small warning bubble pointing at the missing field.</li>
@@ -3089,7 +3127,7 @@ field but the user cannot change its value.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 4, 2026 21:02:03 UTC">September 4, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 7, 2026 05:21:52 UTC">September 7, 2026</span>
   </span>
 
     
