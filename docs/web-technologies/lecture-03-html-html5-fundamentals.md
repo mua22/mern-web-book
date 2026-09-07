@@ -52,12 +52,7 @@ Every browser (Chrome, Firefox, Edge, Safari) reads your HTML file and builds an
 tree-like representation of it called the **DOM** (Document Object Model), then draws
 ("renders") that tree on the screen.
 
-```mermaid
-flowchart LR
-    A[".html file<br/>(plain text)"] --> B["Browser parses the tags"]
-    B --> C["DOM tree built in memory"]
-    C --> D["Page rendered on screen"]
-```
+![Diagram: a .html file (plain text) flows through "Browser parses the tags", then "DOM tree built in memory", then "Page rendered on screen"](../assets/img/lecture-03/parse-flow.png)
 
 ## HTML Document Structure
 
@@ -561,17 +556,7 @@ versions support a given feature.
 Because HTML elements nest inside each other, an HTML document naturally forms a tree
 structure. This is exactly what the browser's DOM represents:
 
-```mermaid
-graph TD
-    HTML["&lt;html&gt;"] --> HEAD["&lt;head&gt;"]
-    HTML --> BODY["&lt;body&gt;"]
-    HEAD --> TITLE["&lt;title&gt;"]
-    BODY --> H1["&lt;h1&gt;"]
-    BODY --> P["&lt;p&gt;"]
-    BODY --> UL["&lt;ul&gt;"]
-    UL --> LI1["&lt;li&gt;"]
-    UL --> LI2["&lt;li&gt;"]
-```
+![Diagram: a tree with <html> at the root, branching to <head> (containing <title>) and <body> (containing <h1>, <p>, and <ul>, which itself branches to two <li> items)](../assets/img/lecture-03/document-tree.png)
 
 ## Try It Yourself
 
