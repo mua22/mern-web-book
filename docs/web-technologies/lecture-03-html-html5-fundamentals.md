@@ -18,6 +18,9 @@ text, links, images, media, tables, and lists — the raw ingredients of every w
 - Understand the role of markup languages and why HTML is one
 - Learn the standard structure of an HTML document
 - Understand elements, tags, attributes, nesting rules, and validation
+- Recognize void (self-closing) elements like `<br>` and `<hr>`
+- Tell block-level elements and inline elements apart, and know why it matters
+- Use common HTML attributes, including global and boolean attributes, with real examples
 - Write headings, paragraphs, formatted text, and hyperlinks (absolute vs. relative)
 - Add images, audio, and video to a page
 - Build tables and the three types of lists
@@ -111,19 +114,94 @@ and a **closing tag**:
 - `This is a paragraph element.` is the content.
 - `</p>` is the closing tag (notice the forward slash).
 
-Some elements have no content and no closing tag. These are called **void elements** or
-**self-closing elements**:
+### Void (Self-Closing) Elements
+
+Some elements have no content and therefore no closing tag at all — you cannot write
+`<br></br>`, because there is nothing to put between an opening and closing `<br>`. These
+are called **void elements** (also commonly called "self-closing" elements):
 
 ```html
 <br>
+<hr>
 <img src="cat.jpg" alt="A photo of a cat">
 <input type="text">
 ```
 
+| Element | What it does |
+|---|---|
+| `<br>` | A single line break within text — forces the following content onto a new line |
+| `<hr>` | A "horizontal rule": a thematic divider line, used to separate sections of content |
+| `<img>` | Embeds an image (covered in detail later in this lecture) |
+| `<input>` | A form control (covered in Lecture 4) |
+| `<meta>` | Document metadata, used inside `<head>` |
+| `<link>` | Links an external resource such as a CSS file, used inside `<head>` |
+| `<area>`, `<base>`, `<col>`, `<embed>`, `<source>`, `<track>`, `<wbr>` | Less common void elements you will meet as needed |
+
+!!! note "`<br>` vs. `<br />`"
+    You will see void elements written two ways: `<br>` (plain HTML5 style) and `<br />`
+    (with a trailing slash, inherited from the stricter XHTML standard). Both are valid
+    HTML5 and render identically — the trailing slash is optional, purely a style choice.
+    This book uses the plain `<br>` form.
+
+!!! warning "Don't confuse void elements with elements that are just often empty"
+    `<div></div>` is *not* a void element — it is a completely normal element that simply
+    has no content in this example, and it absolutely does need its closing tag. Void
+    elements are a fixed, specific list (the ones in the table above); everything else
+    follows the normal opening-tag/content/closing-tag pattern.
+
+### Block-Level vs. Inline Elements
+
+Every HTML element falls into one of two layout categories, which controls how it behaves
+next to other elements *before any CSS is applied at all*:
+
+- A **block-level element** always starts on a new line and stretches to fill the full
+  width available to it, pushing whatever comes after it down to the next line. Think of
+  it as a box stacked on top of other boxes.
+- An **inline element** does not start on a new line — it flows *within* the surrounding
+  text, taking up only as much width as its content needs, like a word in the middle of a
+  sentence.
+
+```html
+<!-- p and h1 are block-level: each starts on its own line -->
+<h1>Page Title</h1>
+<p>This is a paragraph.</p>
+<p>This is another paragraph, on its own line below.</p>
+
+<!-- strong and a are inline: they sit inside the flow of the sentence -->
+<p>This word is <strong>important</strong>, and this is a <a href="#">link</a> in the middle of a sentence.</p>
+```
+
+```mermaid
+flowchart TD
+    subgraph Block["Block-level: each takes a full new line"]
+        direction TB
+        B1["&lt;h1&gt;Page Title&lt;/h1&gt;"]
+        B2["&lt;p&gt;Paragraph one&lt;/p&gt;"]
+        B3["&lt;p&gt;Paragraph two&lt;/p&gt;"]
+    end
+```
+
+| | Block-level | Inline |
+|---|---|---|
+| Starts on a new line? | Yes | No — flows with surrounding content |
+| Takes full available width? | Yes, by default | No — only as wide as its content |
+| Can contain other block elements? | Usually yes | No — only other inline elements or text |
+| Examples | `<h1>`-`<h6>`, `<p>`, `<div>`, `<ul>`, `<ol>`, `<li>`, `<table>`, `<form>`, `<section>` | `<a>`, `<strong>`, `<em>`, `<span>`, `<img>`, `<br>`, `<input>`, `<label>` |
+
+!!! tip "You already know several of each"
+    Every heading and paragraph tag you've used so far in this lecture is block-level;
+    `<a>`, `<strong>`, and `<em>` from the formatting table below are inline. `<div>`
+    (a generic block container) and `<span>` (a generic inline container) — the two most
+    common "no inherent meaning, just a box" elements — are covered in the next lecture
+    alongside semantic HTML. CSS can override this default behavior (with the `display`
+    property, in Lecture 6), but the default block/inline behavior is what you get with no
+    CSS at all.
+
 ### Attributes
 
-An **attribute** provides extra information about an element. Attributes are written
-inside the opening tag as `name="value"` pairs:
+An **attribute** provides extra information about an element, without being part of the
+content the reader sees. Attributes are written inside the *opening* tag only, as
+`name="value"` pairs, separated by spaces:
 
 ```html
 <a href="https://www.comsats.edu.pk" target="_blank">Visit COMSATS</a>
@@ -131,8 +209,43 @@ inside the opening tag as `name="value"` pairs:
 
 Here, `<a>` is the element (a hyperlink), `href` is an attribute specifying the destination
 URL, and `target="_blank"` is an attribute telling the browser to open the link in a new
-tab. An element can have multiple attributes, separated by spaces, and attribute values
-should always be wrapped in quotes.
+tab. Attribute values should always be wrapped in quotes (double quotes are the
+convention this book uses).
+
+Some frequently used attributes work the same way on almost *any* element — these are
+called **global attributes**:
+
+| Attribute | Purpose | Example |
+|---|---|---|
+| `id` | A unique identifier for one specific element on the page (no two elements should share an `id`) | `<h2 id="contact">Contact</h2>` |
+| `class` | One or more category names, shared by many elements, used by CSS and JavaScript to target them as a group | `<p class="warning-text">Careful!</p>` |
+| `title` | Extra information shown as a tooltip on hover | `<abbr title="World Wide Web Consortium">W3C</abbr>` |
+| `style` | Inline CSS applied to just this one element (covered properly in the CSS lectures) | `<p style="color: red;">Urgent</p>` |
+| `lang` | The (human) language of this element's content | `<p lang="fr">Bonjour</p>` |
+| `data-*` | A custom attribute for attaching your own data, read later by JavaScript (an HTML5 addition — see later in this lecture) | `<li data-user-id="42">Ali Khan</li>` |
+
+Other attributes are specific to one element — `href` and `target` only make sense on
+`<a>`; `src` and `alt` only make sense on `<img>`; you'll meet each as you meet the
+element it belongs to.
+
+Not every attribute takes a value. A **boolean attribute** is either present (meaning
+"true") or absent (meaning "false") — it does not need `="value"` at all:
+
+```html
+<input type="text" required>
+<input type="checkbox" checked>
+<button disabled>Can't click me</button>
+```
+
+Writing `required="required"` is also valid HTML5 (some developers do this for clarity in
+JSX/React code, which you'll meet later in this course), but the bare `required` form
+shown above is what you'll see most often in plain HTML.
+
+An element can have as many attributes as it needs, in any order, separated by spaces:
+
+```html
+<img src="logo.png" alt="Site logo" width="120" height="40" class="site-logo" id="main-logo">
+```
 
 ### Nesting Rules
 
@@ -436,6 +549,14 @@ graph TD
 - Every HTML document starts with `<!DOCTYPE html>` and has `<html>`, `<head>`, and `<body>`.
 - Elements are made of opening/closing tags; attributes add extra information inside the
   opening tag; tags must be nested (closed) in the correct order.
+- **Void elements** (`<br>`, `<hr>`, `<img>`, `<input>`, and a handful of others) have no
+  closing tag because they have no content.
+- **Block-level** elements stack on their own line and fill the available width by
+  default; **inline** elements flow within surrounding text and take only the width they
+  need.
+- Attributes can be **global** (usable on almost any element, like `id`/`class`/`title`),
+  element-specific (like `href` on `<a>`), or **boolean** (present or absent, like
+  `required`, with no `="value"` needed).
 - Absolute URLs point to other websites; relative URLs point within your own site and
   survive a domain move.
 - `<img>`, `<audio>`, and `<video>` embed media directly, without needing plugins.
