@@ -96,6 +96,15 @@ html {
 }
 ```
 
+The same page rendered at a wide desktop width and at a narrow mobile width shows why fluid
+units matter: the dark `.hero` block always spans the full browser width and 60% of the
+browser height, and the light `.card` box always spans 90% of its own container, in both
+cases:
+
+![Rendered output: a dark hero block reading ".hero — width: 100vw; height: 60vh;" filling the full browser width, with a light blue card below it reading ".card — width: 90% of its parent", shown at a wide desktop width](../assets/img/lecture-10/fluid-units-wide.png)
+
+![Rendered output: the same dark hero block and light card, now much narrower and re-wrapped because the browser window itself is narrow, at a narrow mobile width](../assets/img/lecture-10/fluid-units-narrow.png)
+
 !!! tip "Why rem instead of px for text?"
     Some users increase their browser's default font size for accessibility reasons (poor
     eyesight, for example). Text sized in `px` ignores that setting completely. Text sized in
@@ -133,6 +142,14 @@ value you put inside a `min-width` or `max-width` media query.
 }
 ```
 
+Applying this exact CSS to a `.container` holding three cards shows the collapse in action:
+a wide screen lays the cards out in a row, and a narrow screen — below the 768px breakpoint —
+stacks them into a single column instead:
+
+![Rendered output: three light blue cards labeled Card 1, Card 2, and Card 3 arranged side by side in a single row, at a wide desktop width above the 768px breakpoint](../assets/img/lecture-10/media-query-wide.png)
+
+![Rendered output: the same three cards now stacked one above the other in a single column, at a narrow mobile width below the 768px breakpoint](../assets/img/lecture-10/media-query-narrow.png)
+
 There is no single "correct" set of breakpoints — they should match your actual content,
 not a fixed rulebook. That said, most frameworks (including Bootstrap, which you will see
 below) converge on a similar rough set of common device widths: around 576px (large
@@ -149,6 +166,14 @@ img {
   height: auto;
 }
 ```
+
+Here the same 800×400px image sits inside a container fixed at 60% of the page width — the
+image scales down to fit the container at both a wide and a narrow page width, instead of
+overflowing it:
+
+![Rendered output: an 800 by 400 pixel placeholder image inside a dashed-border container that is 60% of the page width, at a wide desktop width where the image renders large](../assets/img/lecture-10/responsive-image-wide.png)
+
+![Rendered output: the same image and dashed container, now much smaller because the page itself is narrow, at a narrow mobile width where the image has scaled down to match](../assets/img/lecture-10/responsive-image-narrow.png)
 
 `max-width: 100%` means the image never grows wider than its parent container, while
 `height: auto` keeps its aspect ratio correct as it shrinks. This one rule is often applied
@@ -224,6 +249,14 @@ numbers add up to 12 for a full row.
 </div>
 ```
 
+Rendered with real Bootstrap CSS loaded from the CDN link above, the two columns sit side by
+side at their assigned 8/12 and 4/12 widths on a wide screen, then stack full-width on a
+narrow screen below the `md` breakpoint — Bootstrap's built-in mobile-first behavior:
+
+![Rendered output: two Bootstrap grid columns side by side, a wider "Main content" box using 8 of 12 columns and a narrower "Sidebar" box using 4 of 12 columns, at a wide desktop width](../assets/img/lecture-10/bootstrap-grid-wide.png)
+
+![Rendered output: the same two boxes now stacked full-width one above the other, at a narrow mobile width below the md breakpoint](../assets/img/lecture-10/bootstrap-grid-narrow.png)
+
 The `md` in `col-md-8` is a **breakpoint prefix** — it means "use 8 columns' width starting
 at the medium breakpoint and up." Below that breakpoint, columns you don't size explicitly
 stack full-width automatically, which is Bootstrap's built-in mobile-first behavior.
@@ -256,6 +289,11 @@ Components are ready-made pieces of UI — you just add the right classes to you
 </nav>
 ```
 
+Rendered with Bootstrap's CSS applied, these three lines of HTML alone produce a fully
+styled button, card, and navbar — none of the visual polish comes from custom CSS:
+
+![Rendered output: a filled blue "Save Changes" button, below it a bordered card with a bold "Card Title", body text, and a gray "Read more" button, and below that a light gray navbar reading "MySite"](../assets/img/lecture-10/bootstrap-components.png)
+
 ### Bootstrap utilities
 
 Alongside full components, Bootstrap also includes small single-purpose utility classes for
@@ -272,6 +310,12 @@ Tailwind's approach, just with a smaller set of classes.
 </div>
 ```
 
+Rendered (with a dashed border added just to make the flex container's edges visible), the
+"Left item" and "Right item" spans sit at opposite ends of the row, spaced apart by
+`justify-content-between`:
+
+![Rendered output: a light blue box with a dashed border containing "Left item" text at the far left edge and "Right item" text at the far right edge](../assets/img/lecture-10/bootstrap-utilities.png)
+
 ## Tailwind CSS: Utility-Class Structure
 
 Tailwind takes the opposite approach: instead of shipping finished components, it gives you
@@ -287,6 +331,11 @@ directly in your markup.
   Save Changes
 </button>
 ```
+
+Rendered with the Tailwind Play CDN loaded, that single class list produces a fully styled
+button with no separate CSS file at all:
+
+![Rendered output: a filled blue rounded button with a drop shadow reading "Save Changes" in bold white text](../assets/img/lecture-10/tailwind-button.png)
 
 Reading that one class list top to bottom already tells you exactly what the button looks
 like, without switching to a separate CSS file:
@@ -315,6 +364,21 @@ the exact same mobile-first idea as Bootstrap's `col-md-8`, just spelled differe
 </div>
 ```
 
+The `flex flex-col md:flex-row` example, rendered with three boxes inside it, stacks in a
+column on a narrow screen and switches to a row once the screen reaches the `md` breakpoint:
+
+![Rendered output: three light blue boxes labeled Box 1, Box 2, and Box 3 arranged side by side in a row, at a wide desktop width above the md breakpoint](../assets/img/lecture-10/tailwind-flex-wide.png)
+
+![Rendered output: the same three boxes now stacked one above the other in a single column, at a narrow mobile width below the md breakpoint](../assets/img/lecture-10/tailwind-flex-narrow.png)
+
+The `w-full lg:w-1/3` example, rendered inside a gray wrapper so the surrounding space is
+visible, fills nearly the entire wrapper on a narrow screen but shrinks to about a third of
+it once the screen reaches the `lg` breakpoint:
+
+![Rendered output: a light blue box nearly filling a wider gray background bar, with the box taking up roughly a third of the bar's width, at a wide desktop width above the lg breakpoint](../assets/img/lecture-10/tailwind-width-wide.png)
+
+![Rendered output: the same light blue box now filling almost the entire gray background bar, at a narrow mobile width below the lg breakpoint](../assets/img/lecture-10/tailwind-width-narrow.png)
+
 !!! tip "Reading Tailwind classes"
     Most Tailwind class names follow a `property-value` pattern (`text-center`, `p-4`,
     `bg-red-500`), and a breakpoint prefix like `md:` or `lg:` before a class means "only
@@ -341,6 +405,12 @@ almost always mix in your own custom CSS.
       letter-spacing: 1px;
     }
     ```
+
+    Rendered together, Bootstrap's `.btn.btn-primary` styling (color, padding, rounded
+    corners) and the custom `.my-cta-button` rule (uppercase, letter-spacing) both apply to
+    the same button:
+
+    ![Rendered output: a filled blue rounded Bootstrap button reading "GET STARTED" in uppercase letters with extra letter-spacing](../assets/img/lecture-10/bootstrap-custom-class.png)
 
     Because `.my-cta-button` is your own class, its rule can add new styles on top of
     whatever `.btn.btn-primary` already sets, as long as it's loaded after Bootstrap's CSS
@@ -377,6 +447,11 @@ almost always mix in your own custom CSS.
     ```html
     <span class="text-blue-600 font-bold brand-underline">New!</span>
     ```
+
+    Rendered together, Tailwind's `text-blue-600 font-bold` utilities and the custom
+    `.brand-underline` CSS rule both apply to the same span:
+
+    ![Rendered output: bold blue text reading "New!" with a wavy underline beneath it](../assets/img/lecture-10/tailwind-custom-class.png)
 
 In both frameworks, the same rule applies: use the framework for the 80% of common styling
 it already solves well, and drop into plain custom CSS for the remaining 20% that makes your
