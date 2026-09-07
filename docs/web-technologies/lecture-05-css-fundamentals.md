@@ -96,6 +96,10 @@ It applies only to that one element.
 <p style="color: red; font-weight: bold;">This paragraph is styled inline.</p>
 ```
 
+Rendered in a browser:
+
+![Rendered output: a paragraph reading "This paragraph is styled inline." in bold red text](../assets/img/lecture-05/inline-style.png)
+
 Inline styles are quick, but they mix content and presentation back together, and you would
 have to repeat the same `style` attribute on every element you want styled the same way.
 Because of this, inline styles are only recommended for quick tests or for styles generated
@@ -127,6 +131,10 @@ of an HTML document. It applies to the whole page.
 </html>
 ```
 
+Rendered in a browser, only the `<body>` content shows, styled by the rules in `<head>`:
+
+![Rendered output: a bold navy-blue "Welcome" heading, in the Arial font set on the body](../assets/img/lecture-05/internal-stylesheet.png)
+
 Internal style sheets are better than inline styles because the rules are written once and
 apply to every matching element on the page. But the CSS is still stuck inside that one
 HTML file — if you have a five-page site, you would have to copy the `<style>` block into
@@ -152,6 +160,10 @@ h1 {
   color: navy;
 }
 ```
+
+This produces the exact same rendered page as the internal style sheet example above —
+the same navy "Welcome" heading in Arial — just loaded from a separate file instead of
+being written inline in the HTML.
 
 !!! tip "Why external style sheets are preferred"
     External style sheets are the recommended approach for real projects, for several
@@ -198,6 +210,10 @@ selector starts with a dot `.` followed by the class name.
 }
 ```
 
+Rendered in a browser:
+
+![Rendered output: a paragraph reading "This text is important." with a yellow background stretching the full width of the block](../assets/img/lecture-05/class-selector.png)
+
 Classes are reusable — you can put `class="highlight"` on as many elements as you like, and
 you can also give one element more than one class, separated by spaces:
 `class="highlight bordered"`.
@@ -217,6 +233,10 @@ the same page should share an id. The id selector starts with a hash `#`.
   text-align: center;
 }
 ```
+
+Rendered in a browser:
+
+![Rendered output: a large, centered heading reading "Site Title"](../assets/img/lecture-05/id-selector.png)
 
 !!! warning "Class vs. id"
     Use a **class** when a style might apply to more than one element (most of the time).
@@ -240,6 +260,11 @@ a[target] {
 }
 ```
 
+Here is one of each, rendered together — an `email` input with the gray border, and a link
+carrying a `target` attribute in purple:
+
+![Rendered output: an empty text input with placeholder "you@example.com" and a thin gray border, above a purple underlined link reading "A link that opens in a new tab"](../assets/img/lecture-05/attribute-selector.png)
+
 ### Grouping Selector
 
 If several selectors should get the *same* styles, separate them with commas instead of
@@ -253,7 +278,9 @@ h1, h2, h3 {
 ```
 
 This is equivalent to writing three separate rules with identical declarations, but much
-shorter.
+shorter. Rendered against three real headings:
+
+![Rendered output: "Chapter Title", "Section Heading", and "Sub-section Heading" all in a dark red, serif (Georgia) font, at their normal decreasing heading sizes](../assets/img/lecture-05/grouping-selector.png)
 
 ### Descendant Selector
 
@@ -276,6 +303,12 @@ select a `<p>` that lives outside any `<article>`.
 <p>This paragraph is NOT styled (it's outside article).</p>
 ```
 
+Rendered together, so the contrast is visible in one image — the first paragraph (inside
+`<article>`) picks up the darker `#333` from the descendant rule, while the second
+paragraph (outside `<article>`) is left at the browser's default black:
+
+![Rendered output: two paragraphs stacked vertically — "This paragraph IS styled (it's inside article)." in a slightly softer dark gray, and "This paragraph is NOT styled (it's outside article)." in pure black](../assets/img/lecture-05/descendant-selector.png)
+
 ## Pseudo-Classes and Pseudo-Elements
 
 ### Pseudo-Classes
@@ -296,6 +329,13 @@ li:first-child {
   font-weight: bold;
 }
 ```
+
+`:hover` and `:active` need a live mouse to demonstrate and can't be captured in a static
+screenshot, but `:first-child` and `:disabled` are states the browser can render up front.
+Here is a list where the first `<li>` picks up the bold rule, next to a button styled with
+`button:disabled { opacity: 0.5; }`:
+
+![Rendered output: a bulleted list where "First item" is bold and "Second item"/"Third item" are normal weight, above a grayed-out, faded button reading "Can't click me"](../assets/img/lecture-05/pseudo-class-demo.png)
 
 Common pseudo-classes include:
 
@@ -329,6 +369,12 @@ p::first-line {
   content: "”";
 }
 ```
+
+Rendered in a browser — a paragraph long enough to wrap, with only its first rendered
+line bolded by `::first-line`, and a quote wrapped in curly quotation marks that were
+never typed into the HTML, only generated by `::before`/`::after`:
+
+![Rendered output: a paragraph whose first line is bold and the rest normal weight, and below it the bold text "Content is king on the web" wrapped in curly opening and closing quotation marks](../assets/img/lecture-05/pseudo-element-demo.png)
 
 `::before` and `::after` are especially common: they insert content that is not in the
 HTML at all, purely for decoration (like the quotation marks above).
@@ -369,6 +415,10 @@ p { color: black; }          /* specificity: low  */
 ```html
 <p id="lead-paragraph" class="intro">What colour am I?</p>
 ```
+
+Rendered in a browser:
+
+![Rendered output: a paragraph reading "What colour am I?" in blue text](../assets/img/lecture-05/specificity-demo.png)
 
 Here the paragraph will be **blue**, because the id selector has the highest specificity,
 regardless of the order the rules were written in.
@@ -415,6 +465,12 @@ CSS colours can be written in several formats:
 .e { color: hsl(0, 100%, 50%); }   /* hue, saturation, lightness */
 ```
 
+All five rendered together — the first three (named, hex, and `rgb`) all produce the exact
+same solid red; the fourth is visibly lighter/pink because its `0.5` alpha blends the red
+with the white page background; the fifth (`hsl`) is solid red again:
+
+![Rendered output: five lines of red text reading "Red text" followed by the format used — the named, hex, and rgb lines are the same solid red, the rgba line is a lighter pink from its 50% transparency, and the hsl line is solid red again](../assets/img/lecture-05/color-values.png)
+
 `color` sets the text colour. `background-color` sets the background colour of an element's
 box.
 
@@ -428,6 +484,10 @@ p {
   font-style: italic;
 }
 ```
+
+Rendered in a browser:
+
+![Rendered output: a paragraph in bold italic text using a sans-serif font, reading "This paragraph demonstrates font-family, font-size, font-weight, and font-style together."](../assets/img/lecture-05/font-properties.png)
 
 - `font-family` is a **fallback list**: the browser tries each font in order and uses the
   first one it has available. Always end the list with a generic family like `sans-serif`,
@@ -446,6 +506,9 @@ p {
 }
 ```
 
+This shorthand produces the same bold-italic rendering as the four separate declarations
+shown above, just written on one line.
+
 ### Text Properties
 
 ```css
@@ -457,6 +520,10 @@ p {
   letter-spacing: 0.5px;      /* space between characters */
 }
 ```
+
+Rendered in a browser:
+
+![Rendered output: a centered, underlined, all-uppercase paragraph with visibly wider line spacing and letter spacing than normal body text](../assets/img/lecture-05/text-properties.png)
 
 ### Background Properties
 
