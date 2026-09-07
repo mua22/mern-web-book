@@ -24,6 +24,9 @@ that follows.
 - Define core terms: URL/URI, HTTP/HTTPS, DNS, hosting, web server, browser
 - Identify the organizations that create and maintain web standards
 - Compare static, dynamic, MPA, SPA, and PWA application types
+- See the full technology landscape — where HTML, CSS, Bootstrap/Tailwind, JavaScript,
+  jQuery, React, Node/Express, and MongoDB/Mongoose each fit, and what alternatives exist
+  at every layer
 
 ## The Internet vs. the Web
 
@@ -263,6 +266,149 @@ flowchart TD
     These categories are not mutually exclusive. An SPA is almost always dynamic, and a
     PWA is usually built as an SPA with extra capabilities layered on top.
 
+## The Technology Landscape: Where Everything Fits
+
+Over this course and its sequel (Advanced Web Technologies, CSC337), you will learn one
+specific, complete stack: **HTML, CSS, Bootstrap or Tailwind, JavaScript, jQuery, React,
+Node.js with Express, and MongoDB with Mongoose** — commonly nicknamed the **MERN stack**
+(**M**ongoDB, **E**xpress, **R**eact, **N**ode). Before you learn any one piece in depth,
+it helps to see the whole map: which layer of a web application each technology belongs
+to, and what else exists at that same layer. Every layer below has multiple valid
+options — this course picks one path through the map, but you will meet people, job
+listings, and codebases that picked different ones, and you should be able to recognize
+them.
+
+```mermaid
+flowchart TB
+    subgraph Browser["Browser (Client)"]
+        direction LR
+        HTML["HTML<br/>structure"]
+        CSSL["CSS<br/>+ Bootstrap or Tailwind"]
+        JS["JavaScript<br/>+ jQuery / React"]
+    end
+    Browser -->|"HTTP request<br/>(often a REST API call)"| Server
+    subgraph Server["Server"]
+        NODE["Node.js + Express"]
+    end
+    Server -->|"queries"| Data
+    subgraph Data["Data Layer"]
+        DB["MongoDB<br/>(via Mongoose)"]
+    end
+    Data -->|"results"| Server
+    Server -->|"HTTP response<br/>(HTML or JSON)"| Browser
+```
+
+### Markup: Structuring Content
+
+| This course | What it does |
+|---|---|
+| **HTML** | The only markup language browsers understand — there is no real alternative *in the browser itself*. |
+
+You will, however, see HTML *generated* by other tools rather than written by hand once
+you reach server-side templates (Lecture 24) and React's JSX (Lecture 26) — those are
+different ways of producing HTML, not different markup languages.
+
+### Styling: Making It Look Good
+
+| Category | This course | Alternatives |
+|---|---|---|
+| Plain CSS | CSS3 | — (CSS itself has no real substitute; you must know it regardless of what else you use) |
+| CSS preprocessors | — | [Sass/SCSS](https://sass-lang.com/), [Less](https://lesscss.org/) — add variables, nesting, and functions on top of CSS, compiled down to plain CSS |
+| Component-based CSS frameworks | [Bootstrap](https://getbootstrap.com/) | [Bulma](https://bulma.io/), [Foundation](https://get.foundation/) |
+| Utility-first CSS frameworks | [Tailwind CSS](https://tailwindcss.com/) | [UnoCSS](https://unocss.dev/) |
+| Pre-built component libraries | — | [MUI](https://mui.com/), [Chakra UI](https://www.chakra-ui.com/), [shadcn/ui](https://ui.shadcn.com/) — usually built on top of React + a styling approach above |
+
+### Client-Side Scripting
+
+| Category | This course | Alternatives |
+|---|---|---|
+| The language itself | JavaScript (ES6+) | [TypeScript](https://www.typescriptlang.org/) — a typed superset of JavaScript that compiles to plain JS; increasingly common in real projects |
+| DOM/AJAX helper library | [jQuery](https://jquery.com/) | Modern vanilla JS (`querySelector`, `fetch`) now covers most of what jQuery was for — jQuery is still common in older/legacy codebases, which is why this course covers it |
+
+### Front-End Frameworks (Building Full UIs)
+
+| This course | Alternatives |
+|---|---|
+| [React](https://react.dev/) | [Vue](https://vuejs.org/), [Angular](https://angular.dev/), [Svelte](https://svelte.dev/), [SolidJS](https://www.solidjs.com/) |
+
+All of these solve the same core problem (building UI out of reusable, data-driven
+components) with different trade-offs in syntax and philosophy. Once you understand React
+well, picking up any of the others is mostly a matter of new syntax around familiar ideas.
+
+### Server-Side Runtime and Frameworks
+
+| This course | Alternatives |
+|---|---|
+| [Node.js](https://nodejs.org/) + [Express](https://expressjs.com/) | Python: [Django](https://www.djangoproject.com/), [FastAPI](https://fastapi.tiangolo.com/), [Flask](https://flask.palletsprojects.com/) |
+| | Ruby: [Ruby on Rails](https://rubyonrails.org/) |
+| | PHP: [Laravel](https://laravel.com/) |
+| | Java/Kotlin: [Spring Boot](https://spring.io/projects/spring-boot) |
+| | C#: [ASP.NET Core](https://dotnet.microsoft.com/en-us/apps/aspnet) |
+| | Full-stack JS frameworks: [Next.js](https://nextjs.org/) (covered in CSC337) |
+
+### Databases
+
+| This course | Alternatives |
+|---|---|
+| [MongoDB](https://www.mongodb.com/) (via [Mongoose](https://mongoosejs.com/)) — a **NoSQL** document database | Relational (**SQL**): [PostgreSQL](https://www.postgresql.org/), [MySQL](https://www.mysql.com/), [SQLite](https://www.sqlite.org/) |
+| | SQL ORMs: [Prisma](https://www.prisma.io/), [Sequelize](https://sequelize.org/), [TypeORM](https://typeorm.io/) |
+| | Other NoSQL/managed options: [Firebase/Firestore](https://firebase.google.com/), [Redis](https://redis.io/) (mainly caching and sessions) |
+
+!!! note "SQL vs. NoSQL, in one sentence"
+    Reach for a relational database (PostgreSQL, MySQL) when your data is highly
+    structured and relationships between records matter a lot (orders, payments,
+    accounting); reach for MongoDB when your data is naturally document-shaped and the
+    schema needs to flex as your application grows. This course uses MongoDB because it
+    pairs naturally with JSON, which is also what your React front end and Express API
+    will be passing back and forth.
+
+### Deployment and Hosting
+
+| Category | Options |
+|---|---|
+| Frontend / static / serverless | [Vercel](https://vercel.com/), [Netlify](https://www.netlify.com/) |
+| Full-stack apps + managed databases | [Render](https://render.com/), [Railway](https://railway.app/) |
+| Full control, enterprise-scale | [AWS](https://aws.amazon.com/), [Google Cloud](https://cloud.google.com/), [Azure](https://azure.microsoft.com/) |
+
+### Tooling You'll Use Regardless of the Stack
+
+| Tool | Purpose |
+|---|---|
+| [Git](https://git-scm.com/) + [GitHub](https://github.com/) | Version control and collaboration — required for every project in this course |
+| [npm](https://www.npmjs.com/) (or [pnpm](https://pnpm.io/), [Yarn](https://yarnpkg.com/)) | Installing and managing JavaScript packages |
+| [Vite](https://vitejs.dev/) | The build tool you'll use to set up your React project (Lecture 26) |
+
+### What You Actually Need to Know as a MERN Stack Developer
+
+The table above lists a lot of technology — you are **not** expected to learn all of it.
+The goal is to know this course's stack deeply, and recognize the alternatives well
+enough that they don't confuse you in a job posting, a tutorial, or someone else's
+codebase.
+
+| Skill | How well you need to know it |
+|---|---|
+| HTML | Solid — non-negotiable, everything ends up as this |
+| CSS | Solid — non-negotiable |
+| A CSS framework | **At least one** of Bootstrap or Tailwind, deeply — not both. Once you know one well, learning the other later takes a day, not a semester |
+| JavaScript (ES6+) | Strong — the single most important skill in this entire stack |
+| jQuery | Awareness, not mastery — enough to read and maintain an older codebase that uses it |
+| React | Solid — the "R" in MERN |
+| Node.js + Express | Solid — the "N" and "E" in MERN |
+| MongoDB + Mongoose | Solid — the "M" in MERN. Basic SQL/PostgreSQL awareness is a valuable bonus, not a requirement |
+| Git and GitHub | Solid — required for any real project, solo or team |
+| REST API design | Solid — you will design and consume APIs constantly from Lecture 18 onward |
+| Deployment | Working knowledge of **at least one** platform (e.g., Vercel for the frontend, Render for the backend) |
+| TypeScript | Nice to have — increasingly expected in job listings, not required to start this course |
+| A second front-end framework (Vue, Svelte, ...) | Not required — the underlying concepts transfer once you know React |
+
+!!! tip "The pick-one pattern"
+    Notice the pattern: for CSS frameworks, front-end frameworks, backend frameworks, and
+    databases, there is a *category* of tools that solve the same problem, and this course
+    commits to one option per category (Bootstrap/Tailwind, React, Express, MongoDB) so
+    you can go deep instead of shallow. Depth in one option per category, plus awareness
+    of what else exists, is exactly what makes a developer employable — not having
+    surface-level exposure to every tool on this page.
+
 ## Try It Yourself
 
 1. Open your browser's developer tools (press `F12` or right-click → "Inspect"), go to
@@ -287,3 +433,7 @@ flowchart TD
 - Applications range from simple **static** sites to **dynamic** ones, and can be built
   as traditional **MPAs**, faster-feeling **SPAs**, or installable, offline-capable
   **PWAs**.
+- This course teaches the **MERN stack** (MongoDB, Express, React, Node) plus Bootstrap/
+  Tailwind and jQuery — one valid path through a landscape where every layer (styling,
+  front end, back end, database) has real alternatives; the goal is depth in this stack,
+  not shallow exposure to all of them.
