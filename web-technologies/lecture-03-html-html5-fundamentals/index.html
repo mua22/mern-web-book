@@ -2833,6 +2833,8 @@ and open it in any browser to see it work:</p>
 </span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
 </span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
 </span></code></pre></div>
+<p>Rendered in a browser, the <code>&lt;head&gt;</code> content is invisible and only the <code>&lt;body&gt;</code> shows:</p>
+<p><img alt="Rendered output: a bold &quot;Hello, Web!&quot; heading followed by a paragraph of text" src="../../assets/img/lecture-03/doc-structure.png" /></p>
 <p>Let's go through each part:</p>
 <ul>
 <li><strong><code>&lt;!DOCTYPE html&gt;</code></strong> — This must be the very first line. It is not a tag in the usual
@@ -2876,6 +2878,10 @@ are called <strong>void elements</strong> (also commonly called "self-closing" e
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;cat.jpg&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;A photo of a cat&quot;</span><span class="p">&gt;</span>
 </span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span><span class="p">&gt;</span>
 </span></code></pre></div>
+<p><img alt="Rendered output: a line break, a horizontal divider, a broken-image icon showing its alt text because cat.jpg doesn't exist, and an empty text input box" src="../../assets/img/lecture-03/void-elements.png" /></p>
+<p>Notice the broken-image icon: <code>cat.jpg</code> doesn't actually exist in this example, so the
+browser falls back to showing the <code>alt</code> text right where the image would have been — a
+preview of why <code>alt</code> matters, covered properly in the Images section below.</p>
 <table>
 <thead>
 <tr>
@@ -2947,13 +2953,9 @@ next to other elements <em>before any CSS is applied at all</em>:</p>
 </span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="cm">&lt;!-- strong and a are inline: they sit inside the flow of the sentence --&gt;</span>
 </span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>This word is <span class="p">&lt;</span><span class="nt">strong</span><span class="p">&gt;</span>important<span class="p">&lt;/</span><span class="nt">strong</span><span class="p">&gt;</span>, and this is a <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">&gt;</span>link<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span> in the middle of a sentence.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
 </span></code></pre></div>
-<pre class="mermaid"><code>flowchart TD
-    subgraph Block["Block-level: each takes a full new line"]
-        direction TB
-        B1["&amp;lt;h1&amp;gt;Page Title&amp;lt;/h1&amp;gt;"]
-        B2["&amp;lt;p&amp;gt;Paragraph one&amp;lt;/p&amp;gt;"]
-        B3["&amp;lt;p&amp;gt;Paragraph two&amp;lt;/p&amp;gt;"]
-    end</code></pre>
+<p>Here's the same code, rendered in a browser — notice the heading and both paragraphs each
+claim a full line, while <code>&lt;strong&gt;</code> and <code>&lt;a&gt;</code> sit <em>inside</em> the last paragraph's line:</p>
+<p><img alt="Rendered output: a large &quot;Page Title&quot; heading, then two paragraphs each on their own line, then a final paragraph where &quot;important&quot; is bold and &quot;link&quot; is an underlined hyperlink flowing in the middle of the sentence" src="../../assets/img/lecture-03/block-inline.png" /></p>
 <table>
 <thead>
 <tr>
@@ -3057,6 +3059,11 @@ element it belongs to.</p>
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;checkbox&quot;</span> <span class="na">checked</span><span class="p">&gt;</span>
 </span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="p">&lt;</span><span class="nt">button</span> <span class="na">disabled</span><span class="p">&gt;</span>Can&#39;t click me<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
 </span></code></pre></div>
+<p>Here is everything from this section rendered together — the link, an <code>&lt;abbr&gt;</code> using
+<code>title</code> (hover it in a real browser to see the tooltip), a <code>style</code>-colored paragraph, and
+the three boolean-attribute form controls (notice the pre-checked checkbox and the
+grayed-out disabled button):</p>
+<p><img alt="Rendered output: a &quot;Visit COMSATS&quot; link, a sentence with a dotted-underlined &quot;W3C&quot; abbreviation, a red &quot;Urgent&quot; paragraph, a text input with placeholder &quot;required field&quot;, a pre-checked checkbox labeled Subscribe, and a grayed-out disabled button reading &quot;Can't click me&quot;" src="../../assets/img/lecture-03/attributes-demo.png" /></p>
 <p>Writing <code>required="required"</code> is also valid HTML5 (some developers do this for clarity in
 JSX/React code, which you'll meet later in this course), but the bare <code>required</code> form
 shown above is what you'll see most often in plain HTML.</p>
@@ -3090,6 +3097,7 @@ early on, helps you catch mistakes before they cause confusing bugs.</p>
 </span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>Section Heading<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
 </span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;</span>Sub-section Heading<span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
 </span></code></pre></div>
+<p><img alt="Rendered output: three headings of decreasing size and boldness, from &quot;Chapter Title&quot; (largest) to &quot;Sub-section Heading&quot; (smallest)" src="../../assets/img/lecture-03/headings.png" /></p>
 <div class="admonition note">
 <p class="admonition-title">Only one <code>&lt;h1&gt;</code> per page</p>
 <p>Use <code>&lt;h1&gt;</code> for the main title of the page, and step down through <code>&lt;h2&gt;</code>, <code>&lt;h3&gt;</code>, and so
@@ -3156,6 +3164,8 @@ multiple <code>&lt;h1&gt;</code> tags confuses screen readers and hurts search-e
 </tr>
 </tbody>
 </table>
+<p>All of these rendered together:</p>
+<p><img alt="Rendered output: bold &quot;Warning&quot; followed by italic &quot;really&quot; important; bold text and italic text; yellow-highlighted &quot;highlighted&quot; text and small &quot;terms apply&quot; text; H with a subscript 2 and O, and x with a superscript 2; &quot;Line one&quot; and &quot;Line two&quot; on separate lines; then a horizontal divider" src="../../assets/img/lecture-03/text-formatting.png" /></p>
 <h2 id="hyperlinks-absolute-vs-relative-urls">Hyperlinks: Absolute vs. Relative URLs<a class="headerlink" href="#hyperlinks-absolute-vs-relative-urls" title="Permanent link">&para;</a></h2>
 <p>A <strong>hyperlink</strong> (or just "link") lets a user click text or an image to navigate to another
 page. Links are created with the <code>&lt;a&gt;</code> (anchor) element and its <code>href</code> (hypertext
@@ -3177,6 +3187,8 @@ reference) attribute:</p>
 </span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;pages/contact.html&quot;</span><span class="p">&gt;</span>Contact (in a subfolder)<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
 </span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;../index.html&quot;</span><span class="p">&gt;</span>Back to home (one folder up)<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
 </span></code></pre></div>
+<p>All four links rendered together (an absolute link followed by three relative ones):</p>
+<p><img alt="Rendered output: four blue underlined links stacked vertically, reading &quot;HTML on Wikipedia&quot;, &quot;About Us&quot;, &quot;Contact (in a subfolder)&quot;, and &quot;Back to home (one folder up)&quot;" src="../../assets/img/lecture-03/links.png" /></p>
 <div class="admonition tip">
 <p class="admonition-title">When to use which</p>
 <p>Use absolute URLs for links leaving your site, and relative URLs for links that stay
@@ -3193,6 +3205,7 @@ website to a new domain, none of your internal links break.</p>
 key attributes:</p>
 <div class="language-html highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;images/logo.png&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;COMSATS logo&quot;</span> <span class="na">width</span><span class="o">=</span><span class="s">&quot;200&quot;</span> <span class="na">height</span><span class="o">=</span><span class="s">&quot;80&quot;</span><span class="p">&gt;</span>
 </span></code></pre></div>
+<p><img alt="Rendered output: a 200 by 80 pixel image showing a dark blue box with the word COMSATS in white text" src="../../assets/img/lecture-03/images.png" /></p>
 <ul>
 <li><code>src</code> (source) — the path to the image file, which can be relative or absolute, just like
   a link's <code>href</code>.</li>
@@ -3214,6 +3227,10 @@ key attributes:</p>
 </span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>    Your browser does not support the video element.
 </span><span id="__span-15-9"><a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a><span class="p">&lt;/</span><span class="nt">video</span><span class="p">&gt;</span>
 </span></code></pre></div>
+<p>Even without a real, playable file behind <code>song.mp3</code>/<code>movie.mp4</code>, the browser still draws
+its native player controls, because <code>controls</code> is a boolean attribute that only depends on
+being present — not on whether a file actually loads:</p>
+<p><img alt="Rendered output: a native audio player control bar with play button, timestamp, seek bar, volume, and menu; below it, a native video player showing a black video area with the same style of control bar" src="../../assets/img/lecture-03/audio-video.png" /></p>
 <ul>
 <li>The <code>controls</code> attribute makes the browser show a built-in play/pause/volume bar.</li>
 <li>The <code>&lt;source&gt;</code> child element specifies the actual file; you can list several <code>&lt;source&gt;</code>
@@ -3246,6 +3263,13 @@ header cell), and <code>&lt;td&gt;</code> (table data cell):</p>
 </span><span id="__span-16-20"><a id="__codelineno-16-20" name="__codelineno-16-20" href="#__codelineno-16-20"></a>    <span class="p">&lt;/</span><span class="nt">tbody</span><span class="p">&gt;</span>
 </span><span id="__span-16-21"><a id="__codelineno-16-21" name="__codelineno-16-21" href="#__codelineno-16-21"></a><span class="p">&lt;/</span><span class="nt">table</span><span class="p">&gt;</span>
 </span></code></pre></div>
+<p><img alt="Rendered output: a table with header row Name, Course, Grade, and two data rows for Ali (CSC336, A) and Sara (CSC336, A+), with light gray gridlines added for clarity" src="../../assets/img/lecture-03/tables.png" /></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Plain HTML tables have no visible gridlines by default — the borders in the screenshot
+above were added with a little CSS purely so the structure is easy to see. You will
+learn to style tables (and everything else) with CSS starting in the next unit.</p>
+</div>
 <ul>
 <li><code>&lt;thead&gt;</code> groups the header row(s); <code>&lt;tbody&gt;</code> groups the actual data rows. Both are
   optional but recommended for clarity and styling.</li>
@@ -3285,6 +3309,8 @@ key-value data):</p>
 </span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>    <span class="p">&lt;</span><span class="nt">dd</span><span class="p">&gt;</span>The language used to style web pages.<span class="p">&lt;/</span><span class="nt">dd</span><span class="p">&gt;</span>
 </span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a><span class="p">&lt;/</span><span class="nt">dl</span><span class="p">&gt;</span>
 </span></code></pre></div>
+<p>All three list types rendered together — unordered, then ordered, then description:</p>
+<p><img alt="Rendered output: a bulleted list of HTML, CSS, JavaScript; a numbered list of three steps; and a description list pairing the terms HTML and CSS with their definitions" src="../../assets/img/lecture-03/lists.png" /></p>
 <ul>
 <li><code>&lt;dl&gt;</code> — description list (the container)</li>
 <li><code>&lt;dt&gt;</code> — description term (the word being defined)</li>
@@ -3396,7 +3422,7 @@ structure. This is exactly what the browser's DOM represents:</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 7, 2026 01:53:39 UTC">September 7, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 7, 2026 02:19:15 UTC">September 7, 2026</span>
   </span>
 
     
