@@ -45,6 +45,11 @@ include `<a>`, `<span>`, `<strong>`, `<em>`, and `<img>`.
 <a href="#">inline link</a> sitting right in the flow of the text.</p>
 ```
 
+Rendered in a browser, the two paragraphs each claim their own line, while the bold word
+and the link sit inside the flow of the third paragraph's line:
+
+![Rendered output: two paragraphs stacked on separate lines, followed by a third paragraph where "inline bold word" is bold and "inline link" is an underlined blue hyperlink sitting in the middle of the sentence](../assets/img/lecture-04/block-inline.png)
+
 !!! note "Why this distinction matters"
     Understanding block vs. inline is essential once you start styling pages with CSS
     (Lecture 5 onward), because it determines how elements size themselves and flow next
@@ -66,6 +71,11 @@ containers for exactly this:
 
 <p>The price is <span class="highlight-price">$25</span> today only.</p>
 ```
+
+Rendered in a browser with no CSS at all, the `class` names have zero visual effect — the
+"card" div and the highlighted span look exactly like ordinary, unstyled text:
+
+![Rendered output: a plain sentence about content wrapped in a div, followed by a plain sentence reading "The price is $25 today only." with no visible box or highlight color anywhere](../assets/img/lecture-04/div-span.png)
 
 Neither `<div>` nor `<span>` tells the browser, a search engine, or a screen reader
 anything about *what kind* of content is inside them — they are pure containers, useful
@@ -97,6 +107,12 @@ page:
     <aside>...</aside>
     <footer>...</footer>
     ```
+
+!!! note "No screenshot here on purpose"
+    Rendered in a real browser with no CSS, both versions above produce nothing but a
+    stack of empty, invisible containers — there is no visible content inside them to show
+    in a screenshot. That invisibility is exactly the point: the tag name changes what the
+    markup *means*, not how it looks.
 
 Both versions might look *identical* in the browser once styled with CSS — semantic
 elements do not automatically look different. The difference is that the second version
@@ -149,6 +165,11 @@ Here is a full, realistic page skeleton using them together:
 </body>
 ```
 
+Rendered in a browser, semantic elements have no built-in visual styling of their own —
+the page is plain, but every section is genuinely there in the markup:
+
+![Rendered output: a plain page showing a large "My Tech Blog" heading, a row of three links (Home, About, Contact), a "Why Semantic HTML Matters" heading with a paragraph, a smaller "Related Posts" heading with a bulleted list of two links, and a copyright line at the bottom](../assets/img/lecture-04/semantic-skeleton.png)
+
 Notice that `<section>` and `<article>` are similar. Use `<article>` when the content makes
 sense entirely on its own, even if copied to a completely different site (a blog post, a
 product listing). Use `<section>` for a grouping of related content that is *part of* the
@@ -190,6 +211,11 @@ element.
     <button type="submit">Log In</button>
 </form>
 ```
+
+Rendered in a browser, with no CSS to force the fields onto separate lines, the labels and
+inputs simply flow together left to right like any other inline content:
+
+![Rendered output: "Username:" label next to an empty text box, then "Password:" label next to another empty text box, then a "Log In" button, all sitting on a single line](../assets/img/lecture-04/login-form.png)
 
 ### The `action` and `method` Attributes
 
@@ -261,6 +287,15 @@ what kind of control the browser displays and what kind of data it expects:
 <input type="hidden" name="formVersion" value="2">
 ```
 
+Rendered in a browser, each `type` produces a genuinely different native control — this is
+one of the clearest illustrations of how much the browser does for you with plain HTML:
+
+![Rendered output: a stack of distinct form controls — a text box with placeholder "Full name", an email box, a plain password box, a number box, a date picker showing dd/mm/yyyy, a checked checkbox, two radio buttons labeled Male and Female, a "Choose File" button, a slider, a black color swatch, and a "Send" button; the hidden input produces no visible control at all](../assets/img/lecture-04/input-types.png)
+
+A little extra CSS (`display: block` on every `<input>`) was added purely so each type
+stacks on its own line for a legible screenshot — the input elements, types, and attributes
+themselves are exactly as shown in the code above.
+
 | Type | Purpose |
 |---|---|
 | `text` | A single line of free text |
@@ -292,6 +327,10 @@ starts typing, and it is not a substitute for a `<label>`.
 </select>
 ```
 
+Rendered in a browser, the dropdown shows the `selected` option's text by default:
+
+![Rendered output: a "Choose a course:" label next to a dropdown box currently showing "Advanced Web Technologies"](../assets/img/lecture-04/select-dropdown.png)
+
 The `selected` attribute pre-selects an option; the `value` attribute is what gets sent to
 the server (which can differ from the visible text).
 
@@ -302,6 +341,11 @@ always one line:
 <label for="message">Message:</label>
 <textarea id="message" name="message" rows="5" cols="40">Type here...</textarea>
 ```
+
+Rendered in a browser, the `rows`/`cols` attributes size the visible box, and the text
+between the tags appears pre-filled inside it:
+
+![Rendered output: a "Message:" label next to a multi-line text box, five rows tall, pre-filled with the text "Type here..." and a resize handle in the bottom-right corner](../assets/img/lecture-04/textarea.png)
 
 Note that the default text goes *between* the opening and closing tags, not in a `value`
 attribute.
@@ -314,6 +358,11 @@ because it can contain other HTML (like an icon) inside it:
 <button type="reset">Clear Form</button>
 <button type="button">Just a Button (does nothing by itself)</button>
 ```
+
+All three render as ordinary clickable buttons — nothing about their appearance reveals
+which `type` they are; only their behavior differs when clicked inside a real form:
+
+![Rendered output: three gray buttons side by side, reading "Submit", "Clear Form", and "Just a Button (does nothing by itself)"](../assets/img/lecture-04/buttons.png)
 
 - `type="submit"` (the default inside a form) submits the form.
 - `type="reset"` clears all fields back to their default values.
@@ -342,6 +391,14 @@ do simple validation automatically, with zero JavaScript required.
     <button type="submit">Register</button>
 </form>
 ```
+
+Rendered in a browser, the fields themselves look like any other text/number input:
+
+![Rendered output: "Username (required):" label next to a text box, "CNIC (format 00000-0000000-0):" label wrapping to a new line above an empty text box, "Age (18–60):" label next to a small number box, and a "Register" button](../assets/img/lecture-04/validation-form.png)
+
+The validation messages themselves are not visible in a static screenshot — a small warning
+bubble like "Please fill out this field" or "Please match the requested format" only
+appears in a real browser when you try to submit the form with invalid or missing data.
 
 - **`required`** — the field cannot be left empty. The browser blocks submission and shows
   a small warning bubble pointing at the missing field.
