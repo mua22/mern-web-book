@@ -489,6 +489,45 @@ everyday workflow from this tutorial, visually:
     need for scripting, CI/CD pipelines, and working on a remote server that has no GUI
     at all.
 
+### Creating Your First Repository with GitHub Desktop
+
+This walks through the exact same result as [Part 2](#part-2-your-first-repository) and
+[Part 3](#part-3-github-working-with-a-remote) above — a repository, a first commit, and
+that commit pushed to GitHub — but entirely with clicks instead of commands.
+
+1. **Install and sign in.** Download GitHub Desktop from
+   [desktop.github.com](https://desktop.github.com/) and install it. On first launch, go
+   to **File > Options > Accounts** (Windows) or **GitHub Desktop > Settings > Accounts**
+   (macOS) and sign in with your GitHub account — this is what lets it push on your
+   behalf without asking for a password every time.
+2. **Create a new repository.** Go to **File > New Repository**. Fill in:
+      - **Name** — the repository's name (e.g. `my-first-repo`)
+      - **Local path** — which folder on your computer it will live in
+      - **Initialize this repository with a README** — leave this checked; it saves you
+        the `echo "# My Project" > README.md` step from [Part 2](#creating-a-repository)
+   Click **Create Repository**.
+3. **Make a change.** Open the new folder in your code editor (GitHub Desktop has a
+   **Repository > Open in Visual Studio Code** shortcut, if VS Code is installed) and
+   edit `README.md` — add a line of text and save the file.
+4. **Review and commit.** Switch back to GitHub Desktop. The **Changes** tab on the left
+   shows `README.md` with a diff on the right — red lines removed, green lines added,
+   exactly like `git diff` from the terminal. Type a summary in the box at the
+   bottom-left (this is your commit message, same rules as
+   [Writing Good Commit Messages](#writing-good-commit-messages)) and click
+   **Commit to main**.
+5. **Publish (push) to GitHub.** Click **Publish repository** in the top bar (this button
+   reads **Push origin** instead, with a small "1^" badge, on every commit *after* the
+   first). Choose whether the repository should be public or private, and click
+   **Publish Repository**. That's the equivalent of `git remote add origin ...` and
+   `git push -u origin main` combined into one click.
+6. **Confirm it worked.** Click **View on GitHub** (or visit github.com and open the
+   repository from your profile) — your README and its commit history should now be
+   there, exactly as if you'd pushed it from the terminal.
+
+From here on, the loop is: edit files → **Changes** tab shows what's different → write a
+summary → **Commit to main** → **Push origin**. That's the entire day-to-day GitHub
+Desktop workflow.
+
 ### Alternatives to GitHub Desktop
 
 | Tool | Notes |

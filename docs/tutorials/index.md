@@ -13,6 +13,7 @@ examples.
 
 | Tutorial | Level | What it covers |
 |---|---|---|
+| [MERN Environment Setup](environment-setup.md) | Beginner | Installing VS Code (and essential extensions), Node.js/npm, nodemon, MongoDB (Atlas or local), and Git/GitHub Desktop |
 | [Git and GitHub](git-and-github.md) | Beginner to Intermediate | Version control fundamentals, everyday Git commands, branching and merging, undoing mistakes, collaborating on GitHub with forks and pull requests, and GitHub Desktop / GUI alternatives |
 
 More tutorials will be added here over time.
