@@ -830,6 +830,67 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#layered-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layered Architecture
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Layered Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-three-common-layers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Three Common Layers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-bother-separating-layers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Bother Separating Layers?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-concrete-example-layers-inside-a-nodejsexpress-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A Concrete Example: Layers Inside a Node.js/Express Application
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#layers-combine-with-tiers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layers Combine With Tiers
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#choosing-an-architecture" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2534,6 +2595,67 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#layered-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layered Architecture
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Layered Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-three-common-layers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Three Common Layers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-bother-separating-layers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Bother Separating Layers?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-concrete-example-layers-inside-a-nodejsexpress-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A Concrete Example: Layers Inside a Node.js/Express Application
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#layers-combine-with-tiers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layers Combine With Tiers
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#choosing-an-architecture" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2623,6 +2745,7 @@ websites — and how to reason about which one to pick.</p>
 <h2 id="in-this-lecture">In This Lecture<a class="headerlink" href="#in-this-lecture" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Distinguish between tiers (physical deployment) and layers (logical code organization)</li>
+<li>Learn the common layers inside a typical application, and how they combine with tiers</li>
 <li>Understand one-tier (standalone) architecture and when it's used</li>
 <li>Understand two-tier (client-server) architecture, its advantages and limitations</li>
 <li>Understand three-tier and N-tier architecture</li>
@@ -2773,6 +2896,128 @@ system might add:</p>
 <li><strong>Network latency</strong> — communication between tiers happens over a network, which is
   slower than function calls within a single process.</li>
 </ul>
+<h2 id="layered-architecture">Layered Architecture<a class="headerlink" href="#layered-architecture" title="Permanent link">&para;</a></h2>
+<p>Every example so far has focused on <strong>tiers</strong> — where code physically runs. Now let's
+look at <strong>layers</strong> — how code is logically organized <em>within</em> any one of those tiers.
+Layers matter just as much as tiers: even a simple one-tier script benefits from being
+organized into layers, and understanding layers now will make the Express applications
+you build starting in Unit 5 far easier to follow.</p>
+<h3 id="the-three-common-layers">The Three Common Layers<a class="headerlink" href="#the-three-common-layers" title="Permanent link">&para;</a></h3>
+<p>Most web applications — no matter how many tiers they're deployed across — organize
+their code into three logical layers:</p>
+<ol>
+<li><strong>Presentation Layer</strong> — the part responsible for showing information to the user
+   and capturing their input. In a browser, this is your HTML/CSS/JS or React
+   components; on a server that returns JSON, it's the code that shapes the response
+   sent back to whatever is calling it. Its job is <em>only</em> to display and collect data —
+   it should not contain business rules.</li>
+<li><strong>Business Logic Layer</strong> (also called the <strong>Application Layer</strong> or <strong>Service
+   Layer</strong>) — the actual rules of your application: validating a discount code,
+   calculating an order total, deciding whether a user is allowed to delete a post. This
+   layer doesn't know or care <em>how</em> its results will be displayed, or <em>where</em> its data
+   comes from — it just applies the rules.</li>
+<li><strong>Data Access Layer</strong> (also called the <strong>Persistence Layer</strong> or <strong>Repository
+   Layer</strong>) — the code that actually talks to the database: running queries, and
+   reading or writing records. This layer doesn't know or care about business rules or
+   how the UI looks — it just stores and retrieves data.</li>
+</ol>
+<pre class="mermaid"><code>flowchart TB
+    P["Presentation Layer&lt;br/&gt;(routes/controllers, or UI components)"]
+    B["Business Logic Layer&lt;br/&gt;(services: validation, calculations, rules)"]
+    D["Data Access Layer&lt;br/&gt;(models/repositories: database queries)"]
+    P --&gt; B --&gt; D</code></pre>
+<p>A request flows <em>down</em> through the layers, and the response flows back <em>up</em> — each
+layer only ever talks to the layer directly next to it, never skipping ahead.</p>
+<h3 id="why-bother-separating-layers">Why Bother Separating Layers?<a class="headerlink" href="#why-bother-separating-layers" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Swap technology in one layer without touching the others.</strong> If you decide to
+  migrate from MongoDB to PostgreSQL, only the data access layer needs to change — the
+  business logic and presentation layers don't need to know or care.</li>
+<li><strong>Test business logic without a real database.</strong> Because the business logic layer
+  doesn't call the database directly, you can test it by substituting ("mocking") the
+  data access layer with fake data, making tests fast and independent of a real
+  database connection.</li>
+<li><strong>Reuse the same business logic from multiple presentation layers.</strong> A web front end
+  and a mobile app can both call the same business logic layer (through an API), so
+  rules like "an order total must include tax" are written once, not duplicated.</li>
+<li><strong>Easier to reason about and debug.</strong> If a page shows the wrong currency symbol,
+  that's obviously a presentation-layer bug; if an order total is calculated wrong,
+  that's a business-logic bug — the layer boundaries tell you where to look first.</li>
+</ul>
+<h3 id="a-concrete-example-layers-inside-a-nodejsexpress-application">A Concrete Example: Layers Inside a Node.js/Express Application<a class="headerlink" href="#a-concrete-example-layers-inside-a-nodejsexpress-application" title="Permanent link">&para;</a></h3>
+<p>Here is what these three layers typically look like as actual folders and files in a
+Node.js/Express project — the same kind of structure you will build starting in Unit 5:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>project/
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>├── routes/            &lt;- Presentation layer: defines URLs, reads the request,
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>│   └── orders.js         sends back a response. No business rules here.
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>├── services/          &lt;- Business logic layer: validation, calculations, rules.
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>│   └── orderService.js   Knows nothing about HTTP or the database.
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>├── models/            &lt;- Data access layer: talks to the database (e.g. via
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>│   └── Order.js          Mongoose). Knows nothing about business rules.
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>└── app.js
+</span></code></pre></div>
+<p>Tracing a single request through these layers, in plain pseudocode:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>POST /orders  arrives at  routes/orders.js
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    -&gt; routes/orders.js reads the request body, then calls
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>       orderService.createOrder(data)
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>services/orderService.js  (business logic)
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>    -&gt; checks that requested items are in stock
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>    -&gt; calculates the total price, including tax
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>    -&gt; calls Order.save(orderData)   [data access layer]
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>models/Order.js  (data access)
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>    -&gt; runs the actual database insert
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>    -&gt; returns the saved record back up to the service
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>services/orderService.js
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>    -&gt; returns the result back up to the route
+</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>
+</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>routes/orders.js
+</span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>    -&gt; formats and sends the JSON response back to the client
+</span></code></pre></div>
+<p>Notice that <code>routes/orders.js</code> never talks to the database directly, and
+<code>models/Order.js</code> never makes a business decision — each layer sticks to its own job.</p>
+<h3 id="layers-combine-with-tiers">Layers Combine With Tiers<a class="headerlink" href="#layers-combine-with-tiers" title="Permanent link">&para;</a></h3>
+<p>Tiers and layers are independent, but real applications use both together:</p>
+<ul>
+<li>In a <strong>one-tier</strong> script, all three layers can still exist as separate functions or
+  files — they're just all loaded into the same process on the same machine.</li>
+<li>In the <strong>two-tier</strong> example from earlier (a server that renders HTML <em>and</em> queries
+  the database directly), the presentation and business logic layers typically live
+  together on the server tier, while the data itself sits in a separate database — the
+  data access layer is the thin bridge between them.</li>
+<li>In a <strong>three-tier</strong> MERN-style setup, the presentation layer maps naturally onto the
+  Presentation Tier (the React app), while the Application Tier internally contains
+  <em>both</em> the business logic layer and the data access layer, which then makes network
+  calls to the separate Data Tier.</li>
+</ul>
+<pre class="mermaid"><code>flowchart TB
+    subgraph "Presentation Tier"
+        UI[React UI]
+    end
+    subgraph "Application Tier"
+        direction TB
+        BL[Business Logic Layer]
+        DAL[Data Access Layer]
+        BL --&gt; DAL
+    end
+    subgraph "Data Tier"
+        DB[(Database)]
+    end
+    UI &lt;-- HTTP/JSON --&gt; BL
+    DAL &lt;-- queries --&gt; DB</code></pre>
+<div class="admonition note">
+<p class="admonition-title">A naming trap: 'N-layer' vs. 'N-tier'</p>
+<p>You will sometimes see "layered architecture" called <strong>N-layer architecture</strong> —
+which sounds almost identical to <strong>N-tier architecture</strong> from earlier in this
+lecture, and is a common source of confusion. Keep the distinction from the start
+of this lecture in mind: <strong>N-tier is about how many machines/processes</strong> your
+application is physically split across; <strong>N-layer is about how many logical
+groupings</strong> your code is organized into on any one of those machines. A single
+physical tier can (and usually should) still be internally organized into several
+layers.</p>
+</div>
 <h2 id="choosing-an-architecture">Choosing an Architecture<a class="headerlink" href="#choosing-an-architecture" title="Permanent link">&para;</a></h2>
 <p>There is no single "best" architecture — the right choice depends on trade-offs between
 three main factors:</p>
@@ -2824,6 +3069,11 @@ architecture to the actual requirements, not to what sounds most impressive.</p>
    queries the database directly) and describe, in a few sentences, how you would split
    it into three tiers. What new component would you introduce, and what would move
    into it?</li>
+<li>Pick any app on your phone. Without knowing its actual code, guess at three pieces
+   of logic it probably has and sort each one into a presentation, business logic, or
+   data access layer (for example: "shows a red badge on the icon when you have unread
+   messages" is presentation; "decides you've qualified for free shipping over a
+   certain amount" is business logic).</li>
 </ol>
 <h2 id="key-takeaways">Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permanent link">&para;</a></h2>
 <ul>
@@ -2840,6 +3090,15 @@ architecture to the actual requirements, not to what sounds most impressive.</p>
   complexity.</li>
 <li><strong>N-tier</strong> generalizes this further, adding tiers like caching or load balancing as
   needed.</li>
+<li>Most applications also organize their code into three <strong>layers</strong>: a <strong>presentation
+  layer</strong> (display/input), a <strong>business logic layer</strong> (rules and calculations), and a
+  <strong>data access layer</strong> (talking to the database) — each layer only talks to its
+  neighbor, never skipping ahead.</li>
+<li>Layers make it possible to swap technology, test business logic without a real
+  database, and reuse the same logic behind multiple presentation layers.</li>
+<li>Tiers and layers combine: a single tier is usually still organized into multiple
+  layers internally, and "N-layer" (logical) should not be confused with "N-tier"
+  (physical).</li>
 <li>Choosing an architecture is a trade-off between <strong>scalability</strong>, <strong>maintainability</strong>,
   and <strong>cost</strong> — match the architecture to your application's actual needs, not to
   complexity for its own sake.</li>
@@ -2864,7 +3123,7 @@ architecture to the actual requirements, not to what sounds most impressive.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 4, 2026 21:02:03 UTC">September 4, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 8, 2026 05:07:57 UTC">September 8, 2026</span>
   </span>
 
     
