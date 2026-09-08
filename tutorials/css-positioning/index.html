@@ -1,0 +1,1887 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="An online textbook for Web Technologies (CSC336) and Advanced Web Technologies (CSC337), built lecture-by-lecture from the official COMSATS course plans.">
+      
+      
+        <meta name="author" content="Usman Akram">
+      
+      
+        <link rel="canonical" href="https://mua22.github.io/mern-web-book/tutorials/css-positioning/">
+      
+      
+        <link rel="prev" href="../layout-designing/">
+      
+      
+        <link rel="next" href="../flexbox/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/logo.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Tutorial: CSS Positioning - Web Dev Book — CSC336 & CSC337</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+  
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+  
+  <style>:root{--md-admonition-icon--note:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M20%2011h3v2h-3zM1%2011h3v2H1zM13%201v3h-2V1zM4.92%203.5l2.13%202.14-1.42%201.41L3.5%204.93zm12.03%202.13%202.12-2.13%201.43%201.43-2.13%202.12zM12%206a6%206%200%200%201%206%206c0%202.22-1.21%204.16-3%205.2V19a1%201%200%200%201-1%201h-4a1%201%200%200%201-1-1v-1.8c-1.79-1.04-3-2.98-3-5.2a6%206%200%200%201%206-6m2%2015v1a1%201%200%200%201-1%201h-2a1%201%200%200%201-1-1v-1zm-3-3h2v-2.13c1.73-.44%203-2.01%203-3.87a4%204%200%200%200-4-4%204%204%200%200%200-4%204c0%201.86%201.27%203.43%203%203.87z%22/%3E%3C/svg%3E');--md-admonition-icon--tip:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M12%203%201%209l4%202.18v6L12%2021l7-3.82v-6l2-1.09V17h2V9zm6.82%206L12%2012.72%205.18%209%2012%205.28zM17%2016l-5%202.72L7%2016v-3.73L12%2015l5-2.73z%22/%3E%3C/svg%3E');--md-admonition-icon--warning:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M12%202%201%2021h22M12%206l7.53%2013H4.47M11%2010v4h2v-4m-2%206v2h2v-2%22/%3E%3C/svg%3E');--md-admonition-icon--example:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M19%203H5c-1.1%200-2%20.9-2%202v14c0%201.1.9%202%202%202h14c1.1%200%202-.9%202-2V5c0-1.1-.9-2-2-2m-8%205H9v2c0%201.1-.9%202-2%202%201.1%200%202%20.9%202%202v2h2v2H9c-1.1%200-2-.9-2-2v-1c0-1.1-.9-2-2-2v-2c1.1%200%202-.9%202-2V8c0-1.1.9-2%202-2h2zm8%205c-1.1%200-2%20.9-2%202v1c0%201.1-.9%202-2%202h-2v-2h2v-2c0-1.1.9-2%202-2-1.1%200-2-.9-2-2V8h-2V6h2c1.1%200%202%20.9%202%202v1c0%201.1.9%202%202%202z%22/%3E%3C/svg%3E');}</style>
+
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="deep-purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#tutorial-css-positioning" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Web Dev Book — CSC336 &amp; CSC337" class="md-header__button md-logo" aria-label="Web Dev Book — CSC336 & CSC337" data-md-component="logo">
+      
+  <img src="../../assets/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Web Dev Book — CSC336 & CSC337
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Tutorial: CSS Positioning
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="deep-purple"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="deep-purple"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../.." class="md-tabs__link">
+          
+  
+  
+    
+  
+  Home
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../web-technologies/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Web Technologies (CSC336)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../advanced-web-technologies/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Advanced Web Technologies (CSC337)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Tutorials
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../tags/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Tags
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://usmanlive.com" class="md-tabs__link">
+        
+  
+  
+    
+  
+  usmanlive.com
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Web Dev Book — CSC336 &amp; CSC337" class="md-nav__button md-logo" aria-label="Web Dev Book — CSC336 & CSC337" data-md-component="logo">
+      
+  <img src="../../assets/logo.svg" alt="logo">
+
+    </a>
+    Web Dev Book — CSC336 & CSC337
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../.." class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../web-technologies/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Web Technologies (CSC336)
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../advanced-web-technologies/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced Web Technologies (CSC337)
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutorials
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tutorials
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../environment-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MERN Environment Setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../first-html-css-app/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Your First HTML + CSS Page
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../layout-designing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Layout Designing: div, span, and Float
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CSS Positioning
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CSS Positioning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#in-this-tutorial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        In This Tutorial
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-1-normal-flow-and-position-static" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 1: Normal Flow and position: static
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-2-position-relative" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 2: position: relative
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-3-position-absolute" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 3: position: absolute
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-4-position-fixed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 4: position: fixed
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-5-position-sticky" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 5: position: sticky
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-6-z-index-and-stacking-order" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 6: z-index and Stacking Order
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-7-real-world-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 7: Real-World Patterns
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 7: Real-World Patterns">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pattern-a-a-tooltip-with-position-absolute" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pattern A: A Tooltip with position: absolute
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pattern-b-a-centered-modal-dialog-with-position-fixed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pattern B: A Centered Modal Dialog with position: fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#try-it-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try It Yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Takeaways
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../flexbox/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Flexbox Layout
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../multilevel-navigation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multilevel Navigation with Positioning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../css-animations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CSS Transitions and Animations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../responsive-design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Responsive Web Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../git-and-github/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git and GitHub
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../assignment-submission/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Submitting Coursework via GitHub
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tags
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://usmanlive.com" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    usmanlive.com
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#in-this-tutorial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        In This Tutorial
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-1-normal-flow-and-position-static" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 1: Normal Flow and position: static
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-2-position-relative" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 2: position: relative
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-3-position-absolute" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 3: position: absolute
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-4-position-fixed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 4: position: fixed
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-5-position-sticky" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 5: position: sticky
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-6-z-index-and-stacking-order" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 6: z-index and Stacking Order
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-7-real-world-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 7: Real-World Patterns
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 7: Real-World Patterns">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pattern-a-a-tooltip-with-position-absolute" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pattern A: A Tooltip with position: absolute
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pattern-b-a-centered-modal-dialog-with-position-fixed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pattern B: A Centered Modal Dialog with position: fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#try-it-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try It Yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Takeaways
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <a href="../../tags/#tag:css" class="md-tag">CSS</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../tags/#tag:layout" class="md-tag">Layout</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../tags/#tag:positioning" class="md-tag">Positioning</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../tags/#tag:z-index" class="md-tag">z-index</a>
+      
+    
+  </nav>
+
+
+
+<h1 id="tutorial-css-positioning">Tutorial: CSS Positioning<a class="headerlink" href="#tutorial-css-positioning" title="Permanent link">&para;</a></h1>
+<p>Every layout technique you have used so far — normal block and inline flow, <code>float</code> — leaves
+elements roughly where the document's structure puts them. CSS's <code>position</code> property is
+different: it lets you take an element out of that structure and place it exactly where you
+want, relative to different reference points. This tutorial covers all five values of
+<code>position</code> (<code>static</code>, <code>relative</code>, <code>absolute</code>, <code>fixed</code>, and <code>sticky</code>), the <code>z-index</code> property
+that controls which overlapping element renders on top, and two real-world UI patterns —
+tooltips and modal dialogs — built entirely from these tools.</p>
+<p><strong>Prerequisites:</strong> <a href="../../web-technologies/lecture-05-css-fundamentals/">CSS Fundamentals</a> and
+<a href="../../web-technologies/lecture-06-css-box-model-and-display/">the CSS Box Model</a>.</p>
+<h2 id="in-this-tutorial">In This Tutorial<a class="headerlink" href="#in-this-tutorial" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Normal document flow, and <code>position: static</code> as its formal name</li>
+<li><code>position: relative</code> — shifting an element while its original space stays reserved</li>
+<li><code>position: absolute</code> — removing an element from flow, anchored to a positioned ancestor</li>
+<li><code>position: fixed</code> — anchored to the viewport, ignoring scrolling</li>
+<li><code>position: sticky</code> — a hybrid of <code>relative</code> and <code>fixed</code></li>
+<li><code>z-index</code> and stacking order for overlapping positioned elements</li>
+<li>Two complete patterns: a hover tooltip and a centered modal dialog</li>
+</ul>
+<hr />
+<h2 id="part-1-normal-flow-and-position-static">Part 1: Normal Flow and position: static<a class="headerlink" href="#part-1-normal-flow-and-position-static" title="Permanent link">&para;</a></h2>
+<p>Every element you have styled so far — paragraphs, headings, floated columns, list items —
+has been placed by the browser's <strong>normal document flow</strong>: block-level elements stack
+top to bottom in source order, inline elements flow left to right within a line, and nothing
+overlaps unless you specifically pull an element out of that flow (as <code>float</code> does).</p>
+<p>Formally, this default placement has a name: <code>position: static</code>. Every element starts out
+<code>static</code> unless you say otherwise, and a <code>static</code> element ignores the <code>top</code>, <code>right</code>,
+<code>bottom</code>, and <code>left</code> properties entirely — they simply have no effect on it.</p>
+<div class="language-css highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">.</span><span class="nc">box</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="k">position</span><span class="p">:</span><span class="w"> </span><span class="kc">static</span><span class="p">;</span><span class="w"> </span><span class="c">/* the default — you rarely write this explicitly */</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>Here are three ordinary boxes with no positioning applied — this is the baseline everything
+else in this tutorial is compared against:</p>
+<p><img alt="Rendered output: three light blue boxes labeled Box 1, Box 2, and Box 3, stacked vertically with equal spacing, each captioned &quot;position: static (the default)&quot;" src="../../assets/img/tutorials/positioning/normal-flow-static-boxes.png" /></p>
+<p>The other four values of <code>position</code> — <code>relative</code>, <code>absolute</code>, <code>fixed</code>, and <code>sticky</code> — are
+collectively called <strong>positioned elements</strong>. That label matters later: <code>z-index</code> and the
+"nearest positioned ancestor" rule for <code>absolute</code> both only care whether an element is
+positioned (anything but <code>static</code>), not which specific value it uses.</p>
+<h2 id="part-2-position-relative">Part 2: position: relative<a class="headerlink" href="#part-2-position-relative" title="Permanent link">&para;</a></h2>
+<p><code>position: relative</code> shifts an element from the spot normal flow would have given it, using
+the <code>top</code>, <code>right</code>, <code>bottom</code>, and <code>left</code> properties — but critically, the space that element
+originally occupied is <strong>still reserved</strong> for it. Nothing else moves to fill the gap.</p>
+<div class="language-css highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">.</span><span class="nc">box-2</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="k">position</span><span class="p">:</span><span class="w"> </span><span class="kc">relative</span><span class="p">;</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span><span class="k">top</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span><span class="k">left</span><span class="p">:</span><span class="w"> </span><span class="mi">40</span><span class="kt">px</span><span class="p">;</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><code>top: 20px</code> pushes the element 20px down from where it would normally sit, and <code>left: 40px</code>
+pushes it 40px to the right. (Think of <code>top</code>/<code>left</code>/<code>right</code>/<code>bottom</code> here as "push away from
+this edge," not "move toward it.")</p>
+<p><img alt="Rendered output: Box 1 and Box 3 in their normal static positions, with Box 2 (yellow, labeled &quot;position: relative; top: 20px; left: 40px;&quot;) shifted down and to the right so it overlaps Box 3, plus a caption explaining Box 3 did not move up to fill Box 2's original spot" src="../../assets/img/tutorials/positioning/position-relative-shift.png" /></p>
+<p>Box 3 is still exactly where it would be if Box 2 had never moved — proof that Box 2's
+original space in the flow is untouched. Only Box 2's own rendered position changed.</p>
+<div class="admonition note">
+<p class="admonition-title">The most important side effect of position: relative</p>
+<p>Giving an element <code>position: relative</code> — even with no <code>top</code>/<code>left</code>/<code>right</code>/<code>bottom</code> at
+all — does something else that matters enormously for the next section: it makes that
+element a <strong>positioning context</strong> for any <code>absolute</code>-positioned children inside it. You
+will see exactly why in Part 3.</p>
+</div>
+<h2 id="part-3-position-absolute">Part 3: position: absolute<a class="headerlink" href="#part-3-position-absolute" title="Permanent link">&para;</a></h2>
+<p><code>position: absolute</code> is a much bigger change than <code>relative</code>: the element is removed from
+normal document flow <strong>entirely</strong>. Nothing reserves space for it anymore, and it no longer
+affects the size or layout of its parent at all — as far as everyone else on the page is
+concerned, it is not there. It is then placed using <code>top</code>/<code>right</code>/<code>bottom</code>/<code>left</code>, measured
+from the edges of its <strong>nearest positioned ancestor</strong> — the closest ancestor element whose
+<code>position</code> is anything other than <code>static</code>. If no ancestor is positioned, it falls all the
+way back to being placed relative to the page itself.</p>
+<p>This is exactly why the note at the end of Part 2 mattered: giving a container
+<code>position: relative</code> (even with no offsets of its own) is the standard way to "claim" it as
+the positioning context for an absolutely positioned element inside it. This combination —
+a <code>relative</code> parent with an <code>absolute</code> child — is one of the most common patterns in CSS,
+and it's the basis of the classic "badge pinned to a card's corner" component:</p>
+<div class="language-css highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">.</span><span class="nc">card</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="k">position</span><span class="p">:</span><span class="w"> </span><span class="kc">relative</span><span class="p">;</span><span class="w"> </span><span class="c">/* becomes the positioning context */</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span><span class="c">/* ...width, padding, border, etc... */</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="p">}</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="p">.</span><span class="nc">badge</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">  </span><span class="k">position</span><span class="p">:</span><span class="w"> </span><span class="kc">absolute</span><span class="p">;</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">  </span><span class="k">top</span><span class="p">:</span><span class="w"> </span><span class="mi">-10</span><span class="kt">px</span><span class="p">;</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">  </span><span class="k">right</span><span class="p">:</span><span class="w"> </span><span class="mi">-10</span><span class="kt">px</span><span class="p">;</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">  </span><span class="c">/* ...background, color, border-radius, etc... */</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><img alt="Rendered output: two cards side by side, both titled &quot;Course Notes&quot; with a red &quot;NEW&quot; badge; the left card has position: relative and its badge sits pinned neatly to the card's own top-right corner, while the right card has no position set and its badge has escaped to the top-right corner of the whole page instead" src="../../assets/img/tutorials/positioning/position-absolute-badge-corner.png" /></p>
+<p>Both cards use the exact same <code>.badge</code> CSS. The only difference is whether <code>.card</code> itself is
+positioned. On the left, <code>.card { position: relative; }</code> makes the card the badge's nearest
+positioned ancestor, so <code>top: -10px; right: -10px;</code> places the badge just outside the card's
+own corner. On the right, <code>.card</code> has no <code>position</code> set, so the browser keeps looking up the
+ancestor chain, finds nothing positioned, and falls back to the page itself — the badge ends
+up pinned to the corner of the entire page instead of the card.</p>
+<div class="admonition tip">
+<p class="admonition-title">Rule of thumb</p>
+<p>Whenever you use <code>position: absolute</code> on an element, immediately ask: "what should this
+be positioned relative to?" — then make sure that ancestor has <code>position: relative</code> (or
+any non-<code>static</code> value). Forgetting this step is the single most common <code>absolute</code>
+positioning bug.</p>
+</div>
+<h2 id="part-4-position-fixed">Part 4: position: fixed<a class="headerlink" href="#part-4-position-fixed" title="Permanent link">&para;</a></h2>
+<p><code>position: fixed</code> also removes an element from normal flow, but instead of anchoring to a
+positioned ancestor, it always anchors to the <strong>viewport</strong> — the visible browser window
+itself. A fixed element stays glued in the same spot on screen even while the rest of the
+page scrolls underneath it. This is the technique behind floating action buttons, "back to
+top" buttons, and navigation bars that stay visible as you scroll.</p>
+<div class="language-css highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">.</span><span class="nc">fab</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="k">position</span><span class="p">:</span><span class="w"> </span><span class="kc">fixed</span><span class="p">;</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="k">bottom</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span><span class="k">right</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><img alt="Rendered output: a page with a dark blue &quot;Tutorial Page&quot; header and a paragraph of body text, with a red circular &quot;+&quot; floating action button pinned to the bottom-right corner of the page, labeled &quot;position: fixed; bottom: 20px; right: 20px;&quot;" src="../../assets/img/tutorials/positioning/position-fixed-fab.png" /></p>
+<p>This screenshot only shows the button <strong>at rest</strong>. The entire point of <code>position: fixed</code> —
+that it stays pinned to that same corner while you scroll the rest of the page — cannot be
+demonstrated in a still image. You need to open this in a real browser, add enough content
+to make the page scroll, and watch the button stay put while everything else moves past it.</p>
+<h2 id="part-5-position-sticky">Part 5: position: sticky<a class="headerlink" href="#part-5-position-sticky" title="Permanent link">&para;</a></h2>
+<p><code>position: sticky</code> is a hybrid of <code>relative</code> and <code>fixed</code>. A sticky element behaves like a
+normal, <code>relative</code>-positioned element — sitting in its regular place in the flow — <strong>until</strong>
+the page (or its scrolling container) scrolls past a threshold you define with <code>top</code>,
+<code>bottom</code>, <code>left</code>, or <code>right</code>. At that point, it switches to behaving like <code>fixed</code>, sticking
+in place, until its container scrolls out of view entirely and takes it along.</p>
+<div class="language-css highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">.</span><span class="nc">sticky-header</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="k">position</span><span class="p">:</span><span class="w"> </span><span class="kc">sticky</span><span class="p">;</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span><span class="k">top</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="c">/* sticks once its top edge reaches the top of its scrolling container */</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><img alt="Rendered output: a scrollable box containing an intro line, a dark blue &quot;Section Header&quot; bar labeled &quot;position: sticky; top: 0;&quot;, and paragraph content below it, all shown at rest before scrolling, with a caption noting this is the starting state" src="../../assets/img/tutorials/positioning/position-sticky-header.png" /></p>
+<p>Just like <code>position: fixed</code> in Part 4, a still image can only show the "before" state — the
+header sitting in its ordinary spot, exactly where <code>position: relative</code> would put it. The
+actual sticking behavior only appears once you scroll this box in a real browser and watch
+the header lock to the top of it instead of scrolling away with the rest of the content.</p>
+<h2 id="part-6-z-index-and-stacking-order">Part 6: z-index and Stacking Order<a class="headerlink" href="#part-6-z-index-and-stacking-order" title="Permanent link">&para;</a></h2>
+<p>When positioned elements overlap — as the badge and card did in Part 3 — the browser needs
+a rule for which one renders on top. By default, later elements in the HTML source render
+on top of earlier ones. The <code>z-index</code> property lets you override that: it takes a plain
+number, and <strong>higher values render on top of lower ones</strong>.</p>
+<p><code>z-index</code> has one important restriction worth memorizing: <strong>it only has any effect on
+positioned elements</strong> — anything with a <code>position</code> other than <code>static</code>. Setting <code>z-index</code> on
+a <code>static</code> element does nothing at all, no matter how large the number is.</p>
+<div class="language-css highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">.</span><span class="nc">behind</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="k">position</span><span class="p">:</span><span class="w"> </span><span class="kc">relative</span><span class="p">;</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span><span class="k">z-index</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="p">}</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="p">.</span><span class="nc">in-front</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">  </span><span class="k">position</span><span class="p">:</span><span class="w"> </span><span class="kc">relative</span><span class="p">;</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">  </span><span class="k">z-index</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="c">/* higher value — renders on top of .behind */</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><img alt="Rendered output: three overlapping boxes — a gray box labeled &quot;position: static, z-index: 99 (ignored)&quot; sitting at the back despite its huge z-index, a blue box labeled &quot;position: relative, z-index: 1&quot; in the middle, and a red box labeled &quot;position: relative, z-index: 2 (on top)&quot; rendered above both, with an explanatory caption below" src="../../assets/img/tutorials/positioning/z-index-stacking-order.png" /></p>
+<p>The gray box proves the restriction: it has the highest <code>z-index</code> value of the three (<code>99</code>),
+but because it is still <code>position: static</code>, that <code>z-index</code> is completely ignored, and it
+stays at the back of the stack. Between the two positioned boxes, the higher <code>z-index</code> (red,
+<code>2</code>) wins over the lower one (blue, <code>1</code>), regardless of which one appears later in the HTML.</p>
+<div class="admonition note">
+<p class="admonition-title">Stacking contexts</p>
+<p>In more advanced layouts, <code>z-index</code> values are only compared <em>within the same stacking
+context</em> — certain CSS properties (like <code>opacity</code> less than 1, or <code>transform</code>) cause an
+element to start a brand-new stacking context for its children, so a child's <code>z-index</code>
+is only ever compared against its own siblings, never against elements outside that
+context. You don't need to master this to use <code>z-index</code> correctly day-to-day — just know
+the term exists if you ever see a <code>z-index</code> that "should" win but doesn't.</p>
+</div>
+<h2 id="part-7-real-world-patterns">Part 7: Real-World Patterns<a class="headerlink" href="#part-7-real-world-patterns" title="Permanent link">&para;</a></h2>
+<h3 id="pattern-a-a-tooltip-with-position-absolute">Pattern A: A Tooltip with position: absolute<a class="headerlink" href="#pattern-a-a-tooltip-with-position-absolute" title="Permanent link">&para;</a></h3>
+<p>A tooltip is small text that appears near a trigger element — typically on hover — and is a
+direct application of the <code>relative</code> parent / <code>absolute</code> child pattern from Part 3.</p>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;tooltip-wrapper&quot;</span><span class="p">&gt;</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>  <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;tooltip&quot;</span><span class="p">&gt;</span>Position: absolute; bottom: 125%;<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>  <span class="p">&lt;</span><span class="nt">button</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;trigger&quot;</span><span class="p">&gt;</span>Hover me<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></code></pre></div>
+<div class="language-css highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="p">.</span><span class="nc">tooltip-wrapper</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="k">position</span><span class="p">:</span><span class="w"> </span><span class="kc">relative</span><span class="p">;</span><span class="w">    </span><span class="c">/* the positioning context for .tooltip */</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">inline-block</span><span class="p">;</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="p">}</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="p">.</span><span class="nc">tooltip</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">  </span><span class="k">position</span><span class="p">:</span><span class="w"> </span><span class="kc">absolute</span><span class="p">;</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">  </span><span class="k">bottom</span><span class="p">:</span><span class="w"> </span><span class="mi">125</span><span class="kt">%</span><span class="p">;</span><span class="w">           </span><span class="c">/* just above the trigger, with a small gap */</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">  </span><span class="k">left</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="kt">%</span><span class="p">;</span>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="w">  </span><span class="k">transform</span><span class="p">:</span><span class="w"> </span><span class="nb">translateX</span><span class="p">(</span><span class="mi">-50</span><span class="kt">%</span><span class="p">);</span><span class="w"> </span><span class="c">/* re-center it, since left: 50% alone only aligns its own left edge */</span>
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="w">  </span><span class="k">opacity</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="w">  </span><span class="k">pointer-events</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="p">;</span>
+</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="p">}</span>
+</span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>
+</span><span id="__span-7-15"><a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="p">.</span><span class="nc">tooltip-wrapper</span><span class="p">:</span><span class="nd">hover</span><span class="w"> </span><span class="p">.</span><span class="nc">tooltip</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-7-16"><a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a><span class="w">  </span><span class="k">opacity</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w">             </span><span class="c">/* reveal on hover */</span>
+</span><span id="__span-7-17"><a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><img alt="Rendered output: a dark blue &quot;Hover me&quot; button with a small dark tooltip bubble reading &quot;position: absolute; bottom: 125%;&quot; shown above it, with a small triangular pointer connecting the two, and a caption explaining the tooltip is forced visible here for illustration" src="../../assets/img/tutorials/positioning/tooltip-absolute-position.png" /></p>
+<p><code>bottom: 125%</code> positions the tooltip's bottom edge at 125% of <code>.tooltip-wrapper</code>'s height
+above its top — comfortably clear of the button, with a small gap. <code>left: 50%</code> alone would
+only align the tooltip's own <em>left edge</em> to the wrapper's horizontal center, which is not the
+same as centering the whole tooltip — <code>transform: translateX(-50%)</code> shifts the tooltip back
+by half of its own width to finish the job. In the real page, <code>.tooltip</code> starts at
+<code>opacity: 0</code> and only becomes visible on <code>:hover</code>; this screenshot forces it visible so it
+can be shown at all, since a still image cannot capture a mouse hovering over the button.</p>
+<h3 id="pattern-b-a-centered-modal-dialog-with-position-fixed">Pattern B: A Centered Modal Dialog with position: fixed<a class="headerlink" href="#pattern-b-a-centered-modal-dialog-with-position-fixed" title="Permanent link">&para;</a></h3>
+<p>A modal (or overlay dialog) needs two pieces: a dimmed backdrop covering the whole page, and
+a dialog box centered on top of it — both anchored to the viewport with <code>position: fixed</code> so
+they stay centered regardless of scrolling or page size.</p>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;overlay&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;modal&quot;</span><span class="p">&gt;</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>  <span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;</span>Confirm Action<span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Are you sure you want to continue?<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>  <span class="p">&lt;</span><span class="nt">button</span><span class="p">&gt;</span>OK<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></code></pre></div>
+<div class="language-css highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="p">.</span><span class="nc">overlay</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span><span class="k">position</span><span class="p">:</span><span class="w"> </span><span class="kc">fixed</span><span class="p">;</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">  </span><span class="k">top</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">  </span><span class="k">left</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">  </span><span class="k">right</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">  </span><span class="k">bottom</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">  </span><span class="k">background</span><span class="p">:</span><span class="w"> </span><span class="nb">rgba</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">);</span><span class="w"> </span><span class="c">/* dims the page behind the dialog */</span>
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="p">}</span>
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="p">.</span><span class="nc">modal</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="w">  </span><span class="k">position</span><span class="p">:</span><span class="w"> </span><span class="kc">fixed</span><span class="p">;</span>
+</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="w">  </span><span class="k">top</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="kt">%</span><span class="p">;</span>
+</span><span id="__span-9-13"><a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="w">  </span><span class="k">left</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="kt">%</span><span class="p">;</span>
+</span><span id="__span-9-14"><a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a><span class="w">  </span><span class="k">transform</span><span class="p">:</span><span class="w"> </span><span class="nb">translate</span><span class="p">(</span><span class="mi">-50</span><span class="kt">%</span><span class="p">,</span><span class="w"> </span><span class="mi">-50</span><span class="kt">%</span><span class="p">);</span>
+</span><span id="__span-9-15"><a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a><span class="w">  </span><span class="c">/* ...width, background, padding, border-radius... */</span>
+</span><span id="__span-9-16"><a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><img alt="Rendered output: a page dimmed by a semi-transparent dark overlay, with a white &quot;Confirm Action&quot; dialog box centered on top of it containing a description and an OK button, and a caption below reading the exact CSS rule used to center it" src="../../assets/img/tutorials/positioning/modal-overlay-centered.png" /></p>
+<p><code>top: 0; left: 0; right: 0; bottom: 0;</code> on <code>.overlay</code> is a compact way of stretching a fixed
+element to fill the entire viewport without knowing its size in advance. The <code>.modal</code>
+centering trick is worth memorizing on its own: <code>top: 50%; left: 50%;</code> moves the dialog's
+<strong>top-left corner</strong> to the exact center of the viewport, and
+<code>transform: translate(-50%, -50%)</code> then shifts the whole box back by half of <em>its own</em> width
+and height — centering it perfectly without ever needing to know the dialog's dimensions
+ahead of time. This is the standard technique for centering anything whose size isn't fixed.</p>
+<h2 id="try-it-yourself">Try It Yourself<a class="headerlink" href="#try-it-yourself" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Take the three-box example from Part 2 and change <code>.box-2</code>'s offsets to
+   <code>top: -20px; left: -40px;</code> (negative values). Confirm it now shifts up and to the left
+   instead, overlapping Box 1 rather than Box 3 — while Box 1 and Box 3 still don't move.</li>
+<li>In the badge-and-card example from Part 3, remove <code>position: relative;</code> from <code>.card</code>
+   entirely and confirm the badge escapes to the corner of the page, exactly like the
+   right-hand card in the screenshot. Then add it back and watch the badge snap back to the
+   card's own corner.</li>
+<li>Build the floating action button from Part 4 in a real HTML file with enough paragraph
+   content to make the page taller than the browser window, then scroll and confirm the
+   button stays fixed in the corner the entire time.</li>
+<li>In the tooltip pattern, change <code>bottom: 125%;</code> to <code>top: 125%;</code> (and remove <code>bottom</code>) so
+   the tooltip appears <em>below</em> the button instead of above it. Adjust the little pointer
+   triangle's <code>border</code> properties so it points upward at the button instead of downward.</li>
+<li>In the z-index example from Part 6, change the gray box's <code>position</code> from <code>static</code> to
+   <code>relative</code> (keep <code>z-index: 99</code>) and confirm it now correctly jumps in front of both the
+   blue and red boxes — proving <code>z-index</code> only needed a <code>position</code> value other than <code>static</code>
+   to start working.</li>
+</ol>
+<h2 id="key-takeaways">Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>position: static</code> is the default — normal document flow, with <code>top</code>/<code>right</code>/<code>bottom</code>/
+  <code>left</code> having no effect.</li>
+<li><code>position: relative</code> shifts an element from its normal spot using <code>top</code>/<code>right</code>/<code>bottom</code>/
+  <code>left</code>, but its original space in the flow stays reserved — nothing else moves to fill it.
+  It also makes the element a positioning context for <code>absolute</code> children inside it.</li>
+<li><code>position: absolute</code> removes an element from flow entirely and positions it relative to
+  its nearest positioned ancestor (any ancestor with <code>position</code> other than <code>static</code>), or the
+  page itself if there is none.</li>
+<li><code>position: fixed</code> anchors an element to the viewport — it stays in place while the page
+  scrolls.</li>
+<li><code>position: sticky</code> behaves like <code>relative</code> until a scroll threshold is crossed, then
+  behaves like <code>fixed</code>.</li>
+<li><code>z-index</code> controls stacking order among overlapping elements, with higher values on top —
+  but it only has any effect on positioned elements (anything but <code>static</code>).</li>
+<li><code>relative</code> parent + <code>absolute</code> child is the standard pattern behind badges, tooltips, and
+  countless other UI components; <code>fixed</code> plus
+  <code>top: 50%; left: 50%; transform: translate(-50%, -50%);</code> is the standard pattern for
+  centering an element of unknown size, such as a modal dialog.</li>
+</ul>
+
+
+
+
+
+
+
+  
+    
+  
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 8, 2026 02:40:15 UTC">September 8, 2026</span>
+  </span>
+
+    
+    
+    
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../layout-designing/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Layout Designing: div, span, and Float">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Layout Designing: div, span, and Float
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../flexbox/" class="md-footer__link md-footer__link--next" aria-label="Next: Flexbox Layout">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Flexbox Layout
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; Usman Akram — <a href="https://usmanlive.com">usmanlive.com</a>
+    </div>
+  
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/mua22/mern-web-book" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://usmanlive.com" target="_blank" rel="noopener" title="usmanlive.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M351.9 280H161c2.9 64.5 17.2 123.9 37.5 167.4 11.4 24.5 23.7 41.8 35.1 52.4 11.2 10.5 18.9 12.2 22.9 12.2s11.7-1.7 22.9-12.2c11.4-10.6 23.7-28 35.1-52.4 20.3-43.5 34.6-102.9 37.5-167.4zm-191-48h190.9c-2.8-64.5-17.1-123.9-37.4-167.4-11.4-24.4-23.7-41.8-35.1-52.4C268.1 1.7 260.4 0 256.4 0s-11.7 1.7-22.9 12.2c-11.4 10.6-23.7 28-35.1 52.4-20.3 43.5-34.6 102.9-37.5 167.4m-48 0c3.5-85.6 25.6-165.1 57.9-217.3C78.7 47.3 10.9 131.2 1.5 232zM1.5 280c9.4 100.8 77.2 184.7 169.3 217.3-32.3-52.2-54.4-131.7-57.9-217.3zm398.4 0c-3.5 85.6-25.6 165.1-57.9 217.3 92.1-32.7 159.9-116.5 169.3-217.3zm111.4-48C501.9 131.2 434.1 47.3 342 14.7c32.3 52.2 54.4 131.7 57.9 217.3z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.indexes", "navigation.top", "navigation.footer", "navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.prune", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "header.autohide"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

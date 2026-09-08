@@ -1,0 +1,2122 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="An online textbook for Web Technologies (CSC336) and Advanced Web Technologies (CSC337), built lecture-by-lecture from the official COMSATS course plans.">
+      
+      
+        <meta name="author" content="Usman Akram">
+      
+      
+        <link rel="canonical" href="https://mua22.github.io/mern-web-book/tutorials/flexbox/">
+      
+      
+        <link rel="prev" href="../css-positioning/">
+      
+      
+        <link rel="next" href="../multilevel-navigation/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/logo.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Tutorial: Flexbox Layout - Web Dev Book — CSC336 & CSC337</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+  
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+  
+  <style>:root{--md-admonition-icon--note:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M20%2011h3v2h-3zM1%2011h3v2H1zM13%201v3h-2V1zM4.92%203.5l2.13%202.14-1.42%201.41L3.5%204.93zm12.03%202.13%202.12-2.13%201.43%201.43-2.13%202.12zM12%206a6%206%200%200%201%206%206c0%202.22-1.21%204.16-3%205.2V19a1%201%200%200%201-1%201h-4a1%201%200%200%201-1-1v-1.8c-1.79-1.04-3-2.98-3-5.2a6%206%200%200%201%206-6m2%2015v1a1%201%200%200%201-1%201h-2a1%201%200%200%201-1-1v-1zm-3-3h2v-2.13c1.73-.44%203-2.01%203-3.87a4%204%200%200%200-4-4%204%204%200%200%200-4%204c0%201.86%201.27%203.43%203%203.87z%22/%3E%3C/svg%3E');--md-admonition-icon--tip:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M12%203%201%209l4%202.18v6L12%2021l7-3.82v-6l2-1.09V17h2V9zm6.82%206L12%2012.72%205.18%209%2012%205.28zM17%2016l-5%202.72L7%2016v-3.73L12%2015l5-2.73z%22/%3E%3C/svg%3E');--md-admonition-icon--warning:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M12%202%201%2021h22M12%206l7.53%2013H4.47M11%2010v4h2v-4m-2%206v2h2v-2%22/%3E%3C/svg%3E');--md-admonition-icon--example:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M19%203H5c-1.1%200-2%20.9-2%202v14c0%201.1.9%202%202%202h14c1.1%200%202-.9%202-2V5c0-1.1-.9-2-2-2m-8%205H9v2c0%201.1-.9%202-2%202%201.1%200%202%20.9%202%202v2h2v2H9c-1.1%200-2-.9-2-2v-1c0-1.1-.9-2-2-2v-2c1.1%200%202-.9%202-2V8c0-1.1.9-2%202-2h2zm8%205c-1.1%200-2%20.9-2%202v1c0%201.1-.9%202-2%202h-2v-2h2v-2c0-1.1.9-2%202-2-1.1%200-2-.9-2-2V8h-2V6h2c1.1%200%202%20.9%202%202v1c0%201.1.9%202%202%202z%22/%3E%3C/svg%3E');}</style>
+
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="deep-purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#tutorial-flexbox-layout" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Web Dev Book — CSC336 &amp; CSC337" class="md-header__button md-logo" aria-label="Web Dev Book — CSC336 & CSC337" data-md-component="logo">
+      
+  <img src="../../assets/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Web Dev Book — CSC336 & CSC337
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Tutorial: Flexbox Layout
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="deep-purple"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="deep-purple"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../.." class="md-tabs__link">
+          
+  
+  
+    
+  
+  Home
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../web-technologies/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Web Technologies (CSC336)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../advanced-web-technologies/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Advanced Web Technologies (CSC337)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Tutorials
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../tags/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Tags
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://usmanlive.com" class="md-tabs__link">
+        
+  
+  
+    
+  
+  usmanlive.com
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Web Dev Book — CSC336 &amp; CSC337" class="md-nav__button md-logo" aria-label="Web Dev Book — CSC336 & CSC337" data-md-component="logo">
+      
+  <img src="../../assets/logo.svg" alt="logo">
+
+    </a>
+    Web Dev Book — CSC336 & CSC337
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../.." class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../web-technologies/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Web Technologies (CSC336)
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../advanced-web-technologies/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced Web Technologies (CSC337)
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutorials
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tutorials
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../environment-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MERN Environment Setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../first-html-css-app/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Your First HTML + CSS Page
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../layout-designing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Layout Designing: div, span, and Float
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../css-positioning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CSS Positioning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Flexbox Layout
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Flexbox Layout
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#in-this-tutorial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        In This Tutorial
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-1-what-flexbox-is-and-why-it-exists" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 1: What Flexbox Is, and Why It Exists
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-2-display-flex-and-the-two-axes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 2: display: flex and the Two Axes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-3-flex-direction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 3: flex-direction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-4-justify-content-main-axis-alignment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 4: justify-content (Main-Axis Alignment)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-5-align-items-cross-axis-alignment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 5: align-items (Cross-Axis Alignment)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-6-flex-wrap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 6: flex-wrap
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-7-gap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 7: gap
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-8-flex-grow-flex-shrink-flex-basis-and-the-flex-shorthand" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 8: flex-grow, flex-shrink, flex-basis, and the flex Shorthand
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-9-align-self" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 9: align-self
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-10-common-real-world-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 10: Common Real-World Patterns
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 10: Common Real-World Patterns">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pattern-a-a-navbar-with-space-between" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pattern A: A Navbar with space-between
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pattern-b-perfect-centering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pattern B: Perfect Centering
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#try-it-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try It Yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Takeaways
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../multilevel-navigation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multilevel Navigation with Positioning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../css-animations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CSS Transitions and Animations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../responsive-design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Responsive Web Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../git-and-github/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git and GitHub
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../assignment-submission/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Submitting Coursework via GitHub
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tags
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://usmanlive.com" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    usmanlive.com
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#in-this-tutorial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        In This Tutorial
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-1-what-flexbox-is-and-why-it-exists" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 1: What Flexbox Is, and Why It Exists
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-2-display-flex-and-the-two-axes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 2: display: flex and the Two Axes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-3-flex-direction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 3: flex-direction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-4-justify-content-main-axis-alignment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 4: justify-content (Main-Axis Alignment)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-5-align-items-cross-axis-alignment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 5: align-items (Cross-Axis Alignment)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-6-flex-wrap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 6: flex-wrap
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-7-gap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 7: gap
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-8-flex-grow-flex-shrink-flex-basis-and-the-flex-shorthand" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 8: flex-grow, flex-shrink, flex-basis, and the flex Shorthand
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-9-align-self" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 9: align-self
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-10-common-real-world-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 10: Common Real-World Patterns
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 10: Common Real-World Patterns">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pattern-a-a-navbar-with-space-between" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pattern A: A Navbar with space-between
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pattern-b-perfect-centering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pattern B: Perfect Centering
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#try-it-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try It Yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Takeaways
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <a href="../../tags/#tag:beginner-project" class="md-tag">Beginner Project</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../tags/#tag:css" class="md-tag">CSS</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../tags/#tag:flexbox" class="md-tag">Flexbox</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../tags/#tag:layout" class="md-tag">Layout</a>
+      
+    
+  </nav>
+
+
+
+<h1 id="tutorial-flexbox-layout">Tutorial: Flexbox Layout<a class="headerlink" href="#tutorial-flexbox-layout" title="Permanent link">&para;</a></h1>
+<p>Flexbox (short for the "Flexible Box" module) is a CSS layout system designed to arrange
+items along a single line — either a row or a column — and distribute space between them
+automatically. It replaced the <code>float</code>-based techniques from the
+<a href="../layout-designing/">Layout Designing</a> tutorial for the vast majority of everyday
+layout problems: navigation bars, centering content, evenly spaced cards, and more, all
+without the collapsing-parent workarounds that floats require. This tutorial builds up
+every core Flexbox property from scratch, with a rendered screenshot for each one, and
+ends with two complete real-world layout patterns.</p>
+<p><strong>Prerequisites:</strong> <a href="../../web-technologies/lecture-06-css-box-model-and-display/">the CSS Box Model</a>.
+Familiarity with the <code>float</code> technique in <a href="../layout-designing/">Layout Designing</a> is
+helpful for context but not required.</p>
+<h2 id="in-this-tutorial">In This Tutorial<a class="headerlink" href="#in-this-tutorial" title="Permanent link">&para;</a></h2>
+<ul>
+<li>What Flexbox is, and why it replaced <code>float</code> for most layout tasks</li>
+<li><code>display: flex</code> and the two axes every flex container has: the main axis and the cross
+  axis</li>
+<li><code>flex-direction</code> — choosing whether the main axis runs as a row or a column</li>
+<li><code>justify-content</code> — aligning items along the main axis</li>
+<li><code>align-items</code> — aligning items along the cross axis</li>
+<li><code>flex-wrap</code> — letting items flow onto multiple lines instead of overflowing or shrinking</li>
+<li><code>gap</code> — spacing between items without per-item margins</li>
+<li><code>flex-grow</code>, <code>flex-shrink</code>, <code>flex-basis</code>, and the <code>flex</code> shorthand — controlling how
+  items grow and shrink to fill available space</li>
+<li><code>align-self</code> — overriding the cross-axis alignment for a single item</li>
+<li>Two real-world patterns: a left-logo/right-links navbar, and perfect centering</li>
+</ul>
+<hr />
+<h2 id="part-1-what-flexbox-is-and-why-it-exists">Part 1: What Flexbox Is, and Why It Exists<a class="headerlink" href="#part-1-what-flexbox-is-and-why-it-exists" title="Permanent link">&para;</a></h2>
+<p>Flexbox is a <strong>one-dimensional</strong> layout system: at any given moment, it arranges a
+group of items along a single line, either a row or a column. (CSS Grid, covered
+elsewhere, is the <strong>two-dimensional</strong> counterpart — rows and columns at the same time.)</p>
+<p>Before Flexbox existed, developers reached for <code>float</code> to build side-by-side layouts, as
+shown in <a href="../layout-designing/">Layout Designing</a>. That technique works, but it comes
+with real costs:</p>
+<ul>
+<li>Floated elements are pulled out of normal document flow, so their parent's height
+  <strong>collapses</strong> unless you remember to add <code>overflow: hidden</code> (the "clearfix").</li>
+<li>Centering something both horizontally and vertically inside its container is
+  notoriously awkward with <code>float</code> and requires fragile tricks (fixed widths, negative
+  margins, absolute positioning).</li>
+<li>Distributing leftover space evenly between items — for example, spreading three nav
+  links out so they touch both edges of the bar — has no direct <code>float</code> equivalent.</li>
+</ul>
+<p>Flexbox was designed specifically to solve these problems. You opt an element into it
+with one line of CSS, and its direct children immediately become easy to align, space
+out, reorder, and resize — no clearfixes required.</p>
+<h2 id="part-2-display-flex-and-the-two-axes">Part 2: display: flex and the Two Axes<a class="headerlink" href="#part-2-display-flex-and-the-two-axes" title="Permanent link">&para;</a></h2>
+<p>Turning any element into a <strong>flex container</strong> takes one declaration:</p>
+<div class="language-css highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">.</span><span class="nc">container</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">flex</span><span class="p">;</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>The moment you do this, every direct child of <code>.container</code> becomes a <strong>flex item</strong>, and
+two things change immediately, even with no other CSS added:</p>
+<ul>
+<li>Flex items line up in a <strong>row</strong>, left to right, instead of stacking vertically like
+  normal block-level elements.</li>
+<li>Flex items shrink to only as wide as their content needs, instead of each filling the
+  full available width.</li>
+</ul>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;container&quot;</span><span class="p">&gt;</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;box&quot;</span><span class="p">&gt;</span>Item 1<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;box&quot;</span><span class="p">&gt;</span>Item 2<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;box&quot;</span><span class="p">&gt;</span>Item 3<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></code></pre></div>
+<p>Here is the same three <code>&lt;div&gt;</code>s before and after adding <code>display: flex</code> to their parent.</p>
+<p><img alt="Rendered output: two stacked panels; the top panel shows three full-width dark blue boxes stacked vertically labeled Item 1, Item 2, Item 3; the bottom panel shows the same three boxes now sitting side by side in a row, each only as wide as its text" src="../../assets/img/tutorials/flexbox/display-flex-basic.png" /></p>
+<p>Every other property in this tutorial only makes sense once you understand that a flex
+container has <strong>two axes</strong>:</p>
+<ul>
+<li>The <strong>main axis</strong> — the direction items are laid out along (a row, by default).</li>
+<li>The <strong>cross axis</strong> — the direction perpendicular to the main axis.</li>
+</ul>
+<p>Which physical direction (horizontal or vertical) each axis points in depends entirely
+on one property: <code>flex-direction</code>, covered next.</p>
+<h2 id="part-3-flex-direction">Part 3: flex-direction<a class="headerlink" href="#part-3-flex-direction" title="Permanent link">&para;</a></h2>
+<p><code>flex-direction</code> sets which way the main axis runs, and therefore which way items are
+laid out:</p>
+<div class="language-css highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">.</span><span class="nc">container</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">flex</span><span class="p">;</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span><span class="k">flex-direction</span><span class="p">:</span><span class="w"> </span><span class="kc">row</span><span class="p">;</span><span class="w"> </span><span class="c">/* default */</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="p">}</span>
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Main axis direction</th>
+<th>Items laid out</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>row</code> (default)</td>
+<td>Left to right</td>
+<td>Horizontally, in source order</td>
+</tr>
+<tr>
+<td><code>row-reverse</code></td>
+<td>Right to left</td>
+<td>Horizontally, reversed</td>
+</tr>
+<tr>
+<td><code>column</code></td>
+<td>Top to bottom</td>
+<td>Vertically, in source order</td>
+</tr>
+<tr>
+<td><code>column-reverse</code></td>
+<td>Bottom to top</td>
+<td>Vertically, reversed</td>
+</tr>
+</tbody>
+</table>
+<div class="language-css highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">.</span><span class="nc">row-example</span><span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="k">flex-direction</span><span class="p">:</span><span class="w"> </span><span class="kc">row</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="p">.</span><span class="nc">reverse-example</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">flex-direction</span><span class="p">:</span><span class="w"> </span><span class="kc">row-reverse</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="p">.</span><span class="nc">column-example</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">flex-direction</span><span class="p">:</span><span class="w"> </span><span class="kc">column</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</span></code></pre></div>
+<p>Note that <code>row-reverse</code> and <code>column-reverse</code> only reverse the <strong>visual order</strong> — the
+underlying HTML source order (and so tab order, and screen-reader order) is unchanged.</p>
+<p><img alt="Rendered output: four labeled boxes side by side; flex-direction row shows items 1,2,3 stacked as narrow vertical bars left to right; row-reverse shows the same three bars but in order 3,2,1; column shows three wide horizontal bars stacked top to bottom as 1,2,3; column-reverse shows the same three bars stacked as 3,2,1 top to bottom" src="../../assets/img/tutorials/flexbox/flex-direction-comparison.png" /></p>
+<div class="admonition note">
+<p class="admonition-title">Main axis vs. cross axis, revisited</p>
+<p>When <code>flex-direction</code> is <code>row</code> or <code>row-reverse</code>, the main axis is horizontal and the
+cross axis is vertical. When it's <code>column</code> or <code>column-reverse</code>, that flips: the main
+axis is vertical and the cross axis is horizontal. Keep this in mind for the next
+two sections — <code>justify-content</code> always aligns along the main axis, and
+<code>align-items</code> always aligns along the cross axis, whichever direction that
+currently is.</p>
+</div>
+<h2 id="part-4-justify-content-main-axis-alignment">Part 4: justify-content (Main-Axis Alignment)<a class="headerlink" href="#part-4-justify-content-main-axis-alignment" title="Permanent link">&para;</a></h2>
+<p><code>justify-content</code> controls how items are spaced out along the <strong>main axis</strong> — by
+default, the horizontal direction, since <code>flex-direction: row</code> is the default.</p>
+<div class="language-css highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">.</span><span class="nc">container</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">flex</span><span class="p">;</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span><span class="k">justify-content</span><span class="p">:</span><span class="w"> </span><span class="kc">center</span><span class="p">;</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="p">}</span>
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>flex-start</code> (default)</td>
+<td>Items packed at the start of the main axis</td>
+</tr>
+<tr>
+<td><code>flex-end</code></td>
+<td>Items packed at the end of the main axis</td>
+</tr>
+<tr>
+<td><code>center</code></td>
+<td>Items packed together in the center</td>
+</tr>
+<tr>
+<td><code>space-between</code></td>
+<td>Equal space <em>between</em> items; first and last items touch the edges</td>
+</tr>
+<tr>
+<td><code>space-around</code></td>
+<td>Equal space <em>around</em> each item (edges get half as much space as gaps between items)</td>
+</tr>
+<tr>
+<td><code>space-evenly</code></td>
+<td>Perfectly equal space between and around every item, edges included</td>
+</tr>
+</tbody>
+</table>
+<p><img alt="Rendered output: six labeled rows, each a dashed-border container with three numbered boxes; flex-start packs them at the left; flex-end packs them at the right; center packs them in the middle; space-between spreads box 1 to the left edge and box 3 to the right edge with box 2 centered between; space-around gives each box roughly equal space on both sides; space-evenly spaces all three boxes and the two edges completely evenly" src="../../assets/img/tutorials/flexbox/justify-content-comparison.png" /></p>
+<p><code>space-between</code> is the value you'll reach for most often in practice — it's exactly what
+a navbar with a logo on one side and links on the other needs, as you'll see in Part 10.</p>
+<h2 id="part-5-align-items-cross-axis-alignment">Part 5: align-items (Cross-Axis Alignment)<a class="headerlink" href="#part-5-align-items-cross-axis-alignment" title="Permanent link">&para;</a></h2>
+<p><code>align-items</code> controls how items are aligned along the <strong>cross axis</strong> — by default, the
+vertical direction. This is the property that makes vertical centering trivial, which
+was one of the hardest things to do with <code>float</code>.</p>
+<div class="language-css highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">.</span><span class="nc">container</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">flex</span><span class="p">;</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span><span class="k">align-items</span><span class="p">:</span><span class="w"> </span><span class="kc">center</span><span class="p">;</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="p">}</span>
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>stretch</code> (default)</td>
+<td>Items stretch to fill the container's cross-axis size</td>
+</tr>
+<tr>
+<td><code>flex-start</code></td>
+<td>Items aligned to the start of the cross axis</td>
+</tr>
+<tr>
+<td><code>flex-end</code></td>
+<td>Items aligned to the end of the cross axis</td>
+</tr>
+<tr>
+<td><code>center</code></td>
+<td>Items centered on the cross axis</td>
+</tr>
+<tr>
+<td><code>baseline</code></td>
+<td>Items aligned so their text baselines line up</td>
+</tr>
+</tbody>
+</table>
+<p>The difference between these only becomes visible when items have different sizes
+(otherwise there's nothing to align differently), so the screenshot below uses items of
+different heights — and, for <code>baseline</code>, items with different font sizes:</p>
+<p><img alt="Rendered output: five labeled rows, each a dashed-border container roughly the same height with three items of different sizes; stretch makes all three items the full height of the container; flex-start aligns their tops; flex-end aligns their bottoms; center centers each vertically; baseline shows three boxes of very different sizes (small, medium, and large text) whose text sits on the same horizontal line despite the boxes themselves being very different heights" src="../../assets/img/tutorials/flexbox/align-items-comparison.png" /></p>
+<p><code>baseline</code> is a niche value — you'll use <code>stretch</code>, <code>center</code>, and <code>flex-start</code> far more
+often — but it's worth recognizing: it aligns by where the <em>text</em> sits, not by the
+box edges, which is why the boxes in that row don't line up at their tops or bottoms at
+all.</p>
+<h2 id="part-6-flex-wrap">Part 6: flex-wrap<a class="headerlink" href="#part-6-flex-wrap" title="Permanent link">&para;</a></h2>
+<p>By default, a flex container tries to fit <strong>all</strong> of its items onto a single line along
+the main axis. If there isn't enough room, items shrink (down to their content's minimum
+size) or, once they can't shrink any further, they overflow the container. <code>flex-wrap</code>
+changes that behavior:</p>
+<div class="language-css highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="p">.</span><span class="nc">container</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">flex</span><span class="p">;</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span><span class="k">flex-wrap</span><span class="p">:</span><span class="w"> </span><span class="kc">wrap</span><span class="p">;</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="p">}</span>
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>nowrap</code> (default)</td>
+<td>All items forced onto one line; they shrink, and may overflow</td>
+</tr>
+<tr>
+<td><code>wrap</code></td>
+<td>Items that no longer fit flow onto a new line instead</td>
+</tr>
+</tbody>
+</table>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;container&quot;</span><span class="p">&gt;</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;box&quot;</span><span class="p">&gt;</span>Item 1<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;box&quot;</span><span class="p">&gt;</span>Item 2<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;box&quot;</span><span class="p">&gt;</span>Item 3<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;box&quot;</span><span class="p">&gt;</span>Item 4<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;box&quot;</span><span class="p">&gt;</span>Item 5<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></code></pre></div>
+<div class="language-css highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="p">.</span><span class="nc">box</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span><span class="k">min-width</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="kt">px</span><span class="p">;</span><span class="w"> </span><span class="c">/* prevents items from shrinking past a readable width */</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><img alt="Rendered output: two labeled panels; nowrap shows five boxes forced onto a single line, spilling past the right edge of their dashed-border container since they can't shrink below their minimum width; wrap shows the same five boxes flowing onto two lines (three on the first line, two on the second) so all of them stay inside the container" src="../../assets/img/tutorials/flexbox/flex-wrap-comparison.png" /></p>
+<p>In the <code>nowrap</code> panel, the items can't shrink past their <code>min-width</code>, so they overflow
+the dashed container border entirely — a common surprise for beginners who forget that
+<code>nowrap</code> is the default. Adding <code>flex-wrap: wrap</code> is usually the fix.</p>
+<div class="admonition tip">
+<p class="admonition-title">flex-flow shorthand</p>
+<p><code>flex-direction</code> and <code>flex-wrap</code> are so often set together that CSS provides a
+shorthand: <code>flex-flow: row wrap;</code> sets both in one declaration, in that order.</p>
+</div>
+<h2 id="part-7-gap">Part 7: gap<a class="headerlink" href="#part-7-gap" title="Permanent link">&para;</a></h2>
+<p>Before <code>gap</code>, spacing flex items apart meant adding <code>margin</code> to every individual item —
+and then usually writing an extra rule to remove the margin from the last item, so it
+didn't leave unwanted space at the container's edge. <code>gap</code> solves this directly on the
+<strong>container</strong>:</p>
+<div class="language-css highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="p">.</span><span class="nc">container</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">flex</span><span class="p">;</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">  </span><span class="k">gap</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><code>gap</code> inserts even spacing <strong>between</strong> items only — never before the first item or after
+the last — with no per-item CSS needed at all.</p>
+<p><img alt="Rendered output: two labeled panels; the first shows three boxes touching each other edge to edge with no space between them; the second shows the same three boxes with clear, even 20px gaps between each pair, and no extra space at the container's left or right edge" src="../../assets/img/tutorials/flexbox/flex-gap-comparison.png" /></p>
+<p><code>gap</code> also accepts two values (<code>gap: 10px 20px;</code> for row-gap and column-gap
+separately) and works the same way once <code>flex-wrap: wrap</code> produces multiple lines.</p>
+<h2 id="part-8-flex-grow-flex-shrink-flex-basis-and-the-flex-shorthand">Part 8: flex-grow, flex-shrink, flex-basis, and the flex Shorthand<a class="headerlink" href="#part-8-flex-grow-flex-shrink-flex-basis-and-the-flex-shorthand" title="Permanent link">&para;</a></h2>
+<p>So far, every property in this tutorial has lived on the <strong>container</strong>. These next
+three live on individual <strong>items</strong>, and control how each item grows or shrinks to fill
+(or fit into) the leftover space along the main axis.</p>
+<ul>
+<li><strong><code>flex-basis</code></strong> — an item's starting size along the main axis, before any
+  growing or shrinking happens. Defaults to <code>auto</code> (the item's natural content size).</li>
+<li><strong><code>flex-grow</code></strong> — a unitless number (default <code>0</code>) describing how much of the
+  container's <em>leftover</em> space this item should claim, relative to its siblings.</li>
+<li><strong><code>flex-shrink</code></strong> — a unitless number (default <code>1</code>) describing how much this item
+  should shrink, relative to its siblings, when there isn't enough room for everyone's
+  <code>flex-basis</code>.</li>
+</ul>
+<p>The most important thing to understand about <code>flex-grow</code> is that its values are
+<strong>ratios</strong>, not percentages, and they only apply to space left over <em>after</em> every item's
+<code>flex-basis</code> has been accounted for:</p>
+<div class="language-css highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="p">.</span><span class="nc">item-a</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">flex-grow</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="p">.</span><span class="nc">item-b</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">flex-grow</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="p">.</span><span class="nc">item-c</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">flex-grow</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</span></code></pre></div>
+<p>With these three items in the same container, the leftover space is split into 4 equal
+shares (1 + 2 + 1 = 4): <code>.item-a</code> and <code>.item-c</code> each get 1 share, and <code>.item-b</code> gets 2
+shares — twice as much extra space as either of its siblings, not simply "twice as
+wide" overall.</p>
+<p><img alt="Rendered output: one dashed-border container with three boxes labeled &quot;flex-grow: 1&quot;, &quot;flex-grow: 2&quot;, and &quot;flex-grow: 1&quot;; the middle box is visibly wider than the two side boxes, filling roughly twice as much of the leftover horizontal space" src="../../assets/img/tutorials/flexbox/flex-grow-comparison.png" /></p>
+<p>In practice, you'll rarely set <code>flex-grow</code>, <code>flex-shrink</code>, and <code>flex-basis</code> separately.
+CSS provides a shorthand, <code>flex</code>, that sets all three at once, in that order:</p>
+<div class="language-css highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="p">.</span><span class="nc">item</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span><span class="k">flex</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="kc">auto</span><span class="p">;</span><span class="w"> </span><span class="c">/* flex-grow: 1; flex-shrink: 1; flex-basis: auto; */</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>A very common shorthand pattern is <code>flex: 1;</code>, which expands to
+<code>flex-grow: 1; flex-shrink: 1; flex-basis: 0%;</code> — it tells an item to ignore its content
+size entirely and simply take an equal share of all available space alongside any other
+<code>flex: 1;</code> siblings.</p>
+<h2 id="part-9-align-self">Part 9: align-self<a class="headerlink" href="#part-9-align-self" title="Permanent link">&para;</a></h2>
+<p><code>align-self</code> overrides <code>align-items</code> for exactly one flex item, without affecting its
+siblings. It accepts the same values as <code>align-items</code> (<code>flex-start</code>, <code>flex-end</code>,
+<code>center</code>, <code>stretch</code>, <code>baseline</code>), plus <code>auto</code> (the default, meaning "use whatever the
+container's <code>align-items</code> says").</p>
+<div class="language-css highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="p">.</span><span class="nc">container</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">flex</span><span class="p">;</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">  </span><span class="k">align-items</span><span class="p">:</span><span class="w"> </span><span class="kc">center</span><span class="p">;</span><span class="w"> </span><span class="c">/* applies to every item by default */</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="p">}</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="p">.</span><span class="nc">special-item</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="w">  </span><span class="k">align-self</span><span class="p">:</span><span class="w"> </span><span class="kc">flex-end</span><span class="p">;</span><span class="w"> </span><span class="c">/* this one item ignores align-items and aligns to the end instead */</span>
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><img alt="Rendered output: a dashed-border container with align-items center, containing four boxes; three of them (Item 1, Item 2, Item 4) are vertically centered as expected, but the third box, labeled &quot;align-self: flex-end&quot; and colored differently, sits at the bottom of the container instead" src="../../assets/img/tutorials/flexbox/align-self-override.png" /></p>
+<p>This is the tool to reach for whenever one item in a row genuinely needs different
+cross-axis alignment than the rest — for example, a "Pro" badge that should hug the
+bottom of a row of otherwise vertically centered pricing cards.</p>
+<h2 id="part-10-common-real-world-patterns">Part 10: Common Real-World Patterns<a class="headerlink" href="#part-10-common-real-world-patterns" title="Permanent link">&para;</a></h2>
+<p>With every property above, you can now build the two layouts that come up constantly in
+real projects.</p>
+<h3 id="pattern-a-a-navbar-with-space-between">Pattern A: A Navbar with space-between<a class="headerlink" href="#pattern-a-a-navbar-with-space-between" title="Permanent link">&para;</a></h3>
+<p>A classic navbar has a logo (or site name) pinned to the left and navigation links
+pinned to the right, with whatever space is left between them. This is exactly what
+<code>justify-content: space-between</code> was designed for:</p>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="p">&lt;</span><span class="nt">nav</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;navbar&quot;</span><span class="p">&gt;</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;logo&quot;</span><span class="p">&gt;</span>MyBrand<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>  <span class="p">&lt;</span><span class="nt">ul</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;nav-links&quot;</span><span class="p">&gt;</span>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">&gt;</span>Home<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">&gt;</span>About<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">&gt;</span>Contact<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>  <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="p">&lt;/</span><span class="nt">nav</span><span class="p">&gt;</span>
+</span></code></pre></div>
+<div class="language-css highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="p">.</span><span class="nc">navbar</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">  </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">flex</span><span class="p">;</span>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w">  </span><span class="k">justify-content</span><span class="p">:</span><span class="w"> </span><span class="kc">space-between</span><span class="p">;</span>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="w">  </span><span class="k">align-items</span><span class="p">:</span><span class="w"> </span><span class="kc">center</span><span class="p">;</span>
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="w">  </span><span class="k">background-color</span><span class="p">:</span><span class="w"> </span><span class="mh">#2b2b7a</span><span class="p">;</span>
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="w">  </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="kc">white</span><span class="p">;</span>
+</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="w">  </span><span class="k">padding</span><span class="p">:</span><span class="w"> </span><span class="mi">14</span><span class="kt">px</span><span class="w"> </span><span class="mi">24</span><span class="kt">px</span><span class="p">;</span>
+</span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="p">}</span>
+</span><span id="__span-14-9"><a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a>
+</span><span id="__span-14-10"><a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a><span class="p">.</span><span class="nc">nav-links</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-14-11"><a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a><span class="w">  </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">flex</span><span class="p">;</span><span class="w"> </span><span class="c">/* nested flex container, for the links themselves */</span>
+</span><span id="__span-14-12"><a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a><span class="w">  </span><span class="k">gap</span><span class="p">:</span><span class="w"> </span><span class="mi">24</span><span class="kt">px</span><span class="p">;</span>
+</span><span id="__span-14-13"><a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a><span class="w">  </span><span class="k">list-style</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="p">;</span>
+</span><span id="__span-14-14"><a id="__codelineno-14-14" name="__codelineno-14-14" href="#__codelineno-14-14"></a><span class="w">  </span><span class="k">margin</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-14-15"><a id="__codelineno-14-15" name="__codelineno-14-15" href="#__codelineno-14-15"></a><span class="w">  </span><span class="k">padding</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-14-16"><a id="__codelineno-14-16" name="__codelineno-14-16" href="#__codelineno-14-16"></a><span class="p">}</span>
+</span><span id="__span-14-17"><a id="__codelineno-14-17" name="__codelineno-14-17" href="#__codelineno-14-17"></a>
+</span><span id="__span-14-18"><a id="__codelineno-14-18" name="__codelineno-14-18" href="#__codelineno-14-18"></a><span class="p">.</span><span class="nc">nav-links</span><span class="w"> </span><span class="nt">a</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-14-19"><a id="__codelineno-14-19" name="__codelineno-14-19" href="#__codelineno-14-19"></a><span class="w">  </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="kc">white</span><span class="p">;</span>
+</span><span id="__span-14-20"><a id="__codelineno-14-20" name="__codelineno-14-20" href="#__codelineno-14-20"></a><span class="w">  </span><span class="k">text-decoration</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="p">;</span>
+</span><span id="__span-14-21"><a id="__codelineno-14-21" name="__codelineno-14-21" href="#__codelineno-14-21"></a><span class="w">  </span><span class="k">font-weight</span><span class="p">:</span><span class="w"> </span><span class="kc">bold</span><span class="p">;</span>
+</span><span id="__span-14-22"><a id="__codelineno-14-22" name="__codelineno-14-22" href="#__codelineno-14-22"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><img alt="Rendered output: a dark blue horizontal navbar with the bold white text &quot;MyBrand&quot; on the far left and three links, Home, About, and Contact, evenly spaced on the far right, all vertically centered within the bar" src="../../assets/img/tutorials/flexbox/navbar-pattern.png" /></p>
+<p>Notice the <code>.nav-links</code> list is itself a flex container (with <code>gap</code> handling the
+spacing between individual links) nested inside the outer <code>.navbar</code> flex container —
+flex containers nest freely, with each one managing only its own direct children.</p>
+<p>Compare this to Part 5 of <a href="../layout-designing/">Layout Designing</a>, where a horizontal
+menu required floating every <code>&lt;li&gt;</code> and containing them with <code>overflow: hidden</code>. Here,
+two declarations on the parent (<code>display: flex; justify-content: space-between;</code>) do
+the entire job.</p>
+<h3 id="pattern-b-perfect-centering">Pattern B: Perfect Centering<a class="headerlink" href="#pattern-b-perfect-centering" title="Permanent link">&para;</a></h3>
+<p>Centering an element both horizontally <em>and</em> vertically inside its container was one of
+the most awkward problems in CSS before Flexbox — it typically required a mix of
+<code>position: absolute</code>, fixed pixel dimensions, and negative margins calculated by hand.
+With Flexbox, it's two declarations on the container:</p>
+<div class="language-css highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="p">.</span><span class="nc">centering-box</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">  </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">flex</span><span class="p">;</span>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">  </span><span class="k">justify-content</span><span class="p">:</span><span class="w"> </span><span class="kc">center</span><span class="p">;</span><span class="w"> </span><span class="c">/* centers horizontally, along the main axis */</span>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="w">  </span><span class="k">align-items</span><span class="p">:</span><span class="w"> </span><span class="kc">center</span><span class="p">;</span><span class="w">     </span><span class="c">/* centers vertically, along the cross axis */</span>
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="w">  </span><span class="k">height</span><span class="p">:</span><span class="w"> </span><span class="mi">220</span><span class="kt">px</span><span class="p">;</span>
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="p">}</span>
+</span></code></pre></div>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;centering-box&quot;</span><span class="p">&gt;</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;centered-item&quot;</span><span class="p">&gt;</span>Perfectly Centered<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></code></pre></div>
+<p><img alt="Rendered output: a large dashed-border box with a single smaller dark blue box containing the text &quot;Perfectly Centered&quot; sitting exactly in the middle of it, both horizontally and vertically" src="../../assets/img/tutorials/flexbox/centering-pattern.png" /></p>
+<p>This works regardless of the centered item's size — unlike the old fixed-width,
+negative-margin tricks, you never need to know the item's exact dimensions in advance.</p>
+<h2 id="try-it-yourself">Try It Yourself<a class="headerlink" href="#try-it-yourself" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Take the navbar from Pattern A and change <code>justify-content: space-between;</code> to
+   <code>justify-content: flex-end;</code>. Observe that the logo and links now bunch up together
+   on the right, with empty space on the left — confirming that <code>space-between</code> is doing
+   all the work of pushing them apart.</li>
+<li>Build a row of four <code>&lt;div&gt;</code> "cards" inside a flex container. Give the container
+   <code>flex-wrap: wrap;</code> and each card a fixed <code>width: 200px;</code>. Shrink your browser window
+   (or the container's width) and watch the cards reflow from one row into two, then
+   into four, with no media queries involved.</li>
+<li>Take the <code>flex-grow</code> example from Part 8 and change the three values to <code>1</code>, <code>1</code>,
+   and <code>4</code>. Predict how the space will be split before reloading, then confirm your
+   prediction against the rendered result.</li>
+<li>Build a simple three-item "pricing table" as a flex row with <code>align-items: flex-end;</code>
+   on the container, then use <code>align-self: stretch;</code> on just the middle item so it alone
+   grows to match the tallest card — a common way to visually highlight a "recommended"
+   plan.</li>
+<li>Recreate Pattern B (perfect centering), then add a second item inside
+   <code>.centering-box</code>. Notice both items now center together as a group along the main
+   axis — <code>justify-content</code> centers the <em>set</em> of items, not each one individually.</li>
+</ol>
+<h2 id="key-takeaways">Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Flexbox is a one-dimensional layout system: <code>display: flex</code> arranges direct children
+  along either a row or a column, one line at a time.</li>
+<li>Every flex container has a <strong>main axis</strong> and a <strong>cross axis</strong>; <code>flex-direction</code>
+  decides which physical direction (row or column) each one points in.</li>
+<li><code>justify-content</code> aligns items along the <strong>main axis</strong>: <code>flex-start</code>, <code>flex-end</code>,
+  <code>center</code>, <code>space-between</code>, <code>space-around</code>, <code>space-evenly</code>.</li>
+<li><code>align-items</code> aligns items along the <strong>cross axis</strong>: <code>stretch</code> (default),
+  <code>flex-start</code>, <code>flex-end</code>, <code>center</code>, <code>baseline</code>; <code>align-self</code> overrides it for one item.</li>
+<li><code>flex-wrap: wrap</code> lets items flow onto new lines instead of shrinking or overflowing
+  when they don't all fit on one line.</li>
+<li><code>gap</code> spaces items apart directly on the container, with no per-item margins needed.</li>
+<li><code>flex-grow</code>, <code>flex-shrink</code>, and <code>flex-basis</code> (usually set together via the <code>flex</code>
+  shorthand) control how individual items grow or shrink to fill leftover main-axis
+  space, in proportion to each other.</li>
+<li>Two declarations — <code>justify-content: space-between;</code> for navbars, and
+  <code>justify-content: center; align-items: center;</code> for perfect centering — replace
+  layout problems that used to require fragile <code>float</code> or <code>position</code> hacks.</li>
+</ul>
+
+
+
+
+
+
+
+  
+    
+  
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 8, 2026 02:40:15 UTC">September 8, 2026</span>
+  </span>
+
+    
+    
+    
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../css-positioning/" class="md-footer__link md-footer__link--prev" aria-label="Previous: CSS Positioning">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                CSS Positioning
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../multilevel-navigation/" class="md-footer__link md-footer__link--next" aria-label="Next: Multilevel Navigation with Positioning">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Multilevel Navigation with Positioning
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; Usman Akram — <a href="https://usmanlive.com">usmanlive.com</a>
+    </div>
+  
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/mua22/mern-web-book" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://usmanlive.com" target="_blank" rel="noopener" title="usmanlive.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M351.9 280H161c2.9 64.5 17.2 123.9 37.5 167.4 11.4 24.5 23.7 41.8 35.1 52.4 11.2 10.5 18.9 12.2 22.9 12.2s11.7-1.7 22.9-12.2c11.4-10.6 23.7-28 35.1-52.4 20.3-43.5 34.6-102.9 37.5-167.4zm-191-48h190.9c-2.8-64.5-17.1-123.9-37.4-167.4-11.4-24.4-23.7-41.8-35.1-52.4C268.1 1.7 260.4 0 256.4 0s-11.7 1.7-22.9 12.2c-11.4 10.6-23.7 28-35.1 52.4-20.3 43.5-34.6 102.9-37.5 167.4m-48 0c3.5-85.6 25.6-165.1 57.9-217.3C78.7 47.3 10.9 131.2 1.5 232zM1.5 280c9.4 100.8 77.2 184.7 169.3 217.3-32.3-52.2-54.4-131.7-57.9-217.3zm398.4 0c-3.5 85.6-25.6 165.1-57.9 217.3 92.1-32.7 159.9-116.5 169.3-217.3zm111.4-48C501.9 131.2 434.1 47.3 342 14.7c32.3 52.2 54.4 131.7 57.9 217.3z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.indexes", "navigation.top", "navigation.footer", "navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.prune", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "header.autohide"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

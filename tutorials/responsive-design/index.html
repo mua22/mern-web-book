@@ -1,0 +1,2019 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="An online textbook for Web Technologies (CSC336) and Advanced Web Technologies (CSC337), built lecture-by-lecture from the official COMSATS course plans.">
+      
+      
+        <meta name="author" content="Usman Akram">
+      
+      
+        <link rel="canonical" href="https://mua22.github.io/mern-web-book/tutorials/responsive-design/">
+      
+      
+        <link rel="prev" href="../css-animations/">
+      
+      
+        <link rel="next" href="../git-and-github/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/logo.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Tutorial: Responsive Web Design - Web Dev Book — CSC336 & CSC337</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+  
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+  
+  <style>:root{--md-admonition-icon--note:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M20%2011h3v2h-3zM1%2011h3v2H1zM13%201v3h-2V1zM4.92%203.5l2.13%202.14-1.42%201.41L3.5%204.93zm12.03%202.13%202.12-2.13%201.43%201.43-2.13%202.12zM12%206a6%206%200%200%201%206%206c0%202.22-1.21%204.16-3%205.2V19a1%201%200%200%201-1%201h-4a1%201%200%200%201-1-1v-1.8c-1.79-1.04-3-2.98-3-5.2a6%206%200%200%201%206-6m2%2015v1a1%201%200%200%201-1%201h-2a1%201%200%200%201-1-1v-1zm-3-3h2v-2.13c1.73-.44%203-2.01%203-3.87a4%204%200%200%200-4-4%204%204%200%200%200-4%204c0%201.86%201.27%203.43%203%203.87z%22/%3E%3C/svg%3E');--md-admonition-icon--tip:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M12%203%201%209l4%202.18v6L12%2021l7-3.82v-6l2-1.09V17h2V9zm6.82%206L12%2012.72%205.18%209%2012%205.28zM17%2016l-5%202.72L7%2016v-3.73L12%2015l5-2.73z%22/%3E%3C/svg%3E');--md-admonition-icon--warning:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M12%202%201%2021h22M12%206l7.53%2013H4.47M11%2010v4h2v-4m-2%206v2h2v-2%22/%3E%3C/svg%3E');--md-admonition-icon--example:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M19%203H5c-1.1%200-2%20.9-2%202v14c0%201.1.9%202%202%202h14c1.1%200%202-.9%202-2V5c0-1.1-.9-2-2-2m-8%205H9v2c0%201.1-.9%202-2%202%201.1%200%202%20.9%202%202v2h2v2H9c-1.1%200-2-.9-2-2v-1c0-1.1-.9-2-2-2v-2c1.1%200%202-.9%202-2V8c0-1.1.9-2%202-2h2zm8%205c-1.1%200-2%20.9-2%202v1c0%201.1-.9%202-2%202h-2v-2h2v-2c0-1.1.9-2%202-2-1.1%200-2-.9-2-2V8h-2V6h2c1.1%200%202%20.9%202%202v1c0%201.1.9%202%202%202z%22/%3E%3C/svg%3E');}</style>
+
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="deep-purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#tutorial-responsive-web-design" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Web Dev Book — CSC336 &amp; CSC337" class="md-header__button md-logo" aria-label="Web Dev Book — CSC336 & CSC337" data-md-component="logo">
+      
+  <img src="../../assets/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Web Dev Book — CSC336 & CSC337
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Tutorial: Responsive Web Design
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="deep-purple"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="deep-purple"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../.." class="md-tabs__link">
+          
+  
+  
+    
+  
+  Home
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../web-technologies/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Web Technologies (CSC336)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../advanced-web-technologies/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Advanced Web Technologies (CSC337)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Tutorials
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../tags/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Tags
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://usmanlive.com" class="md-tabs__link">
+        
+  
+  
+    
+  
+  usmanlive.com
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Web Dev Book — CSC336 &amp; CSC337" class="md-nav__button md-logo" aria-label="Web Dev Book — CSC336 & CSC337" data-md-component="logo">
+      
+  <img src="../../assets/logo.svg" alt="logo">
+
+    </a>
+    Web Dev Book — CSC336 & CSC337
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../.." class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../web-technologies/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Web Technologies (CSC336)
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../advanced-web-technologies/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced Web Technologies (CSC337)
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutorials
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tutorials
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../environment-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MERN Environment Setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../first-html-css-app/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Your First HTML + CSS Page
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../layout-designing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Layout Designing: div, span, and Float
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../css-positioning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CSS Positioning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../flexbox/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Flexbox Layout
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../multilevel-navigation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multilevel Navigation with Positioning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../css-animations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CSS Transitions and Animations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Responsive Web Design
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Responsive Web Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#in-this-tutorial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        In This Tutorial
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-1-why-responsive-design-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 1: Why Responsive Design Matters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-2-the-viewport-meta-tag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 2: The Viewport Meta Tag
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-3-mobile-first-vs-desktop-first" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 3: Mobile-First vs. Desktop-First
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-4-media-query-syntax-and-breakpoints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 4: Media Query Syntax and Breakpoints
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-5-responsive-units-choosing-the-right-one" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 5: Responsive Units — Choosing the Right One
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-6-fluid-sizing-in-one-declaration-with-clamp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 6: Fluid Sizing in One Declaration with clamp()
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-7-responsive-images" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 7: Responsive Images
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-8-complete-example-a-responsive-three-card-row" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 8: Complete Example — A Responsive Three-Card Row
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-9-testing-responsive-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 9: Testing Responsive Design
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#try-it-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try It Yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Takeaways
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../git-and-github/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git and GitHub
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../assignment-submission/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Submitting Coursework via GitHub
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tags
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://usmanlive.com" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    usmanlive.com
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#in-this-tutorial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        In This Tutorial
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-1-why-responsive-design-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 1: Why Responsive Design Matters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-2-the-viewport-meta-tag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 2: The Viewport Meta Tag
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-3-mobile-first-vs-desktop-first" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 3: Mobile-First vs. Desktop-First
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-4-media-query-syntax-and-breakpoints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 4: Media Query Syntax and Breakpoints
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-5-responsive-units-choosing-the-right-one" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 5: Responsive Units — Choosing the Right One
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-6-fluid-sizing-in-one-declaration-with-clamp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 6: Fluid Sizing in One Declaration with clamp()
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-7-responsive-images" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 7: Responsive Images
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-8-complete-example-a-responsive-three-card-row" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 8: Complete Example — A Responsive Three-Card Row
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-9-testing-responsive-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 9: Testing Responsive Design
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#try-it-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try It Yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Takeaways
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <a href="../../tags/#tag:css" class="md-tag">CSS</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../tags/#tag:flexbox" class="md-tag">Flexbox</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../tags/#tag:intermediate-project" class="md-tag">Intermediate Project</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../tags/#tag:media-queries" class="md-tag">Media Queries</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../tags/#tag:responsive-design" class="md-tag">Responsive Design</a>
+      
+    
+  </nav>
+
+
+
+<h1 id="tutorial-responsive-web-design">Tutorial: Responsive Web Design<a class="headerlink" href="#tutorial-responsive-web-design" title="Permanent link">&para;</a></h1>
+<p>A single web page today might be opened on a phone barely 360 pixels wide, a tablet held
+sideways, a laptop, or a giant desktop monitor — and you cannot control which one any
+given visitor uses. <strong>Responsive design</strong> is the set of CSS techniques that let one
+codebase adapt itself to all of these screens, instead of you building and maintaining a
+separate "mobile site." This tutorial builds up every piece of that toolkit — the
+viewport meta tag, mobile-first thinking, media queries, fluid units, <code>clamp()</code>, and
+responsive images — and finishes by combining them into one complete, real example: a
+row of cards that reflows from three columns down to one.</p>
+<p><strong>Prerequisites:</strong> <a href="../flexbox/">Flexbox Layouts</a> and
+<a href="../../web-technologies/lecture-10-responsive-design-and-frameworks/">Lecture 10: Responsive Design and Framework Fundamentals</a>.</p>
+<h2 id="in-this-tutorial">In This Tutorial<a class="headerlink" href="#in-this-tutorial" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Why one page has to work across phones, tablets, and desktops with no separate codebase</li>
+<li>The viewport meta tag, and why a page is unreadable on phones without it</li>
+<li>Mobile-first vs. desktop-first CSS, and why mobile-first is the modern default</li>
+<li>Media query syntax (<code>min-width</code> / <code>max-width</code>) and where breakpoints should come from</li>
+<li>Responsive units — <code>%</code>, <code>em</code>, <code>rem</code>, <code>vw</code>/<code>vh</code> — and when to reach for each</li>
+<li>Fluid sizing in a single declaration with <code>clamp()</code></li>
+<li>Making images shrink to fit their container instead of overflowing it</li>
+<li>A complete practical example: a three-card row that becomes a single column on mobile</li>
+<li>Testing responsive layouts with your browser's device toolbar</li>
+</ul>
+<hr />
+<h2 id="part-1-why-responsive-design-matters">Part 1: Why Responsive Design Matters<a class="headerlink" href="#part-1-why-responsive-design-matters" title="Permanent link">&para;</a></h2>
+<p>Before smartphones, most web pages were built for one target: a desktop monitor, usually
+around 1024 pixels wide. That single-target approach breaks down completely once you
+consider the real spread of devices visiting a site today — a small phone, a large
+phone, a tablet, a laptop, and an ultra-wide monitor might all load the exact same HTML
+file within the same hour.</p>
+<p>You have two ways to handle this:</p>
+<ol>
+<li>Build and maintain <strong>separate sites</strong> for mobile and desktop (an older approach,
+   often seen as an <code>m.example.com</code> subdomain) — doubling your work and your bugs.</li>
+<li>Build <strong>one responsive site</strong> whose layout, text size, and images all adapt
+   automatically to whatever screen loads it.</li>
+</ol>
+<p>Every technique in this tutorial serves that second, now-standard approach: one HTML
+file, one CSS file, and CSS rules that respond to the available screen space.</p>
+<h2 id="part-2-the-viewport-meta-tag">Part 2: The Viewport Meta Tag<a class="headerlink" href="#part-2-the-viewport-meta-tag" title="Permanent link">&para;</a></h2>
+<p>Here is a detail that surprises most beginners: a phone's browser does <strong>not</strong>, by
+default, render a page at the phone's actual pixel width. Instead, it assumes the page
+was built for a desktop, lays the whole thing out on a fake, wide <strong>virtual viewport</strong>
+(commonly 980px), and then zooms the whole result out to fit the phone's screen. The
+practical effect is a page where every bit of text is tiny and the visitor has to
+pinch-zoom just to read a sentence — even if your CSS itself is perfectly reasonable.</p>
+<p>The fix is one line in your HTML <code>&lt;head&gt;</code>, and it should be in every page you build from
+this point forward:</p>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;viewport&quot;</span> <span class="na">content</span><span class="o">=</span><span class="s">&quot;width=device-width, initial-scale=1.0&quot;</span><span class="p">&gt;</span>
+</span></code></pre></div>
+<ul>
+<li><strong><code>width=device-width</code></strong> — tells the browser to use the device's actual screen width
+  as the viewport width, instead of the fake desktop-width fallback.</li>
+<li><strong><code>initial-scale=1.0</code></strong> — tells the browser to start at 100% zoom, so text renders at
+  its real, intended size instead of already zoomed out.</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Nothing else in this tutorial works without it</p>
+<p>Media queries, <code>vw</code> units, and <code>clamp()</code> all measure themselves against the
+viewport's width. If the viewport meta tag is missing, a phone reports a fake,
+desktop-sized viewport, and every responsive rule you write will measure against the
+wrong number. This single <code>&lt;meta&gt;</code> tag is the foundation everything else in this
+tutorial depends on.</p>
+</div>
+<h2 id="part-3-mobile-first-vs-desktop-first">Part 3: Mobile-First vs. Desktop-First<a class="headerlink" href="#part-3-mobile-first-vs-desktop-first" title="Permanent link">&para;</a></h2>
+<p>Once your viewport is reporting the real screen width, you need a strategy for <em>when</em> to
+apply which styles. There are two opposite ways to organize this:</p>
+<ul>
+<li><strong>Desktop-first</strong>: write your base CSS for a wide desktop screen, then use
+  <code>max-width</code> media queries to strip styling away as the screen gets smaller.</li>
+<li><strong>Mobile-first</strong>: write your base CSS for the smallest screen first (a single column,
+  simple stacked layout), then use <code>min-width</code> media queries to <em>add</em> styling as more
+  screen space becomes available.</li>
+</ul>
+<div class="language-css highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c">/* mobile-first: base styles apply to every screen, no media query needed */</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="p">.</span><span class="nc">container</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">flex</span><span class="p">;</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span><span class="k">flex-direction</span><span class="p">:</span><span class="w"> </span><span class="kc">column</span><span class="p">;</span><span class="w"> </span><span class="c">/* stacked, single column by default */</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="p">}</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c">/* add a row layout only once there&#39;s enough width for it */</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="p">@</span><span class="k">media</span><span class="w"> </span><span class="o">(</span><span class="nt">min-width</span><span class="o">:</span><span class="w"> </span><span class="nt">768px</span><span class="o">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">  </span><span class="p">.</span><span class="nc">container</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">    </span><span class="k">flex-direction</span><span class="p">:</span><span class="w"> </span><span class="kc">row</span><span class="p">;</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Mobile-first is the modern default</strong>, for two reasons:</p>
+<ol>
+<li><strong>Simpler base styles.</strong> Your un-decorated, no-media-query CSS only has to solve the
+   easy problem — one narrow column — instead of a full multi-column desktop layout that
+   then has to be dismantled piece by piece for small screens.</li>
+<li><strong>Progressive enhancement.</strong> You are always <em>adding</em> capability as space allows
+   (more columns, larger images, a sidebar), rather than trying to <em>remove</em> complexity
+   that was never designed to disappear cleanly.</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">min-width vs. max-width, in plain terms</p>
+<p><code>min-width</code> media queries answer "once the screen is at least this wide, do this."
+<code>max-width</code> media queries answer "as long as the screen is no wider than this, do
+this." Mobile-first design is built almost entirely out of <code>min-width</code> queries.</p>
+</div>
+<h2 id="part-4-media-query-syntax-and-breakpoints">Part 4: Media Query Syntax and Breakpoints<a class="headerlink" href="#part-4-media-query-syntax-and-breakpoints" title="Permanent link">&para;</a></h2>
+<p>A <strong>media query</strong> is a CSS block that only applies when a condition about the browser
+or device is true — most commonly, its width. The syntax wraps ordinary CSS rules inside
+an <code>@media</code> block:</p>
+<div class="language-css highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">@</span><span class="k">media</span><span class="w"> </span><span class="o">(</span><span class="nt">min-width</span><span class="o">:</span><span class="w"> </span><span class="nt">768px</span><span class="o">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="c">/* any CSS in here only applies once the viewport is 768px wide or more */</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span><span class="p">.</span><span class="nc">sidebar</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">block</span><span class="p">;</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="p">}</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="p">@</span><span class="k">media</span><span class="w"> </span><span class="o">(</span><span class="nt">max-width</span><span class="o">:</span><span class="w"> </span><span class="nt">767px</span><span class="o">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">  </span><span class="c">/* this block applies only below 768px */</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">  </span><span class="p">.</span><span class="nc">sidebar</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">    </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="p">;</span>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>A <strong>breakpoint</strong> is simply the width value you chose to put inside that media query —
+768px in the example above. You will often see a rough, commonly-used set of
+breakpoints, inherited from popular frameworks like Bootstrap:</p>
+<table>
+<thead>
+<tr>
+<th>Approx. breakpoint</th>
+<th>Rough device category</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>576px</td>
+<td>Large phones</td>
+</tr>
+<tr>
+<td>768px</td>
+<td>Tablets</td>
+</tr>
+<tr>
+<td>992px</td>
+<td>Laptops</td>
+</tr>
+<tr>
+<td>1200px</td>
+<td>Desktops</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">Breakpoints should come from your content, not a chart</p>
+<p>Treat the table above as a starting reference, not a rule to memorize. The <em>right</em>
+breakpoint for your project is wherever <strong>your own layout</strong> starts to look cramped,
+or where lines of text start to look uncomfortably long or short — not a number
+copied from a table. Resize your own browser window slowly and watch for the exact
+point where things start to look wrong; that pixel width is your breakpoint.</p>
+</div>
+<h2 id="part-5-responsive-units-choosing-the-right-one">Part 5: Responsive Units — Choosing the Right One<a class="headerlink" href="#part-5-responsive-units-choosing-the-right-one" title="Permanent link">&para;</a></h2>
+<p>CSS gives you several ways to size things, and mixing them up is one of the most common
+sources of layouts that "sort of" respond but not quite correctly. The key distinction is
+what each unit is measured <strong>relative to</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>Unit</th>
+<th>Relative to</th>
+<th>Best used for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>px</code></td>
+<td>Nothing — a fixed, absolute size</td>
+<td>Things that genuinely should never scale, like a 1px border</td>
+</tr>
+<tr>
+<td><code>%</code></td>
+<td>The size of the parent element</td>
+<td>Fluid widths that share space with siblings, e.g. <code>width: 50%;</code></td>
+</tr>
+<tr>
+<td><code>em</code></td>
+<td>The current element's own font size</td>
+<td>Spacing that should scale with a specific element's own text size</td>
+</tr>
+<tr>
+<td><code>rem</code></td>
+<td>The root (<code>&lt;html&gt;</code>) element's font size (usually <code>16px</code>)</td>
+<td>Typography — font sizes that stay consistent and scale together sitewide</td>
+</tr>
+<tr>
+<td><code>vw</code></td>
+<td>1% of the viewport's width</td>
+<td>Fluid sizing tied directly to screen width, e.g. <code>width: 100vw;</code></td>
+</tr>
+<tr>
+<td><code>vh</code></td>
+<td>1% of the viewport's height</td>
+<td>Full-height sections, e.g. <code>height: 100vh;</code></td>
+</tr>
+</tbody>
+</table>
+<div class="language-css highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nt">html</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="k">font-size</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="kt">px</span><span class="p">;</span><span class="w"> </span><span class="c">/* 1rem now equals 16px, sitewide */</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="p">}</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="p">.</span><span class="nc">hero</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">  </span><span class="k">width</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="kt">vw</span><span class="p">;</span><span class="w">    </span><span class="c">/* always exactly the full screen width */</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">  </span><span class="k">height</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="kt">vh</span><span class="p">;</span><span class="w">    </span><span class="c">/* always exactly half the screen height */</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="p">}</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="p">.</span><span class="nc">card</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="w">  </span><span class="k">width</span><span class="p">:</span><span class="w"> </span><span class="mi">90</span><span class="kt">%</span><span class="p">;</span><span class="w">      </span><span class="c">/* always 90% of whatever its parent container is */</span>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="w">  </span><span class="k">padding</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="kt">rem</span><span class="p">;</span><span class="w">    </span><span class="c">/* scales consistently with the root font size */</span>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="w">  </span><span class="k">border</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="kt">px</span><span class="w"> </span><span class="kc">solid</span><span class="w"> </span><span class="mh">#ccc</span><span class="p">;</span><span class="w"> </span><span class="c">/* a hairline border — this should NOT scale */</span>
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="p">}</span>
+</span></code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Why rem beats px for font sizes</p>
+<p>Some visitors increase their browser's default font size for accessibility reasons —
+poor eyesight, for example. Text sized in <code>px</code> completely ignores that setting. Text
+sized in <code>rem</code> scales right along with it, which is why <code>rem</code> is the standard
+recommendation for font sizes in professional style guides.</p>
+</div>
+<h2 id="part-6-fluid-sizing-in-one-declaration-with-clamp">Part 6: Fluid Sizing in One Declaration with clamp()<a class="headerlink" href="#part-6-fluid-sizing-in-one-declaration-with-clamp" title="Permanent link">&para;</a></h2>
+<p>Media queries are great for changing a handful of discrete layout states (one column vs.
+three columns), but they are clumsy for something that should scale <em>continuously</em> — a
+heading, for example, that should grow smoothly as the screen widens, rather than
+jumping abruptly at a couple of fixed breakpoints. CSS's <code>clamp()</code> function solves this
+in a single line.</p>
+<div class="language-css highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nt">h1</span><span class="p">.</span><span class="nc">fluid-heading</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="k">font-size</span><span class="p">:</span><span class="w"> </span><span class="nf">clamp</span><span class="p">(</span><span class="mf">1.5</span><span class="kt">rem</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="kt">vw</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="kt">rem</span><span class="p">);</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><code>clamp()</code> takes exactly three values, in order:</p>
+<ol>
+<li><strong>Minimum</strong> (<code>1.5rem</code>) — the smallest the value is ever allowed to be, no matter how
+   narrow the screen gets.</li>
+<li><strong>Preferred</strong> (<code>5vw</code>) — the value the browser actually tries to use, calculated live
+   from the viewport. This is normally a <code>vw</code>-based value, so it scales with screen width.</li>
+<li><strong>Maximum</strong> (<code>3rem</code>) — the largest the value is ever allowed to be, no matter how wide
+   the screen gets.</li>
+</ol>
+<p>The browser continuously recalculates the preferred value as the window resizes, but
+clips it to never go below the minimum or above the maximum — giving you one declaration
+that replaces what would otherwise take two or three separate media queries.</p>
+<p>Rendered at a desktop width, <code>5vw</code> comfortably exceeds the <code>3rem</code> maximum, so the
+heading is clamped to its largest allowed size:</p>
+<p><img alt="Rendered output: a large bold heading reading &quot;Fluid Heading with clamp()&quot; in dark blue, below it monospace text reading &quot;font-size: clamp(1.5rem, 5vw, 3rem);&quot;, at a desktop width where the heading has clamped to its 3rem maximum size" src="../../assets/img/tutorials/responsive/clamp-heading-wide.png" /></p>
+<p>Rendered at a narrow mobile width, <code>5vw</code> now works out to less than <code>1.5rem</code>, so the same
+heading clamps instead to its smallest allowed size — visibly smaller than the desktop
+version, but never below <code>1.5rem</code>:</p>
+<p><img alt="Rendered output: the same heading &quot;Fluid Heading with clamp()&quot; now noticeably smaller, at a mobile width where the heading has clamped to its 1.5rem minimum size" src="../../assets/img/tutorials/responsive/clamp-heading-narrow.png" /></p>
+<div class="admonition note">
+<p class="admonition-title">clamp() works for more than font-size</p>
+<p>Anywhere CSS accepts a length — <code>width</code>, <code>padding</code>, <code>margin</code>, <code>gap</code> — you can use
+<code>clamp()</code> the same way. It is most popular for typography, but it is not limited to
+it.</p>
+</div>
+<h2 id="part-7-responsive-images">Part 7: Responsive Images<a class="headerlink" href="#part-7-responsive-images" title="Permanent link">&para;</a></h2>
+<p>An <code>&lt;img&gt;</code> with no sizing rules keeps its natural pixel dimensions no matter how small
+its container is — a 800px-wide photo dropped into a 300px-wide mobile layout will
+simply overflow its container and force the whole page to scroll sideways. This is one
+of the single most common mistakes in beginner responsive layouts, and the fix is one
+short rule, usually applied globally near the top of a stylesheet:</p>
+<div class="language-css highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nt">img</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="k">max-width</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="kt">%</span><span class="p">;</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span><span class="k">height</span><span class="p">:</span><span class="w"> </span><span class="kc">auto</span><span class="p">;</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="p">}</span>
+</span></code></pre></div>
+<ul>
+<li><strong><code>max-width: 100%</code></strong> means the image can shrink to fit its container, but will never
+  grow <em>wider</em> than that container.</li>
+<li><strong><code>height: auto</code></strong> lets the browser recalculate the image's height automatically as
+  its width changes, so its aspect ratio stays correct instead of stretching.</li>
+</ul>
+<p>Here, an 800×400px placeholder image sits inside a container fixed at 60% of the page
+width. Rendered at a desktop width, the container itself is wide, so the image displays
+close to its natural size:</p>
+<p><img alt="Rendered output: an 800 by 400 pixel blue placeholder image labeled &quot;800 x 400&quot; inside a dashed-border container fixed at 60% of the page width, at a desktop width where the container and image are both large" src="../../assets/img/tutorials/responsive/responsive-image-wide.png" /></p>
+<p>Rendered at a narrow mobile width, the same 60%-wide container is now much smaller in
+absolute pixels — and thanks to <code>max-width: 100%; height: auto;</code>, the image has shrunk
+right along with it instead of overflowing:</p>
+<p><img alt="Rendered output: the same blue placeholder image and dashed container, both now much smaller because the page itself is narrow, at a mobile width where the image has scaled down to match its container" src="../../assets/img/tutorials/responsive/responsive-image-narrow.png" /></p>
+<h2 id="part-8-complete-example-a-responsive-three-card-row">Part 8: Complete Example — A Responsive Three-Card Row<a class="headerlink" href="#part-8-complete-example-a-responsive-three-card-row" title="Permanent link">&para;</a></h2>
+<p>Now combine everything so far into one real, practical layout: three cards that sit
+<strong>side by side on a wide screen</strong> and <strong>stack into a single column on a narrow screen</strong>
+— one of the most common patterns on the web (feature lists, product grids, team member
+listings).</p>
+<p>The technique combines two things you already know: Flexbox for the container, and a
+<code>min-width</code> media query, mobile-first, to switch each card's width once there is enough
+room.</p>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;card-row&quot;</span><span class="p">&gt;</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;card&quot;</span><span class="p">&gt;</span>Card 1<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;card&quot;</span><span class="p">&gt;</span>Card 2<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;card&quot;</span><span class="p">&gt;</span>Card 3<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></code></pre></div>
+<div class="language-css highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="p">.</span><span class="nc">card-row</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">flex</span><span class="p">;</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span><span class="k">flex-wrap</span><span class="p">:</span><span class="w"> </span><span class="kc">wrap</span><span class="p">;</span><span class="w"> </span><span class="c">/* allow cards to wrap onto a new line when they don&#39;t fit */</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">  </span><span class="k">gap</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="kt">px</span><span class="p">;</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="p">}</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="p">.</span><span class="nc">card</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">  </span><span class="k">background-color</span><span class="p">:</span><span class="w"> </span><span class="mh">#2b2b7a</span><span class="p">;</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">  </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="kc">white</span><span class="p">;</span>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="w">  </span><span class="k">border-radius</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="kt">px</span><span class="p">;</span>
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="w">  </span><span class="k">padding</span><span class="p">:</span><span class="w"> </span><span class="mi">24</span><span class="kt">px</span><span class="p">;</span>
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="w">  </span><span class="k">box-sizing</span><span class="p">:</span><span class="w"> </span><span class="kc">border-box</span><span class="p">;</span>
+</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="w">  </span><span class="k">text-align</span><span class="p">:</span><span class="w"> </span><span class="kc">center</span><span class="p">;</span>
+</span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="w">  </span><span class="k">flex</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">100</span><span class="kt">%</span><span class="p">;</span><span class="w"> </span><span class="c">/* mobile-first base: each card takes the full row width */</span>
+</span><span id="__span-7-15"><a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="p">}</span>
+</span><span id="__span-7-16"><a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a>
+</span><span id="__span-7-17"><a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a><span class="c">/* desktop breakpoint: switch each card to roughly one third of the row */</span>
+</span><span id="__span-7-18"><a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a><span class="p">@</span><span class="k">media</span><span class="w"> </span><span class="o">(</span><span class="nt">min-width</span><span class="o">:</span><span class="w"> </span><span class="nt">768px</span><span class="o">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-7-19"><a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a><span class="w">  </span><span class="p">.</span><span class="nc">card</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-7-20"><a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a><span class="w">    </span><span class="k">flex</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="nb">calc</span><span class="p">(</span><span class="mf">33.333</span><span class="kt">%</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">16</span><span class="kt">px</span><span class="p">);</span>
+</span><span id="__span-7-21"><a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-7-22"><a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>Walking through the CSS:</p>
+<ul>
+<li><code>display: flex; flex-wrap: wrap;</code> on <code>.card-row</code> turns it into a flex container that is
+  allowed to wrap its children onto new lines instead of squeezing them into one row no
+  matter what.</li>
+<li>The <strong>mobile-first base rule</strong>, <code>flex: 1 1 100%</code>, applies at every screen size unless
+  overridden — each card claims the full width of the row, so three cards naturally
+  stack into three separate lines.</li>
+<li>The <code>@media (min-width: 768px)</code> block only adds its rule once the screen reaches 768px
+  — at that point, <code>flex: 1 1 calc(33.333% - 16px)</code> shrinks each card to roughly a third
+  of the row (the <code>- 16px</code> subtraction keeps room for the <code>gap</code> between cards), so all
+  three now fit side by side.</li>
+</ul>
+<p>Rendered at a desktop width, above the 768px breakpoint, the three cards sit side by
+side in a single row:</p>
+<p><img alt="Rendered output: three dark blue rounded cards labeled Card 1, Card 2, and Card 3 arranged side by side in a single row, at a desktop width above the 768px breakpoint" src="../../assets/img/tutorials/responsive/three-card-layout-wide.png" /></p>
+<p>Rendered at a narrow mobile width, below the 768px breakpoint, the mobile-first base rule
+is all that applies — the same three cards stack into a single column, each one filling
+the full row width:</p>
+<p><img alt="Rendered output: the same three dark blue rounded cards now stacked one above the other in a single column, at a narrow mobile width below the 768px breakpoint" src="../../assets/img/tutorials/responsive/three-card-layout-narrow.png" /></p>
+<p>No JavaScript, and no separate mobile stylesheet, is involved anywhere in this example —
+the same handful of CSS rules produce both layouts, purely because of the media query's
+condition.</p>
+<h2 id="part-9-testing-responsive-design">Part 9: Testing Responsive Design<a class="headerlink" href="#part-9-testing-responsive-design" title="Permanent link">&para;</a></h2>
+<p>You do not need a drawer full of real phones and tablets to test a responsive layout.
+Every modern browser's developer tools include a <strong>device toolbar</strong> (sometimes called
+"responsive design mode") that simulates a range of specific real device screen sizes
+directly inside your desktop browser.</p>
+<p>To open it in Chrome or Edge:</p>
+<ol>
+<li>Open DevTools (<code>F12</code>, or right-click the page and choose <strong>Inspect</strong>).</li>
+<li>Click the small device/toolbar icon at the top-left of the DevTools panel (or press
+   <code>Ctrl+Shift+M</code>).</li>
+<li>Choose a specific device from the dropdown (for example, "iPhone SE" or
+   "iPad Air"), or drag the edges of the simulated screen to any custom width.</li>
+</ol>
+<p>This is a meaningfully better test than simply shrinking your desktop browser window
+manually, for two reasons:</p>
+<ul>
+<li>It simulates the <strong>exact reported screen width</strong> of real, named devices, rather than
+  whatever arbitrary width your window happens to be at.</li>
+<li>It simulates <strong>touch input</strong> (taps instead of mouse clicks), which can reveal
+  interaction problems — a menu that only opens on hover, for example — that a resized
+  desktop window would never catch.</li>
+</ul>
+<p>That said, manually dragging your browser window narrower is still a fast, valid first
+check while you are actively writing CSS — it is just not a substitute for a final pass
+in the device toolbar (or, ideally, a real device) before calling a layout finished.</p>
+<h2 id="try-it-yourself">Try It Yourself<a class="headerlink" href="#try-it-yourself" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Take the three-card example from Part 8 and change the breakpoint from <code>768px</code> to
+   <code>992px</code>. Reload at a width of 800px and confirm the cards now stack instead of
+   sitting in a row, since 800px no longer satisfies the new breakpoint.</li>
+<li>Add a fourth card to the same example with no other changes, and observe what
+   <code>flex-wrap: wrap</code> does with an item count that doesn't divide evenly into full rows
+   at the desktop breakpoint.</li>
+<li>Take the <code>clamp()</code> heading from Part 6 and change it to
+   <code>clamp(1rem, 8vw, 4rem)</code>. Predict, then confirm, at what approximate screen width the
+   heading stops growing and hits its new maximum.</li>
+<li>Find any <code>&lt;img&gt;</code> in a page you've built for this course that does not yet have
+   <code>max-width: 100%; height: auto;</code> applied, add the rule, and confirm — using the
+   device toolbar from Part 9 — that it no longer causes horizontal scrolling at a
+   mobile width.</li>
+<li>Open any real site in your browser's device toolbar, switch between two or three
+   different simulated devices, and write down every layout change you can spot (column
+   count, font size, whether a navigation menu collapses into a hamburger icon).</li>
+</ol>
+<h2 id="key-takeaways">Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permanent link">&para;</a></h2>
+<ul>
+<li>The viewport meta tag
+  (<code>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</code>) is required
+  in every page's <code>&lt;head&gt;</code> — without it, mobile browsers render at a fake desktop width
+  and zoom out, and no media query will behave correctly.</li>
+<li><strong>Mobile-first</strong> design writes base CSS for the smallest screen first, then layers on
+  complexity for larger screens with <code>min-width</code> media queries — simpler base styles,
+  and progressive enhancement instead of stripping things away.</li>
+<li>A <strong>media query</strong> (<code>@media (min-width: ...) { ... }</code>) applies a block of CSS only when
+  its condition is true; a <strong>breakpoint</strong> is the width value inside it, and should come
+  from where your own content actually breaks, not a memorized chart of numbers.</li>
+<li>Choose units by what they should scale with: fixed <code>px</code> for things that must never
+  scale (a hairline border), <code>rem</code> for consistent, accessible typography, and <code>%</code>/<code>vw</code>
+  for fluid widths tied to a parent or the viewport.</li>
+<li><code>clamp(minimum, preferred, maximum)</code> gives you continuous, fluid scaling — a heading
+  size that grows smoothly with the viewport but never drops below or exceeds sensible
+  limits — in a single declaration.</li>
+<li><code>img { max-width: 100%; height: auto; }</code> keeps images from overflowing their
+  container on small screens while preserving their aspect ratio.</li>
+<li>Combining Flexbox (<code>display: flex; flex-wrap: wrap;</code>) with a <code>min-width</code> media query
+  that adjusts each child's <code>flex-basis</code> is the standard pattern behind most
+  multi-column-to-single-column responsive layouts, including the three-card example in
+  this tutorial.</li>
+<li>Use your browser's device toolbar (DevTools' responsive design mode) to test against
+  real device widths and touch input, rather than relying only on manually resizing your
+  desktop window.</li>
+</ul>
+
+
+
+
+
+
+
+  
+    
+  
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 8, 2026 02:40:15 UTC">September 8, 2026</span>
+  </span>
+
+    
+    
+    
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../css-animations/" class="md-footer__link md-footer__link--prev" aria-label="Previous: CSS Transitions and Animations">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                CSS Transitions and Animations
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../git-and-github/" class="md-footer__link md-footer__link--next" aria-label="Next: Git and GitHub">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Git and GitHub
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; Usman Akram — <a href="https://usmanlive.com">usmanlive.com</a>
+    </div>
+  
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/mua22/mern-web-book" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://usmanlive.com" target="_blank" rel="noopener" title="usmanlive.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M351.9 280H161c2.9 64.5 17.2 123.9 37.5 167.4 11.4 24.5 23.7 41.8 35.1 52.4 11.2 10.5 18.9 12.2 22.9 12.2s11.7-1.7 22.9-12.2c11.4-10.6 23.7-28 35.1-52.4 20.3-43.5 34.6-102.9 37.5-167.4zm-191-48h190.9c-2.8-64.5-17.1-123.9-37.4-167.4-11.4-24.4-23.7-41.8-35.1-52.4C268.1 1.7 260.4 0 256.4 0s-11.7 1.7-22.9 12.2c-11.4 10.6-23.7 28-35.1 52.4-20.3 43.5-34.6 102.9-37.5 167.4m-48 0c3.5-85.6 25.6-165.1 57.9-217.3C78.7 47.3 10.9 131.2 1.5 232zM1.5 280c9.4 100.8 77.2 184.7 169.3 217.3-32.3-52.2-54.4-131.7-57.9-217.3zm398.4 0c-3.5 85.6-25.6 165.1-57.9 217.3 92.1-32.7 159.9-116.5 169.3-217.3zm111.4-48C501.9 131.2 434.1 47.3 342 14.7c32.3 52.2 54.4 131.7 57.9 217.3z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.indexes", "navigation.top", "navigation.footer", "navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.prune", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "header.autohide"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,2104 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="An online textbook for Web Technologies (CSC336) and Advanced Web Technologies (CSC337), built lecture-by-lecture from the official COMSATS course plans.">
+      
+      
+        <meta name="author" content="Usman Akram">
+      
+      
+        <link rel="canonical" href="https://mua22.github.io/mern-web-book/tutorials/css-animations/">
+      
+      
+        <link rel="prev" href="../multilevel-navigation/">
+      
+      
+        <link rel="next" href="../responsive-design/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/logo.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Tutorial: CSS Transitions and Animations - Web Dev Book — CSC336 & CSC337</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+  
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+  
+  <style>:root{--md-admonition-icon--note:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M20%2011h3v2h-3zM1%2011h3v2H1zM13%201v3h-2V1zM4.92%203.5l2.13%202.14-1.42%201.41L3.5%204.93zm12.03%202.13%202.12-2.13%201.43%201.43-2.13%202.12zM12%206a6%206%200%200%201%206%206c0%202.22-1.21%204.16-3%205.2V19a1%201%200%200%201-1%201h-4a1%201%200%200%201-1-1v-1.8c-1.79-1.04-3-2.98-3-5.2a6%206%200%200%201%206-6m2%2015v1a1%201%200%200%201-1%201h-2a1%201%200%200%201-1-1v-1zm-3-3h2v-2.13c1.73-.44%203-2.01%203-3.87a4%204%200%200%200-4-4%204%204%200%200%200-4%204c0%201.86%201.27%203.43%203%203.87z%22/%3E%3C/svg%3E');--md-admonition-icon--tip:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M12%203%201%209l4%202.18v6L12%2021l7-3.82v-6l2-1.09V17h2V9zm6.82%206L12%2012.72%205.18%209%2012%205.28zM17%2016l-5%202.72L7%2016v-3.73L12%2015l5-2.73z%22/%3E%3C/svg%3E');--md-admonition-icon--warning:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M12%202%201%2021h22M12%206l7.53%2013H4.47M11%2010v4h2v-4m-2%206v2h2v-2%22/%3E%3C/svg%3E');--md-admonition-icon--example:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M19%203H5c-1.1%200-2%20.9-2%202v14c0%201.1.9%202%202%202h14c1.1%200%202-.9%202-2V5c0-1.1-.9-2-2-2m-8%205H9v2c0%201.1-.9%202-2%202%201.1%200%202%20.9%202%202v2h2v2H9c-1.1%200-2-.9-2-2v-1c0-1.1-.9-2-2-2v-2c1.1%200%202-.9%202-2V8c0-1.1.9-2%202-2h2zm8%205c-1.1%200-2%20.9-2%202v1c0%201.1-.9%202-2%202h-2v-2h2v-2c0-1.1.9-2%202-2-1.1%200-2-.9-2-2V8h-2V6h2c1.1%200%202%20.9%202%202v1c0%201.1.9%202%202%202z%22/%3E%3C/svg%3E');}</style>
+
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="deep-purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#tutorial-css-transitions-and-animations" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Web Dev Book — CSC336 &amp; CSC337" class="md-header__button md-logo" aria-label="Web Dev Book — CSC336 & CSC337" data-md-component="logo">
+      
+  <img src="../../assets/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Web Dev Book — CSC336 & CSC337
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Tutorial: CSS Transitions and Animations
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="deep-purple"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="deep-purple"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../.." class="md-tabs__link">
+          
+  
+  
+    
+  
+  Home
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../web-technologies/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Web Technologies (CSC336)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../advanced-web-technologies/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Advanced Web Technologies (CSC337)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Tutorials
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../tags/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Tags
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://usmanlive.com" class="md-tabs__link">
+        
+  
+  
+    
+  
+  usmanlive.com
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Web Dev Book — CSC336 &amp; CSC337" class="md-nav__button md-logo" aria-label="Web Dev Book — CSC336 & CSC337" data-md-component="logo">
+      
+  <img src="../../assets/logo.svg" alt="logo">
+
+    </a>
+    Web Dev Book — CSC336 & CSC337
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../.." class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../web-technologies/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Web Technologies (CSC336)
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../advanced-web-technologies/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced Web Technologies (CSC337)
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutorials
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tutorials
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../environment-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MERN Environment Setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../first-html-css-app/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Your First HTML + CSS Page
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../layout-designing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Layout Designing: div, span, and Float
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../css-positioning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CSS Positioning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../flexbox/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Flexbox Layout
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../multilevel-navigation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multilevel Navigation with Positioning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CSS Transitions and Animations
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CSS Transitions and Animations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#in-this-tutorial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        In This Tutorial
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-1-transitions-vs-animations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 1: Transitions vs. Animations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-2-the-transition-properties" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 2: The Transition Properties
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 2: The Transition Properties">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#timing-functions-in-plain-language" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Timing functions, in plain language
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-3-a-hover-button-built-with-a-transition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 3: A Hover Button, Built with a Transition
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-4-a-card-hover-lift-built-the-same-way" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 4: A Card Hover-Lift, Built the Same Way
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-5-keyframes-syntax" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 5: @keyframes Syntax
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-6-the-animation-properties" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 6: The Animation Properties
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-7-a-loading-spinner" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 7: A Loading Spinner
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-8-a-pulsing-new-badge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 8: A Pulsing "New!" Badge
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-9-a-fade-in-and-slide-up-entrance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 9: A Fade-In-and-Slide-Up Entrance
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-10-performance-prefer-transform-and-opacity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 10: Performance — Prefer transform and opacity
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-11-accessibility-respecting-prefers-reduced-motion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 11: Accessibility — Respecting prefers-reduced-motion
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#try-it-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try It Yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Takeaways
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../responsive-design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Responsive Web Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../git-and-github/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git and GitHub
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../assignment-submission/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Submitting Coursework via GitHub
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tags
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://usmanlive.com" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    usmanlive.com
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#in-this-tutorial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        In This Tutorial
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-1-transitions-vs-animations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 1: Transitions vs. Animations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-2-the-transition-properties" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 2: The Transition Properties
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 2: The Transition Properties">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#timing-functions-in-plain-language" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Timing functions, in plain language
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-3-a-hover-button-built-with-a-transition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 3: A Hover Button, Built with a Transition
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-4-a-card-hover-lift-built-the-same-way" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 4: A Card Hover-Lift, Built the Same Way
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-5-keyframes-syntax" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 5: @keyframes Syntax
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-6-the-animation-properties" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 6: The Animation Properties
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-7-a-loading-spinner" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 7: A Loading Spinner
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-8-a-pulsing-new-badge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 8: A Pulsing "New!" Badge
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-9-a-fade-in-and-slide-up-entrance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 9: A Fade-In-and-Slide-Up Entrance
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-10-performance-prefer-transform-and-opacity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 10: Performance — Prefer transform and opacity
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-11-accessibility-respecting-prefers-reduced-motion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 11: Accessibility — Respecting prefers-reduced-motion
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#try-it-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try It Yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Takeaways
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <a href="../../tags/#tag:animations" class="md-tag">Animations</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../tags/#tag:beginner-project" class="md-tag">Beginner Project</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../tags/#tag:css" class="md-tag">CSS</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../tags/#tag:css3" class="md-tag">CSS3</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../tags/#tag:transitions" class="md-tag">Transitions</a>
+      
+    
+  </nav>
+
+
+
+<h1 id="tutorial-css-transitions-and-animations">Tutorial: CSS Transitions and Animations<a class="headerlink" href="#tutorial-css-transitions-and-animations" title="Permanent link">&para;</a></h1>
+<p>Static pages feel static. The difference between a page that feels merely functional and
+one that feels polished is almost always small, deliberate motion: a button that responds
+when you hover over it, a card that lifts off the page, a spinner that tells you something
+is loading. This tutorial builds five of these effects from scratch — a button, a card, a
+loading spinner, a pulsing badge, and a fade-in entrance — so you come away able to build
+your own.</p>
+<p><strong>Prerequisites:</strong> <a href="../../web-technologies/lecture-08-css3-features/">Lecture 8: CSS3 Features</a>,
+which introduces transitions and <code>@keyframes</code> from the lecture's perspective. This tutorial
+is the hands-on, project-style companion to that lecture — expect to write and run a lot
+more CSS here than you read.</p>
+<h2 id="in-this-tutorial">In This Tutorial<a class="headerlink" href="#in-this-tutorial" title="Permanent link">&para;</a></h2>
+<ul>
+<li>The real difference between a <code>transition</code> and an <code>animation</code>, and when to reach for each</li>
+<li>Every transition property (<code>transition-property</code>, <code>-duration</code>, <code>-timing-function</code>,
+  <code>-delay</code>) and what the common timing functions actually feel like</li>
+<li>A hover button and a hover-lift card, built with transitions</li>
+<li><code>@keyframes</code> syntax, and every animation property (<code>animation-name</code>, <code>-duration</code>,
+  <code>-timing-function</code>, <code>-iteration-count</code>, <code>-direction</code>, <code>-fill-mode</code>, <code>-delay</code>)</li>
+<li>A loading spinner, a pulsing "New!" badge, and a fade-in-and-slide-up entrance effect</li>
+<li>Why some CSS properties animate more smoothly than others</li>
+<li>A one-sentence introduction to respecting <code>prefers-reduced-motion</code></li>
+</ul>
+<hr />
+<h2 id="part-1-transitions-vs-animations">Part 1: Transitions vs. Animations<a class="headerlink" href="#part-1-transitions-vs-animations" title="Permanent link">&para;</a></h2>
+<p>CSS gives you two separate tools for movement, and it is worth being precise about the
+difference before writing any code.</p>
+<p>A <strong>transition</strong> smoothly interpolates ("fills in the in-between frames") between an
+element's old value for a property and its new value, whenever that value changes for some
+other reason — most commonly a <code>:hover</code>, a <code>:focus</code>, or a class being added or removed by
+JavaScript. A transition never starts on its own; something else has to change the property
+first.</p>
+<p>An <strong>animation</strong>, defined with <code>@keyframes</code>, is a self-contained sequence of one or more
+steps that can play automatically the moment the page loads, with no trigger required. It
+can also repeat forever, run in reverse, and move through many intermediate steps instead of
+just a start and an end.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Transition</th>
+<th>Animation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Needs a trigger?</td>
+<td>Yes — hover, focus, class toggle, etc.</td>
+<td>No — can run on page load</td>
+</tr>
+<tr>
+<td>Number of steps</td>
+<td>Exactly two (old value, new value)</td>
+<td>Any number, via <code>@keyframes</code></td>
+</tr>
+<tr>
+<td>Can it loop?</td>
+<td>No</td>
+<td>Yes (<code>animation-iteration-count: infinite</code>)</td>
+</tr>
+<tr>
+<td>Typical use</td>
+<td>Hover/focus feedback, small state changes</td>
+<td>Spinners, badges, entrance effects</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">Rule of thumb</p>
+<p>If the motion only ever happens in response to something the user does, reach for a
+<code>transition</code>. If the motion should play by itself, or needs more than a start and an end
+state, reach for <code>@keyframes</code> and <code>animation</code>.</p>
+</div>
+<h2 id="part-2-the-transition-properties">Part 2: The Transition Properties<a class="headerlink" href="#part-2-the-transition-properties" title="Permanent link">&para;</a></h2>
+<p>A transition is controlled by four separate properties, usually combined into one
+shorthand.</p>
+<div class="language-css highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">.</span><span class="nc">box</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="k">transition-property</span><span class="p">:</span><span class="w"> </span><span class="k">background-color</span><span class="p">,</span><span class="w"> </span><span class="k">transform</span><span class="p">;</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="k">transition-duration</span><span class="p">:</span><span class="w"> </span><span class="mf">0.3</span><span class="kt">s</span><span class="p">;</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span><span class="k">transition-timing-function</span><span class="p">:</span><span class="w"> </span><span class="kc">ease</span><span class="p">;</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">  </span><span class="k">transition-delay</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="kt">s</span><span class="p">;</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">  </span><span class="c">/* the same four values, as the shorthand: property | duration | timing-function | delay */</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">  </span><span class="k">transition</span><span class="p">:</span><span class="w"> </span><span class="k">background-color</span><span class="w"> </span><span class="mf">0.3</span><span class="kt">s</span><span class="w"> </span><span class="kc">ease</span><span class="w"> </span><span class="mi">0</span><span class="kt">s</span><span class="p">,</span><span class="w"> </span><span class="k">transform</span><span class="w"> </span><span class="mf">0.3</span><span class="kt">s</span><span class="w"> </span><span class="kc">ease</span><span class="w"> </span><span class="mi">0</span><span class="kt">s</span><span class="p">;</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="p">}</span>
+</span></code></pre></div>
+<ul>
+<li><strong><code>transition-property</code></strong> — which CSS property (or properties, comma-separated) should
+  animate. You can also write <code>all</code> to animate every property that changes, which is
+  convenient but can make the browser do unnecessary work if several unrelated properties
+  change at once.</li>
+<li><strong><code>transition-duration</code></strong> — how long the transition takes, in seconds (<code>0.3s</code>) or
+  milliseconds (<code>300ms</code>).</li>
+<li><strong><code>transition-timing-function</code></strong> — the <em>pace</em> of the change over that duration (see
+  below).</li>
+<li><strong><code>transition-delay</code></strong> — how long to wait before the transition starts.</li>
+</ul>
+<h3 id="timing-functions-in-plain-language">Timing functions, in plain language<a class="headerlink" href="#timing-functions-in-plain-language" title="Permanent link">&para;</a></h3>
+<p>A timing function controls whether the transition moves at a constant speed or speeds up
+and slows down along the way.</p>
+<table>
+<thead>
+<tr>
+<th>Timing function</th>
+<th>What it feels like</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>linear</code></td>
+<td>Constant speed the whole way through — no speeding up or slowing down.</td>
+</tr>
+<tr>
+<td><code>ease</code></td>
+<td>Starts a little slow, speeds up in the middle, ends slow. The default, and usually the most natural-feeling choice.</td>
+</tr>
+<tr>
+<td><code>ease-in</code></td>
+<td>Starts slow, then accelerates and stays fast right up to the end.</td>
+</tr>
+<tr>
+<td><code>ease-out</code></td>
+<td>Starts fast, then decelerates smoothly into the end — good for something that should feel like it's settling into place.</td>
+</tr>
+<tr>
+<td><code>ease-in-out</code></td>
+<td>Slow to start, fast in the middle, slow to finish — a more pronounced version of <code>ease</code>.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Where do these numbers actually come from?</p>
+<p>Under the hood, every one of these keywords is shorthand for a mathematical curve
+(<code>cubic-bezier(...)</code>) that maps time to progress. You do not need to understand the
+math to use them — just remember the plain-language behavior in the table above, and
+try a couple in a real browser if you want to feel the difference for yourself.</p>
+</div>
+<h2 id="part-3-a-hover-button-built-with-a-transition">Part 3: A Hover Button, Built with a Transition<a class="headerlink" href="#part-3-a-hover-button-built-with-a-transition" title="Permanent link">&para;</a></h2>
+<p>Here is a complete, practical transition: a button that changes background color and lifts
+slightly when the user hovers over it.</p>
+<div class="language-css highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">.</span><span class="nc">hover-button</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="k">padding</span><span class="p">:</span><span class="w"> </span><span class="mi">14</span><span class="kt">px</span><span class="w"> </span><span class="mi">28</span><span class="kt">px</span><span class="p">;</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span><span class="k">font-size</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="kt">px</span><span class="p">;</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span><span class="k">font-weight</span><span class="p">:</span><span class="w"> </span><span class="kc">bold</span><span class="p">;</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">  </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="kc">white</span><span class="p">;</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">  </span><span class="k">background-color</span><span class="p">:</span><span class="w"> </span><span class="mh">#4a6fa5</span><span class="p">;</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">  </span><span class="k">border</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="p">;</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">  </span><span class="k">border-radius</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="kt">px</span><span class="p">;</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">  </span><span class="k">box-shadow</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">2</span><span class="kt">px</span><span class="w"> </span><span class="mi">4</span><span class="kt">px</span><span class="w"> </span><span class="nb">rgba</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.2</span><span class="p">);</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">  </span><span class="k">cursor</span><span class="p">:</span><span class="w"> </span><span class="kc">pointer</span><span class="p">;</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">  </span><span class="k">transition</span><span class="p">:</span><span class="w"> </span><span class="k">background-color</span><span class="w"> </span><span class="mf">0.25</span><span class="kt">s</span><span class="w"> </span><span class="kc">ease</span><span class="p">,</span><span class="w"> </span><span class="k">transform</span><span class="w"> </span><span class="mf">0.25</span><span class="kt">s</span><span class="w"> </span><span class="kc">ease</span><span class="p">,</span><span class="w"> </span><span class="k">box-shadow</span><span class="w"> </span><span class="mf">0.25</span><span class="kt">s</span><span class="w"> </span><span class="kc">ease</span><span class="p">;</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="p">}</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="p">.</span><span class="nc">hover-button</span><span class="p">:</span><span class="nd">hover</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="w">  </span><span class="k">background-color</span><span class="p">:</span><span class="w"> </span><span class="mh">#2f4d78</span><span class="p">;</span>
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="w">  </span><span class="k">box-shadow</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">8</span><span class="kt">px</span><span class="w"> </span><span class="mi">16</span><span class="kt">px</span><span class="w"> </span><span class="nb">rgba</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.3</span><span class="p">);</span>
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="w">  </span><span class="k">transform</span><span class="p">:</span><span class="w"> </span><span class="nb">translateY</span><span class="p">(</span><span class="mi">-4</span><span class="kt">px</span><span class="p">);</span>
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>Every property named in <code>transition-property</code> (background-color, transform, box-shadow)
+animates smoothly the instant <code>:hover</code> applies the new values — and, just as importantly,
+animates smoothly back the instant the mouse leaves. <code>transform: translateY(-4px)</code> moves the
+button up by 4 pixels; a negative Y value moves an element <em>up</em>, since Y increases downward
+in CSS.</p>
+<p>A still image cannot show the smooth motion in between — that part you have to see by
+actually hovering the button in a browser — but it can honestly show the two endpoints the
+transition moves between: the button at rest, and the <code>:hover</code> styles applied directly as
+the end state.</p>
+<p><img alt="Rendered output: two blue rounded &quot;Click Me&quot; buttons, the left a lighter blue at normal position labeled &quot;Default&quot;, the right a darker navy blue, raised slightly with a larger shadow, labeled &quot;On hover (end state)&quot;" src="../../assets/img/tutorials/animations/transition-button-default-hover.png" /></p>
+<h2 id="part-4-a-card-hover-lift-built-the-same-way">Part 4: A Card Hover-Lift, Built the Same Way<a class="headerlink" href="#part-4-a-card-hover-lift-built-the-same-way" title="Permanent link">&para;</a></h2>
+<p>The exact same technique — a <code>transition</code> on <code>transform</code> and <code>box-shadow</code>, triggered by
+<code>:hover</code> — works on any element, not just buttons. Here it is applied to a card:</p>
+<div class="language-css highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">.</span><span class="nc">hover-card</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="k">width</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="kt">px</span><span class="p">;</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span><span class="k">padding</span><span class="p">:</span><span class="w"> </span><span class="mi">18</span><span class="kt">px</span><span class="p">;</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">  </span><span class="k">background</span><span class="p">:</span><span class="w"> </span><span class="kc">white</span><span class="p">;</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">  </span><span class="k">border-radius</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="kt">px</span><span class="p">;</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">  </span><span class="k">box-shadow</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">2</span><span class="kt">px</span><span class="w"> </span><span class="mi">6</span><span class="kt">px</span><span class="w"> </span><span class="nb">rgba</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.15</span><span class="p">);</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">  </span><span class="k">transition</span><span class="p">:</span><span class="w"> </span><span class="k">transform</span><span class="w"> </span><span class="mf">0.25</span><span class="kt">s</span><span class="w"> </span><span class="kc">ease</span><span class="p">,</span><span class="w"> </span><span class="k">box-shadow</span><span class="w"> </span><span class="mf">0.25</span><span class="kt">s</span><span class="w"> </span><span class="kc">ease</span><span class="p">;</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="p">}</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="p">.</span><span class="nc">hover-card</span><span class="p">:</span><span class="nd">hover</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">  </span><span class="k">box-shadow</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">16</span><span class="kt">px</span><span class="w"> </span><span class="mi">28</span><span class="kt">px</span><span class="w"> </span><span class="nb">rgba</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.28</span><span class="p">);</span>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">  </span><span class="k">transform</span><span class="p">:</span><span class="w"> </span><span class="nb">translateY</span><span class="p">(</span><span class="mi">-10</span><span class="kt">px</span><span class="p">);</span>
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>Again, the default card next to its <code>:hover</code> end state — a bigger lift than the button
+above, paired with a noticeably larger, softer shadow, which is what sells the illusion that
+the card has physically risen off the page:</p>
+<p><img alt="Rendered output: two white rounded cards reading &quot;Course Card&quot;, the left sitting flat with a small soft shadow labeled &quot;Default&quot;, the right raised higher with a much larger, softer shadow labeled &quot;On hover (end state)&quot;" src="../../assets/img/tutorials/animations/card-hover-lift-default-hover.png" /></p>
+<div class="admonition tip">
+<p class="admonition-title">Why transform and not top/margin?</p>
+<p>You could move the card up with <code>margin-top: -10px</code> or <code>top: -10px</code> instead of
+<code>transform: translateY(-10px)</code> — but you shouldn't. Part 10 explains why <code>transform</code> is
+the better choice for anything animated.</p>
+</div>
+<h2 id="part-5-keyframes-syntax">Part 5: @keyframes Syntax<a class="headerlink" href="#part-5-keyframes-syntax" title="Permanent link">&para;</a></h2>
+<p>A transition only ever has two states: old and new. The moment you need more than that —
+multiple steps, or something that should play automatically instead of waiting for a
+<code>:hover</code> — you need <code>@keyframes</code>.</p>
+<p>A <code>@keyframes</code> rule defines a name, and then describes what the animated element should look
+like at various points along the animation's timeline, as percentages from <code>0%</code> (the very
+start) to <code>100%</code> (the very end):</p>
+<div class="language-css highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">@</span><span class="k">keyframes</span><span class="w"> </span><span class="nt">bounce</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="nt">0</span><span class="o">%</span><span class="w">   </span><span class="p">{</span><span class="w"> </span><span class="k">transform</span><span class="p">:</span><span class="w"> </span><span class="nb">translateY</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="nt">50</span><span class="o">%</span><span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="k">transform</span><span class="p">:</span><span class="w"> </span><span class="nb">translateY</span><span class="p">(</span><span class="mi">-20</span><span class="kt">px</span><span class="p">);</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span><span class="nt">100</span><span class="o">%</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">transform</span><span class="p">:</span><span class="w"> </span><span class="nb">translateY</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>If your animation only has a start and an end state (no steps in between), you can write
+<code>from</code> and <code>to</code> instead, which is just a more readable alias for <code>0%</code> and <code>100%</code>:</p>
+<div class="language-css highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">@</span><span class="k">keyframes</span><span class="w"> </span><span class="nt">fade-in</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="nt">from</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">opacity</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span><span class="nt">to</span><span class="w">   </span><span class="p">{</span><span class="w"> </span><span class="k">opacity</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>Defining <code>@keyframes</code> on its own does nothing yet — it is just a named recipe sitting in
+your stylesheet. You attach it to an element with the <code>animation</code> property, covered next.</p>
+<h2 id="part-6-the-animation-properties">Part 6: The Animation Properties<a class="headerlink" href="#part-6-the-animation-properties" title="Permanent link">&para;</a></h2>
+<p>Once you have a named <code>@keyframes</code> rule, you play it on an element with these properties:</p>
+<div class="language-css highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">.</span><span class="nc">ball</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="k">animation-name</span><span class="p">:</span><span class="w"> </span><span class="n">bounce</span><span class="p">;</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span><span class="k">animation-duration</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="kt">s</span><span class="p">;</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">  </span><span class="k">animation-timing-function</span><span class="p">:</span><span class="w"> </span><span class="kc">ease-in-out</span><span class="p">;</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">  </span><span class="k">animation-iteration-count</span><span class="p">:</span><span class="w"> </span><span class="kc">infinite</span><span class="p">;</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">  </span><span class="k">animation-direction</span><span class="p">:</span><span class="w"> </span><span class="kc">alternate</span><span class="p">;</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">  </span><span class="k">animation-fill-mode</span><span class="p">:</span><span class="w"> </span><span class="kc">forwards</span><span class="p">;</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">  </span><span class="k">animation-delay</span><span class="p">:</span><span class="w"> </span><span class="mf">0.5</span><span class="kt">s</span><span class="p">;</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">  </span><span class="c">/* the same values, as the shorthand:</span>
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="c">     name | duration | timing-function | delay | iteration-count | direction | fill-mode */</span>
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w">  </span><span class="k">animation</span><span class="p">:</span><span class="w"> </span><span class="n">bounce</span><span class="w"> </span><span class="mi">1</span><span class="kt">s</span><span class="w"> </span><span class="kc">ease-in-out</span><span class="w"> </span><span class="mf">0.5</span><span class="kt">s</span><span class="w"> </span><span class="kc">infinite</span><span class="w"> </span><span class="kc">alternate</span><span class="w"> </span><span class="kc">forwards</span><span class="p">;</span>
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="p">}</span>
+</span></code></pre></div>
+<ul>
+<li><strong><code>animation-name</code></strong> — which <code>@keyframes</code> rule to play (must match its name exactly).</li>
+<li><strong><code>animation-duration</code></strong> — how long one full pass through the keyframes takes.</li>
+<li><strong><code>animation-timing-function</code></strong> — the same pacing keywords from Part 2 (<code>linear</code>, <code>ease</code>,
+  <code>ease-in-out</code>, and so on), applied to the animation instead of a transition.</li>
+<li><strong><code>animation-iteration-count</code></strong> — how many times to play it: a number like <code>3</code>, or
+  <code>infinite</code> to loop forever.</li>
+<li><strong><code>animation-direction</code></strong> — which way to play the keyframes on each pass:<ul>
+<li><code>normal</code> — always 0% to 100% (the default).</li>
+<li><code>reverse</code> — always 100% to 0%.</li>
+<li><code>alternate</code> — forwards on the first pass, backwards on the second, forwards on the
+  third, and so on — this is what makes a looping animation feel like it bounces back
+  and forth instead of snapping back to the start every cycle.</li>
+</ul>
+</li>
+<li><strong><code>animation-fill-mode</code></strong> — what the element looks like <em>before</em> the animation starts and
+  <em>after</em> it ends, outside the <code>0%</code>–<code>100%</code> window: <code>none</code> (the default; the element uses its
+  own regular CSS the instant the animation isn't actively running), <code>forwards</code> (keep the
+  styles from the last keyframe once it finishes), <code>backwards</code> (apply the first keyframe's
+  styles immediately, even during <code>animation-delay</code>, instead of showing the element's normal
+  styles while it waits), or <code>both</code> (apply both rules).</li>
+<li><strong><code>animation-delay</code></strong> — how long to wait before starting.</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Shorthand order for animation vs. transition</p>
+<p>Notice the <code>animation</code> shorthand lists more values than <code>transition</code>, and in a different
+order (delay comes before iteration-count and direction). There's no way around
+memorizing this — or, more practically, writing the longhand properties out while you're
+still learning, and only compressing to the shorthand once you're comfortable.</p>
+</div>
+<h2 id="part-7-a-loading-spinner">Part 7: A Loading Spinner<a class="headerlink" href="#part-7-a-loading-spinner" title="Permanent link">&para;</a></h2>
+<p>A loading spinner is a circle whose border is one color, except for one segment which is a
+different, contrasting color — then it spins forever.</p>
+<div class="language-css highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="p">.</span><span class="nc">spinner</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="k">width</span><span class="p">:</span><span class="w"> </span><span class="mi">40</span><span class="kt">px</span><span class="p">;</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span><span class="k">height</span><span class="p">:</span><span class="w"> </span><span class="mi">40</span><span class="kt">px</span><span class="p">;</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">  </span><span class="k">border</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="kt">px</span><span class="w"> </span><span class="kc">solid</span><span class="w"> </span><span class="mh">#e0e0e0</span><span class="p">;</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">  </span><span class="k">border-top-color</span><span class="p">:</span><span class="w"> </span><span class="mh">#4a6fa5</span><span class="p">;</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">  </span><span class="k">border-radius</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="kt">%</span><span class="p">;</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">  </span><span class="k">animation</span><span class="p">:</span><span class="w"> </span><span class="n">spin</span><span class="w"> </span><span class="mi">1</span><span class="kt">s</span><span class="w"> </span><span class="kc">linear</span><span class="w"> </span><span class="kc">infinite</span><span class="p">;</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="p">}</span>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="p">@</span><span class="k">keyframes</span><span class="w"> </span><span class="nt">spin</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="w">  </span><span class="nt">from</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">transform</span><span class="p">:</span><span class="w"> </span><span class="nb">rotate</span><span class="p">(</span><span class="mi">0</span><span class="kt">deg</span><span class="p">);</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="w">  </span><span class="nt">to</span><span class="w">   </span><span class="p">{</span><span class="w"> </span><span class="k">transform</span><span class="p">:</span><span class="w"> </span><span class="nb">rotate</span><span class="p">(</span><span class="mi">360</span><span class="kt">deg</span><span class="p">);</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><code>border-top-color</code> overrides just the top edge of the border to a different color than the
+other three edges, which is what creates the illusion of a moving segment once the whole
+circle starts rotating. <code>linear</code> is essential here — a spinner that sped up and slowed down
+on every rotation would look broken, not smooth.</p>
+<p>A screenshot cannot capture something mid-spin — by definition, a single frame of a rotating
+element looks identical to that same element sitting still at some angle. What it <em>can</em> show
+honestly is several fixed rotation angles side by side, each applied directly with
+<code>transform: rotate(...)</code> instead of through the running animation, to represent points along
+one full spin:</p>
+<p><img alt="Rendered output: four identical spinner circles (light gray ring with one darker blue segment) rotated to four different angles, labeled &quot;0deg&quot;, &quot;90deg&quot;, &quot;180deg&quot;, and &quot;270deg&quot;" src="../../assets/img/tutorials/animations/spinner-rotation-frames.png" /></p>
+<h2 id="part-8-a-pulsing-new-badge">Part 8: A Pulsing "New!" Badge<a class="headerlink" href="#part-8-a-pulsing-new-badge" title="Permanent link">&para;</a></h2>
+<p>The same <code>@keyframes</code> approach can drive far more than a spinner. Here, a small badge scales
+up and fades slightly, then returns to normal, in an endless loop — a common way to draw a
+little attention to a "new" label without being obnoxious about it.</p>
+<div class="language-css highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="p">.</span><span class="nc">badge</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">inline-block</span><span class="p">;</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span><span class="k">background-color</span><span class="p">:</span><span class="w"> </span><span class="mh">#e63946</span><span class="p">;</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">  </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="kc">white</span><span class="p">;</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">  </span><span class="k">font-weight</span><span class="p">:</span><span class="w"> </span><span class="kc">bold</span><span class="p">;</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">  </span><span class="k">padding</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="kt">px</span><span class="w"> </span><span class="mi">14</span><span class="kt">px</span><span class="p">;</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">  </span><span class="k">border-radius</span><span class="p">:</span><span class="w"> </span><span class="mi">999</span><span class="kt">px</span><span class="p">;</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">  </span><span class="k">animation</span><span class="p">:</span><span class="w"> </span><span class="n">pulse</span><span class="w"> </span><span class="mf">1.6</span><span class="kt">s</span><span class="w"> </span><span class="kc">ease-in-out</span><span class="w"> </span><span class="kc">infinite</span><span class="p">;</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="p">}</span>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="p">@</span><span class="k">keyframes</span><span class="w"> </span><span class="nt">pulse</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="w">  </span><span class="nt">0</span><span class="o">%</span><span class="w">   </span><span class="p">{</span><span class="w"> </span><span class="k">transform</span><span class="p">:</span><span class="w"> </span><span class="nb">scale</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w">   </span><span class="k">opacity</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w">   </span><span class="p">}</span>
+</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="w">  </span><span class="nt">50</span><span class="o">%</span><span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="k">transform</span><span class="p">:</span><span class="w"> </span><span class="nb">scale</span><span class="p">(</span><span class="mf">1.3</span><span class="p">);</span><span class="w"> </span><span class="k">opacity</span><span class="p">:</span><span class="w"> </span><span class="mf">0.6</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="w">  </span><span class="nt">100</span><span class="o">%</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">transform</span><span class="p">:</span><span class="w"> </span><span class="nb">scale</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w">   </span><span class="k">opacity</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w">   </span><span class="p">}</span>
+</span><span id="__span-7-15"><a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>Notice this <code>@keyframes</code> rule has three steps, not two — something a <code>transition</code> could
+never express on its own, since a transition only ever knows about "old value" and "new
+value." Again, shown as three static frames rather than a claim of real motion:</p>
+<p><img alt="Rendered output: three &quot;New!&quot; badges — the first and third solid red at normal size labeled &quot;0% (scale 1, opacity 1)&quot; and &quot;100% (scale 1, opacity 1)&quot;, the middle one larger and lighter/pinker labeled &quot;50% (scale 1.3, opacity 0.6)&quot;" src="../../assets/img/tutorials/animations/badge-pulse-frames.png" /></p>
+<h2 id="part-9-a-fade-in-and-slide-up-entrance">Part 9: A Fade-In-and-Slide-Up Entrance<a class="headerlink" href="#part-9-a-fade-in-and-slide-up-entrance" title="Permanent link">&para;</a></h2>
+<p>This last pattern is one you have almost certainly seen: content that eases into view when
+a page first loads, fading in while sliding up slightly from below its final position.</p>
+<div class="language-css highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="p">.</span><span class="nc">entrance</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span><span class="k">animation</span><span class="p">:</span><span class="w"> </span><span class="n">fade-in-up</span><span class="w"> </span><span class="mf">0.6</span><span class="kt">s</span><span class="w"> </span><span class="kc">ease-out</span><span class="w"> </span><span class="kc">forwards</span><span class="p">;</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="p">}</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="p">@</span><span class="k">keyframes</span><span class="w"> </span><span class="nt">fade-in-up</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">  </span><span class="nt">from</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">    </span><span class="k">opacity</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">    </span><span class="k">transform</span><span class="p">:</span><span class="w"> </span><span class="nb">translateY</span><span class="p">(</span><span class="mi">20</span><span class="kt">px</span><span class="p">);</span>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="w">  </span><span class="nt">to</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="w">    </span><span class="k">opacity</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="w">    </span><span class="k">transform</span><span class="p">:</span><span class="w"> </span><span class="nb">translateY</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-8-14"><a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><code>animation-fill-mode: forwards</code> (folded into the shorthand above) matters here: without it,
+the instant the animation finished, the element would snap back to whatever <code>opacity</code> and
+<code>transform</code> its normal CSS specifies — which, if you never set them elsewhere, means popping
+back to fully invisible. <code>forwards</code> tells the browser to keep the styles from the <code>to</code> step
+once the animation ends.</p>
+<p>An element sitting at true <code>opacity: 0</code> would, of course, be completely invisible in a
+screenshot — so the "before" frame below is rendered at a low but nonzero opacity purely so
+you can see its starting position and size; the actual animation really does start from
+<code>opacity: 0</code>.</p>
+<p><img alt="Rendered output: two dashed-outline placeholder frames side by side; the left frame shows a faint, barely visible blue box positioned in the lower half, labeled &quot;Before: opacity 0, translateY(20px) (shown here at low opacity so the starting position is visible)&quot;; the right frame shows the same box fully solid and positioned at the top, labeled &quot;After: opacity 1, translateY(0)&quot;" src="../../assets/img/tutorials/animations/fade-in-slide-up-frames.png" /></p>
+<h2 id="part-10-performance-prefer-transform-and-opacity">Part 10: Performance — Prefer transform and opacity<a class="headerlink" href="#part-10-performance-prefer-transform-and-opacity" title="Permanent link">&para;</a></h2>
+<p>Not every CSS property is equally cheap to animate. Properties like <code>width</code>, <code>height</code>,
+<code>top</code>, <code>left</code>, and <code>margin</code> change an element's position or size within the page's layout —
+so on every single frame of the animation, the browser has to redo <strong>layout</strong> (recalculating
+where every affected element on the page belongs) before it can even draw anything.</p>
+<p><code>transform</code> and <code>opacity</code>, by contrast, do not affect layout at all. Translating, scaling, or
+rotating an element with <code>transform</code>, or fading it with <code>opacity</code>, only changes how that
+element is drawn on top of the layout the browser already calculated — a much cheaper
+operation that, on modern browsers, can often be handed off to the GPU entirely.</p>
+<p>This is exactly why every example in this tutorial animates <code>transform</code> and <code>box-shadow</code> /
+<code>opacity</code>, and never <code>top</code>, <code>left</code>, <code>width</code>, or <code>margin</code>. A button that lifts with
+<code>transform: translateY(-4px)</code> looks identical to one that lifts with <code>margin-top: -4px</code> — but
+the <code>transform</code> version stays smooth on slower devices and complex pages, while the
+<code>margin</code> version is more likely to visibly stutter.</p>
+<div class="admonition tip">
+<p class="admonition-title">The practical rule</p>
+<p>If you can express a hover or animation effect using only <code>transform</code> and <code>opacity</code>,
+prefer that over any property that would otherwise sit in the box model (<code>width</code>,
+<code>height</code>, <code>top</code>, <code>left</code>, <code>margin</code>, <code>padding</code>).</p>
+</div>
+<h2 id="part-11-accessibility-respecting-prefers-reduced-motion">Part 11: Accessibility — Respecting prefers-reduced-motion<a class="headerlink" href="#part-11-accessibility-respecting-prefers-reduced-motion" title="Permanent link">&para;</a></h2>
+<p>Not every visitor wants motion on their screen. Some people experience real discomfort —
+dizziness, nausea, headaches — from animated interfaces, often due to vestibular disorders.
+Operating systems let users declare this preference once, system-wide, and browsers expose
+it to CSS as a media feature: <code>prefers-reduced-motion</code>.</p>
+<p>A real project should wrap its non-essential animations in a check for this preference, so
+that visitors who have asked their system for reduced motion get a calmer, largely static
+version of the page instead of every spinner, badge, and entrance effect running at full
+force. You do not need new code to see this in practice — some of this book's other CSS
+projects already do exactly this, and are worth revisiting with this concept in mind once
+you have finished this tutorial.</p>
+<div class="admonition note">
+<p class="admonition-title">Not just a courtesy</p>
+<p>For some visitors, <code>prefers-reduced-motion</code> is closer to an accessibility requirement
+than a nice-to-have. Treat it the same way you would treat providing <code>alt</code> text for
+images: a small, cheap addition that matters a great deal to the people who need it.</p>
+</div>
+<h2 id="try-it-yourself">Try It Yourself<a class="headerlink" href="#try-it-yourself" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Take the hover button from Part 3 and change its <code>transition-timing-function</code> from
+   <code>ease</code> to <code>linear</code>, then to <code>ease-in</code>. Hover it in a real browser after each change and
+   notice how differently the motion feels, even though the start and end states never
+   change.</li>
+<li>Add a fourth property to the hover card's <code>transition-property</code> list —
+   <code>border-radius</code> — and change <code>border-radius</code> in the <code>:hover</code> rule to a different value.
+   Confirm the corner rounding itself now animates smoothly along with the lift.</li>
+<li>Change the spinner's <code>animation-direction</code> to <code>alternate</code> and its <code>animation-iteration-count</code>
+   to <code>4</code>. Watch it spin forward, then backward, then forward again, four times total,
+   instead of spinning in one direction forever.</li>
+<li>Change the pulsing badge's <code>@keyframes</code> to add a fourth step at <code>75%</code> that shifts its
+   <code>background-color</code> to a different value, in addition to the existing <code>scale</code>/<code>opacity</code>
+   changes.</li>
+<li>Change the fade-in-and-slide-up animation's <code>transform: translateY(20px)</code> starting value
+   to <code>translateX(-40px)</code> instead, so the content slides in from the left rather than from
+   below.</li>
+</ol>
+<h2 id="key-takeaways">Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permanent link">&para;</a></h2>
+<ul>
+<li>A <code>transition</code> smoothly interpolates between two states and needs a trigger (<code>:hover</code>,
+  <code>:focus</code>, a class toggle); an <code>animation</code> via <code>@keyframes</code> is self-contained, can run
+  automatically, can loop, and can have any number of steps.</li>
+<li>The four transition properties are <code>transition-property</code>, <code>transition-duration</code>,
+  <code>transition-timing-function</code>, and <code>transition-delay</code>, usually combined into the
+  <code>transition</code> shorthand.</li>
+<li>Timing functions control pacing, not distance: <code>linear</code> is constant speed; <code>ease</code>,
+  <code>ease-in</code>, <code>ease-out</code>, and <code>ease-in-out</code> all start and/or end slower than they move in the
+  middle, in different combinations.</li>
+<li><code>@keyframes</code> names a sequence of steps as percentages (or <code>from</code>/<code>to</code>); <code>animation-name</code>,
+  <code>animation-duration</code>, <code>animation-timing-function</code>, <code>animation-iteration-count</code>,
+  <code>animation-direction</code>, <code>animation-fill-mode</code>, and <code>animation-delay</code> control how it plays,
+  usually combined into the <code>animation</code> shorthand.</li>
+<li><code>animation-iteration-count: infinite</code> loops forever; <code>animation-direction: alternate</code>
+  makes each loop reverse direction instead of snapping back to the start;
+  <code>animation-fill-mode: forwards</code> keeps the animation's final styles once it ends.</li>
+<li>Prefer animating <code>transform</code> and <code>opacity</code> over layout-affecting properties like <code>width</code>,
+  <code>height</code>, <code>top</code>, <code>left</code>, and <code>margin</code> — the former don't force the browser to recompute
+  page layout on every frame.</li>
+<li>Respect <code>prefers-reduced-motion</code> in real projects, so visitors who are sensitive to motion
+  get a calmer version of the page.</li>
+</ul>
+
+
+
+
+
+
+
+  
+    
+  
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 8, 2026 02:40:15 UTC">September 8, 2026</span>
+  </span>
+
+    
+    
+    
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../multilevel-navigation/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Multilevel Navigation with Positioning">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Multilevel Navigation with Positioning
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../responsive-design/" class="md-footer__link md-footer__link--next" aria-label="Next: Responsive Web Design">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Responsive Web Design
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; Usman Akram — <a href="https://usmanlive.com">usmanlive.com</a>
+    </div>
+  
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/mua22/mern-web-book" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://usmanlive.com" target="_blank" rel="noopener" title="usmanlive.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M351.9 280H161c2.9 64.5 17.2 123.9 37.5 167.4 11.4 24.5 23.7 41.8 35.1 52.4 11.2 10.5 18.9 12.2 22.9 12.2s11.7-1.7 22.9-12.2c11.4-10.6 23.7-28 35.1-52.4 20.3-43.5 34.6-102.9 37.5-167.4zm-191-48h190.9c-2.8-64.5-17.1-123.9-37.4-167.4-11.4-24.4-23.7-41.8-35.1-52.4C268.1 1.7 260.4 0 256.4 0s-11.7 1.7-22.9 12.2c-11.4 10.6-23.7 28-35.1 52.4-20.3 43.5-34.6 102.9-37.5 167.4m-48 0c3.5-85.6 25.6-165.1 57.9-217.3C78.7 47.3 10.9 131.2 1.5 232zM1.5 280c9.4 100.8 77.2 184.7 169.3 217.3-32.3-52.2-54.4-131.7-57.9-217.3zm398.4 0c-3.5 85.6-25.6 165.1-57.9 217.3 92.1-32.7 159.9-116.5 169.3-217.3zm111.4-48C501.9 131.2 434.1 47.3 342 14.7c32.3 52.2 54.4 131.7 57.9 217.3z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.indexes", "navigation.top", "navigation.footer", "navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.prune", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "header.autohide"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
