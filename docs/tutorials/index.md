@@ -14,6 +14,7 @@ examples.
 | Tutorial | Level | What it covers |
 |---|---|---|
 | [MERN Environment Setup](environment-setup.md) | Beginner | Installing VS Code (and essential extensions), Node.js/npm, nodemon, MongoDB (Atlas or local), and Git/GitHub Desktop |
+| [Your First HTML + CSS Page](first-html-css-app.md) | Beginner | Combining HTML structure and CSS (colors, the box model, centering, hover transitions) into one complete, real page |
 | [Git and GitHub](git-and-github.md) | Beginner to Intermediate | Version control fundamentals, everyday Git commands, branching and merging, undoing mistakes, collaborating on GitHub with forks and pull requests, and GitHub Desktop / GUI alternatives |
 | [Submitting Coursework via GitHub](assignment-submission.md) | Beginner | This course's actual submission workflow: one repository, a required folder structure, and what counts as an on-time, valid submission |
 
