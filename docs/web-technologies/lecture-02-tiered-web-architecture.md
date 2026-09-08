@@ -17,6 +17,7 @@ websites — and how to reason about which one to pick.
 ## In This Lecture
 
 - Distinguish between tiers (physical deployment) and layers (logical code organization)
+- Learn the common layers inside a typical application, and how they combine with tiers
 - Understand one-tier (standalone) architecture and when it's used
 - Understand two-tier (client-server) architecture, its advantages and limitations
 - Understand three-tier and N-tier architecture
@@ -191,6 +192,146 @@ flowchart LR
 - **Network latency** — communication between tiers happens over a network, which is
   slower than function calls within a single process.
 
+## Layered Architecture
+
+Every example so far has focused on **tiers** — where code physically runs. Now let's
+look at **layers** — how code is logically organized *within* any one of those tiers.
+Layers matter just as much as tiers: even a simple one-tier script benefits from being
+organized into layers, and understanding layers now will make the Express applications
+you build starting in Unit 5 far easier to follow.
+
+### The Three Common Layers
+
+Most web applications — no matter how many tiers they're deployed across — organize
+their code into three logical layers:
+
+1. **Presentation Layer** — the part responsible for showing information to the user
+   and capturing their input. In a browser, this is your HTML/CSS/JS or React
+   components; on a server that returns JSON, it's the code that shapes the response
+   sent back to whatever is calling it. Its job is *only* to display and collect data —
+   it should not contain business rules.
+2. **Business Logic Layer** (also called the **Application Layer** or **Service
+   Layer**) — the actual rules of your application: validating a discount code,
+   calculating an order total, deciding whether a user is allowed to delete a post. This
+   layer doesn't know or care *how* its results will be displayed, or *where* its data
+   comes from — it just applies the rules.
+3. **Data Access Layer** (also called the **Persistence Layer** or **Repository
+   Layer**) — the code that actually talks to the database: running queries, and
+   reading or writing records. This layer doesn't know or care about business rules or
+   how the UI looks — it just stores and retrieves data.
+
+```mermaid
+flowchart TB
+    P["Presentation Layer<br/>(routes/controllers, or UI components)"]
+    B["Business Logic Layer<br/>(services: validation, calculations, rules)"]
+    D["Data Access Layer<br/>(models/repositories: database queries)"]
+    P --> B --> D
+```
+
+A request flows *down* through the layers, and the response flows back *up* — each
+layer only ever talks to the layer directly next to it, never skipping ahead.
+
+### Why Bother Separating Layers?
+
+- **Swap technology in one layer without touching the others.** If you decide to
+  migrate from MongoDB to PostgreSQL, only the data access layer needs to change — the
+  business logic and presentation layers don't need to know or care.
+- **Test business logic without a real database.** Because the business logic layer
+  doesn't call the database directly, you can test it by substituting ("mocking") the
+  data access layer with fake data, making tests fast and independent of a real
+  database connection.
+- **Reuse the same business logic from multiple presentation layers.** A web front end
+  and a mobile app can both call the same business logic layer (through an API), so
+  rules like "an order total must include tax" are written once, not duplicated.
+- **Easier to reason about and debug.** If a page shows the wrong currency symbol,
+  that's obviously a presentation-layer bug; if an order total is calculated wrong,
+  that's a business-logic bug — the layer boundaries tell you where to look first.
+
+### A Concrete Example: Layers Inside a Node.js/Express Application
+
+Here is what these three layers typically look like as actual folders and files in a
+Node.js/Express project — the same kind of structure you will build starting in Unit 5:
+
+```text
+project/
+├── routes/            <- Presentation layer: defines URLs, reads the request,
+│   └── orders.js         sends back a response. No business rules here.
+├── services/          <- Business logic layer: validation, calculations, rules.
+│   └── orderService.js   Knows nothing about HTTP or the database.
+├── models/            <- Data access layer: talks to the database (e.g. via
+│   └── Order.js          Mongoose). Knows nothing about business rules.
+└── app.js
+```
+
+Tracing a single request through these layers, in plain pseudocode:
+
+```text
+POST /orders  arrives at  routes/orders.js
+    -> routes/orders.js reads the request body, then calls
+       orderService.createOrder(data)
+
+services/orderService.js  (business logic)
+    -> checks that requested items are in stock
+    -> calculates the total price, including tax
+    -> calls Order.save(orderData)   [data access layer]
+
+models/Order.js  (data access)
+    -> runs the actual database insert
+    -> returns the saved record back up to the service
+
+services/orderService.js
+    -> returns the result back up to the route
+
+routes/orders.js
+    -> formats and sends the JSON response back to the client
+```
+
+Notice that `routes/orders.js` never talks to the database directly, and
+`models/Order.js` never makes a business decision — each layer sticks to its own job.
+
+### Layers Combine With Tiers
+
+Tiers and layers are independent, but real applications use both together:
+
+- In a **one-tier** script, all three layers can still exist as separate functions or
+  files — they're just all loaded into the same process on the same machine.
+- In the **two-tier** example from earlier (a server that renders HTML *and* queries
+  the database directly), the presentation and business logic layers typically live
+  together on the server tier, while the data itself sits in a separate database — the
+  data access layer is the thin bridge between them.
+- In a **three-tier** MERN-style setup, the presentation layer maps naturally onto the
+  Presentation Tier (the React app), while the Application Tier internally contains
+  *both* the business logic layer and the data access layer, which then makes network
+  calls to the separate Data Tier.
+
+```mermaid
+flowchart TB
+    subgraph "Presentation Tier"
+        UI[React UI]
+    end
+    subgraph "Application Tier"
+        direction TB
+        BL[Business Logic Layer]
+        DAL[Data Access Layer]
+        BL --> DAL
+    end
+    subgraph "Data Tier"
+        DB[(Database)]
+    end
+    UI <-- HTTP/JSON --> BL
+    DAL <-- queries --> DB
+```
+
+!!! note "A naming trap: 'N-layer' vs. 'N-tier'"
+    You will sometimes see "layered architecture" called **N-layer architecture** —
+    which sounds almost identical to **N-tier architecture** from earlier in this
+    lecture, and is a common source of confusion. Keep the distinction from the start
+    of this lecture in mind: **N-tier is about how many machines/processes** your
+    application is physically split across; **N-layer is about how many logical
+    groupings** your code is organized into on any one of those machines. A single
+    physical tier can (and usually should) still be internally organized into several
+    layers.
+
 ## Choosing an Architecture
 
 There is no single "best" architecture — the right choice depends on trade-offs between
@@ -227,6 +368,11 @@ A simple guideline:
    queries the database directly) and describe, in a few sentences, how you would split
    it into three tiers. What new component would you introduce, and what would move
    into it?
+3. Pick any app on your phone. Without knowing its actual code, guess at three pieces
+   of logic it probably has and sort each one into a presentation, business logic, or
+   data access layer (for example: "shows a red badge on the icon when you have unread
+   messages" is presentation; "decides you've qualified for free shipping over a
+   certain amount" is business logic).
 
 ## Key Takeaways
 
@@ -243,6 +389,15 @@ A simple guideline:
   complexity.
 - **N-tier** generalizes this further, adding tiers like caching or load balancing as
   needed.
+- Most applications also organize their code into three **layers**: a **presentation
+  layer** (display/input), a **business logic layer** (rules and calculations), and a
+  **data access layer** (talking to the database) — each layer only talks to its
+  neighbor, never skipping ahead.
+- Layers make it possible to swap technology, test business logic without a real
+  database, and reuse the same logic behind multiple presentation layers.
+- Tiers and layers combine: a single tier is usually still organized into multiple
+  layers internally, and "N-layer" (logical) should not be confused with "N-tier"
+  (physical).
 - Choosing an architecture is a trade-off between **scalability**, **maintainability**,
   and **cost** — match the architecture to your application's actual needs, not to
   complexity for its own sake.
