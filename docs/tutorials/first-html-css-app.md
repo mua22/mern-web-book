@@ -73,14 +73,14 @@ external image file at all.
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ayesha Khan - About Me</title>
+    <title>Muhammad Hassan - About Me</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <header class="profile-header">
-            <div class="avatar">AK</div>
-            <h1>Ayesha Khan</h1>
+            <div class="avatar">MH</div>
+            <h1>Muhammad Hassan</h1>
             <p class="tagline">BSCS Student &middot; Aspiring Web Developer</p>
         </header>
 
@@ -108,12 +108,12 @@ external image file at all.
             <section class="contact">
                 <h2>Get In Touch</h2>
                 <p>Have a question about this page? Send me an email.</p>
-                <a class="btn" href="mailto:ayesha.khan@example.com">Email Me</a>
+                <a class="btn" href="mailto:muhammad.hassan@example.com">Email Me</a>
             </section>
         </main>
 
         <footer>
-            <p>&copy; 2026 Ayesha Khan. Built with HTML &amp; CSS.</p>
+            <p>&copy; 2026 Muhammad Hassan. Built with HTML &amp; CSS.</p>
         </footer>
     </div>
 </body>
@@ -127,7 +127,7 @@ A few things worth noticing:
 - `class="avatar"`, `class="profile-header"`, `class="tagline"`, and `class="btn"` don't
   do anything by themselves — they're just hooks for the CSS you'll write next, exactly
   like you learned with [class selectors](../web-technologies/lecture-05-css-fundamentals.md#class-selector).
-- Replace `"Ayesha Khan"`, the initials, the tagline, and the email address with your
+- Replace `"Muhammad Hassan"`, the initials, the tagline, and the email address with your
   own — this is *your* page.
 
 ## Part 4: Style It With CSS
@@ -270,7 +270,7 @@ Walking through the interesting parts:
 Open `index.html` directly in your browser (double-click it, or right-click → Open
 With). Here is what this exact HTML and CSS produce:
 
-![Rendered output: a centered white card on a light gray page, with a dark blue header containing an orange circular avatar showing the initials AK, the name "Ayesha Khan" and a tagline, followed by About Me, What I'm Learning, and Get In Touch sections, and an orange "Email Me" button](../assets/img/tutorials/first-html-css-app.png)
+![Rendered output: a centered white card on a light gray page, with a dark blue header containing an orange circular avatar showing the initials MH, the name "Muhammad Hassan" and a tagline, followed by About Me, What I'm Learning, and Get In Touch sections, and an orange "Email Me" button](../assets/img/tutorials/first-html-css-app.png)
 
 Try hovering your mouse over the **Email Me** button in your own browser — you'll see the
 color change and the slight upward movement that `.btn:hover` and `transition` produce
@@ -283,7 +283,7 @@ together, something a still screenshot can't show.
 2. Add a fourth section — a "Projects" section with a short paragraph or a list of things
    you've built or want to build.
 3. Replace the initials `<div class="avatar">` with a real photo instead: add
-   `<img src="photo.jpg" alt="A photo of Ayesha Khan" class="avatar">` in the HTML (an
+   `<img src="photo.jpg" alt="A photo of Muhammad Hassan" class="avatar">` in the HTML (an
    `<img>` can take the same `class="avatar"` styling), and add `object-fit: cover;` to
    the `.avatar` CSS rule so a rectangular photo still fills the circle correctly.
 4. Add a second button next to "Email Me" — for example a link to a GitHub profile —
