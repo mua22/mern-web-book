@@ -140,6 +140,42 @@ Content-Length: 1256
 <html>...</html>
 ```
 
+#### Anatomy of an HTTP Request
+
+Every HTTP request — whether your browser sends it by loading a page, or your own
+JavaScript sends it with `fetch()` — has the same three-part shape:
+
+1. **Request line** — `METHOD /path HTTP/version`. The method says what you want to do,
+   the path says which resource, and the version says which HTTP dialect you're speaking.
+2. **Headers** — key-value pairs of metadata: which host you're asking for, what response
+   formats you'll accept, who you are (`User-Agent`), whether you're carrying cookies, and
+   more. A blank line marks the end of the headers.
+3. **Body** (optional) — the actual data being sent. A `GET` request has no body, since
+   everything it needs is already in the URL; methods like `POST` and `PUT` use the body
+   to carry the data being created or updated.
+
+| Method | Purpose |
+|---|---|
+| `GET` | Fetch a resource; should have no side effects |
+| `POST` | Create a new resource, or submit data |
+| `PUT` | Replace a resource entirely |
+| `PATCH` | Update part of a resource |
+| `DELETE` | Remove a resource |
+
+You'll use all five constantly once you start building REST APIs (Lecture 25).
+
+The response mirrors this same shape: a **status line** (`HTTP/1.1 200 OK`), headers, and
+an optional body. The first digit of the status code tells you the category of the
+outcome:
+
+| Status range | Meaning | Example |
+|---|---|---|
+| `1xx` | Informational — request received, still processing | `100 Continue` |
+| `2xx` | Success | `200 OK`, `201 Created` |
+| `3xx` | Redirection — the resource moved | `301 Moved Permanently` |
+| `4xx` | Client error — something about *your* request was wrong | `404 Not Found`, `403 Forbidden` |
+| `5xx` | Server error — the server failed while handling a valid request | `500 Internal Server Error` |
+
 **HTTPS** is HTTP with an added layer of encryption (called TLS/SSL). It scrambles the
 data traveling between client and server so that nobody eavesdropping on the network can
 read it. Today almost every site uses HTTPS, and browsers warn users when a site does
@@ -165,6 +201,60 @@ flowchart LR
     C --> D[Browser connects to<br/>93.184.216.34]
 ```
 
+DNS is not one giant database — it's organized as a hierarchy, and looking up a name means
+walking down that hierarchy one level at a time:
+
+- **Root servers** don't know any actual websites — they only know which servers handle
+  each top-level domain (`.com`, `.org`, `.pk`, and so on).
+- **TLD (top-level domain) servers** don't know your website either — they know which
+  authoritative server is responsible for each domain registered under that TLD.
+- **Authoritative name servers** hold the real records for one specific domain (for
+  `example.com`, this is usually a DNS service run by its registrar or host).
+
+You don't walk this hierarchy yourself on every request. Your computer asks a **recursive
+resolver** (often run by your ISP, or a public service like Google's `8.8.8.8` or
+Cloudflare's `1.1.1.1`) to do the walking and hand back just the final IP address:
+
+```mermaid
+sequenceDiagram
+    participant You as Your Computer
+    participant Resolver as Recursive Resolver
+    participant Root as Root Server
+    participant TLD as .com TLD Server
+    participant Auth as Authoritative Server<br/>(example.com)
+
+    You->>Resolver: Where is example.com?
+    Resolver->>Root: Who handles .com?
+    Root-->>Resolver: Ask the .com TLD server
+    Resolver->>TLD: Who handles example.com?
+    TLD-->>Resolver: Ask example.com's name server
+    Resolver->>Auth: What's the IP for example.com?
+    Auth-->>Resolver: 93.184.216.34
+    Resolver-->>You: 93.184.216.34
+```
+
+#### Common DNS Record Types
+
+A domain's authoritative server doesn't just store one address — it stores several kinds
+of records, each answering a different question:
+
+| Record | Purpose |
+|---|---|
+| `A` | Maps a domain name to an IPv4 address |
+| `AAAA` | Maps a domain name to an IPv6 address |
+| `CNAME` | Aliases one domain name to another (e.g., pointing `www.example.com` at `example.com`) |
+| `MX` | Points to the mail servers responsible for a domain's email |
+| `TXT` | Arbitrary text, often used to prove domain ownership or configure email security (SPF/DKIM) |
+| `NS` | Lists the authoritative name servers for a domain |
+
+!!! note "Caching and TTL"
+    Resolved DNS answers are cached — by your browser, your operating system, and the
+    recursive resolver — for a period set by the record's **TTL (Time To Live)**. Most
+    lookups are therefore answered from a nearby cache in milliseconds rather than walking
+    the full hierarchy. This caching is also why a DNS change (like pointing a domain at a
+    new host) can take anywhere from minutes to a day to "propagate" everywhere — old,
+    cached answers keep being served until their TTL expires.
+
 ### Hosting and Web Servers
 
 **Hosting** means storing your website's files (and running the software that serves
@@ -177,6 +267,28 @@ both ways) that listens for HTTP requests and sends back responses. Common web s
 software includes Apache, Nginx, and — as you will use later in this course — Node.js
 with Express.
 
+#### Types of Hosting
+
+"Hosting" is not one product — it's a spectrum of options that trade off cost, control,
+and how much server administration you have to do yourself:
+
+| Hosting type | What it is | Best for |
+|---|---|---|
+| **Static hosting** | Serves pre-built HTML/CSS/JS files directly; no server-side code runs | Portfolios, documentation, marketing sites, and SPAs after they're built (Vercel, Netlify, GitHub Pages) |
+| **Shared hosting** | Many websites share one physical server and its resources | Low-traffic personal sites and small businesses on a tight budget — cheap, but limited control and performance |
+| **VPS (Virtual Private Server)** | A slice of a physical server reserved just for you, with full control over the OS | Developers who need more control than shared hosting but not a whole physical machine (DigitalOcean Droplets, Linode) |
+| **Dedicated server** | An entire physical machine reserved for one customer | High-traffic sites with large, predictable, sustained resource needs |
+| **Platform as a Service (PaaS)** | You push your code; the platform handles the server, scaling, and deployment for you | Full-stack apps where you'd rather focus on code than infrastructure (Render, Railway, Heroku) |
+| **Serverless / Functions** | Your code runs only in response to a request, in short-lived functions the platform manages | APIs with unpredictable or spiky traffic, where you don't want to pay for an idle server (Vercel/Netlify Functions, AWS Lambda) |
+| **Cloud infrastructure (IaaS)** | Rent raw compute, storage, and networking building blocks and assemble them yourself | Large-scale or enterprise applications that need fine-grained control over every layer (AWS, Google Cloud, Azure) |
+
+!!! tip "Choosing for a course project"
+    For projects in this course, static hosting (Vercel/Netlify) is normally enough for
+    your React front end, and a PaaS (Render/Railway) is the easiest way to host a Node +
+    Express + MongoDB backend without administering a server yourself. Save VPS,
+    dedicated, and IaaS options for when you specifically want to practice server
+    administration — they hand you the most control, but also the most setup work.
+
 ### Browser
 
 A **browser** is the client application end-users interact with. It sends HTTP requests,
@@ -184,6 +296,38 @@ receives HTML/CSS/JavaScript in response, and renders that into the visual page 
 and interact with. Popular browsers include Chrome, Firefox, Safari, and Edge — each one
 is built by a different company but they all aim to follow the same web standards, which
 brings us to the next topic.
+
+#### Cross-Browser Compatibility
+
+Browsers "aim to follow the same standards," but they don't run identical code. Each is
+built on a different **rendering engine** — Chrome and Edge use **Blink**, Firefox uses
+**Gecko**, and Safari uses **WebKit** — and each engine can ship a new feature early, lag
+behind on another, or interpret an ambiguous part of a spec slightly differently. The
+practical result: the same HTML, CSS, or JavaScript can look or behave a little differently
+depending on which browser opens it. Common examples you'll run into:
+
+- A newer CSS feature (like `:has()` or container queries) works in some browsers before
+  others.
+- Default styling of form elements — buttons, checkboxes, `<select>` — differs noticeably
+  between browsers unless you reset it yourself.
+- Older browser versions (historically Internet Explorer, and older Safari releases) tend
+  to lag furthest behind on new JavaScript and CSS features.
+
+**How developers handle this in practice:**
+
+| Technique | What it does |
+|---|---|
+| [caniuse.com](https://caniuse.com/) | Check real-world browser support for a feature before relying on it |
+| Vendor prefixes (`-webkit-`, `-moz-`) | Opt into an engine's experimental implementation of a CSS property before it's standardized |
+| Feature detection | Check whether a feature actually exists at runtime before using it, instead of assuming every browser has it |
+| Progressive enhancement | Build a baseline experience that works everywhere, then layer on enhancements for browsers that support them |
+| Autoprefixer / Babel | Build tools that automatically add vendor prefixes or transpile modern JS down to a version older browsers understand |
+| [BrowserStack](https://www.browserstack.com/) and similar tools | Test your site on real browsers and devices you don't personally own |
+
+!!! tip
+    You don't need to memorize every browser quirk. The habit that matters is: check
+    caniuse.com before relying on a newer feature, and test your project in at least two
+    different browser engines (for example, Chrome and Firefox) before calling it done.
 
 ## Web Standards Bodies
 
