@@ -21,9 +21,11 @@ text, links, images, media, tables, and lists — the raw ingredients of every w
 - Recognize void (self-closing) elements like `<br>` and `<hr>`
 - Tell block-level elements and inline elements apart, and know why it matters
 - Use common HTML attributes, including global and boolean attributes, with real examples
-- Write headings, paragraphs, formatted text, and hyperlinks (absolute vs. relative)
-- Add images, audio, and video to a page
-- Build tables and the three types of lists
+- Write headings, paragraphs, formatted text, and hyperlinks (internal vs. external)
+- Understand why the old `<font>` tag is obsolete, and use `<pre>`/`<code>` and HTML
+  entities correctly
+- Add images (including image links), audio, and video to a page
+- Build tables and the three types of lists, including nested lists
 - Learn what HTML5 added to the language, and why browser support matters
 
 ## What Is a Markup Language?
@@ -321,7 +323,120 @@ All of these rendered together:
 
 ![Rendered output: bold "Warning" followed by italic "really" important; bold text and italic text; yellow-highlighted "highlighted" text and small "terms apply" text; H with a subscript 2 and O, and x with a superscript 2; "Line one" and "Line two" on separate lines; then a horizontal divider](../assets/img/lecture-03/text-formatting.png)
 
-## Hyperlinks: Absolute vs. Relative URLs
+## The `<font>` Tag (and Why We Don't Use It for Styling)
+
+Before CSS existed, HTML had its own built-in way to change a piece of text's color, size,
+and typeface: the `<font>` element.
+
+```html
+<font color="red" size="5" face="Arial">This text is red, size 5, Arial font.</font>
+```
+
+![Rendered output: the sentence "This text is red, size 5, Arial font." shown in red, size-5, Arial text](../assets/img/lecture-03/font-tag.png)
+
+- `color` — the text color, as a name (`red`) or a hex code (`#FF0000`).
+- `size` — a number from `1` (smallest) to `7` (largest) — not a pixel or point value, just
+  a relative scale defined by the browser.
+- `face` — the font family to use, if the visitor's device has it installed.
+
+!!! warning "Do not use `<font>` — it is obsolete"
+    The `<font>` tag still renders in every modern browser (browsers keep old features
+    working so old pages don't break), but it was **removed from the HTML5 specification**
+    and should never be used in new code. There are several real reasons why, not just
+    "it's old":
+
+    - **It mixes structure with appearance.** HTML is supposed to describe *what* something
+      is (a heading, a warning, a quote); `<font>` describes *how it looks*, which is CSS's
+      job. Mixing the two makes pages harder to maintain.
+    - **It does not scale.** Changing the color of every warning message on a 50-page site
+      built with `<font color="red">` means editing all 50 pages by hand. The same change
+      with CSS means editing one rule in one stylesheet.
+    - **It has no responsive or interactive ability.** `<font>` cannot change on hover, on a
+      smaller screen, or in dark mode — CSS can do all of this.
+    - **It fails accessibility and validation.** `<font>` is flagged as an error by the
+      [W3C Markup Validator](https://validator.w3.org/), and screen readers get no useful
+      information from it beyond the raw text.
+
+    The modern equivalent of the example above is a single line of CSS (which you'll learn
+    starting in the next unit):
+
+    ```html
+    <p style="color: red; font-size: 24px; font-family: Arial;">This text is red, size 24px, Arial font.</p>
+    ```
+
+    Or, better still, a reusable class defined once in a stylesheet and applied to as many
+    elements as needed.
+
+## `<pre>`, `<code>`, and Other Technical Text Tags
+
+HTML has a small family of elements specifically for showing technical content — code,
+commands, and quotations — instead of ordinary prose.
+
+```html
+<pre>
+function greet() {
+    console.log("Hello!");
+}
+</pre>
+
+<p>Use the <code>console.log()</code> function to print output.</p>
+
+<p>Press <kbd>Ctrl</kbd> + <kbd>C</kbd> to copy.</p>
+
+<p>The command printed: <samp>Build succeeded</samp></p>
+
+<p>Replace <var>filename</var> with your own file's name.</p>
+
+<blockquote>
+    The Web does not just connect machines, it connects people.
+</blockquote>
+```
+
+| Tag | Meaning |
+|---|---|
+| `<pre>` | **Preformatted text** — preserves every space, tab, and line break exactly as written, and renders in a monospace font. Without it, HTML collapses multiple spaces and line breaks into a single space. |
+| `<code>` | An inline snippet of computer code, rendered in a monospace font. |
+| `<kbd>` | Keyboard input — a key or key combination the user should press. |
+| `<samp>` | Sample output from a program or command. |
+| `<var>` | A variable name or placeholder value the reader should substitute. |
+| `<blockquote>` | A longer, block-level quotation from another source. |
+
+!!! tip "`<pre>` and `<code>` together"
+    For a multi-line code block (like the ones throughout this book), `<pre>` and `<code>`
+    are normally used *together* — `<pre><code>...</code></pre>` — `<pre>` preserves the
+    formatting, and `<code>` labels the content as code. Using `<code>` alone is for a short
+    snippet sitting *inside* a sentence, like `console.log()` above.
+
+## HTML Entities
+
+Some characters cannot be typed directly into HTML, either because the browser would
+misread them as markup, or because they don't exist on a standard keyboard. **HTML
+entities** are special codes, always starting with `&` and ending with `;`, that stand in
+for these characters.
+
+```html
+<p>5 &lt; 10 and 10 &gt; 5</p>
+<p>Copyright &copy; 2025 &mdash; All rights reserved</p>
+<p>Click&nbsp;Here&nbsp;Now (no line break allowed between these words)</p>
+```
+
+| Entity | Renders as | Why you need it |
+|---|---|---|
+| `&lt;` | `<` | A literal `<` would be read as the start of a tag |
+| `&gt;` | `>` | A literal `>` would be read as the end of a tag |
+| `&amp;` | `&` | A literal `&` would be read as the start of another entity |
+| `&nbsp;` | (a space) | A **non-breaking space** — a space that browsers will never break a line on, useful for keeping two words glued together |
+| `&copy;` | © | Copyright symbol — not on most keyboards |
+| `&mdash;` | — | An em dash, longer than a regular hyphen |
+| `&quot;` | `"` | A literal double quote, occasionally needed inside an attribute value |
+
+!!! note "Why HTML collapses whitespace matters here"
+    Remember that HTML normally collapses multiple spaces into one. Typing two spaces
+    between words in your source code has no visible effect — but `&nbsp;` is not collapsed,
+    because the browser treats it as a real, protected character rather than ordinary
+    whitespace.
+
+## Hyperlinks: Internal and External Links
 
 A **hyperlink** (or just "link") lets a user click text or an image to navigate to another
 page. Links are created with the `<a>` (anchor) element and its `href` (hypertext
@@ -331,40 +446,68 @@ reference) attribute:
 <a href="https://www.google.com">Go to Google</a>
 ```
 
-There are two kinds of URLs you can put in `href`:
+Links fall into two categories, based on where they use an **absolute** or a **relative**
+URL:
 
-- **Absolute URL** — the *complete* address, including the protocol (`https://`) and
-  domain name. Use this to link to a page on a *different* website.
+### External Links (Absolute URLs)
 
-  ```html
-  <a href="https://en.wikipedia.org/wiki/HTML">HTML on Wikipedia</a>
-  ```
+An **external link** points to a page on a *different* website. It always uses an
+**absolute URL** — the *complete* address, including the protocol (`https://`) and domain
+name:
 
-- **Relative URL** — a path relative to the *current* page's location, used to link to
-  another page within your own site. It does not include the domain name.
+```html
+<a href="https://en.wikipedia.org/wiki/HTML">HTML on Wikipedia</a>
+<a href="https://www.comsats.edu.pk" target="_blank" rel="noopener noreferrer">Visit COMSATS (new tab)</a>
+```
 
-  ```html
-  <a href="about.html">About Us</a>
-  <a href="pages/contact.html">Contact (in a subfolder)</a>
-  <a href="../index.html">Back to home (one folder up)</a>
-  ```
+`target="_blank"` opens the link in a new browser tab, which is common for external links so
+the visitor doesn't lose your page. When you use `target="_blank"`, always add
+`rel="noopener noreferrer"` too — it's a security measure that stops the new tab from being
+able to control the page that opened it.
 
-All four links rendered together (an absolute link followed by three relative ones):
+### Internal Links (Relative URLs)
 
-![Rendered output: four blue underlined links stacked vertically, reading "HTML on Wikipedia", "About Us", "Contact (in a subfolder)", and "Back to home (one folder up)"](../assets/img/lecture-03/links.png)
+An **internal link** points to another page *within your own site*. It uses a **relative
+URL** — a path relative to the *current* page's location — and does not include the domain
+name at all:
+
+```html
+<a href="about.html">About Us</a>
+<a href="pages/contact.html">Contact (in a subfolder)</a>
+<a href="../index.html">Back to home (one folder up)</a>
+```
+
+All the links above, rendered together (external links first, then internal ones):
+
+![Rendered output: five blue underlined links stacked vertically, reading "HTML on Wikipedia", "Visit COMSATS (new tab)", "About Us", "Contact (in a subfolder)", and "Back to home (one folder up)"](../assets/img/lecture-03/links.png)
 
 !!! tip "When to use which"
-    Use absolute URLs for links leaving your site, and relative URLs for links that stay
-    within your own site. Relative URLs have a big advantage: if you move your entire
-    website to a new domain, none of your internal links break.
+    Use external (absolute) links for anything leaving your site, and internal (relative)
+    links for anything that stays within it. Internal links have a big advantage: if you
+    move your entire website to a new domain, none of them break, because they never
+    contained the domain name in the first place.
 
-You can also link to a specific spot on the *same* page using an `id` and a `#` fragment:
+You can also link to a specific spot on the *same* page using an `id` and a `#` fragment —
+this is technically still an internal link, just to a location instead of a whole new page:
 
 ```html
 <a href="#contact">Jump to Contact section</a>
 ...
 <h2 id="contact">Contact</h2>
 ```
+
+### Other Link Types
+
+Two special-purpose `href` values don't point to a web page at all:
+
+```html
+<a href="mailto:info@comsats.edu.pk">Email Us</a>
+<a href="tel:+923001234567">Call Us</a>
+```
+
+`mailto:` opens the visitor's default email application with a new message addressed to
+that address; `tel:` opens their phone/dialer app on a mobile device — genuinely useful on
+a contact page.
 
 ## Images
 
@@ -383,6 +526,30 @@ key attributes:
   load and read aloud by screen readers for visually impaired users. **Never skip `alt`.**
 - `width` and `height` — optional, but recommended, so the browser can reserve space for
   the image before it finishes loading (this prevents the page from jumping around).
+
+### Making an Image a Link
+
+Just like text, an image can be a clickable link — simply wrap the `<img>` element inside
+an `<a>` element:
+
+```html
+<a href="https://www.comsats.edu.pk">
+    <img src="images/logo.png" alt="COMSATS logo — click to visit the COMSATS website" width="200" height="80">
+</a>
+```
+
+The whole image becomes clickable, navigating to whatever `href` points to (an internal
+page, an external site, or even a `mailto:`/`tel:` link, exactly as with a text link).
+
+!!! tip "Write `alt` text for what the link does, not just what the image shows"
+    When an image is also a link, its `alt` text is what a screen-reader user hears in
+    place of *both* the image and the link's purpose — so "COMSATS logo — click to visit
+    the COMSATS website" is more useful than just "COMSATS logo."
+
+!!! note "That blue border around old linked images"
+    Older browsers used to draw a blue outline around any image wrapped in a link (the same
+    highlight color used for text links). Every modern browser has removed this by default,
+    but if you ever see it, it's removed with one line of CSS: `img { border: none; }`.
 
 ## Audio and Video
 
@@ -505,8 +672,40 @@ All three list types rendered together — unordered, then ordered, then descrip
 - `<dt>` — description term (the word being defined)
 - `<dd>` — description details (the definition itself)
 
-Lists can also be **nested**: put a whole `<ul>` or `<ol>` inside an `<li>` to create
-sub-lists.
+### Nested Lists
+
+Lists can also be **nested**: put a whole `<ul>` or `<ol>` *inside* an `<li>` to create a
+sub-list. This is how you represent a hierarchy — categories with sub-items, an outline, a
+multi-level menu (which you'll build with CSS in a later tutorial):
+
+```html
+<ul>
+    <li>Front End
+        <ul>
+            <li>HTML</li>
+            <li>CSS</li>
+            <li>JavaScript</li>
+        </ul>
+    </li>
+    <li>Back End
+        <ul>
+            <li>Node.js</li>
+            <li>Express</li>
+        </ul>
+    </li>
+</ul>
+```
+
+A few rules worth knowing:
+
+- The nested `<ul>` (or `<ol>`) goes *inside* the `<li>` of the item it belongs under, after
+  that item's own text.
+- You can nest an `<ol>` inside a `<ul>`, or a `<ul>` inside an `<ol>` — the two types mix
+  freely at different levels.
+- A nested `<ol>` restarts its own numbering from `1` by default, independent of any
+  numbering at the level above it.
+- Browsers automatically change the bullet style (disc → circle → square) at each nesting
+  depth in a `<ul>`, purely as a visual cue that you've gone one level deeper.
 
 ## HTML5: What Changed and Why It Matters
 
@@ -583,10 +782,17 @@ structure. This is exactly what the browser's DOM represents:
 - Attributes can be **global** (usable on almost any element, like `id`/`class`/`title`),
   element-specific (like `href` on `<a>`), or **boolean** (present or absent, like
   `required`, with no `="value"` needed).
-- Absolute URLs point to other websites; relative URLs point within your own site and
-  survive a domain move.
-- `<img>`, `<audio>`, and `<video>` embed media directly, without needing plugins.
+- **External links** (absolute URLs) point to other websites; **internal links** (relative
+  URLs) point within your own site and survive a domain move.
+- The `<font>` tag is obsolete — it mixes appearance into HTML instead of using CSS, and
+  doesn't scale across a real site; use CSS for all styling instead.
+- `<pre>` preserves whitespace and line breaks exactly as written; `<code>` marks inline
+  code snippets; entities like `&lt;`, `&amp;`, and `&nbsp;` represent characters HTML
+  can't take literally.
+- `<img>`, `<audio>`, and `<video>` embed media directly, without needing plugins — and an
+  `<img>` wrapped in an `<a>` becomes a clickable image link.
 - Tables (`<table>`, `<tr>`, `<th>`, `<td>`) are for tabular data only, not page layout.
-- HTML has three list types: unordered (`<ul>`), ordered (`<ol>`), and description (`<dl>`).
+- HTML has three list types: unordered (`<ul>`), ordered (`<ol>`), and description
+  (`<dl>`) — and any list type can be **nested** inside an `<li>` to represent a hierarchy.
 - HTML5 added semantic elements, native media support, and new attributes like `data-*`;
   always check browser support for newer features before relying on them.
