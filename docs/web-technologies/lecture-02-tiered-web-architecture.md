@@ -51,10 +51,14 @@ code modules), and one does not require the other.
     layers** (well-organized code). Tiers and layers are independent design decisions.
 
 ```mermaid
-flowchart TB
+flowchart LR
     subgraph "Tiers = physical deployment"
         T1[Machine 1] -.network.-> T2[Machine 2]
     end
+```
+
+```mermaid
+flowchart LR
     subgraph "Layers = logical code organization"
         L1[Presentation Layer] --> L2[Business Logic Layer] --> L3[Data Access Layer]
     end
