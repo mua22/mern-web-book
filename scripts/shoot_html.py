@@ -36,7 +36,27 @@ def find_browser() -> str:
     raise SystemExit("No headless-capable browser found (checked Chrome/Edge default install paths).")
 
 
+MIN_RELIABLE_WIDTH = 530
+"""Headless Chrome on Windows enforces a minimum real window width (observed ~504px
+logical CSS pixels) regardless of a smaller --window-size request, but --screenshot still
+crops the OUTPUT PNG to the literally requested width -- silently clipping any content
+that only fits because the browser actually laid it out wider than you asked for. This
+produced several genuinely broken "mobile" screenshots (text and box borders cut off
+mid-line) before it was diagnosed. There is no known flag to lower this floor, so the
+only fix is to never request a width below it."""
+
+
 def shoot(html_path: Path, out_path: Path, width: int = 760, height: int = 1400, pad: int = 12, scale: int = 2) -> None:
+    if width < MIN_RELIABLE_WIDTH:
+        print(
+            f"WARNING: --width {width} is below the ~{MIN_RELIABLE_WIDTH}px floor headless "
+            "Chrome actually renders at on this machine. The page will be laid out wider "
+            "than requested but the screenshot will still be cropped to your narrower "
+            "width, silently clipping content. Design your 'narrow/mobile' demo to look "
+            "right at >=530px (still well below most 768px+ breakpoints) instead of "
+            "a literal phone width.",
+            file=sys.stderr,
+        )
     browser = find_browser()
     html_path = html_path.resolve()
     out_path = out_path.resolve()
