@@ -20,8 +20,9 @@ behind almost everything you will do in CSS layout.
 - The four layers of the box model: content, padding, border, and margin
 - Margin collapsing, and why it surprises beginners
 - `box-sizing`: `content-box` vs. `border-box`
-- Controlling size with `width`, `height`, `min-`/`max-` constraints, and `overflow`
+- Controlling size with `width`, `height`, and `min-`/`max-` constraints
 - The `display` property: `block`, `inline`, `inline-block`, and `none`
+- A real technique: turning a `<ul>` into a horizontal menu with `display`, and why
 - Borders, shadows, and techniques for consistent spacing
 
 ## The Box Model
@@ -199,40 +200,11 @@ constraints:
 screens: the box scales down with the screen on narrow devices, but stops growing past a
 sensible limit on wide monitors.
 
-### Overflow
-
-**Overflow** happens when an element's content is too big to fit inside its box. The
-`overflow` property tells the browser what to do about it.
-
-```css
-.box {
-  width: 200px;
-  height: 100px;
-  overflow: hidden;   /* clips content that doesn't fit — extra content is not shown */
-}
-```
-
-Here is the same 200×100 box with more text than it can hold, rendered twice — once with
-`overflow: visible` (the default) and once with `overflow: hidden` — so you can see the
-difference directly:
-
-![Rendered output: two identical 200 by 100 pixel boxes with the same overflowing paragraph of text; the left box labeled "overflow: visible" lets the extra lines spill out below its border, still readable; the right box labeled "overflow: hidden" clips the extra lines off cleanly at the border](../assets/img/lecture-06/overflow-comparison.png)
-
-!!! note "About `scroll` and `auto`"
-    A static screenshot can't show a scrollbar in action. `overflow: scroll` and
-    `overflow: auto` both clip the content exactly like `hidden` does visually, but they
-    also add a scrollbar so the user can scroll down to reach the hidden part — `scroll`
-    always shows the scrollbar, `auto` only shows it when the content actually overflows.
-    Try both live in a real browser to see the scrollbar appear.
-
-Common values:
-
-| Value | Behaviour |
-|---|---|
-| `visible` (default) | Content spills outside the box, still visible |
-| `hidden` | Content that doesn't fit is clipped and hidden |
-| `scroll` | Always shows scrollbars, letting the user scroll to see overflow |
-| `auto` | Adds scrollbars only if the content actually overflows |
+!!! note "What happens when content doesn't fit its box?"
+    Setting a fixed `width`/`height` raises an obvious question: what if the content is
+    bigger than the box? That's controlled by the `overflow` property — covered in the next
+    lecture alongside `float`, since `overflow` is also the standard fix for a classic
+    float layout bug.
 
 ## The `display` Property
 
@@ -298,6 +270,66 @@ layout.
 All four values, rendered together and compared directly:
 
 ![Rendered output: four labeled sections — "display: block" showing three full-width teal bars stacked on their own lines; "display: inline" showing three orange highlighted spans flowing inside a sentence; "display: inline-block" showing three green boxes with a fixed size sitting side by side; and "display: none" showing the text "Visible before Visible after" with no gap where a hidden element sits in the markup](../assets/img/lecture-06/display-comparison.png)
+
+### A Practical Example: Turning a `<ul>` into a Horizontal Menu
+
+`<li>` is block-level by default, so a plain `<ul>` always renders as a vertical stack, one
+item per line. A huge number of real navigation menus are built by keeping that exact
+`<ul>`/`<li>` markup and changing only the `<li>`'s `display` value — no extra `<div>`s, and
+no change to the HTML at all:
+
+```html
+<nav>
+  <ul class="menu">
+    <li><a href="/">Home</a></li>
+    <li><a href="/about.html">About</a></li>
+    <li><a href="/services.html">Services</a></li>
+    <li><a href="/contact.html">Contact</a></li>
+  </ul>
+</nav>
+```
+
+```css
+.menu {
+  list-style: none;  /* remove the bullet points */
+  margin: 0;
+  padding: 0;
+}
+
+.menu li {
+  display: inline-block;  /* the key change — li is block by default */
+  margin-right: 20px;
+}
+
+.menu a {
+  text-decoration: none;
+  color: #222;
+  font-weight: bold;
+}
+```
+
+Rendered in a browser — the same four-item list, before and after that one `display`
+change:
+
+![Rendered output: two versions of the same four-item list of links (Home, About, Services, Contact) — the top, labeled "Default: li is block", shows the items stacked vertically with bullet points, one per line; the bottom, labeled ".menu li { display: inline-block; }", shows the same four items with no bullets, sitting side by side in a single horizontal row](../assets/img/lecture-06/ul-menu-display.png)
+
+Why go through a `<ul>` at all, instead of just laying out `<div>`s or bare links directly
+with `display: inline-block`? Because a navigation menu **is**, conceptually, a list of
+links — that is exactly what it is to a screen reader and to a search engine, regardless of
+how it looks. Using `display` to change only the *visual* layout keeps that meaning intact:
+
+- Screen readers announce it as a list (e.g. "navigation, list of 4 items"), telling users
+  how many links there are and letting them jump between them.
+- Search engines and any tool that builds an "outline" or "landmarks" view of a page
+  recognize it as a genuine list of navigation links, not a handful of unrelated boxes.
+- The HTML never has to change later. Redesign the menu to stay vertical, become a
+  dropdown, or collapse into a hamburger menu on mobile, and only the CSS needs to change.
+
+!!! tip "The general pattern"
+    This is one case of a much bigger CSS habit: pick your HTML element for what it
+    *means*, and pick its `display` (and other layout properties) for how it should
+    *look*. A `<ul>` is always a list in meaning, whether it displays as a vertical stack,
+    a horizontal menu, or a grid of cards.
 
 ## Borders, Shadows, and Consistent Spacing
 
@@ -397,11 +429,14 @@ values in `:root`, and every element using `var(--space-md)` updates automatical
 - `box-sizing: content-box` (default) adds padding and border *on top of* your set width;
   `box-sizing: border-box` makes padding and border count *inside* your set width, which
   is far more predictable and commonly used as a site-wide reset.
-- `min-`/`max-width`/`height` add flexible constraints on top of a base size, and
-  `overflow` controls what happens when content doesn't fit its box.
+- `min-`/`max-width`/`height` add flexible constraints on top of a base size; what happens
+  when content still doesn't fit is controlled by `overflow`, covered in Lecture 7.
 - `display: block` starts a new line and fills available width; `inline` flows within text
   and ignores width/height; `inline-block` combines both behaviours; `display: none`
   removes an element from the layout entirely.
+- A `<ul>`/`<li>` list styled with `.menu li { display: inline-block; }` is a common,
+  real-world way to build a horizontal menu without giving up the semantic meaning (and
+  accessibility) of a list.
 - Borders, `border-radius`, and `box-shadow` are the main tools for visually finishing a
   box; CSS custom properties (`--variable-name`) help keep spacing consistent across a
   whole site.

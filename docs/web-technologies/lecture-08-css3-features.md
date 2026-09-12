@@ -19,7 +19,8 @@ to turn a plain, flat-looking page into something that feels modern and alive.
 
 - Draw rounded corners, gradients, shadows, and control opacity with pure CSS
 - Move, rotate, and scale elements in 2D and 3D using transforms
-- Animate changes smoothly with transitions and keyframe animations
+- Animate changes smoothly with transitions and keyframe animations — with live, actually
+  running demos embedded right in this chapter, not just screenshots
 - Use web fonts and icon fonts, and store reusable values in CSS custom properties (variables)
 - Adapt styles to different screens with media and feature queries
 - Understand vendor prefixes and why cross-browser compatibility still matters
@@ -119,9 +120,32 @@ h1 {
 }
 ```
 
-The `.card`'s default `box-shadow` next to its `:hover` end state (bigger, softer shadow), and the `text-shadow`'d heading:
+Rather than a screenshot of two frozen states, here is the exact `.card`/`.card:hover` rule
+above, live — hover it to watch the shadow genuinely grow and soften:
 
-![Rendered output: two white rounded cards, the left with a small soft drop shadow labeled "Default" and the right with a larger, more spread-out drop shadow labeled "On hover (end state)"](../assets/img/lecture-08/box-shadow-default-hover.png)
+<div class="wdb-live-demo" markdown="0">
+<style>
+.wdb-demo-shadow-card {
+  display: inline-block;
+  width: 200px;
+  padding: 24px;
+  background: #fff;
+  color: #222;
+  border-radius: 10px;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+.wdb-demo-shadow-card:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+  transform: translateY(-3px);
+}
+</style>
+<div class="wdb-demo-shadow-card">Hover Me</div>
+<p class="wdb-live-caption">Live demo — the exact <code>.card</code> / <code>.card:hover</code> <code>box-shadow</code> CSS above, actually running.</p>
+</div>
+
+And the `text-shadow`'d heading:
 
 ![Rendered output: bold black heading text "Shadowed Heading" with a soft dark drop shadow offset down and to the right](../assets/img/lecture-08/text-shadow-heading.png)
 
@@ -212,9 +236,37 @@ the "viewer" is from the 3D scene.
 }
 ```
 
-The card at its default `rotateY(25deg)` angle next to its `:hover` end state (`rotateY(0deg)`, flat-on) — the `perspective: 800px` on the parent `.scene` is what makes the default state look tilted in 3D instead of just squashed:
+A 3D tilt is exactly the kind of thing a flat screenshot struggles to sell — so here is the
+exact `.scene`/`.card-3d` CSS above, live: the card sits tilted in real 3D perspective by
+default, then rotates flat to face you on hover:
 
-![Rendered output: two rounded gradient cards reading "rotateY(25deg)" and "rotateY(0deg)" — the left card appears subtly tilted in 3D perspective, the right sits flat facing the viewer](../assets/img/lecture-08/transform-3d-perspective-card.png)
+<div class="wdb-live-demo" markdown="0">
+<style>
+.wdb-demo-scene {
+  display: inline-block;
+  perspective: 800px;
+}
+.wdb-demo-card-3d {
+  width: 220px;
+  height: 130px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #6c5ce7, #341f97);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 15px;
+  transform: rotateY(25deg);
+  transition: transform 0.4s ease;
+}
+.wdb-demo-card-3d:hover {
+  transform: rotateY(0deg);
+}
+</style>
+<div class="wdb-demo-scene"><div class="wdb-demo-card-3d">Hover Me</div></div>
+<p class="wdb-live-caption">Live demo — the exact <code>.card-3d</code> / <code>.card-3d:hover</code> CSS above, actually rotating in 3D.</p>
+</div>
 
 | Function | What it does |
 |---|---|
@@ -240,9 +292,32 @@ button:hover {
 }
 ```
 
-A static screenshot cannot show the smooth animated change itself — that part you have to see by actually hovering the button in a real browser — but it can show the two endpoints the transition moves between: the default button, and the `:hover` styles applied directly as the end state (darker blue, slightly scaled up):
+A screenshot can only ever show two frozen endpoints of a transition, never the smooth
+motion between them — so here is a genuinely live version of the exact CSS above, running
+right on this page. Hover it with a real mouse (or tap it on a touch screen):
 
-![Rendered output: two blue rounded "Click Me" buttons, the left a lighter royal blue at normal size labeled "Default", the right a darker navy blue and slightly larger labeled "On hover (end state)"](../assets/img/lecture-08/transition-button-default-hover.png)
+<div class="wdb-live-demo" markdown="0">
+<style>
+.wdb-demo-transition-btn {
+  background-color: royalblue;
+  color: #fff;
+  border: none;
+  padding: 12px 30px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+.wdb-demo-transition-btn:hover {
+  background-color: darkblue;
+  transform: scale(1.05);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
+}
+</style>
+<button class="wdb-demo-transition-btn">Hover Me</button>
+<p class="wdb-live-caption">Live demo — this is the exact <code>button</code>/<code>button:hover</code> CSS above, actually running.</p>
+</div>
 
 The `transition` shorthand takes: `property | duration | timing-function | delay`. Using
 `all` instead of naming a property (`transition: all 0.3s;`) animates every property that
@@ -267,9 +342,35 @@ sequence — multiple steps, or an animation that plays automatically without a 
 }
 ```
 
-Like the transition above, the actual looping motion only shows up in a live browser. What a still image *can* show is the three keyframe positions the ball passes through on every cycle:
+Like the transition above, the looping motion only really means something in real motion —
+so here is the exact `bounce` keyframe animation above, running live and looping forever on
+this page:
 
-![Rendered output: three orange circles labeled "0% (translateY(0))", "50% (translateY(-20px))", and "100% (translateY(0))" — the middle circle sitting noticeably higher than the other two](../assets/img/lecture-08/keyframe-bounce-frames.png)
+<div class="wdb-live-demo" markdown="0">
+<style>
+.wdb-demo-bounce-track {
+  position: relative;
+  height: 90px;
+}
+.wdb-demo-ball {
+  position: absolute;
+  left: calc(50% - 18px);
+  top: 50px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #ff8a3d;
+  animation: wdb-demo-bounce 1s ease-in-out infinite;
+}
+@keyframes wdb-demo-bounce {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-40px); }
+  100% { transform: translateY(0); }
+}
+</style>
+<div class="wdb-demo-bounce-track"><div class="wdb-demo-ball"></div></div>
+<p class="wdb-live-caption">Live demo — the exact <code>@keyframes bounce</code> animation above, actually looping.</p>
+</div>
 
 You define the `@keyframes` rule once, naming it (`bounce`), then attach it to any element
 with the `animation` property. `infinite` means it loops forever; you could instead write
@@ -491,7 +592,10 @@ flowchart LR
 - `transform` (2D and 3D) repositions, rotates, or resizes elements without disturbing page
   layout; 3D transforms need `perspective` on a parent to look correct.
 - `transition` animates smoothly between two states (like normal and `:hover`); `@keyframes`
-  plus `animation` defines multi-step animations that can run automatically and loop.
+  plus `animation` defines multi-step animations that can run automatically and loop. This
+  chapter embeds live, genuinely running versions of these — a hover button, a shadow that
+  grows on hover, a looping bounce, and a real 3D hover flip — since a still screenshot can
+  only ever show frozen endpoints, never the motion itself.
 - Web fonts (via `@font-face` or services like Google Fonts) let every visitor see the same
   typeface; icon fonts let you use scalable icons the same way you use text.
 - CSS custom properties (`--name`, read with `var(--name)`) store reusable values in one

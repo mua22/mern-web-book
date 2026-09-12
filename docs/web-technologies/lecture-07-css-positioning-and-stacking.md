@@ -22,7 +22,7 @@ you will still encounter in real code.
 - The four positioning schemes: `relative`, `absolute`, `fixed`, and `sticky`
 - Offset properties (`top`, `right`, `bottom`, `left`) and the containing block
 - `z-index` and stacking contexts
-- Floats, clearing, and common layout pitfalls
+- Floats, the `clear` property, `overflow`, and common layout pitfalls
 
 ## Normal Document Flow and Static Positioning
 
@@ -252,7 +252,35 @@ text wraps along the right side of the floated image instead of starting below i
 A floated element is taken out of normal flow horizontally: it shifts to the left or right
 edge of its container, and other inline content flows around it.
 
-### Clearing Floats
+### The `clear` Property
+
+Before looking at the classic float-layout fix, it's worth knowing what `clear` actually
+does on its own: it tells an element "do not sit beside a floated element on this side —
+move down below it instead."
+
+```css
+.next-section {
+  clear: both;   /* moves below any floated elements before it, on either side */
+}
+```
+
+| Value | Behaviour |
+|---|---|
+| `left` | Moves below any preceding **left**-floated elements |
+| `right` | Moves below any preceding **right**-floated elements |
+| `both` | Moves below floated elements on **either** side — by far the most common value |
+| `none` (default) | No clearing — the element is free to sit beside a float |
+
+```html
+<img class="photo" src="photo.jpg" alt="A photo" style="float: left;">
+<p>This text wraps around the floated photo.</p>
+<h2 style="clear: both;">Next Section</h2>
+```
+
+Without `clear: both` on the `<h2>`, it could end up squeezed into the remaining space
+beside the floated image instead of starting cleanly on its own line below it.
+
+### Clearing Floats: The Collapsing Parent Problem
 
 A well-known pitfall: if **every** child inside a container is floated, the container often
 collapses to zero height, because floated elements no longer "count" toward their parent's
@@ -266,10 +294,10 @@ height in normal flow. This is sometimes called the **collapsing parent problem*
 }
 ```
 
-Applying a class like `.clearfix` (using the `clear` property) to the parent forces it to
-account for the height of its floated children again. The `clear` property tells an element
-"do not sit beside a floated element on this side — move below it instead," which is what
-makes this trick work.
+Applying a class like `.clearfix` to the parent adds an invisible, empty element after its
+floated children and sets `clear: both` on it — the property you just saw — which forces
+that invisible element (and therefore the parent that contains it) to account for the full
+height of its floated children again.
 
 The difference is easy to miss in prose but obvious once rendered side by side — the same
 container and floated children, with and without `.clearfix` applied:
@@ -282,6 +310,53 @@ container and floated children, with and without `.clearfix` applied:
     powerful and predictable — you generally should not reach for floats for page layout
     today.
 
+### Overflow: A Simpler Alternative for Containing Floats
+
+**Overflow** happens whenever an element's content is too big to fit inside its own box —
+floated children spilling out of their parent (above) is one specific case of this, but it
+comes up any time content is simply larger than a fixed-size box. The `overflow` property
+tells the browser what to do about it.
+
+```css
+.box {
+  width: 200px;
+  height: 100px;
+  overflow: hidden;   /* clips content that doesn't fit — extra content is not shown */
+}
+```
+
+Here is the same 200×100 box with more text than it can hold, rendered twice — once with
+`overflow: visible` (the default) and once with `overflow: hidden` — so you can see the
+difference directly:
+
+![Rendered output: two 200 by 100 pixel boxes with the same overflowing paragraph of text; the left box, labeled "overflow: visible", lets two extra lines of text spill out below its border, still fully readable; the right box, labeled "overflow: hidden", clips the text off cleanly right at the border, with nothing showing below it](../assets/img/lecture-07/overflow-comparison.png)
+
+Common values:
+
+| Value | Behaviour |
+|---|---|
+| `visible` (default) | Content spills outside the box, still visible |
+| `hidden` | Content that doesn't fit is clipped and hidden |
+| `scroll` | Always shows scrollbars, letting the user scroll to see overflow |
+| `auto` | Adds scrollbars only if the content actually overflows |
+
+!!! note "About `scroll` and `auto`"
+    A static screenshot can't show a scrollbar in action. `overflow: scroll` and
+    `overflow: auto` both clip the content exactly like `hidden` does visually, but they
+    also add a scrollbar so the user can scroll down to reach the hidden part — `scroll`
+    always shows the scrollbar, `auto` only shows it when the content actually overflows.
+    Try both live in a real browser to see the scrollbar appear.
+
+!!! tip "overflow as a one-line clearfix"
+    Setting `overflow: hidden` (or `auto`) directly on a container with only floated
+    children fixes the collapsing-parent problem from above too, without writing the
+    `::after` clearfix trick at all — a floated child forces its parent to expand and
+    contain it once that parent's `overflow` is anything other than `visible`. It's shorter,
+    but has a real trade-off: unlike the dedicated `.clearfix` class, it also **clips any
+    other content** that happens to overflow that same container (like a dropdown menu or
+    a tooltip meant to spill outside it) — so `overflow: hidden` is a fine one-line fix for
+    a simple case, and the `::after` clearfix is the safer, more general-purpose tool.
+
 ### Common Layout Pitfalls
 
 - **Forgetting a containing block.** Setting `position: absolute` without a `relative`
@@ -293,10 +368,15 @@ container and floated children, with and without `.clearfix` applied:
 - **z-index "not working."** As covered above, this is almost always a stacking context
   issue on an ancestor, not a wrong z-index value.
 - **Collapsed containers from floats.** As covered above, a container with only floated
-  children collapses in height unless it is cleared.
+  children collapses in height unless it is cleared (with a clearfix) or given a non-`visible`
+  `overflow`.
 - **Confusing `fixed` inside a scroll container.** A `position: fixed` element is fixed to
   the viewport, not to a scrolling `<div>` — if you wanted it to stay pinned within just
   that div while it scrolls, you likely want `sticky` instead.
+- **`overflow: hidden` clipping more than intended.** Setting `overflow: hidden` to contain
+  floats (or just to hide extra text) also clips anything else that container's content
+  tries to spill outside of, like a dropdown menu or a tooltip — a frequent, confusing bug
+  in real layouts.
 
 ## Try It Yourself
 
@@ -328,5 +408,12 @@ container and floated children, with and without `.clearfix` applied:
   still lose to a lower one if it's trapped inside a different stacking context.
 - **Floats** pull an element to one side and let inline content wrap around it; a container
   with only floated children can collapse in height unless it is cleared.
+- The **`clear`** property (`left`/`right`/`both`/`none`) makes an element move below
+  floated elements instead of sitting beside them — it's what the `::after` clearfix trick
+  uses internally to fix a collapsed container.
+- **`overflow`** controls what happens when content doesn't fit its box (`visible` spills
+  out, `hidden` clips, `scroll`/`auto` add scrollbars); `overflow: hidden`/`auto` on a
+  float's parent is a quick one-line alternative to a full clearfix, at the cost of also
+  clipping any other overflowing content in that container.
 - Prefer flexbox and grid for modern page layout; understand floats mainly to read and
   maintain older code.
