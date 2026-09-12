@@ -1154,10 +1154,32 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#clearing-floats" class="md-nav__link">
+  <a href="#the-clear-property" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Clearing Floats
+        The clear Property
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#clearing-floats-the-collapsing-parent-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Clearing Floats: The Collapsing Parent Problem
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#overflow-a-simpler-alternative-for-containing-floats" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overflow: A Simpler Alternative for Containing Floats
       
     </span>
   </a>
@@ -2620,10 +2642,32 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#clearing-floats" class="md-nav__link">
+  <a href="#the-clear-property" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Clearing Floats
+        The clear Property
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#clearing-floats-the-collapsing-parent-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Clearing Floats: The Collapsing Parent Problem
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#overflow-a-simpler-alternative-for-containing-floats" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overflow: A Simpler Alternative for Containing Floats
       
     </span>
   </a>
@@ -2736,7 +2780,7 @@ you will still encounter in real code.</p>
 <li>The four positioning schemes: <code>relative</code>, <code>absolute</code>, <code>fixed</code>, and <code>sticky</code></li>
 <li>Offset properties (<code>top</code>, <code>right</code>, <code>bottom</code>, <code>left</code>) and the containing block</li>
 <li><code>z-index</code> and stacking contexts</li>
-<li>Floats, clearing, and common layout pitfalls</li>
+<li>Floats, the <code>clear</code> property, <code>overflow</code>, and common layout pitfalls</li>
 </ul>
 <h2 id="normal-document-flow-and-static-positioning">Normal Document Flow and Static Positioning<a class="headerlink" href="#normal-document-flow-and-static-positioning" title="Permanent link">&para;</a></h2>
 <p><strong>Normal document flow</strong> is the default way browsers lay out HTML: elements are placed one
@@ -2913,20 +2957,60 @@ text wraps along the right side of the floated image instead of starting below i
 <p><img alt="Rendered output: a blue rectangular placeholder image labeled &quot;A photo&quot; floated to the left, with a paragraph of text wrapping around its right side and continuing below it once the image's height is cleared" src="../../assets/img/lecture-07/float-wrap.png" /></p>
 <p>A floated element is taken out of normal flow horizontally: it shifts to the left or right
 edge of its container, and other inline content flows around it.</p>
-<h3 id="clearing-floats">Clearing Floats<a class="headerlink" href="#clearing-floats" title="Permanent link">&para;</a></h3>
+<h3 id="the-clear-property">The <code>clear</code> Property<a class="headerlink" href="#the-clear-property" title="Permanent link">&para;</a></h3>
+<p>Before looking at the classic float-layout fix, it's worth knowing what <code>clear</code> actually
+does on its own: it tells an element "do not sit beside a floated element on this side —
+move down below it instead."</p>
+<div class="language-css highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="p">.</span><span class="nc">next-section</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span><span class="k">clear</span><span class="p">:</span><span class="w"> </span><span class="kc">both</span><span class="p">;</span><span class="w">   </span><span class="c">/* moves below any floated elements before it, on either side */</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="p">}</span>
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Behaviour</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>left</code></td>
+<td>Moves below any preceding <strong>left</strong>-floated elements</td>
+</tr>
+<tr>
+<td><code>right</code></td>
+<td>Moves below any preceding <strong>right</strong>-floated elements</td>
+</tr>
+<tr>
+<td><code>both</code></td>
+<td>Moves below floated elements on <strong>either</strong> side — by far the most common value</td>
+</tr>
+<tr>
+<td><code>none</code> (default)</td>
+<td>No clearing — the element is free to sit beside a float</td>
+</tr>
+</tbody>
+</table>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="p">&lt;</span><span class="nt">img</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;photo&quot;</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;photo.jpg&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;A photo&quot;</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;float: left;&quot;</span><span class="p">&gt;</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>This text wraps around the floated photo.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="p">&lt;</span><span class="nt">h2</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;clear: both;&quot;</span><span class="p">&gt;</span>Next Section<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+</span></code></pre></div>
+<p>Without <code>clear: both</code> on the <code>&lt;h2&gt;</code>, it could end up squeezed into the remaining space
+beside the floated image instead of starting cleanly on its own line below it.</p>
+<h3 id="clearing-floats-the-collapsing-parent-problem">Clearing Floats: The Collapsing Parent Problem<a class="headerlink" href="#clearing-floats-the-collapsing-parent-problem" title="Permanent link">&para;</a></h3>
 <p>A well-known pitfall: if <strong>every</strong> child inside a container is floated, the container often
 collapses to zero height, because floated elements no longer "count" toward their parent's
 height in normal flow. This is sometimes called the <strong>collapsing parent problem</strong>.</p>
-<div class="language-css highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="p">.</span><span class="nc">clearfix</span><span class="p">::</span><span class="nd">after</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span><span class="k">content</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">;</span>
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">  </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">block</span><span class="p">;</span>
-</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">  </span><span class="k">clear</span><span class="p">:</span><span class="w"> </span><span class="kc">both</span><span class="p">;</span>
-</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="p">}</span>
+<div class="language-css highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="p">.</span><span class="nc">clearfix</span><span class="p">::</span><span class="nd">after</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span><span class="k">content</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">;</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">  </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">block</span><span class="p">;</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">  </span><span class="k">clear</span><span class="p">:</span><span class="w"> </span><span class="kc">both</span><span class="p">;</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="p">}</span>
 </span></code></pre></div>
-<p>Applying a class like <code>.clearfix</code> (using the <code>clear</code> property) to the parent forces it to
-account for the height of its floated children again. The <code>clear</code> property tells an element
-"do not sit beside a floated element on this side — move below it instead," which is what
-makes this trick work.</p>
+<p>Applying a class like <code>.clearfix</code> to the parent adds an invisible, empty element after its
+floated children and sets <code>clear: both</code> on it — the property you just saw — which forces
+that invisible element (and therefore the parent that contains it) to account for the full
+height of its floated children again.</p>
 <p>The difference is easy to miss in prose but obvious once rendered side by side — the same
 container and floated children, with and without <code>.clearfix</code> applied:</p>
 <p><img alt="Rendered output: two bordered containers each holding two orange floated boxes labeled Floated child 1 and Floated child 2. The top container, without clearfix, has its border collapsed to a thin sliver above the floated boxes, which spill out below it. The bottom container, with clearfix applied, has its border stretched down to fully enclose both floated boxes" src="../../assets/img/lecture-07/clearfix-before-after.png" /></p>
@@ -2936,6 +3020,67 @@ container and floated children, with and without <code>.clearfix</code> applied:
 that reason. But for new layouts, flexbox and grid (covered in Lecture 9) are far more
 powerful and predictable — you generally should not reach for floats for page layout
 today.</p>
+</div>
+<h3 id="overflow-a-simpler-alternative-for-containing-floats">Overflow: A Simpler Alternative for Containing Floats<a class="headerlink" href="#overflow-a-simpler-alternative-for-containing-floats" title="Permanent link">&para;</a></h3>
+<p><strong>Overflow</strong> happens whenever an element's content is too big to fit inside its own box —
+floated children spilling out of their parent (above) is one specific case of this, but it
+comes up any time content is simply larger than a fixed-size box. The <code>overflow</code> property
+tells the browser what to do about it.</p>
+<div class="language-css highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="p">.</span><span class="nc">box</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">  </span><span class="k">width</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="kt">px</span><span class="p">;</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="w">  </span><span class="k">height</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="kt">px</span><span class="p">;</span>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="w">  </span><span class="k">overflow</span><span class="p">:</span><span class="w"> </span><span class="kc">hidden</span><span class="p">;</span><span class="w">   </span><span class="c">/* clips content that doesn&#39;t fit — extra content is not shown */</span>
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>Here is the same 200×100 box with more text than it can hold, rendered twice — once with
+<code>overflow: visible</code> (the default) and once with <code>overflow: hidden</code> — so you can see the
+difference directly:</p>
+<p><img alt="Rendered output: two 200 by 100 pixel boxes with the same overflowing paragraph of text; the left box, labeled &quot;overflow: visible&quot;, lets two extra lines of text spill out below its border, still fully readable; the right box, labeled &quot;overflow: hidden&quot;, clips the text off cleanly right at the border, with nothing showing below it" src="../../assets/img/lecture-07/overflow-comparison.png" /></p>
+<p>Common values:</p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Behaviour</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>visible</code> (default)</td>
+<td>Content spills outside the box, still visible</td>
+</tr>
+<tr>
+<td><code>hidden</code></td>
+<td>Content that doesn't fit is clipped and hidden</td>
+</tr>
+<tr>
+<td><code>scroll</code></td>
+<td>Always shows scrollbars, letting the user scroll to see overflow</td>
+</tr>
+<tr>
+<td><code>auto</code></td>
+<td>Adds scrollbars only if the content actually overflows</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">About <code>scroll</code> and <code>auto</code></p>
+<p>A static screenshot can't show a scrollbar in action. <code>overflow: scroll</code> and
+<code>overflow: auto</code> both clip the content exactly like <code>hidden</code> does visually, but they
+also add a scrollbar so the user can scroll down to reach the hidden part — <code>scroll</code>
+always shows the scrollbar, <code>auto</code> only shows it when the content actually overflows.
+Try both live in a real browser to see the scrollbar appear.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">overflow as a one-line clearfix</p>
+<p>Setting <code>overflow: hidden</code> (or <code>auto</code>) directly on a container with only floated
+children fixes the collapsing-parent problem from above too, without writing the
+<code>::after</code> clearfix trick at all — a floated child forces its parent to expand and
+contain it once that parent's <code>overflow</code> is anything other than <code>visible</code>. It's shorter,
+but has a real trade-off: unlike the dedicated <code>.clearfix</code> class, it also <strong>clips any
+other content</strong> that happens to overflow that same container (like a dropdown menu or
+a tooltip meant to spill outside it) — so <code>overflow: hidden</code> is a fine one-line fix for
+a simple case, and the <code>::after</code> clearfix is the safer, more general-purpose tool.</p>
 </div>
 <h3 id="common-layout-pitfalls">Common Layout Pitfalls<a class="headerlink" href="#common-layout-pitfalls" title="Permanent link">&para;</a></h3>
 <ul>
@@ -2948,10 +3093,15 @@ today.</p>
 <li><strong>z-index "not working."</strong> As covered above, this is almost always a stacking context
   issue on an ancestor, not a wrong z-index value.</li>
 <li><strong>Collapsed containers from floats.</strong> As covered above, a container with only floated
-  children collapses in height unless it is cleared.</li>
+  children collapses in height unless it is cleared (with a clearfix) or given a non-<code>visible</code>
+  <code>overflow</code>.</li>
 <li><strong>Confusing <code>fixed</code> inside a scroll container.</strong> A <code>position: fixed</code> element is fixed to
   the viewport, not to a scrolling <code>&lt;div&gt;</code> — if you wanted it to stay pinned within just
   that div while it scrolls, you likely want <code>sticky</code> instead.</li>
+<li><strong><code>overflow: hidden</code> clipping more than intended.</strong> Setting <code>overflow: hidden</code> to contain
+  floats (or just to hide extra text) also clips anything else that container's content
+  tries to spill outside of, like a dropdown menu or a tooltip — a frequent, confusing bug
+  in real layouts.</li>
 </ul>
 <h2 id="try-it-yourself">Try It Yourself<a class="headerlink" href="#try-it-yourself" title="Permanent link">&para;</a></h2>
 <ol>
@@ -2983,6 +3133,13 @@ today.</p>
   still lose to a lower one if it's trapped inside a different stacking context.</li>
 <li><strong>Floats</strong> pull an element to one side and let inline content wrap around it; a container
   with only floated children can collapse in height unless it is cleared.</li>
+<li>The <strong><code>clear</code></strong> property (<code>left</code>/<code>right</code>/<code>both</code>/<code>none</code>) makes an element move below
+  floated elements instead of sitting beside them — it's what the <code>::after</code> clearfix trick
+  uses internally to fix a collapsed container.</li>
+<li><strong><code>overflow</code></strong> controls what happens when content doesn't fit its box (<code>visible</code> spills
+  out, <code>hidden</code> clips, <code>scroll</code>/<code>auto</code> add scrollbars); <code>overflow: hidden</code>/<code>auto</code> on a
+  float's parent is a quick one-line alternative to a full clearfix, at the cost of also
+  clipping any other overflowing content in that container.</li>
 <li>Prefer flexbox and grid for modern page layout; understand floats mainly to read and
   maintain older code.</li>
 </ul>
@@ -3006,7 +3163,7 @@ today.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 7, 2026 05:31:40 UTC">September 7, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 12, 2026 21:09:24 UTC">September 12, 2026</span>
   </span>
 
     

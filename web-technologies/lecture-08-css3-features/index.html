@@ -2833,7 +2833,8 @@ to turn a plain, flat-looking page into something that feels modern and alive.</
 <ul>
 <li>Draw rounded corners, gradients, shadows, and control opacity with pure CSS</li>
 <li>Move, rotate, and scale elements in 2D and 3D using transforms</li>
-<li>Animate changes smoothly with transitions and keyframe animations</li>
+<li>Animate changes smoothly with transitions and keyframe animations — with live, actually
+  running demos embedded right in this chapter, not just screenshots</li>
 <li>Use web fonts and icon fonts, and store reusable values in CSS custom properties (variables)</li>
 <li>Adapt styles to different screens with media and feature queries</li>
 <li>Understand vendor prefixes and why cross-browser compatibility still matters</li>
@@ -2911,8 +2912,31 @@ radial (spreading out from a center point).</p>
 </span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="w">  </span><span class="k">text-shadow</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="kt">px</span><span class="w"> </span><span class="mi">2</span><span class="kt">px</span><span class="w"> </span><span class="mi">4</span><span class="kt">px</span><span class="w"> </span><span class="nb">rgba</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">);</span>
 </span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="p">}</span>
 </span></code></pre></div>
-<p>The <code>.card</code>'s default <code>box-shadow</code> next to its <code>:hover</code> end state (bigger, softer shadow), and the <code>text-shadow</code>'d heading:</p>
-<p><img alt="Rendered output: two white rounded cards, the left with a small soft drop shadow labeled &quot;Default&quot; and the right with a larger, more spread-out drop shadow labeled &quot;On hover (end state)&quot;" src="../../assets/img/lecture-08/box-shadow-default-hover.png" /></p>
+<p>Rather than a screenshot of two frozen states, here is the exact <code>.card</code>/<code>.card:hover</code> rule
+above, live — hover it to watch the shadow genuinely grow and soften:</p>
+<div class="wdb-live-demo" markdown="0">
+<style>
+.wdb-demo-shadow-card {
+  display: inline-block;
+  width: 200px;
+  padding: 24px;
+  background: #fff;
+  color: #222;
+  border-radius: 10px;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+.wdb-demo-shadow-card:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+  transform: translateY(-3px);
+}
+</style>
+<div class="wdb-demo-shadow-card">Hover Me</div>
+<p class="wdb-live-caption">Live demo — the exact <code>.card</code> / <code>.card:hover</code> <code>box-shadow</code> CSS above, actually running.</p>
+</div>
+
+<p>And the <code>text-shadow</code>'d heading:</p>
 <p><img alt="Rendered output: bold black heading text &quot;Shadowed Heading&quot; with a soft dark drop shadow offset down and to the right" src="../../assets/img/lecture-08/text-shadow-heading.png" /></p>
 <p><code>rgba()</code> is a color function that adds a fourth value — <strong>alpha</strong>, or transparency — on top
 of the usual red, green, and blue. <code>rgba(0, 0, 0, 0.2)</code> is black at 20% opacity, which is
@@ -2984,8 +3008,37 @@ the "viewer" is from the 3D scene.</p>
 </span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="w">  </span><span class="k">transform</span><span class="p">:</span><span class="w"> </span><span class="nb">rotateY</span><span class="p">(</span><span class="mi">0</span><span class="kt">deg</span><span class="p">);</span>
 </span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="p">}</span>
 </span></code></pre></div>
-<p>The card at its default <code>rotateY(25deg)</code> angle next to its <code>:hover</code> end state (<code>rotateY(0deg)</code>, flat-on) — the <code>perspective: 800px</code> on the parent <code>.scene</code> is what makes the default state look tilted in 3D instead of just squashed:</p>
-<p><img alt="Rendered output: two rounded gradient cards reading &quot;rotateY(25deg)&quot; and &quot;rotateY(0deg)&quot; — the left card appears subtly tilted in 3D perspective, the right sits flat facing the viewer" src="../../assets/img/lecture-08/transform-3d-perspective-card.png" /></p>
+<p>A 3D tilt is exactly the kind of thing a flat screenshot struggles to sell — so here is the
+exact <code>.scene</code>/<code>.card-3d</code> CSS above, live: the card sits tilted in real 3D perspective by
+default, then rotates flat to face you on hover:</p>
+<div class="wdb-live-demo" markdown="0">
+<style>
+.wdb-demo-scene {
+  display: inline-block;
+  perspective: 800px;
+}
+.wdb-demo-card-3d {
+  width: 220px;
+  height: 130px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #6c5ce7, #341f97);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 15px;
+  transform: rotateY(25deg);
+  transition: transform 0.4s ease;
+}
+.wdb-demo-card-3d:hover {
+  transform: rotateY(0deg);
+}
+</style>
+<div class="wdb-demo-scene"><div class="wdb-demo-card-3d">Hover Me</div></div>
+<p class="wdb-live-caption">Live demo — the exact <code>.card-3d</code> / <code>.card-3d:hover</code> CSS above, actually rotating in 3D.</p>
+</div>
+
 <table>
 <thead>
 <tr>
@@ -3025,8 +3078,32 @@ set duration, instead of the change happening instantly.</p>
 </span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">  </span><span class="k">transform</span><span class="p">:</span><span class="w"> </span><span class="nb">scale</span><span class="p">(</span><span class="mf">1.05</span><span class="p">);</span>
 </span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="p">}</span>
 </span></code></pre></div>
-<p>A static screenshot cannot show the smooth animated change itself — that part you have to see by actually hovering the button in a real browser — but it can show the two endpoints the transition moves between: the default button, and the <code>:hover</code> styles applied directly as the end state (darker blue, slightly scaled up):</p>
-<p><img alt="Rendered output: two blue rounded &quot;Click Me&quot; buttons, the left a lighter royal blue at normal size labeled &quot;Default&quot;, the right a darker navy blue and slightly larger labeled &quot;On hover (end state)&quot;" src="../../assets/img/lecture-08/transition-button-default-hover.png" /></p>
+<p>A screenshot can only ever show two frozen endpoints of a transition, never the smooth
+motion between them — so here is a genuinely live version of the exact CSS above, running
+right on this page. Hover it with a real mouse (or tap it on a touch screen):</p>
+<div class="wdb-live-demo" markdown="0">
+<style>
+.wdb-demo-transition-btn {
+  background-color: royalblue;
+  color: #fff;
+  border: none;
+  padding: 12px 30px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+.wdb-demo-transition-btn:hover {
+  background-color: darkblue;
+  transform: scale(1.05);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
+}
+</style>
+<button class="wdb-demo-transition-btn">Hover Me</button>
+<p class="wdb-live-caption">Live demo — this is the exact <code>button</code>/<code>button:hover</code> CSS above, actually running.</p>
+</div>
+
 <p>The <code>transition</code> shorthand takes: <code>property | duration | timing-function | delay</code>. Using
 <code>all</code> instead of naming a property (<code>transition: all 0.3s;</code>) animates every property that
 changes, which is convenient but can be slower to render on complex pages.</p>
@@ -3045,8 +3122,35 @@ sequence — multiple steps, or an animation that plays automatically without a 
 </span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">  </span><span class="c">/* name | duration | timing-function | iteration-count */</span>
 </span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="p">}</span>
 </span></code></pre></div>
-<p>Like the transition above, the actual looping motion only shows up in a live browser. What a still image <em>can</em> show is the three keyframe positions the ball passes through on every cycle:</p>
-<p><img alt="Rendered output: three orange circles labeled &quot;0% (translateY(0))&quot;, &quot;50% (translateY(-20px))&quot;, and &quot;100% (translateY(0))&quot; — the middle circle sitting noticeably higher than the other two" src="../../assets/img/lecture-08/keyframe-bounce-frames.png" /></p>
+<p>Like the transition above, the looping motion only really means something in real motion —
+so here is the exact <code>bounce</code> keyframe animation above, running live and looping forever on
+this page:</p>
+<div class="wdb-live-demo" markdown="0">
+<style>
+.wdb-demo-bounce-track {
+  position: relative;
+  height: 90px;
+}
+.wdb-demo-ball {
+  position: absolute;
+  left: calc(50% - 18px);
+  top: 50px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #ff8a3d;
+  animation: wdb-demo-bounce 1s ease-in-out infinite;
+}
+@keyframes wdb-demo-bounce {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-40px); }
+  100% { transform: translateY(0); }
+}
+</style>
+<div class="wdb-demo-bounce-track"><div class="wdb-demo-ball"></div></div>
+<p class="wdb-live-caption">Live demo — the exact <code>@keyframes bounce</code> animation above, actually looping.</p>
+</div>
+
 <p>You define the <code>@keyframes</code> rule once, naming it (<code>bounce</code>), then attach it to any element
 with the <code>animation</code> property. <code>infinite</code> means it loops forever; you could instead write
 a number like <code>3</code> to play it three times.</p>
@@ -3246,7 +3350,10 @@ not every visitor uses the newest version of Chrome.</p>
 <li><code>transform</code> (2D and 3D) repositions, rotates, or resizes elements without disturbing page
   layout; 3D transforms need <code>perspective</code> on a parent to look correct.</li>
 <li><code>transition</code> animates smoothly between two states (like normal and <code>:hover</code>); <code>@keyframes</code>
-  plus <code>animation</code> defines multi-step animations that can run automatically and loop.</li>
+  plus <code>animation</code> defines multi-step animations that can run automatically and loop. This
+  chapter embeds live, genuinely running versions of these — a hover button, a shadow that
+  grows on hover, a looping bounce, and a real 3D hover flip — since a still screenshot can
+  only ever show frozen endpoints, never the motion itself.</li>
 <li>Web fonts (via <code>@font-face</code> or services like Google Fonts) let every visitor see the same
   typeface; icon fonts let you use scalable icons the same way you use text.</li>
 <li>CSS custom properties (<code>--name</code>, read with <code>var(--name)</code>) store reusable values in one
@@ -3276,7 +3383,7 @@ not every visitor uses the newest version of Chrome.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 7, 2026 05:32:49 UTC">September 7, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 12, 2026 21:09:24 UTC">September 12, 2026</span>
   </span>
 
     
