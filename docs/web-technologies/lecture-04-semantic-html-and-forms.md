@@ -20,8 +20,10 @@ forms.
 - Understand the difference between block-level and inline elements
 - Use the generic `<div>` and `<span>` elements correctly
 - Learn HTML5's semantic elements and why they matter for accessibility and SEO
-- Build forms with the `<form>` element, its `action` and `method` attributes
+- Build forms with the `<form>` element, its `action` and `method` attributes — including a
+  real `GET` form that submits a search straight to Google
 - Use `<input>` types, `<select>`, `<textarea>`, and `<button>`
+- Upload files with `<input type="file">` and understand why `multipart/form-data` matters
 - Add client-side validation with `required`, `pattern`, `min`, and `max`
 
 ## Block-Level vs. Inline Elements
@@ -237,6 +239,39 @@ inputs simply flow together left to right like any other inline content:
 You will learn much more about HTTP methods and servers in later lectures (Unit 5). For
 now, just remember: `GET` reads/retrieves, `POST` submits/changes.
 
+### A Real Example: Searching Google with a GET Form
+
+`GET` forms aren't just a theoretical example — Google's own search box works exactly this
+way, and you can submit a real search straight to it from a page you write yourself:
+
+```html
+<form action="https://www.google.com/search" method="GET">
+    <label for="q">Search Google:</label>
+    <input type="text" id="q" name="q" placeholder="Type your search...">
+    <button type="submit">Search</button>
+</form>
+```
+
+![Rendered output: a "Search Google:" label next to an empty text box with placeholder "Type your search...", followed by a "Search" button](../assets/img/lecture-04/google-search-form.png)
+
+Because `method="GET"`, clicking Search doesn't send anything to a server you control at
+all — it navigates the browser straight to a URL built from the input's `name` and whatever
+was typed, for example:
+
+```text
+https://www.google.com/search?q=web+technologies+comsats
+```
+
+`name="q"` is not an arbitrary choice here — it is the exact query-parameter name Google's
+search endpoint expects. This is the "GET appends form data to the URL as a query string"
+behavior from above, working against a real, live search engine instead of a made-up
+example.
+
+!!! tip "Try it yourself"
+    Save the form above as an `.html` file and open it directly in your browser (no server
+    needed). Type something and click Search — it genuinely searches Google, because you
+    are submitting to Google's real endpoint with the exact parameter name it reads.
+
 Here is the journey a form's data takes when the user clicks submit:
 
 ```mermaid
@@ -313,6 +348,75 @@ themselves are exactly as shown in the code above.
 
 `placeholder` shows light gray hint text inside an empty input; it disappears once the user
 starts typing, and it is not a substitute for a `<label>`.
+
+### Uploading Files: `multipart/form-data`
+
+`<input type="file">` looks like just another input, but submitting a file is different
+from submitting text in one important way: text can be squeezed into a URL or a simple
+text body, but a file's raw bytes cannot.
+
+```html
+<form action="/upload-resume" method="POST" enctype="multipart/form-data">
+    <label for="resume">Upload your resume (PDF):</label>
+    <input type="file" id="resume" name="resume" accept=".pdf">
+
+    <label for="photos">Upload photos (you can pick several):</label>
+    <input type="file" id="photos" name="photos" accept="image/*" multiple>
+
+    <button type="submit">Upload</button>
+</form>
+```
+
+Two things about this form are non-negotiable for a file upload to actually work:
+
+- **`method="POST"`** — a file **cannot** be submitted with `GET` at all. `GET` sends data
+  as text appended to a URL, and there is no way to fit a file's binary contents into a URL.
+- **`enctype="multipart/form-data"`** — this is the easiest part to forget, and forms fail
+  silently without it. By default, a form encodes its data as
+  `application/x-www-form-urlencoded`, a format built for plain text key/value pairs. Set
+  `enctype="multipart/form-data"` and the browser switches to a format built to carry both
+  ordinary text fields *and* raw file bytes together in one request.
+
+`accept` (`.pdf`, `image/*`, and so on) is a hint that filters what the browser's file
+picker shows — it is *not* a security check. A user can still rename any file, so the
+server must always re-validate the uploaded file's real type before trusting it.
+`multiple` lets a single `<input type="file">` accept more than one file at once.
+
+#### What `multipart/form-data` Actually Looks Like
+
+Turning on `multipart/form-data` changes what the browser actually sends. Instead of one
+plain string of `key=value&key=value` pairs, the request body is split into separate
+**parts** — one per field — each with its own small header, so text fields and raw file
+data can travel side by side in a single request:
+
+```text
+POST /upload-resume HTTP/1.1
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryABC123
+
+------WebKitFormBoundaryABC123
+Content-Disposition: form-data; name="resume"; filename="ali-khan-cv.pdf"
+Content-Type: application/pdf
+
+%PDF-1.4 ...(raw binary bytes of the file)...
+------WebKitFormBoundaryABC123
+Content-Disposition: form-data; name="submitterName"
+
+Ali Khan
+------WebKitFormBoundaryABC123--
+```
+
+- The `boundary` is a unique marker string the browser generates just for this request,
+  used to separate one part from the next.
+- Each part carries its own `Content-Disposition` (naming the field, and for a file, its
+  original `filename`) and its own `Content-Type` describing what that one part contains.
+- An ordinary text field (`submitterName` above) is still just one more part in the same
+  request — it rides alongside the file, not in a separate request.
+
+!!! note "You won't parse this by hand"
+    Node.js/Express (with a library like `multer`, covered later in this course) parses
+    `multipart/form-data` for you automatically on the server side — you'll never write
+    boundary-splitting code yourself. What matters right now is recognizing *why* `enctype`
+    exists, and remembering to set it whenever a form includes a file input.
 
 ### `<select>`, `<textarea>`, and `<button>`
 
@@ -444,9 +548,13 @@ appears in a real browser when you try to submit the form with invalid or missin
   `<footer>`) describe the *role* of content, improving accessibility for screen readers
   and boosting SEO.
 - The `<form>` element's `action` sets where data is sent, and `method` (`GET` or `POST`)
-  sets how it's sent; use `POST` for anything sensitive or data-changing.
+  sets how it's sent; use `POST` for anything sensitive or data-changing. A `GET` form
+  submits by building a URL with a query string — exactly how Google's own search box works.
 - `<input type="...">` covers most form controls; `<select>` gives a dropdown,
   `<textarea>` gives multi-line text, and `<button>` triggers submit/reset/custom actions.
+- File uploads need `method="POST"` (a file's bytes can't fit in a URL) and
+  `enctype="multipart/form-data"` (so the browser can send text fields and raw file data
+  together in one request); the `accept` attribute is a filter hint, not a security check.
 - `required`, `pattern`, `min`, and `max` provide instant client-side validation, but must
   always be backed up by server-side validation for real security.
 - Always pair form inputs with `<label>` elements connected via matching `for`/`id`
