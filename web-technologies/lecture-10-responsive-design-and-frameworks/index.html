@@ -1177,6 +1177,56 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#media-query-syntax-and-comma-and-not" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Media Query Syntax: and, comma, and not
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Media Query Syntax: and, comma, and not">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#combining-min-width-and-max-width-targeting-a-range" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Combining min-width and max-width: targeting a range
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#combining-conditions-with-or" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Combining conditions with , (OR)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#other-media-features-you-will-run-into" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Other media features you will run into
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#responsive-images" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2570,6 +2620,56 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#media-query-syntax-and-comma-and-not" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Media Query Syntax: and, comma, and not
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Media Query Syntax: and, comma, and not">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#combining-min-width-and-max-width-targeting-a-range" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Combining min-width and max-width: targeting a range
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#combining-conditions-with-or" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Combining conditions with , (OR)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#other-media-features-you-will-run-into" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Other media features you will run into
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#responsive-images" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2755,7 +2855,9 @@ framework — Bootstrap and Tailwind CSS — that make responsive design faster 
 <h2 id="in-this-lecture">In This Lecture<a class="headerlink" href="#in-this-lecture" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Understand mobile-first design, the viewport meta tag, and fluid units (<code>%</code>, <code>rem</code>, <code>vw</code>/<code>vh</code>)</li>
-<li>Use media queries and breakpoints, and make images respond to screen size</li>
+<li>Use media queries and breakpoints — combining conditions with <code>and</code>/<code>,</code>/<code>not</code>, and
+  features beyond width like <code>orientation</code>, <code>prefers-color-scheme</code>, and <code>print</code> — and make
+  images respond to screen size</li>
 <li>Compare component-based frameworks (Bootstrap) with utility-first frameworks (Tailwind)</li>
 <li>Learn Bootstrap's grid system, components, and utilities</li>
 <li>Learn Tailwind's utility-class structure</li>
@@ -2895,13 +2997,133 @@ stacks them into a single column instead:</p>
 not a fixed rulebook. That said, most frameworks (including Bootstrap, which you will see
 below) converge on a similar rough set of common device widths: around 576px (large
 phones), 768px (tablets), 992px (laptops), and 1200px+ (desktops).</p>
+<h3 id="media-query-syntax-and-comma-and-not">Media Query Syntax: <code>and</code>, comma, and <code>not</code><a class="headerlink" href="#media-query-syntax-and-comma-and-not" title="Permanent link">&para;</a></h3>
+<p>The general shape of a media query is:</p>
+<div class="language-css highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">@</span><span class="k">media</span><span class="w"> </span><span class="o">[</span><span class="nt">not</span><span class="o">]</span><span class="w"> </span><span class="nt">media-type</span><span class="w"> </span><span class="nt">and</span><span class="w"> </span><span class="o">(</span><span class="nt">media-feature</span><span class="o">:</span><span class="w"> </span><span class="nt">value</span><span class="o">)</span><span class="w"> </span><span class="nt">and</span><span class="w"> </span><span class="o">(</span><span class="nt">media-feature</span><span class="o">:</span><span class="w"> </span><span class="nt">value</span><span class="o">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="c">/* CSS rules to apply */</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="p">}</span>
+</span></code></pre></div>
+<ul>
+<li><strong><code>media-type</code></strong> is optional and is almost always <code>screen</code> (or left out entirely, which
+  means "all types"). You will also meet the <code>print</code> type below.</li>
+<li><strong><code>and</code></strong> combines multiple conditions — <em>every</em> condition joined by <code>and</code> must be true
+  for the rule to apply.</li>
+<li><strong><code>,</code></strong> (a comma) works like <strong>or</strong> — the media query matches if <em>any</em> one of the
+  comma-separated conditions is true.</li>
+<li><strong><code>not</code></strong> inverts an entire media query's result. If you use <code>not</code>, you must also name a
+  media type.</li>
+</ul>
+<h4 id="combining-min-width-and-max-width-targeting-a-range">Combining <code>min-width</code> and <code>max-width</code>: targeting a range<a class="headerlink" href="#combining-min-width-and-max-width-targeting-a-range" title="Permanent link">&para;</a></h4>
+<p><code>and</code> lets you target a specific band of screen sizes — for example, "tablets only, not
+phones and not desktops":</p>
+<div class="language-css highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c">/* Applies only between 768px and 1199px (inclusive) — a &quot;tablet-only&quot; range */</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="p">@</span><span class="k">media</span><span class="w"> </span><span class="o">(</span><span class="nt">min-width</span><span class="o">:</span><span class="w"> </span><span class="nt">768px</span><span class="o">)</span><span class="w"> </span><span class="nt">and</span><span class="w"> </span><span class="o">(</span><span class="nt">max-width</span><span class="o">:</span><span class="w"> </span><span class="nt">1199px</span><span class="o">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span><span class="p">.</span><span class="nc">sidebar</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="p">;</span><span class="w"> </span><span class="c">/* hide the sidebar just on this one range of screens */</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="p">}</span>
+</span></code></pre></div>
+<h4 id="combining-conditions-with-or">Combining conditions with <code>,</code> (OR)<a class="headerlink" href="#combining-conditions-with-or" title="Permanent link">&para;</a></h4>
+<div class="language-css highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c">/* Applies if EITHER the screen is 480px or narrower, OR the device is in portrait mode */</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="p">@</span><span class="k">media</span><span class="w"> </span><span class="o">(</span><span class="nt">max-width</span><span class="o">:</span><span class="w"> </span><span class="nt">480px</span><span class="o">),</span><span class="w"> </span><span class="o">(</span><span class="nt">orientation</span><span class="o">:</span><span class="w"> </span><span class="nt">portrait</span><span class="o">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span><span class="p">.</span><span class="nc">hero</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span><span class="k">font-size</span><span class="p">:</span><span class="w"> </span><span class="mf">1.2</span><span class="kt">rem</span><span class="p">;</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="p">}</span>
+</span></code></pre></div>
+<h4 id="other-media-features-you-will-run-into">Other media features you will run into<a class="headerlink" href="#other-media-features-you-will-run-into" title="Permanent link">&para;</a></h4>
+<p>Width and height are the most common media features, but <code>@media</code> can test several other
+things about the device and the user's preferences:</p>
+<div class="language-css highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c">/* orientation: is the viewport wider than it is tall, or the opposite? */</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="p">@</span><span class="k">media</span><span class="w"> </span><span class="o">(</span><span class="nt">orientation</span><span class="o">:</span><span class="w"> </span><span class="nt">landscape</span><span class="o">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span><span class="p">.</span><span class="nc">gallery</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span><span class="k">grid-template-columns</span><span class="p">:</span><span class="w"> </span><span class="nf">repeat</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="n">fr</span><span class="p">);</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="p">}</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="c">/* prefers-color-scheme: respects the user&#39;s OS/browser dark mode setting */</span>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="p">@</span><span class="k">media</span><span class="w"> </span><span class="o">(</span><span class="nt">prefers-color-scheme</span><span class="o">:</span><span class="w"> </span><span class="nt">dark</span><span class="o">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="w">  </span><span class="nt">body</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="w">    </span><span class="k">background</span><span class="p">:</span><span class="w"> </span><span class="mh">#111</span><span class="p">;</span>
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="w">    </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="mh">#eee</span><span class="p">;</span>
+</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a><span class="p">}</span>
+</span><span id="__span-6-15"><a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>
+</span><span id="__span-6-16"><a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a><span class="c">/* print: a media TYPE, not a feature — only applies when the page is printed */</span>
+</span><span id="__span-6-17"><a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a><span class="p">@</span><span class="k">media</span><span class="w"> </span><span class="nt">print</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-6-18"><a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a><span class="w">  </span><span class="nt">nav</span><span class="o">,</span><span class="w"> </span><span class="nt">footer</span><span class="o">,</span><span class="w"> </span><span class="p">.</span><span class="nc">no-print</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-6-19"><a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a><span class="w">    </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="p">;</span><span class="w"> </span><span class="c">/* don&#39;t waste paper printing navigation or footers */</span>
+</span><span id="__span-6-20"><a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-6-21"><a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a><span class="p">}</span>
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Media feature / type</th>
+<th>Matches</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>min-width</code> / <code>max-width</code></td>
+<td>Viewport at least / at most this wide</td>
+</tr>
+<tr>
+<td><code>min-height</code> / <code>max-height</code></td>
+<td>Viewport at least / at most this tall</td>
+</tr>
+<tr>
+<td><code>orientation: portrait</code> / <code>landscape</code></td>
+<td>Viewport taller-than-wide, or wider-than-tall</td>
+</tr>
+<tr>
+<td><code>prefers-color-scheme: light</code> / <code>dark</code></td>
+<td>The user's OS/browser light or dark mode setting</td>
+</tr>
+<tr>
+<td><code>print</code> (a media type, not a feature)</td>
+<td>The page is being printed or print-previewed</td>
+</tr>
+<tr>
+<td><code>hover</code> / <code>pointer</code></td>
+<td>Whether the input device can hover, and how precise it is (mouse vs. touch)</td>
+</tr>
+</tbody>
+</table>
+<p>None of <code>orientation</code>, <code>prefers-color-scheme</code>, or <code>print</code> can be demonstrated in a static
+screenshot — each depends on something about the <em>device or user setting</em>, not just window
+width — but they use exactly the same <code>@media (feature: value) { ... }</code> syntax you have
+already seen for <code>min-width</code>/<code>max-width</code>, so nothing new to learn beyond the feature names
+themselves.</p>
+<div class="admonition tip">
+<p class="admonition-title">Practice these live on W3Schools</p>
+<p>W3Schools has several free, editable "Try it Yourself" pages built around exactly this
+topic — open one, resize the results pane (or the whole browser window), and watch the
+breakpoint fire in real time:</p>
+<ul>
+<li><a href="https://www.w3schools.com/css/css3_mediaqueries.asp">CSS Media Queries</a> — the full
+  <code>@media</code> syntax, including <code>and</code>, <code>,</code>, <code>not</code>, and <code>orientation</code></li>
+<li><a href="https://www.w3schools.com/css/css3_mediaqueries_ex.asp">CSS Media Queries — Examples</a> —
+  several live, editable breakpoint demos (background colors, column counts) you can
+  resize and rerun instantly</li>
+<li><a href="https://www.w3schools.com/css/css_rwd_mediaqueries.asp">Responsive Web Design — Media Queries</a> —
+  the same mobile-first breakpoint pattern used earlier in this lecture</li>
+<li><a href="https://www.w3schools.com/css/css_rwd_grid.asp">Responsive Web Design — Grid View</a> —
+  a realistic multi-column layout built entirely from breakpoints</li>
+<li><a href="https://www.w3schools.com/howto/howto_js_mobile_navbar.asp">How To — Create a Mobile Navigation Menu</a> —
+  a complete, realistic navbar that collapses to a hamburger icon below a breakpoint</li>
+<li><a href="https://www.w3schools.com/cssref/css3_pr_mediaquery.php">CSS <code>@media</code> Rule reference</a> —
+  the full list of media types and features, for whenever you need one this lecture
+  didn't cover</li>
+</ul>
+</div>
 <h3 id="responsive-images">Responsive images<a class="headerlink" href="#responsive-images" title="Permanent link">&para;</a></h3>
 <p>An image with a fixed <code>width</code> in pixels will overflow a small screen's container and force
 horizontal scrolling — one of the most common beginner mistakes. The fix is simple:</p>
-<div class="language-css highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nt">img</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="k">max-width</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="kt">%</span><span class="p">;</span>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="k">height</span><span class="p">:</span><span class="w"> </span><span class="kc">auto</span><span class="p">;</span>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="p">}</span>
+<div class="language-css highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nt">img</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="k">max-width</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="kt">%</span><span class="p">;</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span><span class="k">height</span><span class="p">:</span><span class="w"> </span><span class="kc">auto</span><span class="p">;</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="p">}</span>
 </span></code></pre></div>
 <p>Here the same 800×400px image sits inside a container fixed at 60% of the page width — the
 image scales down to fit the container at both a wide and a narrow page width, instead of
@@ -2914,11 +3136,11 @@ globally near the top of a stylesheet.</p>
 <p>For more advanced cases — like serving a smaller image file to phones so they are not
 forced to download a huge desktop-sized photo — HTML provides the <code>srcset</code> attribute, which
 lets the browser choose the best-fitting image file from a list you provide:</p>
-<div class="language-html highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">&lt;</span><span class="nt">img</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>  <span class="na">src</span><span class="o">=</span><span class="s">&quot;photo-small.jpg&quot;</span>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>  <span class="na">srcset</span><span class="o">=</span><span class="s">&quot;photo-small.jpg 480w, photo-medium.jpg 800w, photo-large.jpg 1200w&quot;</span>
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>  <span class="na">sizes</span><span class="o">=</span><span class="s">&quot;(max-width: 600px) 480px, (max-width: 1000px) 800px, 1200px&quot;</span>
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>  <span class="na">alt</span><span class="o">=</span><span class="s">&quot;A scenic mountain view&quot;</span><span class="p">&gt;</span>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="p">&lt;</span><span class="nt">img</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>  <span class="na">src</span><span class="o">=</span><span class="s">&quot;photo-small.jpg&quot;</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>  <span class="na">srcset</span><span class="o">=</span><span class="s">&quot;photo-small.jpg 480w, photo-medium.jpg 800w, photo-large.jpg 1200w&quot;</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>  <span class="na">sizes</span><span class="o">=</span><span class="s">&quot;(max-width: 600px) 480px, (max-width: 1000px) 800px, 1200px&quot;</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>  <span class="na">alt</span><span class="o">=</span><span class="s">&quot;A scenic mountain view&quot;</span><span class="p">&gt;</span>
 </span></code></pre></div>
 <p>The browser reads <code>sizes</code> to figure out roughly how large the image will display at the
 current screen width, then downloads whichever file in <code>srcset</code> best matches — saving
@@ -2984,18 +3206,18 @@ hands you finished components, the other hands you building blocks.</p>
 <p>Bootstrap is a CSS (and optional JavaScript) framework you include via a <code>&lt;link&gt;</code> tag (or
 install as a package). It gives you a responsive grid system, a large library of
 pre-styled components, and a set of small utility classes for common tweaks.</p>
-<div class="language-html highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">&lt;</span><span class="nt">link</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css&quot;</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;stylesheet&quot;</span><span class="p">&gt;</span>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="p">&lt;</span><span class="nt">link</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css&quot;</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;stylesheet&quot;</span><span class="p">&gt;</span>
 </span></code></pre></div>
 <h3 id="the-bootstrap-grid-system">The Bootstrap grid system<a class="headerlink" href="#the-bootstrap-grid-system" title="Permanent link">&para;</a></h3>
 <p>Bootstrap's grid is built on Flexbox internally, organized into 12 columns. You wrap your
 content in a <code>.container</code>, then a <code>.row</code>, then divide that row into <code>.col-*</code> classes whose
 numbers add up to 12 for a full row.</p>
-<div class="language-html highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;container&quot;</span><span class="p">&gt;</span>
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;row&quot;</span><span class="p">&gt;</span>
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;col-md-8&quot;</span><span class="p">&gt;</span>Main content (8 of 12 columns on medium screens+)<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;col-md-4&quot;</span><span class="p">&gt;</span>Sidebar (4 of 12 columns on medium screens+)<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;container&quot;</span><span class="p">&gt;</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;row&quot;</span><span class="p">&gt;</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;col-md-8&quot;</span><span class="p">&gt;</span>Main content (8 of 12 columns on medium screens+)<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;col-md-4&quot;</span><span class="p">&gt;</span>Sidebar (4 of 12 columns on medium screens+)<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 </span></code></pre></div>
 <p>Rendered with real Bootstrap CSS loaded from the CDN link above, the two columns sit side by
 side at their assigned 8/12 and 4/12 widths on a wide screen, then stack full-width on a
@@ -3037,19 +3259,19 @@ stack full-width automatically, which is Bootstrap's built-in mobile-first behav
 </table>
 <h3 id="bootstrap-components">Bootstrap components<a class="headerlink" href="#bootstrap-components" title="Permanent link">&para;</a></h3>
 <p>Components are ready-made pieces of UI — you just add the right classes to your HTML.</p>
-<div class="language-html highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="p">&lt;</span><span class="nt">button</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;btn btn-primary&quot;</span><span class="p">&gt;</span>Save Changes<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;card&quot;</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;width: 18rem;&quot;</span><span class="p">&gt;</span>
-</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;card-body&quot;</span><span class="p">&gt;</span>
-</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>    <span class="p">&lt;</span><span class="nt">h5</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;card-title&quot;</span><span class="p">&gt;</span>Card Title<span class="p">&lt;/</span><span class="nt">h5</span><span class="p">&gt;</span>
-</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>    <span class="p">&lt;</span><span class="nt">p</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;card-text&quot;</span><span class="p">&gt;</span>Some quick example text for this card component.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>    <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;btn btn-secondary&quot;</span><span class="p">&gt;</span>Read more<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
-</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>
-</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="p">&lt;</span><span class="nt">nav</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;navbar navbar-expand-lg navbar-light bg-light&quot;</span><span class="p">&gt;</span>
-</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>  <span class="p">&lt;</span><span class="nt">a</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;navbar-brand&quot;</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">&gt;</span>MySite<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
-</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="p">&lt;/</span><span class="nt">nav</span><span class="p">&gt;</span>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="p">&lt;</span><span class="nt">button</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;btn btn-primary&quot;</span><span class="p">&gt;</span>Save Changes<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;card&quot;</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;width: 18rem;&quot;</span><span class="p">&gt;</span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;card-body&quot;</span><span class="p">&gt;</span>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>    <span class="p">&lt;</span><span class="nt">h5</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;card-title&quot;</span><span class="p">&gt;</span>Card Title<span class="p">&lt;/</span><span class="nt">h5</span><span class="p">&gt;</span>
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>    <span class="p">&lt;</span><span class="nt">p</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;card-text&quot;</span><span class="p">&gt;</span>Some quick example text for this card component.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>    <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;btn btn-secondary&quot;</span><span class="p">&gt;</span>Read more<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>
+</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a><span class="p">&lt;</span><span class="nt">nav</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;navbar navbar-expand-lg navbar-light bg-light&quot;</span><span class="p">&gt;</span>
+</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>  <span class="p">&lt;</span><span class="nt">a</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;navbar-brand&quot;</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">&gt;</span>MySite<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="p">&lt;/</span><span class="nt">nav</span><span class="p">&gt;</span>
 </span></code></pre></div>
 <p>Rendered with Bootstrap's CSS applied, these three lines of HTML alone produce a fully
 styled button, card, and navbar — none of the visual polish comes from custom CSS:</p>
@@ -3058,13 +3280,13 @@ styled button, card, and navbar — none of the visual polish comes from custom 
 <p>Alongside full components, Bootstrap also includes small single-purpose utility classes for
 common adjustments like spacing, text alignment, and color — similar in spirit to
 Tailwind's approach, just with a smaller set of classes.</p>
-<div class="language-html highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;d-flex justify-content-between p-3 mb-4 text-center&quot;</span><span class="p">&gt;</span>
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>  <span class="cm">&lt;!-- d-flex: display: flex</span>
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="cm">       justify-content-between: justify-content: space-between</span>
-</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="cm">       p-3: padding on all sides</span>
-</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="cm">       mb-4: margin-bottom</span>
-</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="cm">       text-center: centers text --&gt;</span>
-</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;d-flex justify-content-between p-3 mb-4 text-center&quot;</span><span class="p">&gt;</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>  <span class="cm">&lt;!-- d-flex: display: flex</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="cm">       justify-content-between: justify-content: space-between</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="cm">       p-3: padding on all sides</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="cm">       mb-4: margin-bottom</span>
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="cm">       text-center: centers text --&gt;</span>
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 </span></code></pre></div>
 <p>Rendered (with a dashed border added just to make the flex container's edges visible), the
 "Left item" and "Right item" spans sit at opposite ends of the row, spaced apart by
@@ -3074,11 +3296,11 @@ Tailwind's approach, just with a smaller set of classes.</p>
 <p>Tailwind takes the opposite approach: instead of shipping finished components, it gives you
 a very large set of small utility classes, and you build your own look by combining them
 directly in your markup.</p>
-<div class="language-html highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://cdn.tailwindcss.com&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://cdn.tailwindcss.com&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </span></code></pre></div>
-<div class="language-html highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="p">&lt;</span><span class="nt">button</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded-lg shadow&quot;</span><span class="p">&gt;</span>
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>  Save Changes
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="p">&lt;</span><span class="nt">button</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded-lg shadow&quot;</span><span class="p">&gt;</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>  Save Changes
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
 </span></code></pre></div>
 <p>Rendered with the Tailwind Play CDN loaded, that single class list produces a fully styled
 button with no separate CSS file at all:</p>
@@ -3125,14 +3347,14 @@ like, without switching to a separate CSS file:</p>
 </table>
 <p>Tailwind is also responsive by default, using breakpoint <em>prefixes</em> on any utility class —
 the exact same mobile-first idea as Bootstrap's <code>col-md-8</code>, just spelled differently:</p>
-<div class="language-html highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;flex flex-col md:flex-row&quot;</span><span class="p">&gt;</span>
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>  <span class="cm">&lt;!-- flex-col by default (stacked, mobile-first)</span>
-</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="cm">       md:flex-row switches to a row once the screen is &quot;md&quot; width or larger --&gt;</span>
-</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>
-</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;w-full lg:w-1/3&quot;</span><span class="p">&gt;</span>
-</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>  <span class="cm">&lt;!-- full width by default, one-third width from the &quot;lg&quot; breakpoint up --&gt;</span>
-</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;flex flex-col md:flex-row&quot;</span><span class="p">&gt;</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>  <span class="cm">&lt;!-- flex-col by default (stacked, mobile-first)</span>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="cm">       md:flex-row switches to a row once the screen is &quot;md&quot; width or larger --&gt;</span>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;w-full lg:w-1/3&quot;</span><span class="p">&gt;</span>
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>  <span class="cm">&lt;!-- full width by default, one-third width from the &quot;lg&quot; breakpoint up --&gt;</span>
+</span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 </span></code></pre></div>
 <p>The <code>flex flex-col md:flex-row</code> example, rendered with three boxes inside it, stacks in a
 column on a narrow screen and switches to a row once the screen reaches the <code>md</code> breakpoint:</p>
@@ -3158,12 +3380,12 @@ almost always mix in your own custom CSS.</p>
 <div class="tabbed-block">
 <p>Bootstrap components are ordinary HTML with ordinary classes, so you can add your own
 class alongside Bootstrap's and override just the parts you want to change:</p>
-<div class="language-html highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="p">&lt;</span><span class="nt">button</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;btn btn-primary my-cta-button&quot;</span><span class="p">&gt;</span>Get Started<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="p">&lt;</span><span class="nt">button</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;btn btn-primary my-cta-button&quot;</span><span class="p">&gt;</span>Get Started<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
 </span></code></pre></div>
-<div class="language-css highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="p">.</span><span class="nc">my-cta-button</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">  </span><span class="k">text-transform</span><span class="p">:</span><span class="w"> </span><span class="kc">uppercase</span><span class="p">;</span>
-</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="w">  </span><span class="k">letter-spacing</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="kt">px</span><span class="p">;</span>
-</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="p">}</span>
+<div class="language-css highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="p">.</span><span class="nc">my-cta-button</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="w">  </span><span class="k">text-transform</span><span class="p">:</span><span class="w"> </span><span class="kc">uppercase</span><span class="p">;</span>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="w">  </span><span class="k">letter-spacing</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="kt">px</span><span class="p">;</span>
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="p">}</span>
 </span></code></pre></div>
 <p>Rendered together, Bootstrap's <code>.btn.btn-primary</code> styling (color, padding, rounded
 corners) and the custom <code>.my-cta-button</code> rule (uppercase, letter-spacing) both apply to
@@ -3181,19 +3403,19 @@ does not require any special registration step for this.</p>
 component" usually means saving that exact combination somewhere reusable — for
 example, as a snippet, a template partial, or (in component-based tools like React) a
 single reusable component function:</p>
-<div class="language-html highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="cm">&lt;!-- reuse this exact combination everywhere you need a primary button --&gt;</span>
-</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="p">&lt;</span><span class="nt">button</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded-lg shadow&quot;</span><span class="p">&gt;</span>
-</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>  Get Started
-</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="cm">&lt;!-- reuse this exact combination everywhere you need a primary button --&gt;</span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="p">&lt;</span><span class="nt">button</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded-lg shadow&quot;</span><span class="p">&gt;</span>
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>  Get Started
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
 </span></code></pre></div>
 <p>For styles that don't fit neatly into existing utilities, you can still write plain
 custom CSS and combine it with Tailwind's utilities on the same element:</p>
-<div class="language-css highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="p">.</span><span class="nc">brand-underline</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">  </span><span class="k">text-decoration</span><span class="p">:</span><span class="w"> </span><span class="kc">underline</span><span class="w"> </span><span class="kc">wavy</span><span class="p">;</span>
-</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">  </span><span class="k">text-underline-offset</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="kt">px</span><span class="p">;</span>
-</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="p">}</span>
+<div class="language-css highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="p">.</span><span class="nc">brand-underline</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="w">  </span><span class="k">text-decoration</span><span class="p">:</span><span class="w"> </span><span class="kc">underline</span><span class="w"> </span><span class="kc">wavy</span><span class="p">;</span>
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="w">  </span><span class="k">text-underline-offset</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="kt">px</span><span class="p">;</span>
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="p">}</span>
 </span></code></pre></div>
-<div class="language-html highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;text-blue-600 font-bold brand-underline&quot;</span><span class="p">&gt;</span>New!<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;text-blue-600 font-bold brand-underline&quot;</span><span class="p">&gt;</span>New!<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
 </span></code></pre></div>
 <p>Rendered together, Tailwind's <code>text-blue-600 font-bold</code> utilities and the custom
 <code>.brand-underline</code> CSS rule both apply to the same span:</p>
@@ -3224,6 +3446,9 @@ project look like <em>your</em> project instead of a generic template.</p>
   is required for media queries to behave correctly on real phones.</li>
 <li>Fluid units — <code>%</code>, <code>rem</code>, <code>vw</code>, <code>vh</code> — scale relative to something else, instead of being
   fixed like <code>px</code>, which is essential for layouts that truly adapt to any screen.</li>
+<li><code>@media</code> conditions combine with <code>and</code> (all must be true), <code>,</code> (any one must be true), and
+  <code>not</code> (inverts the whole query) — and test more than just width, including <code>orientation</code>,
+  <code>prefers-color-scheme</code>, and the <code>print</code> media type.</li>
 <li><code>max-width: 100%; height: auto;</code> keeps images from overflowing their container;
   <code>srcset</code>/<code>sizes</code> let the browser pick an appropriately-sized image file per device.</li>
 <li>Component-based frameworks like Bootstrap give you finished, pre-styled UI pieces;
@@ -3256,7 +3481,7 @@ project look like <em>your</em> project instead of a generic template.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 7, 2026 05:28:47 UTC">September 7, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 13, 2026 10:05:22 UTC">September 13, 2026</span>
   </span>
 
     
