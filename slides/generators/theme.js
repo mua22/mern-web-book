@@ -8,8 +8,76 @@
 //   const theme = require("./theme");
 //   const { NAVY, ORANGE, ... , bg, kicker, title, pageFoot, ... } = theme;
 
+const fs = require("fs");
+
 const PRESENTER_NAME = "Usman Akram";
 const INSTITUTION = "COMSATS University Islamabad";
+
+/**
+ * Read a PNG's real pixel dimensions straight from its IHDR chunk.
+ *
+ * pptxgenjs 4.0.1's `sizing: { type: "contain" }` cannot actually read a
+ * local image's natural size (getSizeFromImage() is wired up as an async
+ * stub that never resolves in this code path -- see its own source around
+ * "we need to make getSizeFromImage use callback"). Left alone, it silently
+ * falls back to treating the image's own aspect ratio as already matching
+ * the target box, which means "contain" does nothing and the image is
+ * simply stretched to fill the box -- a real, confirmed distortion bug.
+ * Computing the fit ourselves and passing exact w/h/x/y sidesteps it
+ * entirely; every screenshot embed in these decks goes through this.
+ */
+function pngSize(path) {
+  const buf = Buffer.alloc(24);
+  const fd = fs.openSync(path, "r");
+  fs.readSync(fd, buf, 0, 24, 0);
+  fs.closeSync(fd);
+  if (buf.toString("ascii", 1, 4) !== "PNG") {
+    throw new Error(`Not a PNG (or unreadable header): ${path}`);
+  }
+  return { width: buf.readUInt32BE(16), height: buf.readUInt32BE(20) };
+}
+
+/**
+ * Compute the x/y/w/h (inches) an image should be drawn at to fit fully
+ * inside a box (boxX, boxY, boxW, boxH), preserving its real aspect ratio
+ * and centering it — a manual, correct replacement for pptxgenjs's broken
+ * "contain" sizing.
+ */
+const CRISP_DPI = 150; // "looks sharp" pixel density target for a projected/on-screen slide
+const MAX_UPSCALE = 2.5; // never enlarge a source image past this multiple of its crisp-native size
+
+function containFit(imgPath, boxX, boxY, boxW, boxH) {
+  const { width, height } = pngSize(imgPath);
+  const imgRatio = width / height;
+  const boxRatio = boxW / boxH;
+  let w, h;
+  if (imgRatio > boxRatio) {
+    // image is relatively wider than the box -> width-limited
+    w = boxW;
+    h = boxW / imgRatio;
+  } else {
+    // image is relatively taller than the box -> height-limited
+    h = boxH;
+    w = boxH * imgRatio;
+  }
+  // Cap enlargement: a genuinely small source screenshot (some of this
+  // book's are only ~150-300px on a side) blown up to fill an 11+ inch
+  // slide box turns visibly blurry. Rather than stretch it edge to edge,
+  // clamp to a modest multiple of its own "crisp" native size and center
+  // it in the box with more surrounding whitespace instead.
+  const nativeW = width / CRISP_DPI;
+  const nativeH = height / CRISP_DPI;
+  const maxW = nativeW * MAX_UPSCALE;
+  const maxH = nativeH * MAX_UPSCALE;
+  if (w > maxW || h > maxH) {
+    const scale = Math.min(maxW / w, maxH / h);
+    w *= scale;
+    h *= scale;
+  }
+  const x = boxX + (boxW - w) / 2;
+  const y = boxY + (boxH - h) / 2;
+  return { x, y, w, h };
+}
 
 // ---------- palette ----------
 const NAVY = "2B2B7A";
@@ -153,12 +221,11 @@ function screenshotFrame(slide, imgPath, x, y, w, h, ShapeType) {
     fill: { color: WHITE }, line: { color: "E2E2EE", width: 1 },
     shadow: { type: "outer", color: "000000", opacity: 0.12, blur: 8, offset: 3, angle: 90 },
   });
-  // "contain" sizing fits the image inside the w x h box, preserving its
-  // real aspect ratio (screenshots vary wildly in shape), and centers it.
-  slide.addImage({
-    path: imgPath, x, y, w, h,
-    sizing: { type: "contain", w, h },
-  });
+  // Fit the image inside the w x h box ourselves, preserving its real aspect
+  // ratio and centering it -- see containFit()'s comment for why pptxgenjs's
+  // own "contain" sizing can't be trusted for local files.
+  const fit = containFit(imgPath, x, y, w, h);
+  slide.addImage({ path: imgPath, x: fit.x, y: fit.y, w: fit.w, h: fit.h });
 }
 
 /**
