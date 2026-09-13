@@ -69,7 +69,7 @@ function renderAgendaOrBullets(p, spec, helpers) {
   bg(s, WHITE);
   const y0 = header(s, spec, helpers);
   const items = spec.items;
-  const step = items.length <= 5 ? 0.9 : 0.78;
+  const step = Math.max(0.55, Math.min(0.9, (6.9 - y0) / items.length));
   items.forEach((t, i) => {
     const y = y0 + i * step;
     if (spec.numbered !== false) {
@@ -346,7 +346,7 @@ function renderClosing(p, spec, helpers) {
     fontFace: HFONT, fontSize: 34, bold: true, color: WHITE, margin: 0,
   });
   const items = spec.items;
-  const step = items.length <= 6 ? 0.75 : 0.66;
+  const step = Math.max(0.5, Math.min(0.75, (6.9 - 2.5) / items.length));
   items.forEach((t, i) => {
     const y = 2.5 + i * step;
     helpers.numCircle(s, 0.9, y, i + 1, 0.48);

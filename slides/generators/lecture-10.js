@@ -13,9 +13,10 @@ buildDeck({
       "Mobile-first design, the viewport meta tag, and fluid units",
       "Media queries and breakpoints — every combination, plus responsive images",
       "Component-based (Bootstrap) vs. utility-first (Tailwind) frameworks",
-      "Bootstrap's grid system, components, and utilities",
-      "Tailwind's utility-class structure",
+      "Bootstrap's grid system in depth: auto-layout, nesting, offsets, ordering",
+      "Tailwind's utility classes, config file, and dark mode",
       "Extending either framework with your own custom classes",
+      "CSS preprocessors: Sass, SCSS, and LESS — and customizing Bootstrap with Sass",
     ] },
 
     { type: "bullets", kicker: "Mobile-First", heading: "Mobile-First Design", items: [
@@ -91,6 +92,28 @@ buildDeck({
       left: { img: `${IMG}/bootstrap-grid-wide.png`, label: "Wide (side by side)" },
       right: { img: `${IMG}/bootstrap-grid-narrow.png`, label: "Narrow (stacked)" } },
 
+    { type: "table", kicker: "Bootstrap Grid", heading: "Grid Modifier Classes",
+      header: ["Class pattern", "Effect"], colW: [3.6, 8.4], leftCol: 0, rowH: 0.62,
+      rows: [
+        [".col (no number)", "Auto-layout: shares available width equally"],
+        [".col-{n}", "Exactly n of 12 columns, at all screen sizes"],
+        [".col-{bp}-{n}", "n columns from that breakpoint up (mobile-first)"],
+        [".offset-{bp}-{n}", "Pushes the column right by n empty columns"],
+        [".order-{n}", "Visual display order (0-5), independent of HTML order"],
+        [".row-cols-{n}", "Shorthand: every child column becomes 12/n wide"],
+        [".g-{n} / .gx-{n} / .gy-{n}", "Gutter size between columns — all / x / y"],
+      ],
+      note: "Every one of these is a thin wrapper around the Flexbox properties from Lecture 9 — .row is display:flex, .col is a flex item." },
+
+    { type: "codeImage", kicker: "Bootstrap Grid", heading: "Auto-Layout Columns and Nesting",
+      code: '<div class="row">\n  <div class="col">col</div>\n  <div class="col">col</div>\n  <div class="col">col</div>\n</div>\n\n<div class="row">\n  <div class="col-8">\n    col-8\n    <div class="row">\n      <div class="col-6">nested col-6</div>\n      <div class="col-6">nested col-6</div>\n    </div>\n  </div>\n  <div class="col-4">col-4</div>\n</div>',
+      img: `${IMG}/grid-autolayout-nesting.png` },
+
+    { type: "codeImage", kicker: "Bootstrap Grid", heading: "Offsetting and Reordering Columns",
+      intro: "offset-md-4 centers a 4-wide column; order-* rearranges visual order independent of HTML order.",
+      code: '<div class="col-4 offset-md-4">col-4 offset-md-4</div>\n\n<div class="order-3">First in HTML — order-3</div>\n<div class="order-1">Second in HTML — order-1</div>\n<div class="order-2">Third in HTML — order-2</div>',
+      img: `${IMG}/grid-offset-order.png` },
+
     { type: "codeImage", kicker: "Bootstrap", heading: "Components, Rendered",
       intro: "Three lines of HTML, zero custom CSS.",
       code: '<button class="btn btn-primary">Save Changes</button>\n\n<div class="card"><div class="card-body">\n  <h5 class="card-title">Card Title</h5>\n</div></div>\n\n<nav class="navbar navbar-expand-lg navbar-light bg-light">...</nav>',
@@ -120,6 +143,35 @@ buildDeck({
       left: { img: `${IMG}/tailwind-width-wide.png`, label: "Wide (1/3)" },
       right: { img: `${IMG}/tailwind-width-narrow.png`, label: "Narrow (full)" } },
 
+    { type: "table", kicker: "Tailwind CSS", heading: "More Utility Categories",
+      header: ["Category", "Example classes"], colW: [2.6, 9.4], leftCol: 0, rowH: 0.62,
+      rows: [
+        ["Flexbox", "flex, justify-center, items-center, gap-4"],
+        ["Grid", "grid, grid-cols-3, col-span-2"],
+        ["Sizing", "w-1/2, h-screen, max-w-md"],
+        ["Borders", "border, border-2, rounded-full"],
+        ["Typography", "text-lg, font-bold, truncate"],
+        ["State variants", "hover:, focus:, active:, disabled: (prefix any utility)"],
+      ],
+      note: "The spacing/color scale is numeric and consistent — p-4 = 1rem, blue-100 (near-white) through blue-900 (near-black)." },
+
+    { type: "code", kicker: "Tailwind CSS", heading: "Configuring Tailwind: theme.extend",
+      code: "module.exports = {\n  theme: {\n    extend: {\n      colors: { brand: '#ff6b35' },  // usable as bg-brand, text-brand...\n    },\n  },\n};" },
+
+    { type: "codeImage", kicker: "Tailwind CSS", heading: "A Custom Color, Rendered",
+      intro: "theme.extend adds to Tailwind's defaults, so bg-brand works with every state-variant prefix, just like a built-in color.",
+      code: '<button class="bg-brand hover:bg-orange-700 text-white font-semibold\n               px-4 py-2 rounded-lg">\n  Save Changes\n</button>',
+      img: `${IMG}/tailwind-custom-color.png` },
+
+    { type: "codeImage", kicker: "Tailwind CSS", heading: "Dark Mode",
+      intro: "darkMode: 'class' in the config activates dark: utilities for any element inside a .dark ancestor.",
+      code: '<div class="bg-white dark:bg-gray-800 text-black dark:text-white">\n  Card content\n</div>',
+      img: `${IMG}/tailwind-dark-mode.png` },
+
+    { type: "code", kicker: "Tailwind CSS", heading: "The @apply Directive",
+      code: '.btn-primary {\n  @apply bg-blue-600 hover:bg-blue-700 text-white font-semibold\n         px-4 py-2 rounded-lg shadow;\n}\n\n<button class="btn-primary">Save Changes</button>',
+      note: "Produces the exact same button as writing all six utility classes by hand — @apply just names a repeated combination." },
+
     { type: "code", kicker: "Custom Classes", heading: "Bootstrap + Your Own Class",
       code: '<button class="btn btn-primary my-cta-button">Get Started</button>\n\n.my-cta-button { text-transform: uppercase; letter-spacing: 1px; }' },
 
@@ -132,13 +184,54 @@ buildDeck({
     { type: "image", kicker: "Custom Classes", heading: "Tailwind + Custom, Rendered",
       img: `${IMG}/tailwind-custom-class.png` },
 
-    { type: "closing", heading: "Lecture 10 in Six Points", items: [
+    { type: "bullets", kicker: "CSS Preprocessors", heading: "What Is a CSS Preprocessor?", numbered: false, items: [
+      "A separate language that adds variables, nesting, and mixins on top of CSS, then COMPILES to plain CSS the browser reads",
+      "Sass has two syntaxes: the indented .sass, and SCSS (.scss) — CSS-compatible braces/semicolons, by far the more common choice, including in Bootstrap's own source",
+      "LESS solves the same problems with a different syntax (@var instead of $var) — used by Bootstrap 3, before it switched to Sass",
+    ] },
+
+    { type: "table", kicker: "CSS Preprocessors", heading: "Sass Variables vs. CSS Custom Properties",
+      header: ["", "Sass ($name)", "CSS custom property (--name)"], colW: [3.4, 4.4, 4.6], leftCol: 0, rowH: 0.85,
+      rows: [
+        ["Resolved", "At compile time — a fixed value", "At runtime, in the browser"],
+        ["Changes after load?", "No", "Yes — JS or media queries can update it"],
+        ["Needs a build step?", "Yes — must compile the .scss", "No — works in a plain <style> tag"],
+      ] },
+
+    { type: "codeImage", kicker: "Sass Fundamentals", heading: "Variables, Nesting, and Mixins",
+      code: '$primary-color: #6c5ce7;\n\n.card {\n  border: 1px solid $primary-color;\n  .title { color: $primary-color; }\n  &:hover { box-shadow: 0 4px 10px rgba(0,0,0,0.2); }\n}\n\n@mixin flex-center { display: flex; justify-content: center; align-items: center; }\n.banner { @include flex-center; background: $primary-color; }',
+      img: `${IMG}/sass-fundamentals-demo.png` },
+
+    { type: "code", kicker: "Sass Fundamentals", heading: "Partials and @use",
+      code: '// _variables.scss\n$primary-color: #6c5ce7;\n\n// main.scss\n@use \'variables\' as v;\n.card { border: 1px solid v.$primary-color; }',
+      note: "A filename starting with _ is a partial — Sass pulls it into whatever file imports it, instead of compiling it separately." },
+
+    { type: "table", kicker: "LESS", heading: "Sass (SCSS) vs. LESS",
+      header: ["Feature", "Sass (SCSS)", "LESS"], colW: [3.0, 4.6, 4.8], leftCol: 0, rowH: 0.7,
+      rows: [
+        ["Variable syntax", "$name", "@name"],
+        ["Mixin definition", "@mixin name { ... }", ".name() { ... }"],
+        ["Mixin use", "@include name;", ".name();"],
+        ["Used by", "Bootstrap 4 and 5, most new projects", "Bootstrap 3, older codebases"],
+      ] },
+
+    { type: "code", kicker: "Customizing Bootstrap", heading: "Override Variables Before Importing",
+      code: '// custom.scss — override BEFORE importing Bootstrap\'s source\n$primary: #ff6b35;\n$border-radius: 1rem;\n$grid-gutter-width: 3rem;\n\n@import "bootstrap/scss/bootstrap";\n\n// sass custom.scss custom.css',
+      note: "Every component reading these variables picks up the new values everywhere, automatically — no HTML changes at all." },
+
+    { type: "imagePair", kicker: "Customizing Bootstrap", heading: "Stock vs. Sass-Customized Bootstrap",
+      left: { img: `${IMG}/bootstrap-sass-before.png`, label: "Stock Bootstrap" },
+      right: { img: `${IMG}/bootstrap-sass-after.png`, label: "Sass-Customized" } },
+
+    { type: "closing", heading: "Lecture 10 in Eight Points", items: [
       "Mobile-first: base styles for small screens, then add complexity with min-width media queries.",
       "The viewport meta tag is required for media queries to work correctly on real phones.",
       "Fluid units (%, rem, vw, vh) scale relative to something else, unlike fixed px.",
-      "Media queries combine with and (all true), comma (any true), and not (inverts) — and test more than width.",
-      "max-width: 100%; height: auto; keeps images from overflowing their container.",
-      "Bootstrap gives finished components; Tailwind gives composable utilities — both expect your own custom CSS on top.",
+      "Bootstrap's grid goes beyond col-md-*: auto-layout columns, nesting, offset-*, and order-* cover real layouts.",
+      "Bootstrap gives finished components; Tailwind gives composable utilities, configured via tailwind.config.js and dark:.",
+      "Sass/SCSS and LESS compile to plain CSS, adding variables (compile-time, unlike runtime CSS custom properties), nesting, and mixins.",
+      "Bootstrap's own source is Sass — overriding its variables before importing it recompiles the whole framework around your values.",
+      "Both frameworks expect your own custom CSS on top — they solve the common 80%, not the last 20% that makes a site unique.",
     ] },
   ],
 });
