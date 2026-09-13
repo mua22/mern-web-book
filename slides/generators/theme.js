@@ -153,7 +153,12 @@ function screenshotFrame(slide, imgPath, x, y, w, h, ShapeType) {
     fill: { color: WHITE }, line: { color: "E2E2EE", width: 1 },
     shadow: { type: "outer", color: "000000", opacity: 0.12, blur: 8, offset: 3, angle: 90 },
   });
-  slide.addImage({ path: imgPath, x, y, w, h });
+  // "contain" sizing fits the image inside the w x h box, preserving its
+  // real aspect ratio (screenshots vary wildly in shape), and centers it.
+  slide.addImage({
+    path: imgPath, x, y, w, h,
+    sizing: { type: "contain", w, h },
+  });
 }
 
 /**
