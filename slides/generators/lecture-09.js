@@ -24,8 +24,9 @@ buildDeck({
     { type: "image", kicker: "Flexbox", heading: "A Flex Nav Bar, Rendered",
       img: `${IMG}/flex-nav-intro.png` },
 
-    { type: "image", kicker: "Flexbox", heading: "The Main Axis and the Cross Axis",
+    { type: "codeImage", kicker: "Flexbox", heading: "The Main Axis and the Cross Axis",
       intro: "The main axis runs in the flex direction (row, by default); the cross axis runs perpendicular to it.",
+      code: '.flex-row {\n  display: flex; /* main axis: horizontal, left to right */\n}',
       img: `${IMG}/main-cross-axis.png` },
 
     { type: "code", kicker: "Flexbox Properties", heading: "flex-direction",
