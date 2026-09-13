@@ -18,12 +18,14 @@ buildDeck({
       "Client-side validation with required, pattern, min, max",
     ] },
 
-    { type: "image", kicker: "Layout Basics", heading: "Block-Level vs. Inline (Recap)",
+    { type: "codeImage", kicker: "Layout Basics", heading: "Block-Level vs. Inline (Recap)",
       intro: "Block elements each claim their own line; inline elements flow within the surrounding text.",
+      code: '<p>This is a block-level paragraph.</p>\n<p>This is another block — starts on its own line.</p>\n\n<p>This sentence has an <strong>inline bold word</strong> and an\n<a href="#">inline link</a> in the flow of the text.</p>',
       img: `${IMG}/block-inline.png` },
 
-    { type: "image", kicker: "Generic Containers", heading: "The Generic <div> and <span>",
+    { type: "codeImage", kicker: "Generic Containers", heading: "The Generic <div> and <span>",
       intro: "<div> is a generic BLOCK container; <span> is a generic INLINE container — neither means anything on its own.",
+      code: '<div class="card">\n    <p>Some content wrapped in a div so it can be styled as a "card".</p>\n</div>\n\n<p>The price is <span class="highlight-price">$25</span> today only.</p>',
       img: `${IMG}/div-span.png` },
 
     { type: "cards", kicker: "Semantic HTML", heading: "Meaningless Divs vs. Semantic Tags", cards: [
@@ -46,6 +48,9 @@ buildDeck({
         ["<footer>", "Closing content — copyright, contact links"],
       ] },
 
+    { type: "code", kicker: "Semantic HTML", heading: "A Full Page Skeleton",
+      code: '<header>\n    <h1>My Tech Blog</h1>\n    <nav><a href="/">Home</a> <a href="/about.html">About</a></nav>\n</header>\n<main>\n    <article><h2>Why Semantic HTML Matters</h2><p>Semantic tags help everyone.</p></article>\n    <aside><h3>Related Posts</h3></aside>\n</main>\n<footer><p>&copy; 2026 My Tech Blog.</p></footer>' },
+
     { type: "image", kicker: "Semantic HTML", heading: "A Full Page Skeleton, Rendered",
       intro: "Semantic elements have no built-in visual style — but every section genuinely exists in the markup.",
       img: `${IMG}/semantic-skeleton.png` },
@@ -56,10 +61,8 @@ buildDeck({
       "Rule of thumb: reach for a semantic element first; fall back to <div>/<span> only when nothing else fits",
     ] },
 
-    { type: "code", kicker: "HTML Forms", heading: "A Basic Form",
-      code: '<form action="/submit-login" method="POST">\n  <label for="username">Username:</label>\n  <input type="text" id="username" name="username">\n  <button type="submit">Log In</button>\n</form>' },
-
-    { type: "image", kicker: "HTML Forms", heading: "A Basic Form, Rendered",
+    { type: "codeImage", kicker: "HTML Forms", heading: "A Basic Form",
+      code: '<form action="/submit-login" method="POST">\n    <label for="username">Username:</label>\n    <input type="text" id="username" name="username">\n\n    <label for="password">Password:</label>\n    <input type="password" id="password" name="password">\n\n    <button type="submit">Log In</button>\n</form>',
       img: `${IMG}/login-form.png` },
 
     { type: "table", kicker: "HTML Forms", heading: "The action and method Attributes",
@@ -73,11 +76,9 @@ buildDeck({
     { type: "callout", kicker: "Security", heading: "Never Use GET for Passwords", kind: "warning", h: 1.7,
       text: "GET puts form values directly into the URL, where they can end up saved in browser history, server logs, and shared links. Always use POST for passwords and other sensitive information." },
 
-    { type: "code", kicker: "A Real Example", heading: "Searching Google with a GET Form",
-      code: '<form action="https://www.google.com/search" method="GET">\n  <input type="text" name="q" placeholder="Type your search...">\n  <button type="submit">Search</button>\n</form>',
-      note: 'name="q" is the exact query-parameter name Google\'s search endpoint expects — submitting this form genuinely searches Google.' },
-
-    { type: "image", kicker: "A Real Example", heading: "The Google Search Form, Rendered",
+    { type: "codeImage", kicker: "A Real Example", heading: "Searching Google with a GET Form",
+      intro: 'name="q" is the exact query-parameter name Google\'s search endpoint expects — submitting this form genuinely searches Google.',
+      code: '<form action="https://www.google.com/search" method="GET">\n    <label for="q">Search Google:</label>\n    <input type="text" id="q" name="q" placeholder="Type your search...">\n    <button type="submit">Search</button>\n</form>',
       img: `${IMG}/google-search-form.png` },
 
     { type: "table", kicker: "Input Types", heading: "Common <input> Types",
@@ -90,6 +91,9 @@ buildDeck({
         ["range / color", "A slider / a color picker"],
         ["submit / hidden", "Submits the form / not shown, but sent along with the data"],
       ] },
+
+    { type: "code", kicker: "Input Types", heading: "Every <input> Type",
+      code: '<input type="text" name="fullname" placeholder="Full name">\n<input type="email" name="email" placeholder="you@example.com">\n<input type="password" name="password">\n<input type="number" name="age" min="1" max="120">\n<input type="date" name="birthday">\n<input type="checkbox" name="subscribe" checked>\n<input type="radio" name="gender" value="male"> Male\n<input type="radio" name="gender" value="female"> Female\n<input type="file" name="resume">\n<input type="range" name="volume" min="0" max="100">\n<input type="color" name="favcolor">\n<input type="submit" value="Send">' },
 
     { type: "image", kicker: "Input Types", heading: "Every Input Type, Rendered",
       intro: "Each type is a genuinely different native control — this is the browser doing most of the work for you.",
@@ -111,12 +115,16 @@ buildDeck({
       "<button> is more flexible than <input type=\"submit\"> because it can contain other HTML",
     ] },
 
+    { type: "code", kicker: "More Controls", heading: "<select> and <textarea> Markup",
+      code: '<select id="course" name="course">\n    <option value="csc336">Web Technologies</option>\n    <option value="csc337" selected>Advanced Web Technologies</option>\n</select>\n\n<textarea id="message" name="message" rows="5" cols="40">Type here...</textarea>' },
+
     { type: "imagePair", kicker: "More Controls", heading: "Dropdown and Textarea, Rendered",
       left: { img: `${IMG}/select-dropdown.png`, label: "Select" },
       right: { img: `${IMG}/textarea.png`, label: "Textarea" } },
 
-    { type: "image", kicker: "More Controls", heading: "Three Button Types, Rendered",
+    { type: "codeImage", kicker: "More Controls", heading: "Three Button Types",
       intro: "submit submits the form, reset clears it, button does nothing on its own (wired up with JavaScript later).",
+      code: '<button type="submit">Submit</button>\n<button type="reset">Clear Form</button>\n<button type="button">Just a Button (does nothing by itself)</button>',
       img: `${IMG}/buttons.png` },
 
     { type: "table", kicker: "Validation", heading: "HTML5 Client-Side Validation",
@@ -127,6 +135,9 @@ buildDeck({
         ["min / max / step", "Lowest/highest acceptable value and allowed increment"],
         ["maxlength / minlength", "Character-count limits on a text field"],
       ] },
+
+    { type: "code", kicker: "Validation", heading: "A Validated Registration Form",
+      code: '<form action="/register" method="POST">\n    <label for="uname">Username (required):</label>\n    <input type="text" id="uname" name="uname" required>\n\n    <label for="cnic">CNIC (format 00000-0000000-0):</label>\n    <input type="text" id="cnic" name="cnic"\n           pattern="\\d{5}-\\d{7}-\\d" title="Format: 00000-0000000-0">\n\n    <label for="age">Age (18–60):</label>\n    <input type="number" id="age" name="age" min="18" max="60">\n\n    <button type="submit">Register</button>\n</form>' },
 
     { type: "image", kicker: "Validation", heading: "A Validated Form, Rendered",
       intro: "The warning bubbles only appear live in a browser when you try to submit invalid or missing data.",

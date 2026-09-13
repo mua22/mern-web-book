@@ -189,8 +189,22 @@ function renderCode(p, spec, helpers) {
   const y0 = header(s, spec, helpers);
   const lineCount = spec.code.split("\n").length;
   const maxH = spec.note ? 3.6 : 4.3;
-  const boxH = spec.codeH || Math.min(maxH, 0.75 + lineCount * 0.42);
-  helpers.codeBox(s, spec.code, MARGIN_X, y0, CONTENT_W, boxH, spec.fontSize || 14);
+  let fontSize = spec.fontSize || 14;
+  let boxH = spec.codeH;
+  if (!boxH) {
+    // Same calibrated Courier New line-box height as renderCodeImage, with a font
+    // floor so a long snippet shrinks instead of visually overflowing its box.
+    const PAD = 0.6;
+    const FONT_FLOOR = 10;
+    const lineH = (fs) => (fs * 1.5) / 72;
+    let needed = PAD + lineCount * lineH(fontSize);
+    if (needed > maxH) {
+      fontSize = Math.max(FONT_FLOOR, ((maxH - PAD) / lineCount) * (72 / 1.5));
+      needed = PAD + lineCount * lineH(fontSize);
+    }
+    boxH = needed;
+  }
+  helpers.codeBox(s, spec.code, MARGIN_X, y0, CONTENT_W, boxH, fontSize);
   if (spec.note) {
     const noteY = y0 + boxH + 0.25;
     s.addText(spec.note, {
