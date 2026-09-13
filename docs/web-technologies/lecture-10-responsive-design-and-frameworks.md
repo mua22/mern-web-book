@@ -6,6 +6,10 @@ tags:
   - Bootstrap
   - Tailwind CSS
   - CSS Frameworks
+  - Sass
+  - SCSS
+  - LESS
+  - CSS Preprocessors
 ---
 
 # Lecture 10: Responsive Design and Framework Fundamentals (Bootstrap or Tailwind)
@@ -23,9 +27,13 @@ framework — Bootstrap and Tailwind CSS — that make responsive design faster 
   features beyond width like `orientation`, `prefers-color-scheme`, and `print` — and make
   images respond to screen size
 - Compare component-based frameworks (Bootstrap) with utility-first frameworks (Tailwind)
-- Learn Bootstrap's grid system, components, and utilities
-- Learn Tailwind's utility-class structure
+- Learn Bootstrap's grid system in depth — auto-layout columns, nesting, offsetting,
+  reordering, and alignment — plus its components and utilities
+- Learn Tailwind's utility-class structure, its configuration file, and dark mode
 - Extend either framework with your own custom classes and components
+- Understand CSS preprocessors — Sass (SCSS), and LESS — and why they exist
+- Use Sass variables, nesting, mixins, and partials, and use them to customize Bootstrap's
+  own source before it compiles
 
 ## Mobile-First Design, the Viewport Meta Tag, and Fluid Units
 
@@ -379,6 +387,90 @@ stack full-width automatically, which is Bootstrap's built-in mobile-first behav
 | `lg` | ≥992px |
 | `xl` | ≥1200px |
 
+### More Grid Techniques
+
+Sizing every column explicitly (`col-md-8`, `col-md-4`) is only the start. The grid has
+several other tools for real layouts.
+
+**Equal-width, auto-layout columns.** Leave the number off `.col` entirely and Bootstrap
+divides the row evenly among however many columns you add — useful when you don't want to
+do the arithmetic yourself:
+
+```html
+<div class="row">
+  <div class="col">col</div>
+  <div class="col">col</div>
+  <div class="col">col</div>
+</div>
+```
+
+**Nesting.** A `.row` can be placed inside a `.col` to build a sub-grid — the nested row's
+own columns are sized out of 12, independent of the parent column's actual width:
+
+```html
+<div class="row">
+  <div class="col-8">
+    col-8
+    <div class="row">
+      <div class="col-6">nested col-6</div>
+      <div class="col-6">nested col-6</div>
+    </div>
+  </div>
+  <div class="col-4">col-4</div>
+</div>
+```
+
+Rendered together, three equal auto-layout columns on top, and an 8/4 split with a nested
+2-column row inside the 8-wide column on the bottom:
+
+![Rendered output: three equal-width columns in a row labeled col, col, col, and below that an 8-column-wide box containing two equal nested columns labeled "nested col-6" side by side, next to a separate 4-column-wide box](../assets/img/lecture-10/grid-autolayout-nesting.png)
+
+**Offsetting.** `.offset-{breakpoint}-{n}` pushes a column to the right by *n* empty
+columns' worth of space, without needing an invisible spacer column:
+
+```html
+<div class="row">
+  <div class="col-4 offset-md-4">col-4 offset-md-4</div>
+</div>
+```
+
+`col-4 offset-md-4` leaves 4 empty columns, then places a 4-wide column, then leaves the
+remaining 4 empty — centering it in the row.
+
+**Reordering.** `.order-{n}` (0 through 5) changes the *visual* order of columns without
+touching their order in the HTML — handy when source order (for accessibility or SEO)
+should differ from visual order:
+
+```html
+<div class="row">
+  <div class="order-3">First in HTML — order-3</div>
+  <div class="order-1">Second in HTML — order-1</div>
+  <div class="order-2">Third in HTML — order-2</div>
+</div>
+```
+
+Rendered together — the centered offset column on top, and the three reordered columns
+below, visually rearranged even though the middle one is written second in the HTML:
+
+![Rendered output: a single centered box reading "col-4 offset-md-4" on top, and below it three boxes in a row reading "Second in HTML — order-1", "Third in HTML — order-2", "First in HTML — order-3" from left to right, showing they display in a different order than they were written](../assets/img/lecture-10/grid-offset-order.png)
+
+| Class pattern | Effect |
+|---|---|
+| `.col` (no number) | Auto-layout: shares available width equally with sibling `.col`s |
+| `.col-{n}` | Exactly *n* of 12 columns wide, at all screen sizes |
+| `.col-{breakpoint}-{n}` | *n* columns wide from that breakpoint up (mobile-first) |
+| `.offset-{breakpoint}-{n}` | Pushes the column right by *n* empty columns |
+| `.order-{n}` | Visual display order (0–5), independent of HTML source order |
+| `.row-cols-{n}` | Shorthand: every direct child column becomes `12/n` wide |
+| `.g-{n}` / `.gx-{n}` / `.gy-{n}` | Gutter (gap) size between columns — all / horizontal / vertical |
+| `.justify-content-*` / `.align-items-*` on `.row` | Flexbox alignment of columns along/across the row (same values as Lecture 9's Flexbox) |
+
+!!! tip "It's Flexbox underneath"
+    Every one of these classes is a thin wrapper around the Flexbox properties from
+    Lecture 9 — `.row` is `display: flex`, `.col` is a flex item, and `.justify-content-*`
+    on a `.row` is exactly the `justify-content` property you already know. Knowing Flexbox
+    is what makes Bootstrap's grid classes predictable instead of memorized.
+
 ### Bootstrap components
 
 Components are ready-made pieces of UI — you just add the right classes to your HTML.
@@ -495,6 +587,105 @@ it once the screen reaches the `lg` breakpoint:
     apply this class from that screen width and up" — mirroring the same mobile-first logic
     you learned earlier in this lecture.
 
+### More Utility Categories
+
+Tailwind's utilities cover nearly every CSS property. A few categories you will reach for
+constantly, beyond spacing and color:
+
+| Category | Example classes | Equivalent CSS |
+|---|---|---|
+| Flexbox | `flex`, `justify-center`, `items-center`, `gap-4` | `display: flex; justify-content: center; align-items: center; gap: 1rem;` |
+| Grid | `grid`, `grid-cols-3`, `col-span-2` | `display: grid; grid-template-columns: repeat(3, 1fr); grid-column: span 2;` |
+| Sizing | `w-1/2`, `h-screen`, `max-w-md` | `width: 50%; height: 100vh; max-width: 28rem;` |
+| Borders | `border`, `border-2`, `rounded-full` | `border-width: 1px; border-width: 2px; border-radius: 9999px;` |
+| Typography | `text-lg`, `font-bold`, `truncate` | `font-size: 1.125rem; font-weight: 700; text-overflow: ellipsis;` |
+| State variants | `hover:`, `focus:`, `active:`, `disabled:` | `:hover`, `:focus`, `:active`, `:disabled` — prefix any utility with these |
+
+Tailwind's spacing scale (used by `p-*`, `m-*`, `gap-*`, `w-*`, and more) is a consistent
+numeric scale, not arbitrary pixel values: `1` = `0.25rem` (4px), `2` = `0.5rem` (8px), `4` =
+`1rem` (16px), and so on — the same "pick a small set of values and only use those" spacing
+discipline from Lecture 6, just built into the framework. Colors follow a similar scale per
+hue, from `50` (near-white) to `900` (near-black), e.g. `blue-100` through `blue-900`.
+
+### Customizing Tailwind: the Configuration File
+
+The default color palette and spacing scale are only a starting point. A real project
+configures Tailwind with a `tailwind.config.js` file, extending (not replacing) the
+defaults with your own design tokens:
+
+```js title="tailwind.config.js"
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        brand: '#ff6b35', // now usable as bg-brand, text-brand, border-brand, etc.
+      },
+    },
+  },
+};
+```
+
+Once configured, `brand` behaves exactly like any built-in color — it works with every
+color utility and every state-variant prefix, because it's now a real value in Tailwind's
+own color scale, not a one-off custom class:
+
+```html
+<button class="bg-brand hover:bg-orange-700 text-white font-semibold px-4 py-2 rounded-lg">
+  Save Changes
+</button>
+```
+
+![Rendered output: an orange rounded button reading "Save Changes" in white bold text, styled using a custom bg-brand color defined in the Tailwind config file rather than one of Tailwind's built-in colors](../assets/img/lecture-10/tailwind-custom-color.png)
+
+`theme.extend` *adds* new values without discarding Tailwind's defaults; using `theme`
+directly (without `extend`) replaces the entire default scale for that key instead — almost
+always what you don't want, since it also removes every built-in color or spacing value.
+
+### Dark Mode
+
+Tailwind supports a `dark:` variant that applies only when dark mode is active. With
+`darkMode: 'class'` in the config, dark mode activates for any element inside a `dark`
+class — commonly placed on `<html>` and toggled with a few lines of JavaScript that read
+the user's stored preference or `prefers-color-scheme`:
+
+```js title="tailwind.config.js"
+module.exports = {
+  darkMode: 'class', // or 'media' to follow the OS setting automatically, no toggle needed
+};
+```
+
+```html
+<div class="bg-white dark:bg-gray-800 text-black dark:text-white">
+  Card content
+</div>
+```
+
+Rendered twice — the same markup, once with no `dark` ancestor and once inside a container
+carrying `class="dark"` — shows the `dark:` utilities taking over automatically:
+
+![Rendered output: two identical cards reading "Card content" side by side — the left one labeled "Default" with a white background and black text, the right one labeled ".dark ancestor" with a dark navy background and white text](../assets/img/lecture-10/tailwind-dark-mode.png)
+
+### The `@apply` Directive
+
+When the same combination of utilities repeats across many elements, Tailwind's `@apply`
+directive lets you fold them into one custom class inside a real CSS file, without giving
+up the utility values themselves:
+
+```css
+.btn-primary {
+  @apply bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded-lg shadow;
+}
+```
+
+```html
+<button class="btn-primary">Save Changes</button>
+```
+
+This produces the exact same rendered button as writing out all six utility classes by
+hand — `@apply` is purely a way to *name* a repeated combination, not a different way of
+styling. Reach for it when the same long class list shows up on many elements; for a
+one-off element, the plain utility classes in the HTML are usually clearer.
+
 ## Using Custom Classes and Adding Components
 
 Neither framework expects you to only ever use their built-in classes — real projects
@@ -567,6 +758,234 @@ In both frameworks, the same rule applies: use the framework for the 80% of comm
 it already solves well, and drop into plain custom CSS for the remaining 20% that makes your
 project look like *your* project instead of a generic template.
 
+## CSS Preprocessors: Sass, SCSS, and LESS
+
+Plain CSS lacks things every real programming language has: variables, reusable blocks of
+code, and a way to split one large file into smaller, organized pieces. A **CSS
+preprocessor** is a separate language that adds those features on top of CSS — you write in
+the preprocessor's language, then *compile* it into plain CSS that a browser can actually
+read. **Sass** and **LESS** are the two most widely used preprocessors, and Sass in
+particular is what Bootstrap itself is written in.
+
+```mermaid
+flowchart LR
+    A["your-styles.scss\n(Sass source you write)"] -->|"compile\n(sass CLI / build tool)"| B["your-styles.css\n(plain CSS)"]
+    B --> C["Browser\n(links styles.css normally)"]
+```
+
+The browser never sees Sass or LESS directly — it only ever loads the compiled, plain `.css`
+output. This is exactly the same "source vs. what the browser runs" split you already know
+from writing modern JavaScript (Lecture 11 onward) that gets compiled/bundled before it
+ships.
+
+!!! note "Sass has two syntaxes"
+    Sass actually offers two ways to write it: the original **indented syntax** (`.sass`
+    files, no braces or semicolons, indentation-based like Python) and **SCSS** (`.scss`
+    files, which look like ordinary CSS with braces and semicolons, just with extra
+    features added). SCSS is by far the more common choice today — including in Bootstrap's
+    own source — because any valid CSS file is *also* valid SCSS, so adopting it requires no
+    rewriting. Every example below uses SCSS.
+
+### Why Not Just Use CSS Custom Properties?
+
+Lecture 8 already introduced CSS custom properties (`--main-color`, read with
+`var(--main-color)`) — real *runtime* variables the browser understands natively. Sass
+variables look similar but work completely differently:
+
+| | Sass variables (`$name`) | CSS custom properties (`--name`) |
+|---|---|---|
+| Resolved | At **compile time** — replaced with a literal value before the browser ever sees it | At **runtime**, in the browser itself |
+| Can change after page load (JavaScript, media query) | No — it's already a fixed value in the compiled CSS | Yes — this is their main advantage |
+| Needs a build step | Yes — a `.scss` file must be compiled | No — works in a plain `<style>` tag |
+| Useful for | Configuring a whole framework's source before it compiles (see Bootstrap below) | Theming/dark-mode switches that change live in the browser |
+
+They solve different problems and are often used together: Sass variables configure how a
+stylesheet *compiles*, while custom properties let already-compiled CSS *change* in the
+browser afterward.
+
+### Sass Fundamentals
+
+**Variables** store a reusable value under a `$name`:
+
+```scss
+$primary-color: #6c5ce7;
+$spacing: 16px;
+
+.card {
+  padding: $spacing;
+  border: 1px solid $primary-color;
+}
+```
+
+**Nesting** lets you write a child selector's rules physically inside its parent's block,
+instead of repeating the parent selector every time — including `&`, which refers back to
+the parent selector itself (essential for states like `:hover`):
+
+```scss
+.card {
+  padding: $spacing;
+  border: 1px solid $primary-color;
+
+  .title {
+    color: $primary-color;
+    font-weight: bold;
+  }
+
+  &:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+}
+```
+
+**Mixins** are reusable blocks of declarations — closer to a function than a variable —
+defined once with `@mixin` and reused anywhere with `@include`:
+
+```scss
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.banner {
+  @include flex-center;
+  height: 80px;
+  background: $primary-color;
+  color: white;
+}
+```
+
+Compiling the variables, nesting, and mixin above with the Sass CLI (`sass input.scss
+output.css`) produces ordinary CSS — `.card .title { ... }` written out in full, `&:hover`
+expanded to `.card:hover { ... }`, and the mixin's three declarations copied directly into
+`.banner`. Rendered in a browser, the result is indistinguishable from CSS written by hand:
+
+![Rendered output: a card with a purple border and a bold purple "Card Title", containing the text "Some content styled with Sass", and below it a solid purple rounded banner with centered white bold text reading "Centered Banner"](../assets/img/lecture-10/sass-fundamentals-demo.png)
+
+**Partials and `@use`.** A real project splits Sass across many small files instead of one
+giant one. A filename starting with an underscore (`_variables.scss`) is a **partial** —
+Sass knows not to compile it into its own separate CSS file, only to pull it into whatever
+file imports it:
+
+```scss title="_variables.scss"
+$primary-color: #6c5ce7;
+$spacing: 16px;
+```
+
+```scss title="main.scss"
+@use 'variables' as v;
+
+.card {
+  padding: v.$spacing;
+  border: 1px solid v.$primary-color;
+}
+```
+
+`@use` (the modern replacement for the older `@import`) loads a partial's variables and
+mixins under a namespace (`v.` above), keeping large stylesheets organized into logical
+files — colors, typography, one file per component — without any of that structure leaking
+into the compiled output.
+
+**Math and built-in functions.** Sass supports arithmetic directly in property values, plus
+built-in color functions:
+
+```scss
+$base: 16px;
+
+.container {
+  padding: $base * 2;              /* 32px */
+  width: calc(100% - #{$base * 2}); /* interpolate a Sass value inside calc() */
+}
+
+.button:hover {
+  background: darken($primary-color, 10%); /* 10% darker than $primary-color */
+}
+```
+
+### LESS: The Same Idea, Different Syntax
+
+**LESS** solves the same problems as Sass — variables, nesting, mixins — with a syntax
+close enough to switch between them at a glance, but with `@` instead of `$` for variables
+(easy to confuse with CSS's own `@media`/`@import`, one reason many teams now prefer Sass):
+
+```less
+@primary-color: #6c5ce7;
+
+.card {
+  border: 1px solid @primary-color;
+
+  .title {
+    color: @primary-color;
+  }
+}
+
+.mixin-example() {
+  display: flex;
+  justify-content: center;
+}
+
+.banner {
+  .mixin-example();
+  background: @primary-color;
+}
+```
+
+| Feature | Sass (SCSS) | LESS |
+|---|---|---|
+| Variable syntax | `$name` | `@name` |
+| Mixin definition | `@mixin name { ... }` | `.name() { ... }` |
+| Mixin use | `@include name;` | `.name();` |
+| Compiles via | `sass` (Dart Sass) | `lessc`, or a bundler plugin |
+| Used by | Bootstrap 4 and 5, most new projects | Bootstrap 3 (before it switched to Sass), older codebases |
+
+LESS was historically compiled in the browser itself with a JavaScript file, which made it
+easy to try without any build tooling — modern projects compile both LESS and Sass ahead of
+time as part of the build process instead, for speed and reliability.
+
+### Customizing Bootstrap with Sass
+
+Every Bootstrap component you have used so far is compiled from Sass source files that ship
+inside the `bootstrap` package (`node_modules/bootstrap/scss/`) — the CDN `.css` file is
+just one specific, pre-compiled build of that source, using Bootstrap's own default
+variables. Overriding those variables **before** importing Bootstrap's Sass recompiles the
+entire framework around your values — every component, everywhere, automatically.
+
+```scss title="custom.scss"
+// Override Bootstrap's own variables BEFORE importing its source
+$primary: #ff6b35;         // replaces Bootstrap's default blue everywhere .btn-primary etc. are used
+$border-radius: 1rem;      // rounder corners on every component that uses $border-radius
+$grid-gutter-width: 3rem;  // wider gaps between every .row's columns, site-wide
+
+@import "bootstrap/scss/bootstrap";
+```
+
+```bash
+sass custom.scss custom.css   # compiles to a complete, customized Bootstrap build
+```
+
+The compiled `custom.css` is a genuine, complete Bootstrap build — every component that
+reads `$primary`, `$border-radius`, or `$grid-gutter-width` picks up the new values with no
+further edits anywhere. The same button, card, and grid markup, linked against the stock
+Bootstrap CDN file versus this custom-compiled one:
+
+![Rendered output: stock Bootstrap with a blue "Save Changes" button, a card with sharp corners, and three grid columns with a narrow gap between them](../assets/img/lecture-10/bootstrap-sass-before.png)
+
+![Rendered output: the same button now orange, the same card with visibly more rounded corners, and the same three grid columns now with a noticeably wider gap between them — all from the three variable overrides above, and no other markup or CSS changes](../assets/img/lecture-10/bootstrap-sass-after.png)
+
+This is the real advantage of Sass over the "add a custom class after the fact" approach
+from earlier in this lecture: instead of fighting Bootstrap's specificity component by
+component, you configure the *source* once, and every current and future use of that
+variable across the entire framework follows automatically. Bootstrap's own documentation
+lists every variable available to override this way — colors, spacing, breakpoints, the
+number of grid columns (`$grid-columns: 12` by default), fonts, and more.
+
+!!! tip "You don't have to compile it yourself"
+    Tools like the Bootstrap Sass build, a bundler (Vite, webpack), or an online Sass
+    playground can all run this same compilation step for you. The important idea to take
+    away is *what* is happening — your variables are substituted into Bootstrap's own
+    source before a single line of final CSS is generated — not memorizing a specific
+    command line.
+
 ## Try It Yourself
 
 1. Build a simple three-column "feature" section (three cards side by side on desktop,
@@ -578,6 +997,15 @@ project look like *your* project instead of a generic template.
    in CSS, then add the viewport meta tag to your page's `<head>` if it is missing, and test
    resizing your browser window from a wide desktop width down to a narrow phone width to
    confirm the image always fits its container without causing horizontal scrolling.
+3. Write a `_variables.scss` partial defining two variables (a color and a spacing value)
+   and a `@mixin` for centering content with Flexbox. `@use` it from a `main.scss` that
+   styles a card with both the variables and the mixin, then compile it (with the `sass`
+   CLI, or an online Sass playground) and open the resulting `.css` file to see exactly what
+   your nesting and mixin expanded into.
+4. Override at least two of Bootstrap's own Sass variables (for example `$primary` and
+   `$border-radius`) in a `custom.scss` that imports `bootstrap/scss/bootstrap`, compile it,
+   and load the result instead of the Bootstrap CDN link in a test page. Confirm that every
+   `.btn-primary` on the page changed color with zero edits to your HTML.
 
 ## Key Takeaways
 
@@ -596,8 +1024,17 @@ project look like *your* project instead of a generic template.
   utility-first frameworks like Tailwind give you small single-purpose classes you compose
   yourself.
 - Bootstrap's 12-column, Flexbox-based grid (`.container`, `.row`, `.col-md-*`) and its
-  ready-made components (`.btn`, `.card`, `.navbar`) let you assemble a page quickly.
+  ready-made components (`.btn`, `.card`, `.navbar`) let you assemble a page quickly;
+  `.offset-*`, `.order-*`, nesting, and auto-layout `.col`s cover the rest of real layouts.
 - Tailwind's utility classes (`flex`, `p-4`, `bg-blue-600`, with breakpoint prefixes like
-  `md:`) let you build a fully custom look directly in your HTML.
+  `md:`) let you build a fully custom look directly in your HTML; `tailwind.config.js`
+  extends the default theme, `dark:` handles dark mode, and `@apply` names a repeated
+  combination as a real CSS class.
 - Both frameworks expect you to add your own custom CSS or reusable class combinations on
   top of them — frameworks solve the common 80%, not the last 20% that makes a site unique.
+- CSS preprocessors (Sass/SCSS, LESS) compile to plain CSS before the browser ever sees
+  them, adding variables, nesting, and mixins — Sass variables are resolved at compile
+  time, unlike CSS custom properties, which live in the browser and can change at runtime.
+- Bootstrap's own source is written in Sass: overriding its variables (`$primary`,
+  `$border-radius`, `$grid-gutter-width`, and more) before importing it recompiles the
+  entire framework around your values, everywhere, with zero HTML changes.
