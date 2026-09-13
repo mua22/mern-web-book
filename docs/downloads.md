@@ -21,6 +21,23 @@ The source documents this book is generated from, as PDFs.
 - [Course Description Form (CDF)](downloads/course-cdf/CSC337%20AWT%20CDF%20V5.0.pdf)
 - [Lecture-wise Plan](downloads/course-cdf/CSC337%20Advanced%20Web%20Technologies%20-%20Lecture-wise%20Plan.pdf)
 
+## CSC336 Lecture Slides (Lectures 1–10)
+
+Presentation-style slide decks for the first ten Web Technologies lectures, one slide per
+PDF page — use full-screen view in your PDF reader for a proper presentation, or print
+them for offline study.
+
+- [Lecture 1: Introduction to Web Development](downloads/lecture-slides/CSC336-Lecture-01-Introduction-to-Web-Development.pdf)
+- [Lecture 2: Tiered Web Architecture](downloads/lecture-slides/CSC336-Lecture-02-Tiered-Web-Architecture.pdf)
+- [Lecture 3: HTML and HTML5 Fundamentals](downloads/lecture-slides/CSC336-Lecture-03-HTML-and-HTML5-Fundamentals.pdf)
+- [Lecture 4: Semantic HTML and Forms](downloads/lecture-slides/CSC336-Lecture-04-Semantic-HTML-and-Forms.pdf)
+- [Lecture 5: CSS Fundamentals](downloads/lecture-slides/CSC336-Lecture-05-CSS-Fundamentals.pdf)
+- [Lecture 6: The CSS Box Model and Display](downloads/lecture-slides/CSC336-Lecture-06-CSS-Box-Model-and-Display.pdf)
+- [Lecture 7: CSS Positioning and Stacking](downloads/lecture-slides/CSC336-Lecture-07-CSS-Positioning-and-Stacking.pdf)
+- [Lecture 8: CSS3 Features](downloads/lecture-slides/CSC336-Lecture-08-CSS3-Features.pdf)
+- [Lecture 9: Flexbox and Grid Layout](downloads/lecture-slides/CSC336-Lecture-09-Flexbox-and-Grid-Layout.pdf)
+- [Lecture 10: Responsive Design and Frameworks](downloads/lecture-slides/CSC336-Lecture-10-Responsive-Design-and-Frameworks.pdf)
+
 ## Legacy Lecture Slides
 
 Older slide decks from earlier offerings of these courses, kept here for reference
