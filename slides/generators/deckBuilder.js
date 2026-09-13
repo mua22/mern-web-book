@@ -192,8 +192,9 @@ function renderCode(p, spec, helpers) {
   const boxH = spec.codeH || Math.min(maxH, 0.75 + lineCount * 0.42);
   helpers.codeBox(s, spec.code, MARGIN_X, y0, CONTENT_W, boxH, spec.fontSize || 14);
   if (spec.note) {
+    const noteY = y0 + boxH + 0.25;
     s.addText(spec.note, {
-      isTextBox: true, x: MARGIN_X, y: y0 + boxH + 0.25, w: CONTENT_W, h: 1.2,
+      isTextBox: true, x: MARGIN_X, y: noteY, w: CONTENT_W, h: Math.max(0.5, 6.85 - noteY),
       fontFace: BFONT, fontSize: 13, color: INK, valign: "top", margin: 0,
     });
   }
