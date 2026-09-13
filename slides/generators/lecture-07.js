@@ -23,8 +23,9 @@ buildDeck({
       "Offset properties (top/right/bottom/left) have NO effect on a static element",
     ] },
 
-    { type: "image", kicker: "The Positioning Schemes", heading: "Five Ways to Lay Out an Element",
+    { type: "codeImage", kicker: "The Positioning Schemes", heading: "Five Ways to Lay Out an Element",
       intro: "Static flow, relative (shifted but reserved), absolute (pinned to an ancestor), fixed (pinned to the viewport), sticky (relative, then fixed).",
+      code: '.static   { position: static; }\n.relative { position: relative; top: 10px; left: 20px; }\n.absolute { position: absolute; top: 0; right: 0; }\n.fixed    { position: fixed; bottom: 20px; right: 20px; }\n.sticky   { position: sticky; top: 0; }',
       img: `${IMG}/position-values-comparison.png` },
 
     { type: "code", kicker: "Scheme 1 of 4", heading: "relative",
@@ -124,7 +125,8 @@ buildDeck({
         ["scroll / auto", "Adds scrollbars always / only when content actually overflows"],
       ] },
 
-    { type: "image", kicker: "Overflow", heading: "Visible vs. Hidden, Rendered",
+    { type: "codeImage", kicker: "Overflow", heading: "Visible vs. Hidden, Rendered",
+      code: '.box {\n  width: 200px;\n  height: 100px;\n  overflow: visible; /* default: extra content spills out */\n  /* overflow: hidden;  clips content that doesn\'t fit  */\n}',
       img: `${IMG}/overflow-comparison.png` },
 
     { type: "callout", kicker: "Overflow", heading: "A One-Line Clearfix Alternative", kind: "tip", h: 1.9,
