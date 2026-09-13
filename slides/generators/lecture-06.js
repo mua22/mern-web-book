@@ -25,7 +25,8 @@ buildDeck({
       "Margin — transparent space outside the border, never filled with color",
     ] },
 
-    { type: "image", kicker: "The Box Model", heading: "The Four Layers, Rendered",
+    { type: "codeImage", kicker: "The Box Model", heading: "The Four Layers, Rendered",
+      code: '.content { width: 300px; height: 150px; background: steelblue; }\n.padding { padding: 20px; background: seagreen; }\n.border  { border: 20px solid darkorange; }\n.margin  { margin: 20px; background: wheat; }',
       img: `${IMG}/box-model-layers.png` },
 
     { type: "code", kicker: "Margin Collapsing", heading: "Two Adjacent Vertical Margins",
@@ -61,7 +62,8 @@ buildDeck({
       "none — removed from the page entirely, taking up no space at all",
     ] },
 
-    { type: "image", kicker: "The display Property", heading: "All Four Values, Compared",
+    { type: "codeImage", kicker: "The display Property", heading: "All Four Values, Compared",
+      code: '.section { display: block; }        /* new line, full width  */\n.tag     { display: inline; }       /* flows in text, no w/h */\n.button  { display: inline-block;   /* inline + respects w/h */\n           width: 120px; height: 40px; }\n.hidden-panel { display: none; }    /* removed entirely      */',
       img: `${IMG}/display-comparison.png` },
 
     { type: "code", kicker: "A Common Mix-Up", heading: "display: none vs. visibility: hidden",
