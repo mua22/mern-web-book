@@ -176,7 +176,7 @@ buildDeck({
 
     { type: "codeImage", kicker: "Lists", heading: "Nested Lists",
       code: "<ul>\n  <li>Front End\n    <ul>\n      <li>HTML</li>\n      <li>CSS</li>\n    </ul>\n  </li>\n  <li>Back End\n    <ul>\n      <li>Node.js</li>\n      <li>Express</li>\n    </ul>\n  </li>\n</ul>",
-      img: `${IMG}/lists.png` },
+      img: `${IMG2}/nested-lists.png` },
 
     { type: "bullets", kicker: "Lists", heading: "Nested List Rules", numbered: false, items: [
       "A nested <ul>/<ol> goes inside the <li> of the item it belongs under",

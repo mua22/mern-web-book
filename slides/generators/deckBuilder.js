@@ -207,10 +207,29 @@ function renderCodeImage(p, spec, helpers) {
   bg(s, WHITE);
   const y0 = header(s, spec, helpers);
   const lineCount = spec.code.split("\n").length;
-  const codeH = spec.codeH || Math.min(2.6, 0.6 + lineCount * 0.32);
-  helpers.codeBox(s, spec.code, MARGIN_X, y0, CONTENT_W, codeH, spec.fontSize || 12.5);
-  const imgY = y0 + codeH + 0.3;
-  const imgH = 6.8 - imgY;
+  const BOTTOM = 6.8;
+  const GAP = 0.3;
+  const MIN_IMG_H = 1.0;
+  const FONT_FLOOR = 10;
+  // Empirical Courier New line-box height at lineSpacingMultiple 1.25 (measured via
+  // PowerPoint COM render, not the nominal 1.25x-of-point-size figure -- that alone
+  // undercounts and lets long snippets visually overflow into the image below).
+  const lineH = (fs) => (fs * 1.5) / 72;
+  let fontSize = spec.fontSize || 12.5;
+  let codeH = spec.codeH;
+  if (!codeH) {
+    const PAD = 0.6;
+    const maxCodeH = BOTTOM - y0 - GAP - MIN_IMG_H;
+    let needed = PAD + lineCount * lineH(fontSize);
+    if (needed > maxCodeH) {
+      fontSize = Math.max(FONT_FLOOR, ((maxCodeH - PAD) / lineCount) * (72 / 1.5));
+      needed = PAD + lineCount * lineH(fontSize);
+    }
+    codeH = needed;
+  }
+  helpers.codeBox(s, spec.code, MARGIN_X, y0, CONTENT_W, codeH, fontSize);
+  const imgY = y0 + codeH + GAP;
+  const imgH = Math.max(0.7, BOTTOM - imgY);
   helpers.screenshotFrame(s, spec.img, MARGIN_X, imgY, CONTENT_W, imgH);
   pageFoot(s, helpers.nextNum());
   return s;
