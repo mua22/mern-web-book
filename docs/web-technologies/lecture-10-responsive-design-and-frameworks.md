@@ -19,7 +19,9 @@ framework — Bootstrap and Tailwind CSS — that make responsive design faster 
 ## In This Lecture
 
 - Understand mobile-first design, the viewport meta tag, and fluid units (`%`, `rem`, `vw`/`vh`)
-- Use media queries and breakpoints, and make images respond to screen size
+- Use media queries and breakpoints — combining conditions with `and`/`,`/`not`, and
+  features beyond width like `orientation`, `prefers-color-scheme`, and `print` — and make
+  images respond to screen size
 - Compare component-based frameworks (Bootstrap) with utility-first frameworks (Tailwind)
 - Learn Bootstrap's grid system, components, and utilities
 - Learn Tailwind's utility-class structure
@@ -154,6 +156,114 @@ There is no single "correct" set of breakpoints — they should match your actua
 not a fixed rulebook. That said, most frameworks (including Bootstrap, which you will see
 below) converge on a similar rough set of common device widths: around 576px (large
 phones), 768px (tablets), 992px (laptops), and 1200px+ (desktops).
+
+### Media Query Syntax: `and`, comma, and `not`
+
+The general shape of a media query is:
+
+```css
+@media [not] media-type and (media-feature: value) and (media-feature: value) {
+  /* CSS rules to apply */
+}
+```
+
+- **`media-type`** is optional and is almost always `screen` (or left out entirely, which
+  means "all types"). You will also meet the `print` type below.
+- **`and`** combines multiple conditions — *every* condition joined by `and` must be true
+  for the rule to apply.
+- **`,`** (a comma) works like **or** — the media query matches if *any* one of the
+  comma-separated conditions is true.
+- **`not`** inverts an entire media query's result. If you use `not`, you must also name a
+  media type.
+
+#### Combining `min-width` and `max-width`: targeting a range
+
+`and` lets you target a specific band of screen sizes — for example, "tablets only, not
+phones and not desktops":
+
+```css
+/* Applies only between 768px and 1199px (inclusive) — a "tablet-only" range */
+@media (min-width: 768px) and (max-width: 1199px) {
+  .sidebar {
+    display: none; /* hide the sidebar just on this one range of screens */
+  }
+}
+```
+
+#### Combining conditions with `,` (OR)
+
+```css
+/* Applies if EITHER the screen is 480px or narrower, OR the device is in portrait mode */
+@media (max-width: 480px), (orientation: portrait) {
+  .hero {
+    font-size: 1.2rem;
+  }
+}
+```
+
+#### Other media features you will run into
+
+Width and height are the most common media features, but `@media` can test several other
+things about the device and the user's preferences:
+
+```css
+/* orientation: is the viewport wider than it is tall, or the opposite? */
+@media (orientation: landscape) {
+  .gallery {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* prefers-color-scheme: respects the user's OS/browser dark mode setting */
+@media (prefers-color-scheme: dark) {
+  body {
+    background: #111;
+    color: #eee;
+  }
+}
+
+/* print: a media TYPE, not a feature — only applies when the page is printed */
+@media print {
+  nav, footer, .no-print {
+    display: none; /* don't waste paper printing navigation or footers */
+  }
+}
+```
+
+| Media feature / type | Matches |
+|---|---|
+| `min-width` / `max-width` | Viewport at least / at most this wide |
+| `min-height` / `max-height` | Viewport at least / at most this tall |
+| `orientation: portrait` / `landscape` | Viewport taller-than-wide, or wider-than-tall |
+| `prefers-color-scheme: light` / `dark` | The user's OS/browser light or dark mode setting |
+| `print` (a media type, not a feature) | The page is being printed or print-previewed |
+| `hover` / `pointer` | Whether the input device can hover, and how precise it is (mouse vs. touch) |
+
+None of `orientation`, `prefers-color-scheme`, or `print` can be demonstrated in a static
+screenshot — each depends on something about the *device or user setting*, not just window
+width — but they use exactly the same `@media (feature: value) { ... }` syntax you have
+already seen for `min-width`/`max-width`, so nothing new to learn beyond the feature names
+themselves.
+
+!!! tip "Practice these live on W3Schools"
+    W3Schools has several free, editable "Try it Yourself" pages built around exactly this
+    topic — open one, resize the results pane (or the whole browser window), and watch the
+    breakpoint fire in real time:
+
+    - [CSS Media Queries](https://www.w3schools.com/css/css3_mediaqueries.asp) — the full
+      `@media` syntax, including `and`, `,`, `not`, and `orientation`
+    - [CSS Media Queries — Examples](https://www.w3schools.com/css/css3_mediaqueries_ex.asp) —
+      several live, editable breakpoint demos (background colors, column counts) you can
+      resize and rerun instantly
+    - [Responsive Web Design — Media Queries](https://www.w3schools.com/css/css_rwd_mediaqueries.asp) —
+      the same mobile-first breakpoint pattern used earlier in this lecture
+    - [Responsive Web Design — Grid View](https://www.w3schools.com/css/css_rwd_grid.asp) —
+      a realistic multi-column layout built entirely from breakpoints
+    - [How To — Create a Mobile Navigation Menu](https://www.w3schools.com/howto/howto_js_mobile_navbar.asp) —
+      a complete, realistic navbar that collapses to a hamburger icon below a breakpoint
+    - [CSS `@media` Rule reference](https://www.w3schools.com/cssref/css3_pr_mediaquery.php) —
+      the full list of media types and features, for whenever you need one this lecture
+      didn't cover
 
 ### Responsive images
 
@@ -477,6 +587,9 @@ project look like *your* project instead of a generic template.
   is required for media queries to behave correctly on real phones.
 - Fluid units — `%`, `rem`, `vw`, `vh` — scale relative to something else, instead of being
   fixed like `px`, which is essential for layouts that truly adapt to any screen.
+- `@media` conditions combine with `and` (all must be true), `,` (any one must be true), and
+  `not` (inverts the whole query) — and test more than just width, including `orientation`,
+  `prefers-color-scheme`, and the `print` media type.
 - `max-width: 100%; height: auto;` keeps images from overflowing their container;
   `srcset`/`sizes` let the browser pick an appropriately-sized image file per device.
 - Component-based frameworks like Bootstrap give you finished, pre-styled UI pieces;
