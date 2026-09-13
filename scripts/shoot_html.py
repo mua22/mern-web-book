@@ -13,6 +13,12 @@ Usage:
 snippet yourself so you control fonts/margins/extra CSS needed only for legibility
 (e.g. adding a light table border). Keep the actual tags being taught unchanged from
 what's shown in the lecture's code block.
+
+NOTE on 3D CSS transforms: this script passes --disable-gpu, which silently flattens
+`transform: rotateX/Y/Z` + `perspective` to a no-op in headless Chrome on this machine
+(the shape renders as if untransformed, with no error). If you need to screenshot a
+3D-transformed element, invoke Chrome directly without --disable-gpu instead, then
+autocrop the same way `shoot()` below does.
 """
 import argparse
 import subprocess
