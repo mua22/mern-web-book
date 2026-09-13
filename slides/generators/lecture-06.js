@@ -64,6 +64,14 @@ buildDeck({
     { type: "image", kicker: "The display Property", heading: "All Four Values, Compared",
       img: `${IMG}/display-comparison.png` },
 
+    { type: "code", kicker: "A Common Mix-Up", heading: "display: none vs. visibility: hidden",
+      code: ".gone    { display: none; }      /* removed entirely — no space reserved   */\n.invisible { visibility: hidden; } /* invisible, but still takes up its space */",
+      note: "Toggling display: none with JavaScript reflows the page (neighbors shift to fill the gap); visibility: hidden leaves a blank gap where the element used to be." },
+
+    { type: "code", kicker: "inline-block in Practice", heading: "A Row of Equal-Sized Buttons",
+      code: ".btn {\n  display: inline-block;\n  width: 120px;\n  text-align: center;\n  padding: 10px 0;\n  margin-right: 8px;\n}",
+      note: "inline-block is what lets several fixed-width buttons sit on one line, side by side, without giving up width/height control the way plain inline would." },
+
     { type: "code", kicker: "A Practical Example", heading: "Turning a <ul> Into a Horizontal Menu",
       code: ".menu { list-style: none; margin: 0; padding: 0; }\n.menu li { display: inline-block; margin-right: 20px; }",
       note: "li is block by default — this one change turns a vertical list into a horizontal menu, with no HTML change at all." },

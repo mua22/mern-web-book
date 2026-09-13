@@ -75,6 +75,15 @@ buildDeck({
       intro: "animation: bounce 1s ease-in-out infinite; — shown here at its three keyframe positions.",
       img: `${IMG2}/bounce-frames.png` },
 
+    { type: "table", kicker: "Animation", heading: "Timing Functions",
+      header: ["Value", "Feel"], colW: [3.0, 9.0], leftCol: 0,
+      rows: [
+        ["linear", "Constant speed, start to finish — feels mechanical"],
+        ["ease (default)", "Starts slow, speeds up, ends slow — the most natural-feeling default"],
+        ["ease-in / ease-out", "Slow start only / slow finish only"],
+        ["cubic-bezier(...)", "A fully custom easing curve for a specific feel"],
+      ] },
+
     { type: "callout", kicker: "Animation", heading: "transition vs. animation", kind: "tip", h: 1.7,
       text: "Use a transition for simple state changes (hover, focus, a toggled class). Use a keyframe animation for anything that plays on its own, loops, or needs more than a start and end state." },
 

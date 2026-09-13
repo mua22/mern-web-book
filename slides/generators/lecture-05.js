@@ -63,6 +63,14 @@ buildDeck({
       intro: "article p { color: #333; } — selects a <p> anywhere inside an <article>, however deeply nested.",
       img: `${IMG}/descendant-selector.png` },
 
+    { type: "code", kicker: "Selectors", heading: "The Universal Selector",
+      code: "* {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box;\n}",
+      note: "* matches every single element on the page — most commonly seen in a \"CSS reset\" at the very top of a stylesheet." },
+
+    { type: "code", kicker: "Selectors", heading: "Combinators: Child and Sibling",
+      code: "nav > a   { color: navy; }    /* only DIRECT children, not grandchildren   */\nh2 + p    { font-weight: bold; } /* the paragraph immediately after an h2  */\nh2 ~ p    { color: gray; }       /* every p that follows an h2, not just one */",
+      note: "> is stricter than a plain descendant selector (space) — it skips anything nested more than one level deep." },
+
     { type: "table", kicker: "States", heading: "Common Pseudo-Classes",
       header: ["Pseudo-class", "Matches"], colW: [3.4, 8.6], leftCol: 0,
       rows: [
