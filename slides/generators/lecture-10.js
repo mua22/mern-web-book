@@ -40,6 +40,9 @@ buildDeck({
         ["vw / vh", "1% of the viewport's width / height"],
       ] },
 
+    { type: "code", kicker: "Fluid Units", heading: "Fluid Units in Practice",
+      code: '.hero {\n  width: 100vw;   /* always fills the full screen width */\n  height: 60vh;   /* always 60% of the visible screen height */\n}\n.card { width: 90%; } /* always 90% of its parent, whatever that is */' },
+
     { type: "imagePair", kicker: "Fluid Units", heading: "The Same Page, Two Widths",
       left: { img: `${IMG}/fluid-units-wide.png`, label: "Wide" },
       right: { img: `${IMG}/fluid-units-narrow.png`, label: "Narrow" } },
@@ -88,12 +91,13 @@ buildDeck({
       left: { img: `${IMG}/bootstrap-grid-wide.png`, label: "Wide (side by side)" },
       right: { img: `${IMG}/bootstrap-grid-narrow.png`, label: "Narrow (stacked)" } },
 
-    { type: "image", kicker: "Bootstrap", heading: "Components, Rendered",
-      intro: "A button, a card, and a navbar — three lines of HTML, zero custom CSS.",
+    { type: "codeImage", kicker: "Bootstrap", heading: "Components, Rendered",
+      intro: "Three lines of HTML, zero custom CSS.",
+      code: '<button class="btn btn-primary">Save Changes</button>\n\n<div class="card"><div class="card-body">\n  <h5 class="card-title">Card Title</h5>\n</div></div>\n\n<nav class="navbar navbar-expand-lg navbar-light bg-light">...</nav>',
       img: `${IMG}/bootstrap-components.png` },
 
-    { type: "image", kicker: "Bootstrap", heading: "Utilities, Rendered",
-      intro: 'd-flex justify-content-between p-3 — spacing and alignment classes, similar in spirit to Tailwind.',
+    { type: "codeImage", kicker: "Bootstrap", heading: "Utilities, Rendered",
+      code: '<div class="d-flex justify-content-between p-3">\n  <!-- d-flex: display:flex; justify-content-between: space-between; p-3: padding -->\n</div>',
       img: `${IMG}/bootstrap-utilities.png` },
 
     { type: "code", kicker: "Tailwind CSS", heading: "A Fully Styled Button",
@@ -108,6 +112,9 @@ buildDeck({
     { type: "imagePair", kicker: "Tailwind CSS", heading: "flex-col md:flex-row, Two Widths",
       left: { img: `${IMG}/tailwind-flex-wide.png`, label: "Wide (row)" },
       right: { img: `${IMG}/tailwind-flex-narrow.png`, label: "Narrow (column)" } },
+
+    { type: "code", kicker: "Tailwind CSS", heading: "Responsive Width",
+      code: '<div class="w-full lg:w-1/3">\n  <!-- full width by default, one-third width from the "lg" breakpoint up -->\n</div>' },
 
     { type: "imagePair", kicker: "Tailwind CSS", heading: "w-full lg:w-1/3, Two Widths",
       left: { img: `${IMG}/tailwind-width-wide.png`, label: "Wide (1/3)" },
