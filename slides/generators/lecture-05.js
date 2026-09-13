@@ -29,38 +29,41 @@ buildDeck({
       code: "p {\n  color: darkslategray;\n  font-size: 16px;\n}",
       note: "A selector (which elements) plus a declaration block (what style) — every declaration is a property: value pair, ending in a semicolon." },
 
-    { type: "image", kicker: "Attaching CSS", heading: "1. Inline Styles",
-      intro: '<p style="color: red; font-weight: bold;"> — applies only to that one element.',
+    { type: "codeImage", kicker: "Attaching CSS", heading: "1. Inline Styles",
+      code: '<p style="color: red; font-weight: bold;">This paragraph is styled inline.</p>',
       img: `${IMG}/inline-style.png` },
 
-    { type: "image", kicker: "Attaching CSS", heading: "2. Internal Style Sheets",
+    { type: "code", kicker: "Attaching CSS", heading: "2. Internal Style Sheets",
+      code: '<head>\n  <style>\n    body { font-family: Arial, sans-serif; }\n    h1 { color: navy; }\n  </style>\n</head>\n<body>\n  <h1>Welcome</h1>\n</body>' },
+
+    { type: "image", kicker: "Attaching CSS", heading: "2. Internal Style Sheets, Rendered",
       intro: "A <style> block inside <head> — applies to the whole page, but stuck in that one HTML file.",
       img: `${IMG}/internal-stylesheet.png` },
 
     { type: "callout", kicker: "Attaching CSS", heading: "3. External Style Sheets — Preferred", kind: "tip", h: 2.4,
       text: "One file, many pages: every page links the same styles.css, so the whole site looks consistent and you edit one file to restyle it. Separation of concerns keeps HTML focused on content. Browsers cache the file, so pages after the first load faster. Designers and developers can work on CSS and HTML independently." },
 
-    { type: "image", kicker: "Selectors", heading: "Class Selector: .highlight",
-      intro: ".highlight { background-color: yellow; } — reusable across as many elements as you like.",
+    { type: "codeImage", kicker: "Selectors", heading: "Class Selector: .highlight",
+      code: '<p class="highlight">This text is important.</p>\n\n.highlight {\n  background-color: yellow;\n}',
       img: `${IMG}/class-selector.png` },
 
-    { type: "image", kicker: "Selectors", heading: "ID Selector: #main-header",
-      intro: "#main-header { font-size: 2rem; text-align: center; } — an id must be unique on the page.",
+    { type: "codeImage", kicker: "Selectors", heading: "ID Selector: #main-header",
+      code: '<div id="main-header">Site Title</div>\n\n#main-header {\n  font-size: 2rem;\n  text-align: center;\n}',
       img: `${IMG}/id-selector.png` },
 
     { type: "callout", kicker: "Selectors", heading: "Class vs. ID", kind: "warning", h: 1.7,
       text: "Use a class when a style might apply to more than one element (most of the time). Use an id only for something that truly appears once on the page. Overusing ids makes CSS harder to reuse." },
 
-    { type: "image", kicker: "Selectors", heading: "Attribute Selector",
-      intro: 'input[type="email"] { border: 1px solid gray; }  and  a[target] { color: purple; }',
+    { type: "codeImage", kicker: "Selectors", heading: "Attribute Selector",
+      code: 'input[type="email"] {\n  border: 1px solid gray;\n}\n\na[target] {\n  color: purple;\n}',
       img: `${IMG}/attribute-selector.png` },
 
-    { type: "image", kicker: "Selectors", heading: "Grouping Selector",
-      intro: "h1, h2, h3 { font-family: Georgia, serif; color: darkred; } — one declaration block, three selectors.",
+    { type: "codeImage", kicker: "Selectors", heading: "Grouping Selector",
+      code: 'h1, h2, h3 {\n  font-family: Georgia, serif;\n  color: darkred;\n}',
       img: `${IMG}/grouping-selector.png` },
 
-    { type: "image", kicker: "Selectors", heading: "Descendant Selector",
-      intro: "article p { color: #333; } — selects a <p> anywhere inside an <article>, however deeply nested.",
+    { type: "codeImage", kicker: "Selectors", heading: "Descendant Selector",
+      code: 'article p {\n  color: #333;\n}\n\n<article>\n  <p>This paragraph IS styled (inside article).</p>\n</article>\n<p>This paragraph is NOT styled (outside article).</p>',
       img: `${IMG}/descendant-selector.png` },
 
     { type: "code", kicker: "Selectors", heading: "The Universal Selector",
@@ -81,8 +84,9 @@ buildDeck({
         [":not(selector)", "Elements that do NOT match the given selector"],
       ] },
 
-    { type: "image", kicker: "States", heading: "Pseudo-Classes, Rendered",
+    { type: "codeImage", kicker: "States", heading: "Pseudo-Classes, Rendered",
       intro: "li:first-child and button:disabled are states the browser can render up front.",
+      code: "li:first-child {\n  font-weight: bold;\n}\n\nbutton:disabled {\n  opacity: 0.5;\n}",
       img: `${IMG}/pseudo-class-demo.png` },
 
     { type: "code", kicker: "Parts", heading: "Pseudo-Elements",
@@ -102,8 +106,8 @@ buildDeck({
         ["!important", "Overrides everything else"],
       ] },
 
-    { type: "image", kicker: "The Cascade", heading: "Specificity Decides the Winner",
-      intro: '<p id="lead-paragraph" class="intro"> — the id selector wins, regardless of source order.',
+    { type: "codeImage", kicker: "The Cascade", heading: "Specificity Decides the Winner",
+      code: 'p { color: black; }              /* low specificity */\n.intro { color: green; }         /* medium          */\n#lead-paragraph { color: blue; } /* high            */\n\n<p id="lead-paragraph" class="intro">What colour am I?</p>',
       img: `${IMG}/specificity-demo.png` },
 
     { type: "table", kicker: "Every Conflict Case", heading: "How the Browser Resolves Conflicts",
@@ -144,16 +148,17 @@ buildDeck({
         ["visibility", "background / background-color"],
       ] },
 
-    { type: "image", kicker: "Colour", heading: "Five Ways to Write a Colour",
-      intro: "Named, hex, rgb() all give the same red; rgba() adds transparency; hsl() gives hue/saturation/lightness.",
+    { type: "codeImage", kicker: "Colour", heading: "Five Ways to Write a Colour",
+      code: '.a { color: red; }                  /* named colour */\n.b { color: #ff0000; }              /* hex code */\n.c { color: rgb(255, 0, 0); }       /* red, green, blue */\n.d { color: rgba(255, 0, 0, 0.5); } /* rgb + alpha */\n.e { color: hsl(0, 100%, 50%); }    /* hue, sat, lightness */',
       img: `${IMG}/color-values.png` },
 
-    { type: "image", kicker: "Fonts", heading: "Font Properties",
+    { type: "codeImage", kicker: "Fonts", heading: "Font Properties",
       intro: "font-family (a fallback list), font-size, font-weight, font-style — combined via the font shorthand too.",
+      code: "p {\n  font-family: \"Helvetica Neue\", Arial, sans-serif;\n  font-size: 16px;\n  font-weight: bold;\n  font-style: italic;\n}",
       img: `${IMG}/font-properties.png` },
 
-    { type: "image", kicker: "Text", heading: "Text Properties",
-      intro: "text-align, text-decoration, text-transform, line-height, letter-spacing.",
+    { type: "codeImage", kicker: "Text", heading: "Text Properties",
+      code: "p {\n  text-align: center;\n  text-decoration: underline;\n  text-transform: uppercase;\n  line-height: 1.6;\n  letter-spacing: 0.5px;\n}",
       img: `${IMG}/text-properties.png` },
 
     { type: "code", kicker: "Backgrounds", heading: "Background Properties",
