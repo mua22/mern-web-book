@@ -31,24 +31,26 @@ buildDeck({
     { type: "image", kicker: "Gradients", heading: "Gradients, Rendered",
       img: `${IMG}/gradients-linear-radial-diagonal.png` },
 
-    { type: "image", kicker: "Gradients", heading: "Multiple Color Stops",
-      intro: "linear-gradient(to right, red 0%, yellow 25%, green 50%, blue 75%, violet 100%)",
+    { type: "codeImage", kicker: "Gradients", heading: "Multiple Color Stops",
+      code: '.rainbow {\n  background: linear-gradient(\n    to right,\n    red 0%, yellow 25%, green 50%, blue 75%, violet 100%\n  );\n}',
       img: `${IMG}/gradient-rainbow-stops.png` },
 
-    { type: "image", kicker: "Shadows", heading: "box-shadow on Hover — Live",
-      intro: ".card:hover { box-shadow: 0 8px 20px rgba(0,0,0,0.35); } — genuinely live on the deployed page; shown here at both states.",
+    { type: "codeImage", kicker: "Shadows", heading: "box-shadow on Hover — Live",
+      intro: "Genuinely live on the deployed page — shown here at both states.",
+      code: '.card {\n  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);\n}\n.card:hover {\n  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);\n}',
       img: `${IMG2}/shadow-hover.png` },
 
-    { type: "image", kicker: "Shadows", heading: "text-shadow",
-      intro: "h1 { text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }",
+    { type: "codeImage", kicker: "Shadows", heading: "text-shadow",
+      code: "h1 {\n  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);\n}",
       img: `${IMG}/text-shadow-heading.png` },
 
-    { type: "image", kicker: "Shadows", heading: "Multiple Shadows",
-      intro: "box-shadow: 0 1px 2px #000, 0 0 20px gold; — stack shadows by separating them with commas.",
+    { type: "codeImage", kicker: "Shadows", heading: "Multiple Shadows",
+      code: "box-shadow: 0 1px 2px #000, 0 0 20px gold;\n/* stack shadows by separating them with commas */",
       img: `${IMG}/multiple-shadows-glow.png` },
 
-    { type: "image", kicker: "Opacity", heading: "opacity",
-      intro: ".faded { opacity: 0.5; } — fades EVERYTHING inside, including text; use rgba() for a transparent background with solid text.",
+    { type: "codeImage", kicker: "Opacity", heading: "opacity",
+      intro: "opacity fades EVERYTHING inside, including text; use rgba() for a transparent background with solid text.",
+      code: ".faded {\n  opacity: 0.5; /* 50% transparent */\n}",
       img: `${IMG}/opacity-comparison.png` },
 
     { type: "table", kicker: "Transforms", heading: "2D and 3D Transform Functions",
@@ -60,19 +62,20 @@ buildDeck({
         ["skew(deg)", "Slants an element"],
       ] },
 
-    { type: "image", kicker: "Transforms", heading: "2D Transforms, Compared",
+    { type: "codeImage", kicker: "Transforms", heading: "2D Transforms, Compared",
+      code: '.box  { transform: rotate(15deg); }\n.box2 { transform: scale(1.2); }\n.box3 { transform: translate(50px, 20px); }\n.box4 { transform: skew(10deg, 0deg); }\n.box5 { transform: translate(20px, 0) rotate(10deg) scale(1.1); }',
       img: `${IMG}/transforms-2d-comparison.png` },
 
-    { type: "image", kicker: "Transforms", heading: "A 3D Hover Flip — Live",
-      intro: "perspective: 800px on the parent, transform: rotateY(25deg) on the card, rotateY(0deg) on hover.",
+    { type: "codeImage", kicker: "Transforms", heading: "A 3D Hover Flip — Live",
+      code: '.scene { perspective: 800px; }\n\n.card-3d {\n  transform: rotateY(25deg);\n  transition: transform 0.4s ease;\n}\n.card-3d:hover { transform: rotateY(0deg); }',
       img: `${IMG2}/card3d.png` },
 
-    { type: "image", kicker: "Transitions", heading: "A Smooth Hover Transition — Live",
-      intro: "transition: background-color 0.3s ease, transform 0.3s ease; — the button genuinely animates on the live page.",
+    { type: "codeImage", kicker: "Transitions", heading: "A Smooth Hover Transition — Live",
+      code: 'button {\n  background-color: royalblue;\n  transition: background-color 0.3s ease, transform 0.3s ease;\n}\nbutton:hover {\n  background-color: darkblue;\n  transform: scale(1.05);\n}',
       img: `${IMG2}/transition-btn.png` },
 
-    { type: "image", kicker: "Keyframe Animations", heading: "@keyframes — Live and Looping",
-      intro: "animation: bounce 1s ease-in-out infinite; — shown here at its three keyframe positions.",
+    { type: "codeImage", kicker: "Keyframe Animations", heading: "@keyframes — Live and Looping",
+      code: '@keyframes bounce {\n  0%   { transform: translateY(0); }\n  50%  { transform: translateY(-20px); }\n  100% { transform: translateY(0); }\n}\n\n.ball { animation: bounce 1s ease-in-out infinite; }',
       img: `${IMG2}/bounce-frames.png` },
 
     { type: "table", kicker: "Animation", heading: "Timing Functions",
