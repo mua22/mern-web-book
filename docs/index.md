@@ -74,7 +74,7 @@ Every chapter follows the same shape, so you always know what to expect:
       Full slide decks for CSC336 Lectures 1–10, one slide per PDF page — use full-screen
       view for a proper presentation, or print them for offline study.
     </p>
-    <a class="wdb-card-link" href="downloads/#csc336-lecture-slides-lectures-110" aria-label="Open Lecture Slides"></a>
+    <a class="wdb-card-link" href="lecture-slides/" aria-label="Open Lecture Slides"></a>
   </div>
   <div class="wdb-card">
     <span class="wdb-badge">STANDALONE · TOOL-FOCUSED</span>
@@ -98,8 +98,8 @@ Every chapter follows the same shape, so you always know what to expect:
     <span class="wdb-badge">CDF · LECTURE PLAN</span>
     <h3>Course Documents</h3>
     <p>
-      Official CSC336 and CSC337 Course Description Forms and lecture-wise plan PDFs, plus
-      legacy slide decks from earlier course offerings, kept here for reference.
+      Official CSC336 and CSC337 Course Description Forms and lecture-wise plan PDFs, the
+      source documents this book is generated from.
     </p>
     <a class="wdb-card-link" href="downloads/" aria-label="Open Downloads"></a>
   </div>
