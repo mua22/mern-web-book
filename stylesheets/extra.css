@@ -18,13 +18,17 @@
 
 /* Material sets .md-tabs { overflow: auto } so the tab bar can scroll
    horizontally when tabs overflow it -- that same rule clips our vertical
-   dropdown regardless of the submenu's own positioning. Split the axes so
-   horizontal scroll still works but vertical overflow (the dropdown) isn't
-   clipped. */
+   dropdown regardless of the submenu's own positioning.
+   Setting only overflow-y: visible while leaving overflow-x: auto does NOT
+   work here: per the CSS Overflow spec, when overflow-x and overflow-y
+   differ and neither is "clip", a "visible" value on one axis is force-
+   computed to "auto" -- which still clips. So this drops horizontal
+   scrolling on the tab bar entirely (6 top-level tabs fit comfortably at
+   any width wide enough to show .md-tabs at all -- it's hidden below the
+   tablet breakpoint regardless) in favor of the dropdown actually working. */
 .md-tabs,
 .md-tabs__list {
-  overflow-x: auto;
-  overflow-y: visible;
+  overflow: visible;
 }
 
 /* .md-tabs__list also sets `contain: content`, which forces paint clipping
