@@ -64,9 +64,43 @@ Every chapter follows the same shape, so you always know what to expect:
 - **Finished CSC336 already?** Jump into [Advanced Web Technologies → Lecture 1](advanced-web-technologies/lecture-01-course-overview-and-enterprise-architecture.md).
 - **Looking for a specific topic?** Use the search bar at the top of the page, or browse the [tag index](tags.md).
 
-## Downloads and Demos
+## Downloads, Demos, and Tutorials
 
-- **[Downloads](downloads.md)** — PDF copies of the official CSC336/CSC337 CDF and
-  lecture-wise plan documents, plus older lecture slide decks kept here for reference.
-- **[Demos](demos.md)** — a companion repository of small, runnable HTML/CSS/JS demos and
-  mini projects, one per topic, that go with these chapters.
+<div class="wdb-grid">
+  <div class="wdb-card">
+    <span class="wdb-badge">PDF · PRESENTATION-READY</span>
+    <h3>Lecture Slides</h3>
+    <p>
+      Full slide decks for CSC336 Lectures 1–10, one slide per PDF page — use full-screen
+      view for a proper presentation, or print them for offline study.
+    </p>
+    <a class="wdb-card-link" href="downloads/#csc336-lecture-slides-lectures-110" aria-label="Open Lecture Slides"></a>
+  </div>
+  <div class="wdb-card">
+    <span class="wdb-badge">STANDALONE · TOOL-FOCUSED</span>
+    <h3>Tutorials</h3>
+    <p>
+      Self-contained, beginner-to-intermediate walkthroughs that sit alongside the lecture
+      chapters — environment setup, layout patterns, Git and GitHub, and more.
+    </p>
+    <a class="wdb-card-link" href="tutorials/" aria-label="Open Tutorials"></a>
+  </div>
+  <div class="wdb-card">
+    <span class="wdb-badge">RUNNABLE · HTML/CSS/JS</span>
+    <h3>Demos</h3>
+    <p>
+      A companion repository of small, self-contained demos and mini projects, one folder
+      per topic, that go with these chapters — open <code>index.html</code> and run.
+    </p>
+    <a class="wdb-card-link" href="demos/" aria-label="Open Demos"></a>
+  </div>
+  <div class="wdb-card">
+    <span class="wdb-badge">CDF · LECTURE PLAN</span>
+    <h3>Course Documents</h3>
+    <p>
+      Official CSC336 and CSC337 Course Description Forms and lecture-wise plan PDFs, plus
+      legacy slide decks from earlier course offerings, kept here for reference.
+    </p>
+    <a class="wdb-card-link" href="downloads/" aria-label="Open Downloads"></a>
+  </div>
+</div>
