@@ -197,63 +197,20 @@ name into the IP address of the server that hosts it.
 ```mermaid
 flowchart LR
     A[Browser types<br/>example.com] --> B[DNS Resolver]
-    B --> C[DNS finds matching<br/>IP address]
+    B --> C[Finds matching<br/>IP address]
     C --> D[Browser connects to<br/>93.184.216.34]
 ```
 
-DNS is not one giant database — it's organized as a hierarchy, and looking up a name means
-walking down that hierarchy one level at a time:
+That lookup is fast because answers are **cached** — by your browser, your operating
+system, and DNS servers along the way — for a set time. This is also why a DNS change
+(like pointing a domain at a new host) can take a few minutes to a day to fully
+"propagate," instead of updating everywhere instantly.
 
-- **Root servers** don't know any actual websites — they only know which servers handle
-  each top-level domain (`.com`, `.org`, `.pk`, and so on).
-- **TLD (top-level domain) servers** don't know your website either — they know which
-  authoritative server is responsible for each domain registered under that TLD.
-- **Authoritative name servers** hold the real records for one specific domain (for
-  `example.com`, this is usually a DNS service run by its registrar or host).
-
-You don't walk this hierarchy yourself on every request. Your computer asks a **recursive
-resolver** (often run by your ISP, or a public service like Google's `8.8.8.8` or
-Cloudflare's `1.1.1.1`) to do the walking and hand back just the final IP address:
-
-```mermaid
-sequenceDiagram
-    participant You as Your Computer
-    participant Resolver as Recursive Resolver
-    participant Root as Root Server
-    participant TLD as .com TLD Server
-    participant Auth as Authoritative Server<br/>(example.com)
-
-    You->>Resolver: Where is example.com?
-    Resolver->>Root: Who handles .com?
-    Root-->>Resolver: Ask the .com TLD server
-    Resolver->>TLD: Who handles example.com?
-    TLD-->>Resolver: Ask example.com's name server
-    Resolver->>Auth: What's the IP for example.com?
-    Auth-->>Resolver: 93.184.216.34
-    Resolver-->>You: 93.184.216.34
-```
-
-#### Common DNS Record Types
-
-A domain's authoritative server doesn't just store one address — it stores several kinds
-of records, each answering a different question:
-
-| Record | Purpose |
-|---|---|
-| `A` | Maps a domain name to an IPv4 address |
-| `AAAA` | Maps a domain name to an IPv6 address |
-| `CNAME` | Aliases one domain name to another (e.g., pointing `www.example.com` at `example.com`) |
-| `MX` | Points to the mail servers responsible for a domain's email |
-| `TXT` | Arbitrary text, often used to prove domain ownership or configure email security (SPF/DKIM) |
-| `NS` | Lists the authoritative name servers for a domain |
-
-!!! note "Caching and TTL"
-    Resolved DNS answers are cached — by your browser, your operating system, and the
-    recursive resolver — for a period set by the record's **TTL (Time To Live)**. Most
-    lookups are therefore answered from a nearby cache in milliseconds rather than walking
-    the full hierarchy. This caching is also why a DNS change (like pointing a domain at a
-    new host) can take anywhere from minutes to a day to "propagate" everywhere — old,
-    cached answers keep being served until their TTL expires.
+!!! note "Going further"
+    DNS is actually organized as a hierarchy of servers, resolved through a chain of
+    lookups — and a domain stores several kinds of records (A, CNAME, MX, and more), not
+    just one address. [Lecture 32](lecture-32-domain-dns-and-deployment.md) covers this in
+    full once you're ready to register a real domain and deploy to it.
 
 ### Hosting and Web Servers
 
