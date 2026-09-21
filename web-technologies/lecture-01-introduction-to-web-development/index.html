@@ -946,23 +946,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="DNS">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#common-dns-record-types" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Common DNS Record Types
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
         
           <li class="md-nav__item">
@@ -2921,23 +2904,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="DNS">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#common-dns-record-types" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Common DNS Record Types
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
         
           <li class="md-nav__item">
@@ -3527,81 +3493,18 @@ you type <code>example.com</code> into your browser, DNS translates ("resolves")
 name into the IP address of the server that hosts it.</p>
 <pre class="mermaid"><code>flowchart LR
     A[Browser types&lt;br/&gt;example.com] --&gt; B[DNS Resolver]
-    B --&gt; C[DNS finds matching&lt;br/&gt;IP address]
+    B --&gt; C[Finds matching&lt;br/&gt;IP address]
     C --&gt; D[Browser connects to&lt;br/&gt;93.184.216.34]</code></pre>
-<p>DNS is not one giant database — it's organized as a hierarchy, and looking up a name means
-walking down that hierarchy one level at a time:</p>
-<ul>
-<li><strong>Root servers</strong> don't know any actual websites — they only know which servers handle
-  each top-level domain (<code>.com</code>, <code>.org</code>, <code>.pk</code>, and so on).</li>
-<li><strong>TLD (top-level domain) servers</strong> don't know your website either — they know which
-  authoritative server is responsible for each domain registered under that TLD.</li>
-<li><strong>Authoritative name servers</strong> hold the real records for one specific domain (for
-  <code>example.com</code>, this is usually a DNS service run by its registrar or host).</li>
-</ul>
-<p>You don't walk this hierarchy yourself on every request. Your computer asks a <strong>recursive
-resolver</strong> (often run by your ISP, or a public service like Google's <code>8.8.8.8</code> or
-Cloudflare's <code>1.1.1.1</code>) to do the walking and hand back just the final IP address:</p>
-<pre class="mermaid"><code>sequenceDiagram
-    participant You as Your Computer
-    participant Resolver as Recursive Resolver
-    participant Root as Root Server
-    participant TLD as .com TLD Server
-    participant Auth as Authoritative Server&lt;br/&gt;(example.com)
-
-    You-&gt;&gt;Resolver: Where is example.com?
-    Resolver-&gt;&gt;Root: Who handles .com?
-    Root--&gt;&gt;Resolver: Ask the .com TLD server
-    Resolver-&gt;&gt;TLD: Who handles example.com?
-    TLD--&gt;&gt;Resolver: Ask example.com's name server
-    Resolver-&gt;&gt;Auth: What's the IP for example.com?
-    Auth--&gt;&gt;Resolver: 93.184.216.34
-    Resolver--&gt;&gt;You: 93.184.216.34</code></pre>
-<h4 id="common-dns-record-types">Common DNS Record Types<a class="headerlink" href="#common-dns-record-types" title="Permanent link">&para;</a></h4>
-<p>A domain's authoritative server doesn't just store one address — it stores several kinds
-of records, each answering a different question:</p>
-<table>
-<thead>
-<tr>
-<th>Record</th>
-<th>Purpose</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>A</code></td>
-<td>Maps a domain name to an IPv4 address</td>
-</tr>
-<tr>
-<td><code>AAAA</code></td>
-<td>Maps a domain name to an IPv6 address</td>
-</tr>
-<tr>
-<td><code>CNAME</code></td>
-<td>Aliases one domain name to another (e.g., pointing <code>www.example.com</code> at <code>example.com</code>)</td>
-</tr>
-<tr>
-<td><code>MX</code></td>
-<td>Points to the mail servers responsible for a domain's email</td>
-</tr>
-<tr>
-<td><code>TXT</code></td>
-<td>Arbitrary text, often used to prove domain ownership or configure email security (SPF/DKIM)</td>
-</tr>
-<tr>
-<td><code>NS</code></td>
-<td>Lists the authoritative name servers for a domain</td>
-</tr>
-</tbody>
-</table>
+<p>That lookup is fast because answers are <strong>cached</strong> — by your browser, your operating
+system, and DNS servers along the way — for a set time. This is also why a DNS change
+(like pointing a domain at a new host) can take a few minutes to a day to fully
+"propagate," instead of updating everywhere instantly.</p>
 <div class="admonition note">
-<p class="admonition-title">Caching and TTL</p>
-<p>Resolved DNS answers are cached — by your browser, your operating system, and the
-recursive resolver — for a period set by the record's <strong>TTL (Time To Live)</strong>. Most
-lookups are therefore answered from a nearby cache in milliseconds rather than walking
-the full hierarchy. This caching is also why a DNS change (like pointing a domain at a
-new host) can take anywhere from minutes to a day to "propagate" everywhere — old,
-cached answers keep being served until their TTL expires.</p>
+<p class="admonition-title">Going further</p>
+<p>DNS is actually organized as a hierarchy of servers, resolved through a chain of
+lookups — and a domain stores several kinds of records (A, CNAME, MX, and more), not
+just one address. <a href="../lecture-32-domain-dns-and-deployment/">Lecture 32</a> covers this in
+full once you're ready to register a real domain and deploy to it.</p>
 </div>
 <h3 id="hosting-and-web-servers">Hosting and Web Servers<a class="headerlink" href="#hosting-and-web-servers" title="Permanent link">&para;</a></h3>
 <p><strong>Hosting</strong> means storing your website's files (and running the software that serves
@@ -4209,7 +4112,7 @@ surface-level exposure to every tool on this page.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 11, 2026 02:25:26 UTC">September 11, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 21, 2026 07:44:05 UTC">September 21, 2026</span>
   </span>
 
     
