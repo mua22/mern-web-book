@@ -90,6 +90,14 @@ buildDeck({
     { type: "code", kicker: "Finishing Touches", heading: "Borders, Radius, and Shadow",
       code: ".card {\n  border: 2px solid #333;\n  border-radius: 8px;\n  box-shadow: 0 4px 8px rgba(0,0,0,0.2);\n}\n\n.avatar { border-radius: 50%; }  /* a circle */" },
 
+    { type: "codeImageSide", kicker: "Finishing Touches", heading: "Box Shadow: Raised, Soft, and Inset",
+      code: ".raised {\n  box-shadow: 0 4px 8px rgba(0,0,0,.2);\n}\n\n.soft {\n  box-shadow: 0 8px 20px rgba(0,0,0,.15);\n}\n\n.pressed {\n  box-shadow:\n    inset 0 2px 4px rgba(0,0,0,.35);\n}",
+      img: `${IMG}/shadow-basics-demo.png` },
+
+    { type: "codeImageSide", kicker: "Finishing Touches", heading: "Layered Shadows and Text Shadow",
+      code: ".card {\n  box-shadow:\n    0 1px 2px rgba(0,0,0,.08),\n    0 4px 8px rgba(0,0,0,.08),\n    0 12px 24px rgba(0,0,0,.08);\n}\n\nh1 {\n  text-shadow: 2px 2px 4px rgba(0,0,0,.3);\n}",
+      img: `${IMG}/shadow-layered-demo.png` },
+
     { type: "bullets", kicker: "Finishing Touches", heading: "Consistent Spacing Techniques", numbered: false, items: [
       "A spacing scale — pick a small set of values (4px, 8px, 16px, 24px) and only ever use those",
       "CSS custom properties — define --space-md: 16px once in :root, reuse everywhere with var(--space-md)",
