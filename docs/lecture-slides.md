@@ -8,7 +8,7 @@ Presentation-style slide decks for the CSC336 Web Technologies lectures, one sli
 page — use full-screen view in your PDF reader for a proper presentation, or print them for
 offline study.
 
-## CSC336 Lecture Slides (Lectures 1–10)
+## CSC336 Lecture Slides (Lectures 1–32)
 
 - [Lecture 1: Introduction to Web Development](downloads/lecture-slides/CSC336-Lecture-01-Introduction-to-Web-Development.pdf)
 - [Lecture 2: Tiered Web Architecture](downloads/lecture-slides/CSC336-Lecture-02-Tiered-Web-Architecture.pdf)
@@ -20,6 +20,28 @@ offline study.
 - [Lecture 8: CSS3 Features](downloads/lecture-slides/CSC336-Lecture-08-CSS3-Features.pdf)
 - [Lecture 9: Flexbox and Grid Layout](downloads/lecture-slides/CSC336-Lecture-09-Flexbox-and-Grid-Layout.pdf)
 - [Lecture 10: Responsive Design and Frameworks](downloads/lecture-slides/CSC336-Lecture-10-Responsive-Design-and-Frameworks.pdf)
+- [Lecture 11: Core JavaScript (ES6)](downloads/lecture-slides/CSC336-Lecture-11-Core-JavaScript-ES6.pdf)
+- [Lecture 12: Array Methods and Processing](downloads/lecture-slides/CSC336-Lecture-12-Array-Methods-and-Processing.pdf)
+- [Lecture 13: DOM Manipulation and Events](downloads/lecture-slides/CSC336-Lecture-13-DOM-Manipulation-and-Events.pdf)
+- [Lecture 14: Regular Expressions and JSON](downloads/lecture-slides/CSC336-Lecture-14-Regular-Expressions-and-JSON.pdf)
+- [Lecture 15: Async JavaScript, Promises, and Fetch](downloads/lecture-slides/CSC336-Lecture-15-Async-JavaScript-Promises-and-Fetch.pdf)
+- [Lecture 16: Introduction to Server-Side Programming](downloads/lecture-slides/CSC336-Lecture-16-Introduction-to-Server-Side-Programming.pdf)
+- [Lecture 17: Midterm Review](downloads/lecture-slides/CSC336-Lecture-17-Midterm-Review.pdf)
+- [Lecture 18: Request Handling and Routing](downloads/lecture-slides/CSC336-Lecture-18-Request-Handling-and-Routing.pdf)
+- [Lecture 19: HTTP Status Codes and Headers](downloads/lecture-slides/CSC336-Lecture-19-HTTP-Status-Codes-and-Headers.pdf)
+- [Lecture 20: Cookies and Sessions](downloads/lecture-slides/CSC336-Lecture-20-Cookies-and-Sessions.pdf)
+- [Lecture 21: Middleware](downloads/lecture-slides/CSC336-Lecture-21-Middleware.pdf)
+- [Lecture 22: Database Connectivity (PostgreSQL/MongoDB)](downloads/lecture-slides/CSC336-Lecture-22-Database-Connectivity.pdf)
+- [Lecture 23: Object-Relational Mapping](downloads/lecture-slides/CSC336-Lecture-23-Object-Relational-Mapping.pdf)
+- [Lecture 24: Response Generation With Templates](downloads/lecture-slides/CSC336-Lecture-24-Response-Generation-with-Templates.pdf)
+- [Lecture 25: REST API Development and Authentication](downloads/lecture-slides/CSC336-Lecture-25-REST-API-Development-and-Authentication.pdf)
+- [Lecture 26: Introduction to React](downloads/lecture-slides/CSC336-Lecture-26-Introduction-to-React.pdf)
+- [Lecture 27: Components, Props, and Events](downloads/lecture-slides/CSC336-Lecture-27-Components-Props-and-Events.pdf)
+- [Lecture 28: Hooks and State Management](downloads/lecture-slides/CSC336-Lecture-28-Hooks-and-State-Management.pdf)
+- [Lecture 29: Routing and API Integration](downloads/lecture-slides/CSC336-Lecture-29-Routing-and-API-Integration.pdf)
+- [Lecture 30: Application Security Basics](downloads/lecture-slides/CSC336-Lecture-30-Application-Security-Basics.pdf)
+- [Lecture 31: Common Web Attacks and Defenses](downloads/lecture-slides/CSC336-Lecture-31-Common-Web-Attacks-and-Defences.pdf)
+- [Lecture 32: Domain, DNS, and Deployment](downloads/lecture-slides/CSC336-Lecture-32-Domain-DNS-and-Deployment.pdf)
 
 ## Legacy Lecture Slides
 
