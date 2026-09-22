@@ -249,6 +249,11 @@ function renderCodeImage(p, spec, helpers) {
   return s;
 }
 
+// Code (left) + screenshot (right) side by side, unlike renderCodeImage's
+// stacked layout. The height calc below only accounts for `\n`-separated
+// lines, not word-wrap -- since this box is ~half the width of renderCode's,
+// keep each source line under ~45 characters or long lines will wrap and
+// silently overflow the code box's bottom edge.
 function renderCodeImageSide(p, spec, helpers) {
   const s = p.addSlide();
   bg(s, WHITE);

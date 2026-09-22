@@ -5,6 +5,7 @@
   "description": "Online book for Web Technologies (CSC336) and Advanced Web Technologies (CSC337), built with MkDocs Material.",
   "scripts": {
     "setup": "python -m pip install -r requirements.txt",
+    "setup:slides": "python -m pip install -r slides/tools/requirements.txt && npx playwright install chromium",
     "docs:dev": "mkdocs serve",
     "docs:dev:host": "mkdocs serve -a 0.0.0.0:8000",
     "start": "npm run docs:dev",
@@ -14,7 +15,9 @@
     "docs:clean": "rimraf site",
     "topics:web-technologies": "python .claude/skills/list-web-technologies-topics/scripts/extract_topics.py",
     "topics:advanced-web-technologies": "python .claude/skills/list-advanced-web-technologies-topics/scripts/extract_topics.py",
-    "topics:all": "npm run topics:web-technologies && npm run topics:advanced-web-technologies"
+    "topics:all": "npm run topics:web-technologies && npm run topics:advanced-web-technologies",
+    "slides:screenshot": "node slides/tools/screenshot.js",
+    "slides:pdf": "python slides/tools/pptx_to_pdf.py"
   },
   "devDependencies": {
     "rimraf": "^6.0.1"
@@ -26,6 +29,7 @@
   "author": "Usman Akram",
   "license": "MIT",
   "dependencies": {
+    "playwright": "^1.63.0",
     "pptxgenjs": "^4.0.1"
   }
 }
