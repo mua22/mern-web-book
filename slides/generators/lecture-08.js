@@ -120,6 +120,24 @@ buildDeck({
       ],
       note: "Always place the unprefixed, standard property LAST — Autoprefixer automates this in real projects." },
 
+    { type: "diagram", kicker: "Compatibility", heading: "The Vendor-Prefix Workflow",
+      nodes: [
+        { x: 4.65, y: 2.2, w: 4.0, h: 0.5, text: "You write CSS3 code", fill: "1E1E4C", fontSize: 12.5 },
+        { x: 4.65, y: 2.85, w: 4.0, h: 0.75, text: "New / experimental\nfeature?", shape: "diamond", fill: "FF8A3D", fontSize: 11.5 },
+        { x: 0.9, y: 4.4, w: 3.6, h: 0.75, text: "Add vendor prefixes\n(-webkit- -moz- -ms- -o-),\nstandard property last", fill: "2B2B7A", fontSize: 11 },
+        { x: 8.8, y: 4.4, w: 3.6, h: 0.75, text: "Use the standard\nproperty directly", fill: "2B2B7A", fontSize: 12 },
+        { x: 4.9, y: 5.55, w: 3.5, h: 0.5, text: "Test in multiple browsers", fill: "2B2B7A", fontSize: 12 },
+        { x: 4.4, y: 6.3, w: 4.5, h: 0.5, text: "Consistent look across Chrome, Firefox, Safari, Edge", fill: "3FA66B", fontSize: 11 },
+      ],
+      edges: [
+        { x1: 6.65, y1: 2.7, x2: 6.65, y2: 2.85 },
+        { x1: 5.3, y1: 3.35, x2: 2.7, y2: 4.4, label: "Yes, experimental" },
+        { x1: 8.0, y1: 3.35, x2: 10.6, y2: 4.4, label: "No, well supported" },
+        { x1: 2.7, y1: 5.15, x2: 5.5, y2: 5.55 },
+        { x1: 10.6, y1: 5.15, x2: 7.8, y2: 5.55 },
+        { x1: 6.65, y1: 6.05, x2: 6.65, y2: 6.3 },
+      ] },
+
     { type: "closing", heading: "Lecture 8 in Six Points", items: [
       "border-radius, gradients, box-shadow/text-shadow, and opacity build modern visual effects with no images.",
       "transform repositions/rotates/resizes without disturbing layout; 3D transforms need perspective on a parent.",

@@ -51,6 +51,16 @@ buildDeck({
     { type: "code", kicker: "Media Queries", heading: "A Mobile-First Breakpoint",
       code: '.container { display: flex; flex-direction: column; }\n\n@media (min-width: 768px) {\n  .container { flex-direction: row; }\n}' },
 
+    { type: "flow", kicker: "Media Queries", heading: "Mobile-First Breakpoint Ladder",
+      steps: [
+        { label: "Base styles\n(no media query)\nsmall phones" },
+        { label: "min-width: 576px\nlarge phones" },
+        { label: "min-width: 768px\ntablets" },
+        { label: "min-width: 992px\nlaptops" },
+        { label: "min-width: 1200px\ndesktops" },
+      ],
+      caption: "Mobile-first means the base (unqueried) styles target the smallest screen — each breakpoint only ADDS rules for wider viewports, never overrides them back down." },
+
     { type: "imagePair", kicker: "Media Queries", heading: "Three Cards, Two Widths",
       left: { img: `${IMG}/media-query-wide.png`, label: "Wide (row)" },
       right: { img: `${IMG}/media-query-narrow.png`, label: "Narrow (column)" } },
@@ -189,6 +199,15 @@ buildDeck({
       "Sass has two syntaxes: the indented .sass, and SCSS (.scss) — CSS-compatible braces/semicolons, by far the more common choice, including in Bootstrap's own source",
       "LESS solves the same problems with a different syntax (@var instead of $var) — used by Bootstrap 3, before it switched to Sass",
     ] },
+
+    { type: "flow", kicker: "CSS Preprocessors", heading: "Source vs. What the Browser Runs",
+      steps: [
+        { label: "your-styles.scss\n(Sass source\nyou write)" },
+        { label: "compile\n(sass CLI /\nbuild tool)" },
+        { label: "your-styles.css\n(plain CSS)" },
+        { label: "Browser\n(links styles.css\nnormally)" },
+      ],
+      caption: "The browser never sees Sass or LESS directly — it only ever loads the compiled, plain .css output, the same \"source vs. what ships\" split as modern JavaScript that gets compiled/bundled before it runs." },
 
     { type: "table", kicker: "CSS Preprocessors", heading: "Sass Variables vs. CSS Custom Properties",
       header: ["", "Sass ($name)", "CSS custom property (--name)"], colW: [3.4, 4.4, 4.6], leftCol: 0, rowH: 0.85,

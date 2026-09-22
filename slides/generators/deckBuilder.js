@@ -370,6 +370,62 @@ function renderLayers(p, spec, helpers) {
   return s;
 }
 
+// A small, hand-authored node+edge flowchart primitive -- the native-shapes
+// replacement for a mermaid flowchart/sequence diagram. Nodes and edges use
+// absolute slide coordinates (inches) so each diagram is laid out by hand,
+// the same way a mermaid source hand-places its own boxes; there's no
+// auto-routing. Node shapes: "rect" (default), "roundRect", "diamond".
+function renderDiagram(p, spec, helpers) {
+  const s = p.addSlide();
+  bg(s, WHITE);
+  header(s, spec, helpers);
+
+  (spec.edges || []).forEach((e) => {
+    const x = Math.min(e.x1, e.x2);
+    const y = Math.min(e.y1, e.y2);
+    const w = Math.abs(e.x2 - e.x1);
+    const h = Math.abs(e.y2 - e.y1);
+    s.addShape(p.ShapeType.line, {
+      x, y, w: w || 0.01, h: h || 0.01,
+      flipH: e.x2 < e.x1, flipV: e.y2 < e.y1,
+      line: { color: e.color || MUTED, width: 2, endArrowType: "triangle", dashType: e.dashed ? "dash" : "solid" },
+    });
+    if (e.label) {
+      const midX = (e.x1 + e.x2) / 2, midY = (e.y1 + e.y2) / 2;
+      s.addText(e.label, {
+        isTextBox: true, x: midX - 1.0, y: midY - 0.16, w: 2.0, h: 0.32,
+        align: "center", valign: "middle", fontFace: BFONT, fontSize: 10.5, italic: true,
+        color: e.labelColor || MUTED, fill: { color: WHITE }, margin: 0,
+      });
+    }
+  });
+
+  (spec.nodes || []).forEach((n) => {
+    const shapeType = n.shape === "diamond" ? p.ShapeType.diamond
+      : n.shape === "roundRect" ? p.ShapeType.roundRect
+      : p.ShapeType.rect;
+    s.addShape(shapeType, {
+      x: n.x, y: n.y, w: n.w, h: n.h,
+      rectRadius: n.shape === "roundRect" ? 0.08 : undefined,
+      fill: { color: n.fill || NAVY }, line: n.border ? { color: n.border, width: 1.5 } : { type: "none" },
+    });
+    s.addText(n.text, {
+      isTextBox: true, x: n.x + 0.06, y: n.y, w: n.w - 0.12, h: n.h,
+      align: "center", valign: "middle", fontFace: BFONT, fontSize: n.fontSize || 12,
+      bold: n.bold !== false, color: n.textColor || WHITE, margin: 0, lineSpacingMultiple: 1.05,
+    });
+  });
+
+  if (spec.caption) {
+    s.addText(spec.caption, {
+      isTextBox: true, x: MARGIN_X, y: 6.55, w: CONTENT_W, h: 0.45,
+      fontFace: BFONT, fontSize: 12.5, italic: true, color: MUTED, valign: "top", margin: 0,
+    });
+  }
+  pageFoot(s, helpers.nextNum());
+  return s;
+}
+
 function renderClosing(p, spec, helpers) {
   const s = p.addSlide();
   bg(s, NAVY);
@@ -409,6 +465,7 @@ const RENDERERS = {
   callout: renderCallout,
   flow: renderFlowHoriz,
   layers: renderLayers,
+  diagram: renderDiagram,
   closing: renderClosing,
 };
 

@@ -120,6 +120,24 @@ buildDeck({
         ["5. Inline style vs. stylesheet", "The inline style — unless the stylesheet rule is !important"],
       ] },
 
+    { type: "diagram", kicker: "Every Conflict Case", heading: "The Resolution Flowchart",
+      nodes: [
+        { x: 4.5, y: 2.3, w: 4.3, h: 0.6, text: "Conflicting declarations\non the same property", fill: "1E1E4C", fontSize: 12.5 },
+        { x: 4.6, y: 3.15, w: 4.1, h: 0.85, text: "Differ in\n!important status?", shape: "diamond", fill: "FF8A3D", fontSize: 11.5 },
+        { x: 0.9, y: 4.55, w: 3.2, h: 0.6, text: "The !important\ndeclaration wins", fill: "3FA66B", fontSize: 12 },
+        { x: 5.0, y: 4.55, w: 3.6, h: 0.75, text: "Compare specificity", shape: "diamond", fill: "FF8A3D", fontSize: 11.5 },
+        { x: 3.3, y: 5.75, w: 3.1, h: 0.6, text: "More specific\nrule wins", fill: "3FA66B", fontSize: 12 },
+        { x: 7.2, y: 5.75, w: 3.6, h: 0.6, text: "Rule written LATER wins\n(equal specificity)", fill: "3FA66B", fontSize: 11.5 },
+      ],
+      edges: [
+        { x1: 6.65, y1: 2.9, x2: 6.65, y2: 3.15 },
+        { x1: 5.2, y1: 3.75, x2: 2.5, y2: 4.55, label: "One is !important" },
+        { x1: 6.4, y1: 4.0, x2: 6.8, y2: 4.55, label: "Both / neither" },
+        { x1: 6.0, y1: 5.3, x2: 4.85, y2: 5.75, label: "One higher" },
+        { x1: 7.4, y1: 5.3, x2: 9.0, y2: 5.75, label: "Equal specificity" },
+      ],
+      caption: "Every cascade conflict resolves through exactly these branches, in this order — importance first, then specificity, then source order." },
+
     { type: "code", kicker: "Every Conflict Case", heading: "Case 5 in Code",
       code: '<p id="lead" style="color: purple;">...</p>\n\n#lead { color: blue; }              /* loses to inline */\n#lead { color: green !important; } /* beats inline   */',
       note: "Without the !important line, the paragraph is purple. With it, green — one of the few times !important is the right tool." },

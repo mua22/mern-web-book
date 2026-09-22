@@ -65,6 +65,16 @@ buildDeck({
       code: '<form action="/submit-login" method="POST">\n    <label for="username">Username:</label>\n    <input type="text" id="username" name="username">\n\n    <label for="password">Password:</label>\n    <input type="password" id="password" name="password">\n\n    <button type="submit">Log In</button>\n</form>',
       img: `${IMG}/login-form.png` },
 
+    { type: "flow", kicker: "HTML Forms", heading: "What Happens on Submit",
+      steps: [
+        { label: "User fills in\nform fields" },
+        { label: "Clicks the\nSubmit button" },
+        { label: "Browser sends an\nHTTP request to\nthe action URL" },
+        { label: "Server\nprocesses\nthe data" },
+        { label: "Server sends\nback a response" },
+      ],
+      caption: "The action URL and the method (GET or POST) decide where the request goes and how the form's data is packaged inside it." },
+
     { type: "table", kicker: "HTML Forms", heading: "The action and method Attributes",
       header: ["Attribute", "Meaning"], colW: [2.4, 9.6], leftCol: 0, rowH: 0.9,
       rows: [
