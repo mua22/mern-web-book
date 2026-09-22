@@ -1435,6 +1435,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#a-second-harder-trace-precedence-parentheses-and-exponents-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A Second, Harder Trace: Precedence, Parentheses, and Exponents Together
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#postfix-expression-evaluation" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2799,6 +2810,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#a-second-harder-trace-precedence-parentheses-and-exponents-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A Second, Harder Trace: Precedence, Parentheses, and Exponents Together
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#postfix-expression-evaluation" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2884,7 +2906,8 @@ precedence or parentheses — <code>postfix</code>.</p>
 <li>Real applications of stacks: function calls, backtracking, undo/redo</li>
 <li>Infix, prefix, and postfix expression notation</li>
 <li>Operator precedence and associativity</li>
-<li>Converting infix to postfix using a stack</li>
+<li>Converting infix to postfix using a stack, traced token by token</li>
+<li>A second, harder trace exercising precedence and parentheses together</li>
 <li>Evaluating a postfix expression using a stack</li>
 </ul>
 <h2 id="applications-of-stacks">Applications of Stacks<a class="headerlink" href="#applications-of-stacks" title="Permanent link">&para;</a></h2>
@@ -2974,6 +2997,72 @@ turn to be placed in the output:</p>
    have <em>greater or equal</em> precedence, then push the current operator.</li>
 <li>After scanning the whole expression, pop and output any remaining operators.</li>
 </ol>
+<pre class="mermaid"><code>flowchart TD
+    Start(["Next token"]) --&gt; Q1{"What kind&lt;br/&gt;of token?"}
+    Q1 --&gt;|"operand"| A1["Append directly&lt;br/&gt;to output"]
+    Q1 --&gt;|"'('"| A2["Push onto&lt;br/&gt;the stack"]
+    Q1 --&gt;|"')'"| A3["Pop + output until&lt;br/&gt;'(' is popped,&lt;br/&gt;then discard it"]
+    Q1 --&gt;|"operator"| A4["Pop + output while stack top&lt;br/&gt;has &gt;= precedence,&lt;br/&gt;then push this operator"]
+    A1 --&gt; Start
+    A2 --&gt; Start
+    A3 --&gt; Start
+    A4 --&gt; Start
+    Start --&gt;|"no tokens left"| End["Pop + output&lt;br/&gt;everything remaining"]</code></pre>
+<p>Before looking at the code, trace the algorithm by hand on the simplest example,
+<code>3+4*2</code>, one token at a time — this is exactly what the code below does, just with a real
+stack instead of a table:</p>
+<table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Action</th>
+<th>Stack (bottom → top)</th>
+<th>Output so far</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>3</code></td>
+<td>operand: append</td>
+<td><em>(empty)</em></td>
+<td><code>3</code></td>
+</tr>
+<tr>
+<td><code>+</code></td>
+<td>stack empty, push</td>
+<td><code>+</code></td>
+<td><code>3</code></td>
+</tr>
+<tr>
+<td><code>4</code></td>
+<td>operand: append</td>
+<td><code>+</code></td>
+<td><code>3 4</code></td>
+</tr>
+<tr>
+<td><code>*</code></td>
+<td><code>+</code> has <em>lower</em> precedence than <code>*</code> — don't pop, push</td>
+<td><code>+ *</code></td>
+<td><code>3 4</code></td>
+</tr>
+<tr>
+<td><code>2</code></td>
+<td>operand: append</td>
+<td><code>+ *</code></td>
+<td><code>3 4 2</code></td>
+</tr>
+<tr>
+<td><em>(end)</em></td>
+<td>pop everything remaining: <code>*</code>, then <code>+</code></td>
+<td><em>(empty)</em></td>
+<td><code>3 4 2 * +</code></td>
+</tr>
+</tbody>
+</table>
+<p>That matches the program's actual output below exactly — <code>3 4 2 * +</code> — and shows <em>why</em>
+<code>*</code> ends up before <code>+</code> in the postfix result even though <code>+</code> appears first in the infix
+expression: <code>*</code> was pushed <em>after</em> <code>+</code> (since it binds tighter) and so it's popped and
+output <em>before</em> <code>+</code> is, once the stack finally unwinds at the end.</p>
 <div class="language-cpp highlight"><span class="filename">infix_to_postfix.cpp</span><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stack&gt;</span>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string&gt;</span>
@@ -3023,7 +3112,7 @@ turn to be placed in the output:</p>
 </span><span id="__span-0-47"><a id="__codelineno-0-47" name="__codelineno-0-47" href="#__codelineno-0-47"></a><span class="p">}</span>
 </span><span id="__span-0-48"><a id="__codelineno-0-48" name="__codelineno-0-48" href="#__codelineno-0-48"></a>
 </span><span id="__span-0-49"><a id="__codelineno-0-49" name="__codelineno-0-49" href="#__codelineno-0-49"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-0-50"><a id="__codelineno-0-50" name="__codelineno-0-50" href="#__codelineno-0-50"></a><span class="w">    </span><span class="n">string</span><span class="w"> </span><span class="n">expressions</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="s">&quot;3+4*2&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;(3+4)*2&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;3+4*2-1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;2^3^2&quot;</span><span class="p">};</span>
+</span><span id="__span-0-50"><a id="__codelineno-0-50" name="__codelineno-0-50" href="#__codelineno-0-50"></a><span class="w">    </span><span class="n">string</span><span class="w"> </span><span class="n">expressions</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="s">&quot;3+4*2&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;(3+4)*2&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;3+4*2-1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;2^3^2&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;5*(3+2)-8/4^2&quot;</span><span class="p">};</span>
 </span><span id="__span-0-51"><a id="__codelineno-0-51" name="__codelineno-0-51" href="#__codelineno-0-51"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">expr</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">expressions</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-0-52"><a id="__codelineno-0-52" name="__codelineno-0-52" href="#__codelineno-0-52"></a><span class="w">        </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Infix:   &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">expr</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
 </span><span id="__span-0-53"><a id="__codelineno-0-53" name="__codelineno-0-53" href="#__codelineno-0-53"></a><span class="w">        </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Postfix: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">infixToPostfix</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
@@ -3044,6 +3133,9 @@ turn to be placed in the output:</p>
 </span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>
 </span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>Infix:   2^3^2
 </span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>Postfix: 2 3 ^ 2 ^
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>Infix:   5*(3+2)-8/4^2
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>Postfix: 5 3 2 + * 8 4 2 ^ / -
 </span></code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Why the spacing works out correctly even for multi-digit numbers</p>
@@ -3053,6 +3145,134 @@ space before doing anything else. The result is that digits belonging to one num
 stay glued together, while distinct tokens always end up separated — try it yourself
 with <code>"12+34"</code> and confirm the output is <code>12 34 +</code>, not <code>1234+</code> or <code>1 2 3 4 +</code>.</p>
 </div>
+<h2 id="a-second-harder-trace-precedence-parentheses-and-exponents-together">A Second, Harder Trace: Precedence, Parentheses, and Exponents Together<a class="headerlink" href="#a-second-harder-trace-precedence-parentheses-and-exponents-together" title="Permanent link">&para;</a></h2>
+<p><code>3+4*2</code> only ever needed the stack to hold at most two operators at once, and never
+exercised parentheses at all. A more demanding expression, <code>5*(3+2)-8/4^2</code>, exercises
+every rule in the algorithm: a <code>(</code>/<code>)</code> pair that must be fully resolved before anything
+outside it, a lower-precedence <code>-</code> that has to wait behind a completed multiplication,
+and a right-associative <code>^</code> competing with <code>/</code> for precedence.</p>
+<table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Action</th>
+<th>Stack (bottom → top)</th>
+<th>Output so far</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>5</code></td>
+<td>operand: append</td>
+<td><em>(empty)</em></td>
+<td><code>5</code></td>
+</tr>
+<tr>
+<td><code>*</code></td>
+<td>stack empty, push</td>
+<td><code>*</code></td>
+<td><code>5</code></td>
+</tr>
+<tr>
+<td><code>(</code></td>
+<td>always push</td>
+<td><code>* (</code></td>
+<td><code>5</code></td>
+</tr>
+<tr>
+<td><code>3</code></td>
+<td>operand: append</td>
+<td><code>* (</code></td>
+<td><code>5 3</code></td>
+</tr>
+<tr>
+<td><code>+</code></td>
+<td>top is <code>(</code> — never pop past it, push</td>
+<td><code>* ( +</code></td>
+<td><code>5 3</code></td>
+</tr>
+<tr>
+<td><code>2</code></td>
+<td>operand: append</td>
+<td><code>* ( +</code></td>
+<td><code>5 3 2</code></td>
+</tr>
+<tr>
+<td><code>)</code></td>
+<td>pop + output until <code>(</code>: pops <code>+</code>, then discards <code>(</code></td>
+<td><code>*</code></td>
+<td><code>5 3 2 +</code></td>
+</tr>
+<tr>
+<td><code>-</code></td>
+<td>top <code>*</code> has <em>higher</em> precedence — pop + output it, then push <code>-</code></td>
+<td><code>-</code></td>
+<td><code>5 3 2 + *</code></td>
+</tr>
+<tr>
+<td><code>8</code></td>
+<td>operand: append</td>
+<td><code>-</code></td>
+<td><code>5 3 2 + * 8</code></td>
+</tr>
+<tr>
+<td><code>/</code></td>
+<td>top <code>-</code> has <em>lower</em> precedence — don't pop, push</td>
+<td><code>- /</code></td>
+<td><code>5 3 2 + * 8</code></td>
+</tr>
+<tr>
+<td><code>4</code></td>
+<td>operand: append</td>
+<td><code>- /</code></td>
+<td><code>5 3 2 + * 8 4</code></td>
+</tr>
+<tr>
+<td><code>^</code></td>
+<td>top <code>/</code> has <em>lower</em> precedence (2 &lt; 3) — don't pop, push</td>
+<td><code>- / ^</code></td>
+<td><code>5 3 2 + * 8 4</code></td>
+</tr>
+<tr>
+<td><code>2</code></td>
+<td>operand: append</td>
+<td><code>- / ^</code></td>
+<td><code>5 3 2 + * 8 4 2</code></td>
+</tr>
+<tr>
+<td><em>(end)</em></td>
+<td>pop everything remaining: <code>^</code>, <code>/</code>, <code>-</code></td>
+<td><em>(empty)</em></td>
+<td><code>5 3 2 + * 8 4 2 ^ / -</code></td>
+</tr>
+</tbody>
+</table>
+<p>This is the fifth pair <code>infix_to_postfix.cpp</code> prints (its <code>expressions</code> array above already
+includes <code>"5*(3+2)-8/4^2"</code>) — the real, compiled output is <code>5 3 2 + * 8 4 2 ^ / -</code>, matching
+the hand trace exactly.</p>
+<pre class="mermaid"><code>flowchart LR
+    subgraph K1["After token '(' (step 3)"]
+        direction LR
+        s1a["*"] --- s1b["("]
+    end
+    subgraph K2["After token ')' resolves (step 7)"]
+        direction LR
+        s2a["*"]
+    end
+    subgraph K3["After token '-' pushes (step 8)"]
+        direction LR
+        s3a["-"]
+    end
+    K1 --&gt;|"'+' pushed inside,&lt;br/&gt;then ')' pops it&lt;br/&gt;and discards '('"| K2
+    K2 --&gt;|"'*' has higher&lt;br/&gt;precedence than '-':&lt;br/&gt;popped + output first"| K3</code></pre>
+<p>Two things are worth noticing in this trace that <code>3+4*2</code> never exercised. First, the <code>-</code>
+token forces <code>*</code> off the stack <em>before</em> pushing itself (row 9): <code>*</code> was left sitting on
+top from step 2, waiting the entire time the <code>(...)</code> group was being processed, since
+parentheses never let anything pop past them prematurely. Second, <code>^</code> never has to compete
+with another <code>^</code> here (there's only one), so this particular trace doesn't actually test
+right-associativity — that's exactly what the earlier <code>2^3^2</code> example (further up this
+lecture) is for. Comparing the two traces side by side is a good exercise: <code>5*(3+2)-8/4^2</code>
+stresses parentheses and mixed precedence, while <code>2^3^2</code> isolates associativity alone.</p>
 <h2 id="postfix-expression-evaluation">Postfix Expression Evaluation<a class="headerlink" href="#postfix-expression-evaluation" title="Permanent link">&para;</a></h2>
 <p>Evaluating postfix is the payoff for doing the conversion: scan left to right, push every
 <strong>operand</strong>, and whenever you see an <strong>operator</strong>, pop the top two operands, apply the
@@ -3103,6 +3323,74 @@ operator, and push the result back.</p>
 <p>The last example, <code>5 1 2 + 4 * + 3 -</code>, corresponds to the infix expression
 <code>5 + (1 + 2) * 4 - 3</code> — worth tracing by hand with the stack, one token at a time, to see
 exactly how <code>(1 + 2) * 4</code> gets computed with no parentheses in sight at all.</p>
+<table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Action</th>
+<th>Stack (bottom → top)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>5</code></td>
+<td>push operand</td>
+<td><code>5</code></td>
+</tr>
+<tr>
+<td><code>1</code></td>
+<td>push operand</td>
+<td><code>5 1</code></td>
+</tr>
+<tr>
+<td><code>2</code></td>
+<td>push operand</td>
+<td><code>5 1 2</code></td>
+</tr>
+<tr>
+<td><code>+</code></td>
+<td>pop <code>2, 1</code> -&gt; <code>1+2=3</code>, push <code>3</code></td>
+<td><code>5 3</code></td>
+</tr>
+<tr>
+<td><code>4</code></td>
+<td>push operand</td>
+<td><code>5 3 4</code></td>
+</tr>
+<tr>
+<td><code>*</code></td>
+<td>pop <code>4, 3</code> -&gt; <code>3*4=12</code>, push <code>12</code></td>
+<td><code>5 12</code></td>
+</tr>
+<tr>
+<td><code>+</code></td>
+<td>pop <code>12, 5</code> -&gt; <code>5+12=17</code>, push <code>17</code></td>
+<td><code>17</code></td>
+</tr>
+<tr>
+<td><code>3</code></td>
+<td>push operand</td>
+<td><code>17 3</code></td>
+</tr>
+<tr>
+<td><code>-</code></td>
+<td>pop <code>3, 17</code> -&gt; <code>17-3=14</code>, push <code>14</code></td>
+<td><code>14</code></td>
+</tr>
+</tbody>
+</table>
+<p>The final stack holds exactly one value, <code>14</code> — which matches the program's real output
+above, and is also the last value ever pushed, since a well-formed postfix expression
+always leaves precisely one operand on the stack once every token has been consumed.</p>
+<div class="admonition note">
+<p class="admonition-title">Operand order matters for non-commutative operators</p>
+<p>Notice the <code>+</code> and <code>-</code> rows always pop the value that was pushed <em>second</em> into the
+left-hand slot when it matters (e.g. <code>b = values.top(); values.pop(); a = values.top();</code>
+in the code, then <code>a - b</code>, not <code>b - a</code>). For <code>+</code> and <code>*</code> this wouldn't matter since
+they're commutative, but for <code>-</code> and <code>/</code> getting the operand order backwards would
+silently produce a wrong (but plausible-looking) answer — a bug that's easy to
+introduce and easy to miss without a trace like the one above.</p>
+</div>
 <h2 id="try-it-yourself">Try It Yourself<a class="headerlink" href="#try-it-yourself" title="Permanent link">&para;</a></h2>
 <ol>
 <li>Trace <code>infix_to_postfix.cpp</code>'s algorithm by hand for <code>2^3^2</code>, one token at a time,
@@ -3112,6 +3400,18 @@ exactly how <code>(1 + 2) * 4</code> gets computed with no parentheses in sight 
    treating <code>^</code> as left-associative).</li>
 <li>Extend <code>evaluatePostfix</code> to handle the <code>^</code> (exponent) operator using <code>pow()</code> from
    <code>&lt;cmath&gt;</code> (remember to cast the result back to <code>int</code>), and test it on <code>"2 3 ^"</code>.</li>
+<li>Trace <code>infix_to_postfix.cpp</code> by hand for <code>"5*(3+2)-8/4^2"</code>, exactly like the table
+   earlier in this lecture — but this time start your own table from a blank page before
+   checking it against the one shown, rather than reading it top to bottom. Where did you
+   make a mistake, if any, and why?</li>
+<li>Write a <code>main</code> that converts <code>"5*(3+2)-8/4^2"</code> to postfix with <code>infixToPostfix</code>, then
+   feeds that exact result string into <code>evaluatePostfix</code> (after adding <code>^</code> support from
+   exercise 2), printing the final numeric answer. Confirm it matches what you'd get by
+   evaluating the original infix expression using normal order-of-operations arithmetic.</li>
+<li><code>infixToPostfix</code> doesn't check for a mismatched <code>)</code> with no matching <code>(</code> — trace what
+   happens to <code>operators.pop()</code> in the <code>)</code> branch if the stack is already empty when it's
+   called (hint: this is undefined behavior on <code>std::stack</code>). Add a check that throws a
+   clear exception instead, and test it on the malformed input <code>"3+4)"</code>.</li>
 </ol>
 <h2 id="key-takeaways">Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permanent link">&para;</a></h2>
 <ul>
@@ -3121,9 +3421,15 @@ exactly how <code>(1 + 2) * 4</code> gets computed with no parentheses in sight 
   or parentheses needed — which is exactly why compilers and calculators convert to it
   internally.</li>
 <li>Infix-to-postfix conversion works by holding operators on a stack until an operator of
-  <em>lower or equal</em> precedence forces earlier ones to be output first.</li>
+  <em>lower or equal</em> precedence forces earlier ones to be output first — and parentheses act
+  as a hard wall that nothing on either side can pop past.</li>
+<li>A harder expression like <code>5*(3+2)-8/4^2</code> shows the algorithm handling parentheses,
+  mixed precedence, and a right-associative operator all at once — tracing the stack's
+  contents token by token, as the tables in this lecture do, is the fastest way to make
+  the algorithm's behavior concrete rather than abstract.</li>
 <li>Postfix evaluation is the mirror operation: push operands, and whenever an operator
-  appears, pop the two most recent operands, apply it, and push the result back.</li>
+  appears, pop the two most recent operands, apply it (in the right order — operand
+  order matters for <code>-</code> and <code>/</code>), and push the result back.</li>
 </ul>
 
 
@@ -3145,7 +3451,7 @@ exactly how <code>(1 + 2) * 4</code> gets computed with no parentheses in sight 
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 21, 2026 08:35:16 UTC">September 21, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 22, 2026 17:02:55 UTC">September 22, 2026</span>
   </span>
 
     

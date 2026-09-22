@@ -1750,6 +1750,39 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#array-representation-revisited-insertion-without-a-queue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Array Representation, Revisited: Insertion Without a Queue
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-index-math-parent-children-and-a-pitfall" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Index Math: Parent, Children, and a Pitfall
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#space-efficiency-array-representation-on-a-skewed-tree" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Space Efficiency: Array Representation on a Skewed Tree
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#try-it-yourself" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2766,6 +2799,39 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#array-representation-revisited-insertion-without-a-queue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Array Representation, Revisited: Insertion Without a Queue
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-index-math-parent-children-and-a-pitfall" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Index Math: Parent, Children, and a Pitfall
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#space-efficiency-array-representation-on-a-skewed-tree" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Space Efficiency: Array Representation on a Skewed Tree
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#try-it-yourself" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2841,6 +2907,9 @@ keeps the tree in the <strong>complete</strong> shape from Lecture 16 automatica
 <li>Level-order insertion, and why it needs a queue</li>
 <li>A complete, working <code>BinaryTree</code> class</li>
 <li>Printing a tree's structure to see the shape you've built</li>
+<li>The array representation, revisited: level-order insertion as plain <code>push_back</code></li>
+<li>The index math (<code>2i+1</code>, <code>2i+2</code>, <code>(i-1)/2</code>) that connects a node to its parent and children — and the one case where it silently misleads you</li>
+<li>Why array representation wastes space on anything but a complete tree, measured with real numbers</li>
 </ul>
 <h2 id="the-binary-tree-adt">The Binary Tree ADT<a class="headerlink" href="#the-binary-tree-adt" title="Permanent link">&para;</a></h2>
 <table>
@@ -2993,6 +3062,193 @@ Lecture 12's recursion pattern (base case: an empty subtree has height -1; recur
 case: combine both children's results). Trying to compute height with a queue instead
 is possible, but far less directly connected to the definition itself.</p>
 </div>
+<h2 id="array-representation-revisited-insertion-without-a-queue">Array Representation, Revisited: Insertion Without a Queue<a class="headerlink" href="#array-representation-revisited-insertion-without-a-queue" title="Permanent link">&para;</a></h2>
+<p>Lecture 16 introduced the array representation of a binary tree and its index math, but
+only for a tree that was already built by hand. Here's the payoff: <strong>level-order
+insertion is what a <code>vector</code> already does for free.</strong> <code>printLevelOrder()</code> above needed a
+queue because a <em>linked</em> tree has no built-in notion of "level order" — you have to
+rediscover it every time by walking the tree breadth-first. An array representation, by
+contrast, <strong>is</strong> the tree stored in level order already, so inserting at "the next
+available position" is just <code>push_back</code>: the next open slot in level order is always the
+next index.</p>
+<pre class="mermaid"><code>flowchart LR
+    subgraph Linked["Linked representation"]
+    direction TD
+        L1["1"] --&gt; L2["2"]
+        L1 --&gt; L3["3"]
+        L2 --&gt; L4["4"]
+        L2 --&gt; L5["5"]
+        L3 --&gt; L6["6"]
+        L3 --&gt; L7["7"]
+    end
+    subgraph Array["Array representation (same tree)"]
+    direction TD
+        A0["index 0: 1"] -.-&gt;|"left = 2·0+1 = 1"| A1["index 1: 2"]
+        A0 -.-&gt;|"right = 2·0+2 = 2"| A2["index 2: 3"]
+        A1 -.-&gt;|"left = 2·1+1 = 3"| A3["index 3: 4"]
+        A1 -.-&gt;|"right = 2·1+2 = 4"| A4["index 4: 5"]
+        A2 -.-&gt;|"left = 2·2+1 = 5"| A5["index 5: 6"]
+        A2 -.-&gt;|"right = 2·2+2 = 6"| A6["index 6: 7"]
+    end</code></pre>
+<div class="language-cpp highlight"><span class="filename">array_binary_tree.cpp</span><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;vector&gt;</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="k">class</span><span class="w"> </span><span class="nc">ArrayBinaryTree</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="k">private</span><span class="o">:</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">    </span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">nodes</span><span class="p">;</span><span class="w">   </span><span class="c1">// level-order storage: nodes[0] is the root</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="k">public</span><span class="o">:</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">    </span><span class="c1">// Level-order insertion is just &quot;append at the end&quot; -- the next open</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">    </span><span class="c1">// slot in level order is ALWAYS the next index in a vector, because</span>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">    </span><span class="c1">// the vector already IS the tree stored level by level, left to right.</span>
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">insert</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="w">        </span><span class="n">nodes</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">value</span><span class="p">);</span>
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>
+</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">isEmpty</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">nodes</span><span class="p">.</span><span class="n">empty</span><span class="p">();</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>
+</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">leftChildIndex</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">rightChildIndex</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-2-21"><a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">parentIndex</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-2-22"><a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a>
+</span><span id="__span-2-23"><a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">printLevelOrder</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-24"><a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">nodes</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;(empty tree)&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span><span class="w"> </span><span class="k">return</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-2-25"><a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-2-26"><a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">nodesInLevel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+</span><span id="__span-2-27"><a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a><span class="w">        </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">index</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">nodes</span><span class="p">.</span><span class="n">size</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-28"><a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a><span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">nodesInLevel</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">index</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">nodes</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"> </span><span class="n">k</span><span class="o">++</span><span class="p">,</span><span class="w"> </span><span class="n">index</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-29"><a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a><span class="w">                </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">nodes</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="p">;</span>
+</span><span id="__span-2-30"><a id="__codelineno-2-30" name="__codelineno-2-30" href="#__codelineno-2-30"></a><span class="w">            </span><span class="p">}</span>
+</span><span id="__span-2-31"><a id="__codelineno-2-31" name="__codelineno-2-31" href="#__codelineno-2-31"></a><span class="w">            </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+</span><span id="__span-2-32"><a id="__codelineno-2-32" name="__codelineno-2-32" href="#__codelineno-2-32"></a><span class="w">            </span><span class="n">nodesInLevel</span><span class="w"> </span><span class="o">*=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+</span><span id="__span-2-33"><a id="__codelineno-2-33" name="__codelineno-2-33" href="#__codelineno-2-33"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-2-34"><a id="__codelineno-2-34" name="__codelineno-2-34" href="#__codelineno-2-34"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-2-35"><a id="__codelineno-2-35" name="__codelineno-2-35" href="#__codelineno-2-35"></a>
+</span><span id="__span-2-36"><a id="__codelineno-2-36" name="__codelineno-2-36" href="#__codelineno-2-36"></a><span class="w">    </span><span class="c1">// Valid ONLY because level-order insertion guarantees a complete tree:</span>
+</span><span id="__span-2-37"><a id="__codelineno-2-37" name="__codelineno-2-37" href="#__codelineno-2-37"></a><span class="w">    </span><span class="c1">// the last-inserted index is always the deepest node, so walking its</span>
+</span><span id="__span-2-38"><a id="__codelineno-2-38" name="__codelineno-2-38" href="#__codelineno-2-38"></a><span class="w">    </span><span class="c1">// parent chain back to the root counts exactly the tree&#39;s height.</span>
+</span><span id="__span-2-39"><a id="__codelineno-2-39" name="__codelineno-2-39" href="#__codelineno-2-39"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">height</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-40"><a id="__codelineno-2-40" name="__codelineno-2-40" href="#__codelineno-2-40"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">nodes</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+</span><span id="__span-2-41"><a id="__codelineno-2-41" name="__codelineno-2-41" href="#__codelineno-2-41"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">edges</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-2-42"><a id="__codelineno-2-42" name="__codelineno-2-42" href="#__codelineno-2-42"></a><span class="w">        </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-43"><a id="__codelineno-2-43" name="__codelineno-2-43" href="#__codelineno-2-43"></a><span class="w">            </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">parentIndex</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+</span><span id="__span-2-44"><a id="__codelineno-2-44" name="__codelineno-2-44" href="#__codelineno-2-44"></a><span class="w">            </span><span class="n">edges</span><span class="o">++</span><span class="p">;</span>
+</span><span id="__span-2-45"><a id="__codelineno-2-45" name="__codelineno-2-45" href="#__codelineno-2-45"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-2-46"><a id="__codelineno-2-46" name="__codelineno-2-46" href="#__codelineno-2-46"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">edges</span><span class="p">;</span>
+</span><span id="__span-2-47"><a id="__codelineno-2-47" name="__codelineno-2-47" href="#__codelineno-2-47"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-2-48"><a id="__codelineno-2-48" name="__codelineno-2-48" href="#__codelineno-2-48"></a><span class="p">};</span>
+</span><span id="__span-2-49"><a id="__codelineno-2-49" name="__codelineno-2-49" href="#__codelineno-2-49"></a>
+</span><span id="__span-2-50"><a id="__codelineno-2-50" name="__codelineno-2-50" href="#__codelineno-2-50"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-51"><a id="__codelineno-2-51" name="__codelineno-2-51" href="#__codelineno-2-51"></a><span class="w">    </span><span class="n">ArrayBinaryTree</span><span class="w"> </span><span class="n">tree</span><span class="p">;</span>
+</span><span id="__span-2-52"><a id="__codelineno-2-52" name="__codelineno-2-52" href="#__codelineno-2-52"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">})</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-53"><a id="__codelineno-2-53" name="__codelineno-2-53" href="#__codelineno-2-53"></a><span class="w">        </span><span class="n">tree</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">value</span><span class="p">);</span>
+</span><span id="__span-2-54"><a id="__codelineno-2-54" name="__codelineno-2-54" href="#__codelineno-2-54"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-2-55"><a id="__codelineno-2-55" name="__codelineno-2-55" href="#__codelineno-2-55"></a>
+</span><span id="__span-2-56"><a id="__codelineno-2-56" name="__codelineno-2-56" href="#__codelineno-2-56"></a><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Tree built by level-order insertion of 1..7 (array form):&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+</span><span id="__span-2-57"><a id="__codelineno-2-57" name="__codelineno-2-57" href="#__codelineno-2-57"></a><span class="w">    </span><span class="n">tree</span><span class="p">.</span><span class="n">printLevelOrder</span><span class="p">();</span>
+</span><span id="__span-2-58"><a id="__codelineno-2-58" name="__codelineno-2-58" href="#__codelineno-2-58"></a><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Height: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">tree</span><span class="p">.</span><span class="n">height</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+</span><span id="__span-2-59"><a id="__codelineno-2-59" name="__codelineno-2-59" href="#__codelineno-2-59"></a>
+</span><span id="__span-2-60"><a id="__codelineno-2-60" name="__codelineno-2-60" href="#__codelineno-2-60"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-2-61"><a id="__codelineno-2-61" name="__codelineno-2-61" href="#__codelineno-2-61"></a><span class="p">}</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>$ g++ -std=c++17 -o array_binary_tree array_binary_tree.cpp
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>$ ./array_binary_tree
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>Tree built by level-order insertion of 1..7 (array form):
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>1 
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>2 3 
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>4 5 6 7 
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>Height: 2
+</span></code></pre></div>
+<p>Same shape, same height, as the linked <code>BinaryTree</code> built from the identical insertion
+sequence in <code>binary_tree.cpp</code> — the two representations agree because they're two
+different encodings of the exact same tree, not two different trees.</p>
+<div class="admonition note">
+<p class="admonition-title">Where the O(n) actually went</p>
+<p><code>BinaryTree::insert</code> (linked) looks like it does real work — it enqueues and dequeues
+nodes in a <code>while</code> loop — while <code>ArrayBinaryTree::insert</code> looks trivial. That
+difference is real, not cosmetic: the linked version has to <strong>rediscover</strong> the next
+open slot by walking (in the worst case) every existing node, an O(n) search performed
+on <em>every</em> insertion. The array version never searches for the slot at all — level
+order <em>is</em> the storage order, so "the next slot" is always just <code>nodes.size()</code>, an
+O(1) operation. This is the same trade-off Lecture 16's comparison table hinted at:
+array representation is cheaper, but only because it assumes the tree stays complete.</p>
+</div>
+<h2 id="the-index-math-parent-children-and-a-pitfall">The Index Math: Parent, Children, and a Pitfall<a class="headerlink" href="#the-index-math-parent-children-and-a-pitfall" title="Permanent link">&para;</a></h2>
+<p>Three formulas connect an index <code>i</code> to its neighbors in the array representation:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>left child index  = 2*i + 1
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>right child index = 2*i + 2
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>parent index       = (i - 1) / 2   (integer division)
+</span></code></pre></div>
+<p>The first two are safe at every index — a left or right child either exists within the
+array's bounds or it doesn't, and checking <code>index &lt; nodes.size()</code> before using the result
+is all that's needed. The parent formula has a sharp edge that's easy to miss:</p>
+<div class="language-cpp highlight"><span class="filename">parent_index_pitfall.cpp</span><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">    </span><span class="c1">// The formula (i - 1) / 2 finds a node&#39;s parent index -- EXCEPT at the</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">    </span><span class="c1">// root, where it silently gives the wrong answer instead of failing loudly.</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">parent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w">   </span><span class="c1">// C++ integer division truncates toward zero</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">        </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;index &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; -&gt; (i-1)/2 = &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">parent</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="p">}</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>$ g++ -std=c++17 -o parent_index_pitfall parent_index_pitfall.cpp
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>$ ./parent_index_pitfall
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>index 0 -&gt; (i-1)/2 = 0
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>index 1 -&gt; (i-1)/2 = 0
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>index 2 -&gt; (i-1)/2 = 0
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>index 3 -&gt; (i-1)/2 = 1
+</span></code></pre></div>
+<p>Look closely at the first line: <code>parentIndex(0)</code> returns <code>0</code> — the root's "parent" is
+reported as <em>itself</em>. This isn't a special quirk of this one formula; it's C++'s integer
+division truncating <code>-1 / 2</code> toward zero instead of flooring it, so <code>(0 - 1) / 2</code> lands on
+<code>0</code> rather than <code>-1</code>. A formula that was supposed to fail obviously (return an invalid,
+out-of-range index) instead fails <em>quietly</em>, returning a value that looks perfectly
+legitimate. The fix is a guard that every correct use of <code>parentIndex</code> needs: check
+<code>i == 0</code> (or equivalently, "is this the root?") <em>before</em> trusting the formula's output,
+exactly the same discipline as checking <code>head == nullptr</code> before dereferencing in a linked
+list.</p>
+<pre class="mermaid"><code>flowchart LR
+    I6["index 6"] --&gt;|"parentIndex(6) = 2"| I2["index 2"]
+    I2 --&gt;|"parentIndex(2) = 0"| I0["index 0 (root)"]
+    I0 -.-&gt;|"parentIndex(0) = 0 ✗&lt;br/&gt;(looks valid, isn't!)"| I0</code></pre>
+<h2 id="space-efficiency-array-representation-on-a-skewed-tree">Space Efficiency: Array Representation on a Skewed Tree<a class="headerlink" href="#space-efficiency-array-representation-on-a-skewed-tree" title="Permanent link">&para;</a></h2>
+<p>Lecture 16 noted in passing that array representation "wastes enormous amounts of array
+space" on an incomplete tree — here's exactly how much. A node's array index depends on
+<em>where it would sit in a complete tree</em>, not on how many nodes actually exist. For a
+<strong>skewed</strong> tree of height <code>h</code> (only <code>h + 1</code> real nodes, one per level), the deepest node's
+index is still as large as it would be in a <em>complete</em> tree of that same height — which
+means the array needs <code>2^(h+1) - 1</code> slots to hold just <code>h + 1</code> real values.</p>
+<div class="language-cpp highlight"><span class="filename">array_waste.cpp</span><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">h</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">})</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">actualNodes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">h</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">        </span><span class="kt">long</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">slotsNeeded</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mf">1L</span><span class="n">L</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="p">(</span><span class="n">h</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">        </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;height &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">h</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">actualNodes</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; real node(s), &quot;</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">             </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">slotsNeeded</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; array slot(s) reserved, &quot;</span>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="w">             </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="p">(</span><span class="n">slotsNeeded</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">actualNodes</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; wasted&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="p">}</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>$ g++ -std=c++17 -o array_waste array_waste.cpp
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>$ ./array_waste
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>height 2: 3 real node(s), 7 array slot(s) reserved, 4 wasted
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>height 4: 5 real node(s), 31 array slot(s) reserved, 26 wasted
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>height 6: 7 real node(s), 127 array slot(s) reserved, 120 wasted
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>height 10: 11 real node(s), 2047 array slot(s) reserved, 2036 wasted
+</span></code></pre></div>
+<p>The waste grows <strong>exponentially</strong> with height, while a skewed linked tree of the same
+height uses exactly <code>h + 1</code> nodes and no more — this is precisely why Lecture 16 said the
+array representation "only stays efficient for complete trees," and precisely why heaps
+(Lecture 23, always kept complete by construction) are the structure that actually gets to
+exploit it.</p>
 <h2 id="try-it-yourself">Try It Yourself<a class="headerlink" href="#try-it-yourself" title="Permanent link">&para;</a></h2>
 <ol>
 <li>Compile and run <code>binary_tree.cpp</code>, then insert three more values (<code>8, 9, 10</code>) and call
@@ -3001,6 +3257,17 @@ is possible, but far less directly connected to the definition itself.</p>
 <li>Add a <code>int countNodes(TreeNode* node) const</code> method (recursive, following the same
    pattern as <code>height()</code>) that returns the total number of nodes in the tree, and verify
    it returns <code>7</code> for the tree built in <code>main()</code>.</li>
+<li>Compile and run <code>array_binary_tree.cpp</code>, then add a <code>leftChild(int i)</code> helper that
+   returns <code>-1</code> when <code>leftChildIndex(i)</code> is out of bounds, instead of an unchecked index.
+   Call it on every index of the 7-node tree and confirm leaves (indices 3–6) all report
+   <code>-1</code>.</li>
+<li>Fix <code>parentIndex</code> in <code>array_binary_tree.cpp</code> so it returns <code>-1</code> for the root instead of
+   <code>0</code>, and update <code>height()</code> to stop at <code>-1</code> rather than <code>0</code>. Confirm the height still
+   comes out to <code>2</code> for the 7-node tree — the bug in <code>parent_index_pitfall.cpp</code> happened to
+   not affect <code>height()</code> here (why not? trace <code>height()</code>'s loop condition to see).</li>
+<li>Using the formula in <code>array_waste.cpp</code>, compute by hand how many array slots a skewed
+   tree of height <code>20</code> would need, then check your arithmetic by adding <code>20</code> to the list of
+   heights in <code>main()</code> and recompiling.</li>
 </ol>
 <h2 id="key-takeaways">Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permanent link">&para;</a></h2>
 <ul>
@@ -3013,6 +3280,16 @@ is possible, but far less directly connected to the definition itself.</p>
   16, with no manual position-tracking required.</li>
 <li>Tree properties like <code>height()</code> are naturally written as recursive functions, mirroring
   their own recursive definitions — a pattern that will repeat throughout this unit.</li>
+<li>In the <strong>array representation</strong>, level-order insertion needs no queue at all — it's just
+  <code>push_back</code>, because the array's storage order already <em>is</em> level order. The linked
+  version's queue exists purely to <em>rediscover</em> that ordering on every insertion.</li>
+<li>The index formulas <code>2i+1</code>, <code>2i+2</code>, and <code>(i-1)/2</code> connect a node to its children and
+  parent in O(1) — but <code>(i-1)/2</code> silently returns <code>0</code> (a "valid-looking" wrong answer, not
+  an error) when called on the root, because of how C++ truncates integer division.
+  Always guard it with an explicit "is this the root?" check.</li>
+<li>Array representation's compactness is a bet that the tree stays <strong>complete</strong> — a skewed
+  tree pays for that bet with array space that grows <em>exponentially</em> in the tree's height,
+  while the linked representation never pays that cost at all.</li>
 </ul>
 
 
@@ -3034,7 +3311,7 @@ is possible, but far less directly connected to the definition itself.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 21, 2026 08:44:47 UTC">September 21, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 22, 2026 17:02:55 UTC">September 22, 2026</span>
   </span>
 
     

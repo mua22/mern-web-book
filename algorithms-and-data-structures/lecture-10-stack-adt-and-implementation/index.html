@@ -1407,10 +1407,32 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#array-based-vs-linked-list-based-which-should-you-pick" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Array-Based vs. Linked-List-Based: Which Should You Pick?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#complexity-of-stack-operations" class="md-nav__link">
     <span class="md-ellipsis">
       
         Complexity of Stack Operations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#edge-cases-overflow-and-underflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Edge Cases: Overflow and Underflow
       
     </span>
   </a>
@@ -2799,10 +2821,32 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#array-based-vs-linked-list-based-which-should-you-pick" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Array-Based vs. Linked-List-Based: Which Should You Pick?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#complexity-of-stack-operations" class="md-nav__link">
     <span class="md-ellipsis">
       
         Complexity of Stack Operations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#edge-cases-overflow-and-underflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Edge Cases: Overflow and Underflow
       
     </span>
   </a>
@@ -2882,8 +2926,10 @@ history, function calls, and (Lecture 11) parsing arithmetic expressions.</p>
 <ul>
 <li>The stack concept and the LIFO principle</li>
 <li>The Stack ADT: push, pop, and peek</li>
-<li>An array-based implementation</li>
-<li>A linked-list-based implementation</li>
+<li>An array-based implementation, traced step by step</li>
+<li>A linked-list-based implementation, traced step by step</li>
+<li>Overflow and underflow as concrete, compiled edge cases</li>
+<li>Choosing between the two implementations</li>
 <li>The complexity of every stack operation</li>
 </ul>
 <h2 id="the-stack-concept-and-the-lifo-principle">The Stack Concept and the LIFO Principle<a class="headerlink" href="#the-stack-concept-and-the-lifo-principle" title="Permanent link">&para;</a></h2>
@@ -2991,6 +3037,25 @@ of the current top element.</p>
 </span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>Is empty? no
 </span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>Is empty after popping the last element? yes
 </span></code></pre></div>
+<p>The diagram below traces the array's underlying state — the <code>data</code> array and <code>topIndex</code>
+— through exactly this sequence of calls. Notice <code>pop()</code> never actually erases the old
+value from <code>data</code>; it just moves <code>topIndex</code> backward, so the "old" value is simply ignored
+until something overwrites it with a future <code>push</code>.</p>
+<pre class="mermaid"><code>flowchart TD
+    S0["topIndex = -1&lt;br/&gt;data: [ _, _, _ ]&lt;br/&gt;(empty)"] --&gt;|"push(10)"| S1["topIndex = 0&lt;br/&gt;data: [10, _, _ ]"]
+    S1 --&gt;|"push(20)"| S2["topIndex = 1&lt;br/&gt;data: [10, 20, _ ]"]
+    S2 --&gt;|"push(30)"| S3["topIndex = 2&lt;br/&gt;data: [10, 20, 30]"]
+    S3 --&gt;|"pop() -&gt; 30"| S4["topIndex = 1&lt;br/&gt;data: [10, 20, 30]&lt;br/&gt;(30 still THERE, just ignored)"]
+    S4 --&gt;|"pop() -&gt; 20"| S5["topIndex = 0&lt;br/&gt;data: [10, 20, 30]&lt;br/&gt;(only index 0 is 'live')"]</code></pre>
+<div class="admonition note">
+<p class="admonition-title">Popping doesn't erase — it just relabels what's live</p>
+<p>After the two pops, <code>data[1]</code> and <code>data[2]</code> still physically hold <code>20</code> and <code>30</code> in
+memory — <code>pop()</code> only decremented <code>topIndex</code>. That's fine and completely safe: every
+stack operation only ever looks at indices <code>0</code> through <code>topIndex</code>, so anything past
+<code>topIndex</code> is simply invisible to the ADT, exactly the same way a <code>vector</code>'s unused
+reserved capacity is invisible to its <code>size()</code>. The next <code>push</code> will silently overwrite
+it.</p>
+</div>
 <h2 id="linked-list-implementation-of-stack">Linked-List Implementation of Stack<a class="headerlink" href="#linked-list-implementation-of-stack" title="Permanent link">&para;</a></h2>
 <p>A stack can just as easily be built on top of a singly linked list — <code>push</code> inserts at the
 head, <code>pop</code> removes from the head. Neither operation ever needs to walk the list, which
@@ -3056,6 +3121,70 @@ needs a resize.</p>
 </span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>Popped: 300
 </span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>Top after one pop: 200
 </span></code></pre></div>
+<p>Contrast this with the array's diagram above: here, <code>pop()</code> genuinely frees the old top
+node's memory — there's no leftover "dead" data sitting around, because each node is its
+own independent heap allocation rather than a slot inside one shared array.</p>
+<pre class="mermaid"><code>flowchart TD
+    T0(["topNode = nullptr&lt;br/&gt;(empty)"]) --&gt;|"push(100)"| T1(["topNode"])
+    T1 --&gt; N1["data: 100&lt;br/&gt;next: ●"]
+    N1 --&gt; Null1["nullptr"]
+
+    T1 --&gt;|"push(200)"| T2(["topNode"])
+    T2 --&gt; N2["data: 200&lt;br/&gt;next: ●"]
+    N2 --&gt; N1b["data: 100&lt;br/&gt;next: ●"]
+    N1b --&gt; Null2["nullptr"]
+
+    T2 --&gt;|"pop() -&gt; 200&lt;br/&gt;(node freed)"| T3(["topNode"])
+    T3 --&gt; N1c["data: 100&lt;br/&gt;next: ●"]
+    N1c --&gt; Null3["nullptr"]</code></pre>
+<h2 id="array-based-vs-linked-list-based-which-should-you-pick">Array-Based vs. Linked-List-Based: Which Should You Pick?<a class="headerlink" href="#array-based-vs-linked-list-based-which-should-you-pick" title="Permanent link">&para;</a></h2>
+<p>Both implementations satisfy the Stack ADT identically from the <em>caller's</em> perspective —
+<code>push</code>, <code>pop</code>, and <code>peek</code> behave the same way no matter which one sits underneath. The
+choice between them is the same array-vs-linked-list trade-off from Lecture 9, just
+narrowed to a structure that only ever touches one end:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Array-based stack</th>
+<th>Linked-list-based stack</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Maximum size</td>
+<td>Fixed at construction (or needs a resize-and-copy)</td>
+<td>Grows one node at a time, limited only by available memory</td>
+</tr>
+<tr>
+<td>Memory per element</td>
+<td>Just the element itself</td>
+<td>Element plus one <code>next</code> pointer</td>
+</tr>
+<tr>
+<td>Cache behavior</td>
+<td>Excellent — contiguous memory</td>
+<td>Worse — nodes scattered on the heap</td>
+</tr>
+<tr>
+<td><code>push</code>/<code>pop</code> cost</td>
+<td>O(1) (amortized, if it resizes)</td>
+<td>O(1), always, no resize ever needed</td>
+</tr>
+<tr>
+<td>Best when...</td>
+<td>Maximum size is known or boundable in advance</td>
+<td>Size is unpredictable, or memory must never be pre-reserved</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">std::vector's growth strategy borrows the array stack's whole idea</p>
+<p>A resizable array-based stack (like <code>std::vector</code> used as a stack) doesn't resize on
+<em>every</em> push past capacity — it typically <strong>doubles</strong> its capacity when full, which
+makes the <em>amortized</em> cost of push still O(1) even though any single push that triggers
+a resize is O(n). This is the same idea Lecture 32's hash table rehashing uses.</p>
+</div>
 <h2 id="complexity-of-stack-operations">Complexity of Stack Operations<a class="headerlink" href="#complexity-of-stack-operations" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -3100,6 +3229,94 @@ Standard Library already provides <code>std::stack</code>, which by default wrap
 above. Building your own here is about understanding <em>how</em> it works underneath,
 which is exactly what Lecture 11's expression-conversion algorithm depends on.</p>
 </div>
+<h2 id="edge-cases-overflow-and-underflow">Edge Cases: Overflow and Underflow<a class="headerlink" href="#edge-cases-overflow-and-underflow" title="Permanent link">&para;</a></h2>
+<p><code>push</code> and <code>pop</code> both have exactly one failure mode each, and both are worth seeing fail
+<em>on purpose</em> once, with real exceptions caught, rather than only reading about them.
+<strong>Overflow</strong> is pushing onto an already-full array-based stack; <strong>underflow</strong> is popping
+(or peeking) an already-empty stack — a mistake that's easy to make in code that pops in a
+loop without checking <code>isEmpty()</code> first.</p>
+<div class="language-cpp highlight"><span class="filename">stack_edge_cases.cpp</span><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdexcept&gt;</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="k">class</span><span class="w"> </span><span class="nc">ArrayStack</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="k">private</span><span class="o">:</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">CAPACITY</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span><span class="w">   </span><span class="c1">// tiny on purpose, to hit the limit quickly</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="n">CAPACITY</span><span class="p">];</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">topIndex</span><span class="p">;</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="k">public</span><span class="o">:</span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">    </span><span class="n">ArrayStack</span><span class="p">()</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">topIndex</span><span class="p">(</span><span class="mi">-1</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">isEmpty</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">topIndex</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">isFull</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">topIndex</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">CAPACITY</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">push</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">isFull</span><span class="p">())</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="n">overflow_error</span><span class="p">(</span><span class="s">&quot;Stack overflow&quot;</span><span class="p">);</span>
+</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="w">        </span><span class="n">data</span><span class="p">[</span><span class="o">++</span><span class="n">topIndex</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">value</span><span class="p">;</span>
+</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-4-18"><a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">pop</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-19"><a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">isEmpty</span><span class="p">())</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="n">underflow_error</span><span class="p">(</span><span class="s">&quot;Stack underflow&quot;</span><span class="p">);</span>
+</span><span id="__span-4-20"><a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="n">topIndex</span><span class="o">--</span><span class="p">];</span>
+</span><span id="__span-4-21"><a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-4-22"><a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a><span class="p">};</span>
+</span><span id="__span-4-23"><a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a>
+</span><span id="__span-4-24"><a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-25"><a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a><span class="w">    </span><span class="n">ArrayStack</span><span class="w"> </span><span class="n">stack</span><span class="p">;</span>
+</span><span id="__span-4-26"><a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a>
+</span><span id="__span-4-27"><a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Pushing 5 values onto a stack with CAPACITY = 5...&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+</span><span id="__span-4-28"><a id="__codelineno-4-28" name="__codelineno-4-28" href="#__codelineno-4-28"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-29"><a id="__codelineno-4-29" name="__codelineno-4-29" href="#__codelineno-4-29"></a><span class="w">        </span><span class="n">stack</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">10</span><span class="p">);</span>
+</span><span id="__span-4-30"><a id="__codelineno-4-30" name="__codelineno-4-30" href="#__codelineno-4-30"></a><span class="w">        </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;  pushed &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+</span><span id="__span-4-31"><a id="__codelineno-4-31" name="__codelineno-4-31" href="#__codelineno-4-31"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-4-32"><a id="__codelineno-4-32" name="__codelineno-4-32" href="#__codelineno-4-32"></a>
+</span><span id="__span-4-33"><a id="__codelineno-4-33" name="__codelineno-4-33" href="#__codelineno-4-33"></a><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Attempting a 6th push (should overflow)...&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+</span><span id="__span-4-34"><a id="__codelineno-4-34" name="__codelineno-4-34" href="#__codelineno-4-34"></a><span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-35"><a id="__codelineno-4-35" name="__codelineno-4-35" href="#__codelineno-4-35"></a><span class="w">        </span><span class="n">stack</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="mi">60</span><span class="p">);</span>
+</span><span id="__span-4-36"><a id="__codelineno-4-36" name="__codelineno-4-36" href="#__codelineno-4-36"></a><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">overflow_error</span><span class="o">&amp;</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-37"><a id="__codelineno-4-37" name="__codelineno-4-37" href="#__codelineno-4-37"></a><span class="w">        </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;  caught overflow_error: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">what</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+</span><span id="__span-4-38"><a id="__codelineno-4-38" name="__codelineno-4-38" href="#__codelineno-4-38"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-4-39"><a id="__codelineno-4-39" name="__codelineno-4-39" href="#__codelineno-4-39"></a>
+</span><span id="__span-4-40"><a id="__codelineno-4-40" name="__codelineno-4-40" href="#__codelineno-4-40"></a><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Popping all 5 values back off...&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+</span><span id="__span-4-41"><a id="__codelineno-4-41" name="__codelineno-4-41" href="#__codelineno-4-41"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-42"><a id="__codelineno-4-42" name="__codelineno-4-42" href="#__codelineno-4-42"></a><span class="w">        </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;  popped &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">stack</span><span class="p">.</span><span class="n">pop</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+</span><span id="__span-4-43"><a id="__codelineno-4-43" name="__codelineno-4-43" href="#__codelineno-4-43"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-4-44"><a id="__codelineno-4-44" name="__codelineno-4-44" href="#__codelineno-4-44"></a>
+</span><span id="__span-4-45"><a id="__codelineno-4-45" name="__codelineno-4-45" href="#__codelineno-4-45"></a><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Attempting one more pop on an empty stack (should underflow)...&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+</span><span id="__span-4-46"><a id="__codelineno-4-46" name="__codelineno-4-46" href="#__codelineno-4-46"></a><span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-47"><a id="__codelineno-4-47" name="__codelineno-4-47" href="#__codelineno-4-47"></a><span class="w">        </span><span class="n">stack</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+</span><span id="__span-4-48"><a id="__codelineno-4-48" name="__codelineno-4-48" href="#__codelineno-4-48"></a><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">underflow_error</span><span class="o">&amp;</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-49"><a id="__codelineno-4-49" name="__codelineno-4-49" href="#__codelineno-4-49"></a><span class="w">        </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;  caught underflow_error: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">what</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+</span><span id="__span-4-50"><a id="__codelineno-4-50" name="__codelineno-4-50" href="#__codelineno-4-50"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-4-51"><a id="__codelineno-4-51" name="__codelineno-4-51" href="#__codelineno-4-51"></a>
+</span><span id="__span-4-52"><a id="__codelineno-4-52" name="__codelineno-4-52" href="#__codelineno-4-52"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-4-53"><a id="__codelineno-4-53" name="__codelineno-4-53" href="#__codelineno-4-53"></a><span class="p">}</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>$ g++ -std=c++17 -o stack_edge_cases stack_edge_cases.cpp
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>$ ./stack_edge_cases
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>Pushing 5 values onto a stack with CAPACITY = 5...
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>  pushed 10
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>  pushed 20
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>  pushed 30
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>  pushed 40
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>  pushed 50
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>Attempting a 6th push (should overflow)...
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>  caught overflow_error: Stack overflow
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>Popping all 5 values back off...
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>  popped 50
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>  popped 40
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>  popped 30
+</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>  popped 20
+</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>  popped 10
+</span><span id="__span-5-17"><a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a>Attempting one more pop on an empty stack (should underflow)...
+</span><span id="__span-5-18"><a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>  caught underflow_error: Stack underflow
+</span></code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">The linked-list stack can't overflow the same way — but it isn't immune to failure</p>
+<p><code>LinkedStack</code> has no <code>CAPACITY</code> and no <code>isFull()</code> — it can keep accepting <code>push</code> calls
+until the <em>system</em> runs out of heap memory, at which point <code>new</code> itself throws
+<code>std::bad_alloc</code> rather than a stack-specific <code>overflow_error</code>. It is, however, just as
+vulnerable to <strong>underflow</strong>: <code>LinkedStack::pop()</code> still checks <code>isEmpty()</code> and throws
+<code>underflow_error</code>, for exactly the same reason <code>ArrayStack::pop()</code> does — reading
+<code>topNode-&gt;data</code> when <code>topNode</code> is <code>nullptr</code> would dereference a null pointer.</p>
+</div>
 <h2 id="try-it-yourself">Try It Yourself<a class="headerlink" href="#try-it-yourself" title="Permanent link">&para;</a></h2>
 <ol>
 <li>Compile and run <code>array_stack.cpp</code>, then push 100 elements in a loop and try to push a
@@ -3108,6 +3325,14 @@ which is exactly what Lecture 11's expression-conversion algorithm depends on.</
    without modifying the stack. (Hint: you'll need to either walk the list — O(n) — or
    maintain a running count as an extra field, updated in <code>push</code> and <code>pop</code> — O(1). Which
    one did you pick, and why is it the better choice here?)</li>
+<li>Compile and run <code>stack_edge_cases.cpp</code>, then change <code>CAPACITY</code> to <code>1</code> and re-run.
+   Confirm the program still behaves correctly — one push succeeds, the second overflows —
+   and explain why <code>CAPACITY = 1</code> doesn't need any special-case code of its own (compare
+   this to Lecture 5's "one-node list" discussion).</li>
+<li>Write a <code>main</code> that calls <code>pop()</code> on a completely fresh, never-pushed-to <code>LinkedStack</code>
+   inside a <code>try</code>/<code>catch</code>, confirming the <code>underflow_error</code> is caught rather than crashing
+   with a null-pointer dereference. This is exactly the check <code>isEmpty()</code> inside <code>pop()</code>
+   exists to prevent.</li>
 </ol>
 <h2 id="key-takeaways">Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permanent link">&para;</a></h2>
 <ul>
@@ -3118,6 +3343,10 @@ which is exactly what Lecture 11's expression-conversion algorithm depends on.</
 <li>An array-based stack has a fixed capacity (or needs a resize); a linked-list-based
   stack can grow indefinitely, one node at a time, at the cost of one pointer's extra
   memory per element.</li>
+<li><strong>Overflow</strong> (pushing when full) only threatens the array-based version; <strong>underflow</strong>
+  (popping or peeking when empty) threatens <em>both</em> versions equally, and both this
+  lecture's implementations guard against it by throwing a clear exception rather than
+  reading invalid memory.</li>
 <li>Real code almost always reaches for <code>std::stack</code> rather than hand-writing one — but
   understanding the underlying push/pop mechanics is what makes Lecture 11's stack-based
   algorithms make sense.</li>
@@ -3142,7 +3371,7 @@ which is exactly what Lecture 11's expression-conversion algorithm depends on.</
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 21, 2026 08:35:16 UTC">September 21, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 22, 2026 17:02:55 UTC">September 22, 2026</span>
   </span>
 
     

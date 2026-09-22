@@ -1452,6 +1452,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#why-deep-recursion-can-exhaust-the-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Deep Recursion Can Exhaust the Stack
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#types-of-recursion" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2788,6 +2799,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#why-deep-recursion-can-exhaust-the-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Deep Recursion Can Exhaust the Stack
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#types-of-recursion" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2882,8 +2904,9 @@ its own dedicated lecture right before those units begin.</p>
 <h2 id="in-this-lecture">In This Lecture<a class="headerlink" href="#in-this-lecture" title="Permanent link">&para;</a></h2>
 <ul>
 <li>The basic concept: base case and recursive case</li>
-<li>How recursion actually uses the call stack</li>
-<li>Recursion versus iteration</li>
+<li>How recursion actually uses the call stack, traced and diagrammed frame by frame</li>
+<li>Recursion versus iteration, with a real timed comparison on Fibonacci</li>
+<li>Why deep recursion can exhaust the stack, demonstrated safely</li>
 <li>Types of recursion</li>
 <li>The advantages and limitations of thinking recursively</li>
 </ul>
@@ -2974,6 +2997,34 @@ original call, exactly like popping a stack one frame at a time.</p>
 <p>Notice the shape: calls go <em>down</em> (indenting deeper) until the base case, then results
 come back <em>up</em> in reverse order — the last call made is the first one to return. That's
 the call stack's LIFO behavior from Lecture 10, made visible.</p>
+<p>The trace above shows the <em>order</em> of calls and returns, but not what's physically sitting
+on the call stack at the deepest point. The diagram below makes that literal: each box is
+one stack frame — one paused, waiting call to <code>factorialTraced</code> — stacked exactly like
+Lecture 10's <code>LinkedStack</code>, with the most recently pushed frame drawn on top.</p>
+<pre class="mermaid"><code>flowchart TD
+    subgraph Growing["Growing: factorialTraced(4) calling down to the base case"]
+        direction TD
+        F4["frame: factorialTraced(4)&lt;br/&gt;n = 4, waiting on: 4 * factorialTraced(3)"]
+        F3["frame: factorialTraced(3)&lt;br/&gt;n = 3, waiting on: 3 * factorialTraced(2)"]
+        F2["frame: factorialTraced(2)&lt;br/&gt;n = 2, waiting on: 2 * factorialTraced(1)"]
+        F1["frame: factorialTraced(1)&lt;br/&gt;n = 1, waiting on: 1 * factorialTraced(0)"]
+        F0["frame: factorialTraced(0)&lt;br/&gt;n = 0, BASE CASE -- returns 1 immediately"]
+        F4 --&gt; F3 --&gt; F2 --&gt; F1 --&gt; F0
+    end</code></pre>
+<pre class="mermaid"><code>flowchart BT
+    subgraph Unwinding["Unwinding: each frame resumes, multiplies, and pops"]
+        direction BT
+        U0["factorialTraced(0) returns 1&lt;br/&gt;(frame popped)"]
+        U1["factorialTraced(1) resumes:&lt;br/&gt;1 * 1 = 1, returns 1&lt;br/&gt;(frame popped)"]
+        U2["factorialTraced(2) resumes:&lt;br/&gt;2 * 1 = 2, returns 2&lt;br/&gt;(frame popped)"]
+        U3["factorialTraced(3) resumes:&lt;br/&gt;3 * 2 = 6, returns 6&lt;br/&gt;(frame popped)"]
+        U4["factorialTraced(4) resumes:&lt;br/&gt;4 * 6 = 24, returns 24&lt;br/&gt;(frame popped -- stack empty)"]
+        U0 --&gt; U1 --&gt; U2 --&gt; U3 --&gt; U4
+    end</code></pre>
+<p>Every frame in the "growing" diagram is genuinely still on the stack, paused mid-statement
+(<code>n * factorialTraced(n - 1)</code> can't finish computing the multiplication until the recursive
+call returns) — exactly <code>n + 1</code> frames deep for <code>factorialTraced(n)</code>, which is <em>why</em> deep
+recursion costs stack memory proportional to the recursion depth, not a constant amount.</p>
 <div class="admonition warning">
 <p class="admonition-title">Forgetting the base case causes a stack overflow</p>
 <p>If <code>factorial</code> never checked <code>n == 0</code>, it would keep calling itself — <code>factorial(-1)</code>,
@@ -3039,6 +3090,143 @@ naturally.</p>
 </tr>
 </tbody>
 </table>
+<p><code>factorial</code> doesn't make the performance difference between the two obvious, because it
+only ever makes <em>one</em> recursive call per level — the recursive and iterative versions both
+do exactly <code>n</code> multiplications. <strong>Fibonacci</strong> is a far more dramatic example, because the
+naive recursive version makes <strong>two</strong> recursive calls per level, and those two calls'
+subtrees overlap heavily — <code>fibRecursive(5)</code> and <code>fibRecursive(4)</code> both end up separately
+recomputing <code>fibRecursive(3)</code> from scratch, with no memory of having done it already.</p>
+<pre class="mermaid"><code>flowchart TD
+    F5["fib(5)"] --&gt; F4a["fib(4)"]
+    F5 --&gt; F3a["fib(3)"]
+    F4a --&gt; F3b["fib(3)"]
+    F4a --&gt; F2a["fib(2)"]
+    F3a --&gt; F2b["fib(2)"]
+    F3a --&gt; F1a["fib(1)"]
+    F3b --&gt; F2c["fib(2)"]
+    F3b --&gt; F1b["fib(1)"]</code></pre>
+<p>Notice <code>fib(3)</code> appears <strong>twice</strong> and <code>fib(2)</code> appears <strong>three times</strong> in just this small
+slice down to <code>fib(5)</code> — each identical call re-does all the work of its entire subtree
+below it, from scratch, every single time. The number of calls roughly doubles with every
+increase in <code>n</code>, giving O(2ⁿ) total calls — genuinely exponential, unlike factorial's O(n).</p>
+<div class="language-cpp highlight"><span class="filename">fib_recursive_vs_iterative.cpp</span><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;chrono&gt;</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="o">::</span><span class="nn">chrono</span><span class="p">;</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="kt">long</span><span class="w"> </span><span class="nf">fibRecursive</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">n</span><span class="p">;</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">fibRecursive</span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">fibRecursive</span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="p">}</span>
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="kt">long</span><span class="w"> </span><span class="nf">fibIterative</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">n</span><span class="p">;</span>
+</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="w">    </span><span class="kt">long</span><span class="w"> </span><span class="n">prev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">curr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-6-15"><a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a><span class="w">        </span><span class="kt">long</span><span class="w"> </span><span class="n">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">prev</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">curr</span><span class="p">;</span>
+</span><span id="__span-6-16"><a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a><span class="w">        </span><span class="n">prev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">curr</span><span class="p">;</span>
+</span><span id="__span-6-17"><a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a><span class="w">        </span><span class="n">curr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">next</span><span class="p">;</span>
+</span><span id="__span-6-18"><a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-6-19"><a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">curr</span><span class="p">;</span>
+</span><span id="__span-6-20"><a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a><span class="p">}</span>
+</span><span id="__span-6-21"><a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a>
+</span><span id="__span-6-22"><a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-6-23"><a id="__codelineno-6-23" name="__codelineno-6-23" href="#__codelineno-6-23"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">32</span><span class="p">;</span>
+</span><span id="__span-6-24"><a id="__codelineno-6-24" name="__codelineno-6-24" href="#__codelineno-6-24"></a>
+</span><span id="__span-6-25"><a id="__codelineno-6-25" name="__codelineno-6-25" href="#__codelineno-6-25"></a><span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">start1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">high_resolution_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+</span><span id="__span-6-26"><a id="__codelineno-6-26" name="__codelineno-6-26" href="#__codelineno-6-26"></a><span class="w">    </span><span class="kt">long</span><span class="w"> </span><span class="n">r1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fibRecursive</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
+</span><span id="__span-6-27"><a id="__codelineno-6-27" name="__codelineno-6-27" href="#__codelineno-6-27"></a><span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">end1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">high_resolution_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+</span><span id="__span-6-28"><a id="__codelineno-6-28" name="__codelineno-6-28" href="#__codelineno-6-28"></a><span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">recursiveMs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">duration_cast</span><span class="o">&lt;</span><span class="n">duration</span><span class="o">&lt;</span><span class="kt">double</span><span class="p">,</span><span class="w"> </span><span class="n">milli</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="n">end1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start1</span><span class="p">).</span><span class="n">count</span><span class="p">();</span>
+</span><span id="__span-6-29"><a id="__codelineno-6-29" name="__codelineno-6-29" href="#__codelineno-6-29"></a>
+</span><span id="__span-6-30"><a id="__codelineno-6-30" name="__codelineno-6-30" href="#__codelineno-6-30"></a><span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">start2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">high_resolution_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+</span><span id="__span-6-31"><a id="__codelineno-6-31" name="__codelineno-6-31" href="#__codelineno-6-31"></a><span class="w">    </span><span class="kt">long</span><span class="w"> </span><span class="n">r2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fibIterative</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
+</span><span id="__span-6-32"><a id="__codelineno-6-32" name="__codelineno-6-32" href="#__codelineno-6-32"></a><span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">end2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">high_resolution_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+</span><span id="__span-6-33"><a id="__codelineno-6-33" name="__codelineno-6-33" href="#__codelineno-6-33"></a><span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">iterativeMs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">duration_cast</span><span class="o">&lt;</span><span class="n">duration</span><span class="o">&lt;</span><span class="kt">double</span><span class="p">,</span><span class="w"> </span><span class="n">milli</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="n">end2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start2</span><span class="p">).</span><span class="n">count</span><span class="p">();</span>
+</span><span id="__span-6-34"><a id="__codelineno-6-34" name="__codelineno-6-34" href="#__codelineno-6-34"></a>
+</span><span id="__span-6-35"><a id="__codelineno-6-35" name="__codelineno-6-35" href="#__codelineno-6-35"></a><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;fibRecursive(&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;) = &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">r1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+</span><span id="__span-6-36"><a id="__codelineno-6-36" name="__codelineno-6-36" href="#__codelineno-6-36"></a><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;fibIterative(&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;) = &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">r2</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+</span><span id="__span-6-37"><a id="__codelineno-6-37" name="__codelineno-6-37" href="#__codelineno-6-37"></a>
+</span><span id="__span-6-38"><a id="__codelineno-6-38" name="__codelineno-6-38" href="#__codelineno-6-38"></a><span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">ratio</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">recursiveMs</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="n">iterativeMs</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0.0001</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">iterativeMs</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="mf">0.0001</span><span class="p">);</span>
+</span><span id="__span-6-39"><a id="__codelineno-6-39" name="__codelineno-6-39" href="#__codelineno-6-39"></a><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Recursive vs iterative: &quot;</span><span class="p">;</span>
+</span><span id="__span-6-40"><a id="__codelineno-6-40" name="__codelineno-6-40" href="#__codelineno-6-40"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ratio</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">100.0</span><span class="p">)</span><span class="w"> </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;recursion was at least 100x slower&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+</span><span id="__span-6-41"><a id="__codelineno-6-41" name="__codelineno-6-41" href="#__codelineno-6-41"></a><span class="w">    </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ratio</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">10.0</span><span class="p">)</span><span class="w"> </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;recursion was at least 10x slower&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+</span><span id="__span-6-42"><a id="__codelineno-6-42" name="__codelineno-6-42" href="#__codelineno-6-42"></a><span class="w">    </span><span class="k">else</span><span class="w"> </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;recursion was slower, but by less than 10x&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+</span><span id="__span-6-43"><a id="__codelineno-6-43" name="__codelineno-6-43" href="#__codelineno-6-43"></a>
+</span><span id="__span-6-44"><a id="__codelineno-6-44" name="__codelineno-6-44" href="#__codelineno-6-44"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-6-45"><a id="__codelineno-6-45" name="__codelineno-6-45" href="#__codelineno-6-45"></a><span class="p">}</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>$ g++ -std=c++17 -o fib_recursive_vs_iterative fib_recursive_vs_iterative.cpp
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>$ ./fib_recursive_vs_iterative
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>fibRecursive(32) = 2178309
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>fibIterative(32) = 2178309
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>Recursive vs iterative: recursion was at least 100x slower
+</span></code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Same answer, wildly different cost — and a verdict instead of a raw number</p>
+<p>Both functions compute the identical value, <code>2178309</code> — correctness isn't the issue,
+cost is. <code>fibIterative</code> does exactly <code>n - 1</code> additions no matter what; <code>fibRecursive</code>
+makes roughly two million calls to compute <code>fib(32)</code> alone, because of all the repeated
+subtree work shown in the diagram above. As with Lecture 9's timing comparison, the
+program prints a <strong>bucketed verdict</strong> ("at least 100x slower") rather than a raw
+millisecond count — the exact ratio depends on the machine, but the <em>fact</em> that
+exponential beats linear by orders of magnitude does not, which is exactly what makes
+it safe to assert as a fixed, reproducible verdict here. Unit 5 and Unit 6 (trees and
+graphs) both fix exactly this kind of repeated-subproblem waste with <strong>memoization</strong> —
+caching each subproblem's answer the first time it's computed.</p>
+</div>
+<h2 id="why-deep-recursion-can-exhaust-the-stack">Why Deep Recursion Can Exhaust the Stack<a class="headerlink" href="#why-deep-recursion-can-exhaust-the-stack" title="Permanent link">&para;</a></h2>
+<p>The call-stack diagrams earlier in this lecture showed <code>factorialTraced(4)</code> using 5 stack
+frames. That's nothing — but the <em>pattern</em> scales directly: <code>factorialTraced(n)</code> always
+uses <code>n + 1</code> frames, and every frame consumes a small but nonzero amount of stack memory
+(parameters, local variables, and bookkeeping for where to resume). A typical program's
+call stack is only a few megabytes, set by the operating system when the program starts —
+nothing like the gigabytes of heap memory <code>new</code> can draw from. Recurse deep enough, and
+that stack space runs out: a <strong>stack overflow</strong>, which typically crashes the entire
+program immediately, with no exception to catch (unlike <code>ArrayStack::push</code> in Lecture 10,
+which throws a clean, catchable <code>overflow_error</code> instead).</p>
+<div class="language-cpp highlight"><span class="filename">deep_recursion.cpp</span><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="c1">// Recurses `depth` levels deep, doing negligible work per frame, then</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="c1">// unwinds back and returns the deepest level actually reached.</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="kt">int</span><span class="w"> </span><span class="nf">recurseTo</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">target</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">current</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">current</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">target</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">current</span><span class="p">;</span>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">recurseTo</span><span class="p">(</span><span class="n">target</span><span class="p">,</span><span class="w"> </span><span class="n">current</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="p">}</span>
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">target</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="mi">1000</span><span class="p">,</span><span class="w"> </span><span class="mi">5000</span><span class="p">,</span><span class="w"> </span><span class="mi">20000</span><span class="p">})</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">reached</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">recurseTo</span><span class="p">(</span><span class="n">target</span><span class="p">);</span>
+</span><span id="__span-8-14"><a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="w">        </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Requested depth &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">target</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; -&gt; reached &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">reached</span>
+</span><span id="__span-8-15"><a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a><span class="w">             </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; (returned successfully, stack intact)&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+</span><span id="__span-8-16"><a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-8-17"><a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-8-18"><a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a><span class="p">}</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>$ g++ -std=c++17 -o deep_recursion deep_recursion.cpp
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>$ ./deep_recursion
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>Requested depth 1000 -&gt; reached 1000 (returned successfully, stack intact)
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>Requested depth 5000 -&gt; reached 5000 (returned successfully, stack intact)
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>Requested depth 20000 -&gt; reached 20000 (returned successfully, stack intact)
+</span></code></pre></div>
+<p>All three depths here complete safely — each frame of <code>recurseTo</code> is tiny (two <code>int</code>
+parameters, nothing else), so even 20,000 nested frames comfortably fits inside a typical
+few-megabyte stack. This lecture deliberately stops at a depth that succeeds, rather than
+pushing further until it crashes: a genuine stack overflow terminates the whole process
+immediately (no recoverable exception, no clean output), which is the wrong thing to
+trigger in code you intend to keep running — including this book's own verification tooling.</p>
+<div class="admonition warning">
+<p class="admonition-title">This same function crashes well before 100,000 on a typical default stack</p>
+<p>Pushing <code>recurseTo</code>'s target past roughly 30,000–40,000 on a typical MinGW/Windows
+default stack (about 1 MB, well under the 8 MB some Linux defaults reserve) is enough
+to exhaust it and crash with a stack overflow — try it locally outside of any grading
+or verification pipeline, at your own risk, and watch the program terminate abruptly
+with no output for that line at all. The fix is never "recurse more carefully" — it's
+either converting to an equivalent iterative loop (as <code>fibIterative</code> did above, O(1)
+extra space instead of O(n)) or, for problems that genuinely need it, explicitly
+managing your own stack data structure on the heap instead of relying on the call
+stack's fixed-size memory.</p>
+</div>
 <h2 id="types-of-recursion">Types of Recursion<a class="headerlink" href="#types-of-recursion" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>Direct recursion</strong> — a function calls itself directly, as <code>factorial</code> does above.</li>
@@ -3048,6 +3236,20 @@ naturally.</p>
   automatically). <code>factorial</code> above is <strong>not</strong> tail-recursive, because it still has to
   multiply by <code>n</code> <em>after</em> the recursive call returns.</li>
 </ul>
+<div class="admonition tip">
+<p class="admonition-title">Why tail recursion connects back to the stack-overflow discussion</p>
+<p>A <strong>tail-recursive</strong> function's stack frame has nothing left to do once the recursive
+call returns — it can just hand back whatever the recursive call produced. A sufficiently
+smart compiler can therefore reuse the <em>same</em> stack frame for every "call" instead of
+pushing a new one, turning the recursion into a loop under the hood at zero extra stack
+cost. <code>factorial(int n)</code> as written is not tail-recursive (the pending <code>n *</code> means the
+frame is still needed after the call returns), but rewriting it with an accumulator
+parameter — <code>factorialTail(int n, unsigned long acc = 1)</code>, returning
+<code>factorialTail(n - 1, n * acc)</code> — would be. Don't rely on this optimization happening,
+though: C++ doesn't guarantee it (unlike some functional languages), so treating it as
+"recursion with no stack cost" is a bug waiting to happen if you ever change compilers
+or optimization settings.</p>
+</div>
 <h2 id="advantages-and-limitations-of-recursion">Advantages and Limitations of Recursion<a class="headerlink" href="#advantages-and-limitations-of-recursion" title="Permanent link">&para;</a></h2>
 <p><strong>Advantages</strong></p>
 <ul>
@@ -3071,17 +3273,45 @@ naturally.</p>
 <li>Compile and run <code>recursion_trace.cpp</code> with <code>factorialTraced(6)</code> instead of <code>4</code>, and
    count how many lines of indentation deep the trace goes before hitting the base case.
    Confirm it matches your expectation based on the call-stack diagram above.</li>
+<li>Add a <code>fibTraced(int n, int depth = 0)</code> function, modeled on <code>factorialTraced</code>, that
+   prints an indented "called" line on entry and a "returning" line on exit. Run it for
+   <code>fibTraced(4)</code> and count how many times <code>fib(1)</code> and <code>fib(0)</code> get printed as "called" —
+   does the count match what the recursion-tree diagram earlier in this lecture predicts?</li>
+<li>Modify <code>fib_recursive_vs_iterative.cpp</code> to also print the <em>number of calls</em>
+   <code>fibRecursive</code> makes (add a <code>static long callCount</code> or pass a counter by reference,
+   incremented once per call) for <code>n = 20</code>, <code>n = 25</code>, and <code>n = 30</code>. Does the call count
+   roughly double each time <code>n</code> increases by 1, matching the O(2ⁿ) claim in this lecture?</li>
+<li>Write <code>factorialTail(int n, unsigned long acc = 1)</code>, the tail-recursive version of
+   factorial described in the tip above. Confirm it produces the same results as
+   <code>factorialRecursive</code> for several values of <code>n</code>, then explain in a sentence or two why
+   its stack-frame <em>shape</em>, if you were to draw it as the growing/unwinding diagrams from
+   earlier, would look different from <code>factorialTraced</code>'s.</li>
+<li>Using <code>deep_recursion.cpp</code> as a starting point, write a <em>separate</em> program (don't run
+   it inside any grading or verification pipeline) that increases the target depth in a
+   loop — 10,000, 20,000, 40,000, 80,000 — until it crashes on your machine. Record the
+   approximate depth where it stopped succeeding. Is it close to the range this lecture's
+   warning mentions?</li>
 </ol>
 <h2 id="key-takeaways">Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Every correct recursive function needs a <strong>base case</strong> (stops the recursion) and a
   <strong>recursive case</strong> (calls itself on a smaller problem).</li>
 <li>Recursive calls use the <strong>call stack</strong> exactly like any other function call — LIFO,
-  with each paused call waiting for the one below it to return.</li>
+  with each paused call waiting for the one below it to return; the growing/unwinding
+  diagrams in this lecture make that literal, one stack frame per pending call.</li>
 <li>Recursion and iteration are computationally equivalent — the choice is about which one
-  more naturally expresses the problem, not raw capability.</li>
+  more naturally expresses the problem, not raw capability. But equivalent doesn't mean
+  equally <em>fast</em>: naive recursive Fibonacci is O(2ⁿ) because of massively overlapping
+  repeated work, while the iterative version is O(n) — a gap real enough to report as a
+  reproducible verdict, not just a theoretical curiosity.</li>
 <li>A missing or unreachable base case causes a <strong>stack overflow</strong>, the most common bug in
-  recursive code — always verify it before trusting a recursive function.</li>
+  recursive code — always verify it before trusting a recursive function. Even a <em>correct</em>
+  base case doesn't save you if the recursion is simply too deep for the available stack
+  space, which is finite (typically a few megabytes) unlike heap memory.</li>
+<li><strong>Tail recursion</strong> — where the recursive call is the last thing a function does — can in
+  principle be optimized into a loop with zero extra stack cost, but C++ never guarantees
+  this happens, so it shouldn't be relied on as a substitute for an explicit iterative
+  rewrite when stack depth is a genuine concern.</li>
 <li>Recursion is the natural mental model for trees and graphs — the next two units will
   lean on it constantly.</li>
 </ul>
@@ -3105,7 +3335,7 @@ naturally.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 21, 2026 08:35:16 UTC">September 21, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 22, 2026 17:02:55 UTC">September 22, 2026</span>
   </span>
 
     

@@ -1228,10 +1228,54 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#singly-vs-doubly-rewiring-a-middle-insertion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Singly vs. Doubly: Rewiring a Middle Insertion
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#the-doubly-linked-list-class" class="md-nav__link">
     <span class="md-ellipsis">
       
         The Doubly Linked List Class
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-tracing-traversebackward-step-by-step" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worked Example: Tracing traverseBackward() Step by Step
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-pitfalls-with-doubly-linked-lists" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Pitfalls With Doubly Linked Lists
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#application-a-mini-browser-history" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Application: A Mini Browser History
       
     </span>
   </a>
@@ -2777,10 +2821,54 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#singly-vs-doubly-rewiring-a-middle-insertion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Singly vs. Doubly: Rewiring a Middle Insertion
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#the-doubly-linked-list-class" class="md-nav__link">
     <span class="md-ellipsis">
       
         The Doubly Linked List Class
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-tracing-traversebackward-step-by-step" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worked Example: Tracing traverseBackward() Step by Step
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-pitfalls-with-doubly-linked-lists" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Pitfalls With Doubly Linked Lists
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#application-a-mini-browser-history" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Application: A Mini Browser History
       
     </span>
   </a>
@@ -2881,9 +2969,12 @@ problems by giving every node a second pointer, back to the node <em>before</em>
 <h2 id="in-this-lecture">In This Lecture<a class="headerlink" href="#in-this-lecture" title="Permanent link">&para;</a></h2>
 <ul>
 <li>The doubly linked list concept, and its three-field node structure</li>
-<li>Forward and backward traversal</li>
+<li>Forward and backward traversal, including a step-by-step worked trace</li>
 <li>Insertion and deletion at the beginning, end, and a specific position</li>
+<li>A direct pointer-count comparison: rewiring a singly vs. a doubly linked node</li>
 <li>Searching and updating</li>
+<li>Common pitfalls specific to keeping two directions of pointers consistent</li>
+<li>A worked application: a mini browser history built on a doubly linked list</li>
 <li>Real applications where "go backward" is exactly what you need</li>
 </ul>
 <h2 id="the-doubly-linked-list-concept">The Doubly Linked List Concept<a class="headerlink" href="#the-doubly-linked-list-concept" title="Permanent link">&para;</a></h2>
@@ -2904,6 +2995,32 @@ O(1) instead of the singly linked list's O(n).</p>
 </span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="n">DNode</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">data</span><span class="p">(</span><span class="n">value</span><span class="p">),</span><span class="w"> </span><span class="n">prev</span><span class="p">(</span><span class="k">nullptr</span><span class="p">),</span><span class="w"> </span><span class="n">next</span><span class="p">(</span><span class="k">nullptr</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span>
 </span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="p">};</span>
 </span></code></pre></div>
+<h2 id="singly-vs-doubly-rewiring-a-middle-insertion">Singly vs. Doubly: Rewiring a Middle Insertion<a class="headerlink" href="#singly-vs-doubly-rewiring-a-middle-insertion" title="Permanent link">&para;</a></h2>
+<p>This is the real cost (and the real benefit) of the second pointer, made concrete.
+Inserting a new node between two existing nodes <code>A</code> and <code>B</code> takes <strong>two</strong> pointer
+assignments in a singly linked list, but <strong>four</strong> in a doubly linked list — the extra two
+are exactly what keeps <code>prev</code> consistent in both directions.</p>
+<pre class="mermaid"><code>flowchart LR
+    subgraph Singly["Singly linked list -- 2 pointer assignments"]
+        direction LR
+        SA["A"] --&gt; SB["B"]
+        SNew["New"] -.-&gt;|"1. New-&amp;gt;next = A-&amp;gt;next"| SB
+        SA -.-&gt;|"2. A-&amp;gt;next = New"| SNew
+    end</code></pre>
+<pre class="mermaid"><code>flowchart LR
+    subgraph Doubly["Doubly linked list -- 4 pointer assignments"]
+        direction LR
+        DA["A"] &lt;--&gt; DB["B"]
+        DNew["New"] -.-&gt;|"1. New-&amp;gt;next = A-&amp;gt;next"| DB
+        DNew -.-&gt;|"2. New-&amp;gt;prev = A"| DA
+        DA -.-&gt;|"3. A-&amp;gt;next = New"| DNew
+        DB -.-&gt;|"4. B-&amp;gt;prev = New"| DNew
+    end</code></pre>
+<p>Forgetting any <em>one</em> of the doubly linked list's four steps doesn't necessarily crash —
+<code>traverseForward()</code> might still print correctly while <code>traverseBackward()</code> silently prints
+garbage (or an incomplete list), because forward traversal never looks at the <code>prev</code>
+pointer that was left stale. This is exactly why doubly linked list bugs are often caught
+late: half the structure looks perfectly fine.</p>
 <h2 id="the-doubly-linked-list-class">The Doubly Linked List Class<a class="headerlink" href="#the-doubly-linked-list-class" title="Permanent link">&para;</a></h2>
 <div class="language-cpp highlight"><span class="filename">doubly_linked_list.cpp</span><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span>
@@ -3071,6 +3188,167 @@ O(1) instead of the singly linked list's O(n).</p>
 </span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>Forward after deleting position 2:        5 &lt;-&gt; 10 &lt;-&gt; 20 &lt;-&gt; 30
 </span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>Forward after deleting from end:          5 &lt;-&gt; 10 &lt;-&gt; 20
 </span></code></pre></div>
+<h2 id="worked-example-tracing-traversebackward-step-by-step">Worked Example: Tracing traverseBackward() Step by Step<a class="headerlink" href="#worked-example-tracing-traversebackward-step-by-step" title="Permanent link">&para;</a></h2>
+<p><code>traverseBackward()</code> starts at <code>tail</code> instead of <code>head</code>, and follows <code>prev</code> instead of
+<code>next</code> — otherwise it's the exact same loop shape as forward traversal. Tracing it on the
+4-node list from <code>main()</code> (<code>5 &lt;-&gt; 10 &lt;-&gt; 20 &lt;-&gt; 30</code>) makes the symmetry concrete:</p>
+<pre class="mermaid"><code>flowchart LR
+    N1["5&lt;br/&gt;(4th printed)"] &lt;--&gt; N2["10&lt;br/&gt;(3rd printed)"] &lt;--&gt; N3["20&lt;br/&gt;(2nd printed)"] &lt;--&gt; N4["30&lt;br/&gt;(1st printed,&lt;br/&gt;current = tail)"]
+    N4 -.-&gt;|"1. print 30,&lt;br/&gt;current = current-&amp;gt;prev"| N3
+    N3 -.-&gt;|"2. print 20,&lt;br/&gt;current = current-&amp;gt;prev"| N2
+    N2 -.-&gt;|"3. print 10,&lt;br/&gt;current = current-&amp;gt;prev"| N1
+    N1 -.-&gt;|"4. print 5,&lt;br/&gt;current-&amp;gt;prev == nullptr, stop"| StopNull["nullptr"]</code></pre>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th><code>current</code></th>
+<th>Printed</th>
+<th>Next <code>current</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>node holding <code>30</code> (<code>tail</code>)</td>
+<td><code>30</code></td>
+<td><code>current-&gt;prev</code> → node holding <code>20</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td>node holding <code>20</code></td>
+<td><code>20</code></td>
+<td><code>current-&gt;prev</code> → node holding <code>10</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>node holding <code>10</code></td>
+<td><code>10</code></td>
+<td><code>current-&gt;prev</code> → node holding <code>5</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td>node holding <code>5</code></td>
+<td><code>5</code></td>
+<td><code>current-&gt;prev</code> is <code>nullptr</code> → loop ends</td>
+</tr>
+</tbody>
+</table>
+<p>Compare this table against the real captured output above: <code>30 &lt;-&gt; 20 &lt;-&gt; 10 &lt;-&gt; 5</code> reads
+right to left exactly as this trace predicts — <code>traverseBackward()</code> is genuinely just
+<code>traverseForward()</code> with every direction swapped, which is the entire point of paying for
+a second pointer per node.</p>
+<h2 id="common-pitfalls-with-doubly-linked-lists">Common Pitfalls With Doubly Linked Lists<a class="headerlink" href="#common-pitfalls-with-doubly-linked-lists" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Updating <code>next</code> but forgetting <code>prev</code> (or vice versa).</strong> As the rewiring diagram
+  above shows, every insertion or deletion that isn't at an end touches <em>four</em> pointers,
+  not two — missing one leaves the structure "half correct": one traversal direction
+  works, the other doesn't.</li>
+<li><strong>Forgetting to update <code>tail</code> after removing the last node.</strong> <code>deleteFromEnd</code> must set
+  <code>tail = tail-&gt;prev</code> — and if that new <code>tail</code> is <code>nullptr</code> (the list just became empty),
+  <code>head</code> must also be reset to <code>nullptr</code>, or the two pointers disagree about whether the
+  list is empty.</li>
+<li><strong>Off-by-one when the target is the last node.</strong> <code>insertAtPosition</code> and
+  <code>deleteAtPosition</code> above both special-case <code>current == tail</code>, delegating to
+  <code>insertAtEnd</code>/<code>deleteFromEnd</code> — without that check, the general-position logic would
+  try to dereference <code>current-&gt;next</code>, which is <code>nullptr</code> at the tail.</li>
+<li><strong>Assuming a single stray pointer bug will crash immediately.</strong> It often won't — a
+  wrong <code>prev</code> pointer just makes <em>backward</em> traversal wrong; nothing about forward
+  traversal, <code>search</code>, or <code>updateAt</code> would ever notice, since none of them read <code>prev</code>.
+  This is exactly why testing both directions matters, not just one.</li>
+</ul>
+<h2 id="application-a-mini-browser-history">Application: A Mini Browser History<a class="headerlink" href="#application-a-mini-browser-history" title="Permanent link">&para;</a></h2>
+<p>Every one of Lecture 5 and 6's operations was justified by ordering or search speed — but
+the browser-history application mentioned below is a case where the <em>shape</em> of the doubly
+linked list solves the problem almost by itself: <code>back()</code> and <code>forward()</code> map directly
+onto <code>prev</code> and <code>next</code>, and "visiting a new page from the middle of history" is exactly
+what happens when you insert a node and discard everything that used to be ahead of it.</p>
+<div class="language-cpp highlight"><span class="filename">browser_history.cpp</span><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string&gt;</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="c1">// A minimal browser-history implementation on top of a doubly linked list.</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="c1">// `current` is the page being viewed right now; `back()` moves current to</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="c1">// `prev`, `forward()` moves it to `next` -- both O(1) precisely because</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="c1">// every node already stores both directions.</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="k">struct</span><span class="w"> </span><span class="nc">PageNode</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">    </span><span class="n">string</span><span class="w"> </span><span class="n">url</span><span class="p">;</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="w">    </span><span class="n">PageNode</span><span class="o">*</span><span class="w"> </span><span class="n">prev</span><span class="p">;</span>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="w">    </span><span class="n">PageNode</span><span class="o">*</span><span class="w"> </span><span class="n">next</span><span class="p">;</span>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="w">    </span><span class="n">PageNode</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">u</span><span class="p">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">url</span><span class="p">(</span><span class="n">u</span><span class="p">),</span><span class="w"> </span><span class="n">prev</span><span class="p">(</span><span class="k">nullptr</span><span class="p">),</span><span class="w"> </span><span class="n">next</span><span class="p">(</span><span class="k">nullptr</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span>
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="p">};</span>
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="k">class</span><span class="w"> </span><span class="nc">BrowserHistory</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="k">private</span><span class="o">:</span>
+</span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="w">    </span><span class="n">PageNode</span><span class="o">*</span><span class="w"> </span><span class="n">current</span><span class="p">;</span>
+</span><span id="__span-3-19"><a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a>
+</span><span id="__span-3-20"><a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="k">public</span><span class="o">:</span>
+</span><span id="__span-3-21"><a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a><span class="w">    </span><span class="n">BrowserHistory</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">homepage</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-22"><a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a><span class="w">        </span><span class="n">current</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">PageNode</span><span class="p">(</span><span class="n">homepage</span><span class="p">);</span>
+</span><span id="__span-3-23"><a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-3-24"><a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a>
+</span><span id="__span-3-25"><a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a><span class="w">    </span><span class="c1">// Visiting a new page from the middle of history discards everything</span>
+</span><span id="__span-3-26"><a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a><span class="w">    </span><span class="c1">// that was &quot;forward&quot; of it -- exactly how a real browser behaves.</span>
+</span><span id="__span-3-27"><a id="__codelineno-3-27" name="__codelineno-3-27" href="#__codelineno-3-27"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">visit</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">url</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-28"><a id="__codelineno-3-28" name="__codelineno-3-28" href="#__codelineno-3-28"></a><span class="w">        </span><span class="n">PageNode</span><span class="o">*</span><span class="w"> </span><span class="n">newPage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">PageNode</span><span class="p">(</span><span class="n">url</span><span class="p">);</span>
+</span><span id="__span-3-29"><a id="__codelineno-3-29" name="__codelineno-3-29" href="#__codelineno-3-29"></a><span class="w">        </span><span class="n">newPage</span><span class="o">-&gt;</span><span class="n">prev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">current</span><span class="p">;</span>
+</span><span id="__span-3-30"><a id="__codelineno-3-30" name="__codelineno-3-30" href="#__codelineno-3-30"></a><span class="w">        </span><span class="n">current</span><span class="o">-&gt;</span><span class="n">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">newPage</span><span class="p">;</span><span class="w">   </span><span class="c1">// drop the old forward chain, if any</span>
+</span><span id="__span-3-31"><a id="__codelineno-3-31" name="__codelineno-3-31" href="#__codelineno-3-31"></a><span class="w">        </span><span class="n">current</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">newPage</span><span class="p">;</span>
+</span><span id="__span-3-32"><a id="__codelineno-3-32" name="__codelineno-3-32" href="#__codelineno-3-32"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-3-33"><a id="__codelineno-3-33" name="__codelineno-3-33" href="#__codelineno-3-33"></a>
+</span><span id="__span-3-34"><a id="__codelineno-3-34" name="__codelineno-3-34" href="#__codelineno-3-34"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">back</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-35"><a id="__codelineno-3-35" name="__codelineno-3-35" href="#__codelineno-3-35"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">current</span><span class="o">-&gt;</span><span class="n">prev</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">)</span><span class="w"> </span><span class="n">current</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">current</span><span class="o">-&gt;</span><span class="n">prev</span><span class="p">;</span>
+</span><span id="__span-3-36"><a id="__codelineno-3-36" name="__codelineno-3-36" href="#__codelineno-3-36"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-3-37"><a id="__codelineno-3-37" name="__codelineno-3-37" href="#__codelineno-3-37"></a>
+</span><span id="__span-3-38"><a id="__codelineno-3-38" name="__codelineno-3-38" href="#__codelineno-3-38"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">forward</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-39"><a id="__codelineno-3-39" name="__codelineno-3-39" href="#__codelineno-3-39"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">current</span><span class="o">-&gt;</span><span class="n">next</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">)</span><span class="w"> </span><span class="n">current</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">current</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+</span><span id="__span-3-40"><a id="__codelineno-3-40" name="__codelineno-3-40" href="#__codelineno-3-40"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-3-41"><a id="__codelineno-3-41" name="__codelineno-3-41" href="#__codelineno-3-41"></a>
+</span><span id="__span-3-42"><a id="__codelineno-3-42" name="__codelineno-3-42" href="#__codelineno-3-42"></a><span class="w">    </span><span class="n">string</span><span class="w"> </span><span class="n">currentUrl</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">current</span><span class="o">-&gt;</span><span class="n">url</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-3-43"><a id="__codelineno-3-43" name="__codelineno-3-43" href="#__codelineno-3-43"></a><span class="p">};</span>
+</span><span id="__span-3-44"><a id="__codelineno-3-44" name="__codelineno-3-44" href="#__codelineno-3-44"></a>
+</span><span id="__span-3-45"><a id="__codelineno-3-45" name="__codelineno-3-45" href="#__codelineno-3-45"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-46"><a id="__codelineno-3-46" name="__codelineno-3-46" href="#__codelineno-3-46"></a><span class="w">    </span><span class="n">BrowserHistory</span><span class="w"> </span><span class="n">history</span><span class="p">(</span><span class="s">&quot;home.com&quot;</span><span class="p">);</span>
+</span><span id="__span-3-47"><a id="__codelineno-3-47" name="__codelineno-3-47" href="#__codelineno-3-47"></a><span class="w">    </span><span class="n">history</span><span class="p">.</span><span class="n">visit</span><span class="p">(</span><span class="s">&quot;news.com&quot;</span><span class="p">);</span>
+</span><span id="__span-3-48"><a id="__codelineno-3-48" name="__codelineno-3-48" href="#__codelineno-3-48"></a><span class="w">    </span><span class="n">history</span><span class="p">.</span><span class="n">visit</span><span class="p">(</span><span class="s">&quot;docs.com&quot;</span><span class="p">);</span>
+</span><span id="__span-3-49"><a id="__codelineno-3-49" name="__codelineno-3-49" href="#__codelineno-3-49"></a><span class="w">    </span><span class="n">history</span><span class="p">.</span><span class="n">visit</span><span class="p">(</span><span class="s">&quot;mail.com&quot;</span><span class="p">);</span>
+</span><span id="__span-3-50"><a id="__codelineno-3-50" name="__codelineno-3-50" href="#__codelineno-3-50"></a><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;After visiting 3 pages, current: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">history</span><span class="p">.</span><span class="n">currentUrl</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+</span><span id="__span-3-51"><a id="__codelineno-3-51" name="__codelineno-3-51" href="#__codelineno-3-51"></a>
+</span><span id="__span-3-52"><a id="__codelineno-3-52" name="__codelineno-3-52" href="#__codelineno-3-52"></a><span class="w">    </span><span class="n">history</span><span class="p">.</span><span class="n">back</span><span class="p">();</span>
+</span><span id="__span-3-53"><a id="__codelineno-3-53" name="__codelineno-3-53" href="#__codelineno-3-53"></a><span class="w">    </span><span class="n">history</span><span class="p">.</span><span class="n">back</span><span class="p">();</span>
+</span><span id="__span-3-54"><a id="__codelineno-3-54" name="__codelineno-3-54" href="#__codelineno-3-54"></a><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;After two back() calls, current: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">history</span><span class="p">.</span><span class="n">currentUrl</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+</span><span id="__span-3-55"><a id="__codelineno-3-55" name="__codelineno-3-55" href="#__codelineno-3-55"></a>
+</span><span id="__span-3-56"><a id="__codelineno-3-56" name="__codelineno-3-56" href="#__codelineno-3-56"></a><span class="w">    </span><span class="n">history</span><span class="p">.</span><span class="n">forward</span><span class="p">();</span>
+</span><span id="__span-3-57"><a id="__codelineno-3-57" name="__codelineno-3-57" href="#__codelineno-3-57"></a><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;After one forward() call, current: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">history</span><span class="p">.</span><span class="n">currentUrl</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+</span><span id="__span-3-58"><a id="__codelineno-3-58" name="__codelineno-3-58" href="#__codelineno-3-58"></a>
+</span><span id="__span-3-59"><a id="__codelineno-3-59" name="__codelineno-3-59" href="#__codelineno-3-59"></a><span class="w">    </span><span class="c1">// Visiting from the middle discards the old &quot;docs.com -&gt; mail.com&quot; forward chain.</span>
+</span><span id="__span-3-60"><a id="__codelineno-3-60" name="__codelineno-3-60" href="#__codelineno-3-60"></a><span class="w">    </span><span class="n">history</span><span class="p">.</span><span class="n">visit</span><span class="p">(</span><span class="s">&quot;shop.com&quot;</span><span class="p">);</span>
+</span><span id="__span-3-61"><a id="__codelineno-3-61" name="__codelineno-3-61" href="#__codelineno-3-61"></a><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;After visiting shop.com from the middle: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">history</span><span class="p">.</span><span class="n">currentUrl</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+</span><span id="__span-3-62"><a id="__codelineno-3-62" name="__codelineno-3-62" href="#__codelineno-3-62"></a>
+</span><span id="__span-3-63"><a id="__codelineno-3-63" name="__codelineno-3-63" href="#__codelineno-3-63"></a><span class="w">    </span><span class="n">history</span><span class="p">.</span><span class="n">forward</span><span class="p">();</span><span class="w">   </span><span class="c1">// nothing ahead anymore -- forward() is a safe no-op</span>
+</span><span id="__span-3-64"><a id="__codelineno-3-64" name="__codelineno-3-64" href="#__codelineno-3-64"></a><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;forward() with nothing ahead, current:   &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">history</span><span class="p">.</span><span class="n">currentUrl</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+</span><span id="__span-3-65"><a id="__codelineno-3-65" name="__codelineno-3-65" href="#__codelineno-3-65"></a>
+</span><span id="__span-3-66"><a id="__codelineno-3-66" name="__codelineno-3-66" href="#__codelineno-3-66"></a><span class="w">    </span><span class="n">history</span><span class="p">.</span><span class="n">back</span><span class="p">();</span>
+</span><span id="__span-3-67"><a id="__codelineno-3-67" name="__codelineno-3-67" href="#__codelineno-3-67"></a><span class="w">    </span><span class="n">history</span><span class="p">.</span><span class="n">back</span><span class="p">();</span>
+</span><span id="__span-3-68"><a id="__codelineno-3-68" name="__codelineno-3-68" href="#__codelineno-3-68"></a><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;After two more back() calls, current:    &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">history</span><span class="p">.</span><span class="n">currentUrl</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+</span><span id="__span-3-69"><a id="__codelineno-3-69" name="__codelineno-3-69" href="#__codelineno-3-69"></a>
+</span><span id="__span-3-70"><a id="__codelineno-3-70" name="__codelineno-3-70" href="#__codelineno-3-70"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-3-71"><a id="__codelineno-3-71" name="__codelineno-3-71" href="#__codelineno-3-71"></a><span class="p">}</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>$ g++ -std=c++17 -o browser_history browser_history.cpp
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>$ ./browser_history
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>After visiting 3 pages, current: mail.com
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>After two back() calls, current: news.com
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>After one forward() call, current: docs.com
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>After visiting shop.com from the middle: shop.com
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>forward() with nothing ahead, current:   shop.com
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>After two more back() calls, current:    news.com
+</span></code></pre></div>
+<p>Notice what happens after <code>visit("shop.com")</code>: the old <code>mail.com</code> node is still sitting in
+memory (nothing explicitly freed it — a real implementation would need to walk and delete
+the discarded forward chain), but it's no longer <em>reachable</em> from <code>current</code> no matter how
+many times <code>forward()</code> is called. That unreachability is exactly what "the forward history
+was discarded" means at the pointer level.</p>
 <h2 id="applications-of-doubly-linked-lists">Applications of Doubly Linked Lists<a class="headerlink" href="#applications-of-doubly-linked-lists" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>Browser history</strong> — the back <em>and</em> forward buttons need to move in both directions
@@ -3127,6 +3405,15 @@ pointer per node.</p>
 <li>Add a method <code>DNode* findNode(int value) const</code> that returns a pointer to the node
    holding <code>value</code> (or <code>nullptr</code>), and use it to implement <code>updateAt</code> differently —
    searching by <em>value</em> to update, instead of by position.</li>
+<li>Deliberately introduce the bug described in "Common Pitfalls" above: comment out just
+   the <code>newNode-&gt;prev = current;</code> line inside <code>insertAtPosition</code>, recompile, and call
+   <code>traverseForward()</code> then <code>traverseBackward()</code> after inserting in the middle. Confirm
+   forward traversal still looks correct while backward traversal doesn't — then explain
+   in your own words <em>why</em> forward traversal can't detect this particular bug.</li>
+<li>Extend <code>browser_history.cpp</code> with a <code>void printHistory() const</code> method that walks from
+   the <em>earliest</em> reachable page (following <code>prev</code> from <code>current</code> until it hits
+   <code>nullptr</code>) forward to <code>current</code>, printing each URL. Call it after each <code>visit</code>, <code>back</code>,
+   and <code>forward</code> in <code>main</code> to watch the visible history change in real time.</li>
 </ol>
 <h2 id="key-takeaways">Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permanent link">&para;</a></h2>
 <ul>
@@ -3134,11 +3421,18 @@ pointer per node.</p>
   tracks both a <code>head</code> and a <code>tail</code>.</li>
 <li>The <strong>tail pointer</strong> is what makes insertion and deletion at the end O(1), fixing the
   singly linked list's weakest operation — at the cost of one extra pointer per node.</li>
+<li>A middle insertion costs <strong>4 pointer assignments</strong> in a doubly linked list versus <strong>2</strong>
+  in a singly linked list — the direct, concrete price of being able to traverse backward.</li>
 <li>Backward traversal, impossible in a singly linked list, becomes a simple O(n) walk from
-  <code>tail</code>.</li>
+  <code>tail</code>, following <code>prev</code> instead of <code>next</code> — otherwise identical in shape to forward
+  traversal.</li>
 <li>Every insertion and deletion must keep <strong>both</strong> directions' pointers consistent — this
-  is the most common source of bugs when hand-writing doubly linked list code, so trace
-  each operation on paper before trusting it.</li>
+  is the most common source of bugs when hand-writing doubly linked list code, and it's
+  especially dangerous because a missed <code>prev</code> update can leave forward traversal looking
+  completely correct while backward traversal is silently broken.</li>
+<li>A doubly linked list isn't just "a singly linked list with extra bookkeeping" — its
+  shape is often the <em>right</em> fit for a problem, as the mini browser history shows: <code>back()</code>
+  and <code>forward()</code> fall directly out of <code>prev</code> and <code>next</code>, with no extra logic needed.</li>
 </ul>
 
 
@@ -3160,7 +3454,7 @@ pointer per node.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 21, 2026 08:35:16 UTC">September 21, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 22, 2026 17:02:55 UTC">September 22, 2026</span>
   </span>
 
     

@@ -1295,6 +1295,34 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#a-second-worked-application-the-josephus-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A Second Worked Application: The Josephus Problem
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="A Second Worked Application: The Josephus Problem">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#complexity-why-a-circular-list-and-not-a-circular-array" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Complexity: Why a Circular List, and Not a Circular Array?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#combined-linear-structure-operations" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2788,6 +2816,34 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#a-second-worked-application-the-josephus-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A Second Worked Application: The Josephus Problem
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="A Second Worked Application: The Josephus Problem">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#complexity-why-a-circular-list-and-not-a-circular-array" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Complexity: Why a Circular List, and Not a Circular Array?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#combined-linear-structure-operations" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2866,6 +2922,13 @@
       
       
       
+        <a href="../../tags/#tag:circular-linked-lists" class="md-tag">Circular Linked Lists</a>
+      
+    
+      
+      
+      
+      
         <a href="../../tags/#tag:data-structures" class="md-tag">Data Structures</a>
       
     
@@ -2890,6 +2953,8 @@ better-informed trade-off.</p>
 <ul>
 <li>A decision framework for choosing between an array and a linked list</li>
 <li>The same problem, solved both ways, compared directly</li>
+<li>A second worked application — the Josephus problem — solved with a circular linked
+  list, traced step by step</li>
 <li>Combining structures when neither one alone is the full answer</li>
 <li>Real-world applications that make the choice concrete</li>
 </ul>
@@ -2990,36 +3055,195 @@ and measure what actually happens.</p>
 </span><span id="__span-0-50"><a id="__codelineno-0-50" name="__codelineno-0-50" href="#__codelineno-0-50"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">N</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="n">arrList</span><span class="p">.</span><span class="n">arrive</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
 </span><span id="__span-0-51"><a id="__codelineno-0-51" name="__codelineno-0-51" href="#__codelineno-0-51"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">N</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="n">arrList</span><span class="p">.</span><span class="n">serve</span><span class="p">();</span>
 </span><span id="__span-0-52"><a id="__codelineno-0-52" name="__codelineno-0-52" href="#__codelineno-0-52"></a><span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">end1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">high_resolution_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
-</span><span id="__span-0-53"><a id="__codelineno-0-53" name="__codelineno-0-53" href="#__codelineno-0-53"></a>
-</span><span id="__span-0-54"><a id="__codelineno-0-54" name="__codelineno-0-54" href="#__codelineno-0-54"></a><span class="w">    </span><span class="n">LinkedWaitingList</span><span class="w"> </span><span class="n">llList</span><span class="p">;</span>
-</span><span id="__span-0-55"><a id="__codelineno-0-55" name="__codelineno-0-55" href="#__codelineno-0-55"></a><span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">start2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">high_resolution_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
-</span><span id="__span-0-56"><a id="__codelineno-0-56" name="__codelineno-0-56" href="#__codelineno-0-56"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">N</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="n">llList</span><span class="p">.</span><span class="n">arrive</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
-</span><span id="__span-0-57"><a id="__codelineno-0-57" name="__codelineno-0-57" href="#__codelineno-0-57"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">N</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="n">llList</span><span class="p">.</span><span class="n">serve</span><span class="p">();</span>
-</span><span id="__span-0-58"><a id="__codelineno-0-58" name="__codelineno-0-58" href="#__codelineno-0-58"></a><span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">end2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">high_resolution_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
-</span><span id="__span-0-59"><a id="__codelineno-0-59" name="__codelineno-0-59" href="#__codelineno-0-59"></a>
-</span><span id="__span-0-60"><a id="__codelineno-0-60" name="__codelineno-0-60" href="#__codelineno-0-60"></a><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">N</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; arrivals + &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">N</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; serves:&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
-</span><span id="__span-0-61"><a id="__codelineno-0-61" name="__codelineno-0-61" href="#__codelineno-0-61"></a><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;  Array-based:  &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">duration_cast</span><span class="o">&lt;</span><span class="n">microseconds</span><span class="o">&gt;</span><span class="p">(</span><span class="n">end1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start1</span><span class="p">).</span><span class="n">count</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; microseconds&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
-</span><span id="__span-0-62"><a id="__codelineno-0-62" name="__codelineno-0-62" href="#__codelineno-0-62"></a><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;  Linked-based: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">duration_cast</span><span class="o">&lt;</span><span class="n">microseconds</span><span class="o">&gt;</span><span class="p">(</span><span class="n">end2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start2</span><span class="p">).</span><span class="n">count</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; microseconds&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
-</span><span id="__span-0-63"><a id="__codelineno-0-63" name="__codelineno-0-63" href="#__codelineno-0-63"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
-</span><span id="__span-0-64"><a id="__codelineno-0-64" name="__codelineno-0-64" href="#__codelineno-0-64"></a><span class="p">}</span>
+</span><span id="__span-0-53"><a id="__codelineno-0-53" name="__codelineno-0-53" href="#__codelineno-0-53"></a><span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">arrayMs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">duration_cast</span><span class="o">&lt;</span><span class="n">duration</span><span class="o">&lt;</span><span class="kt">double</span><span class="p">,</span><span class="w"> </span><span class="n">milli</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="n">end1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start1</span><span class="p">).</span><span class="n">count</span><span class="p">();</span>
+</span><span id="__span-0-54"><a id="__codelineno-0-54" name="__codelineno-0-54" href="#__codelineno-0-54"></a>
+</span><span id="__span-0-55"><a id="__codelineno-0-55" name="__codelineno-0-55" href="#__codelineno-0-55"></a><span class="w">    </span><span class="n">LinkedWaitingList</span><span class="w"> </span><span class="n">llList</span><span class="p">;</span>
+</span><span id="__span-0-56"><a id="__codelineno-0-56" name="__codelineno-0-56" href="#__codelineno-0-56"></a><span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">start2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">high_resolution_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+</span><span id="__span-0-57"><a id="__codelineno-0-57" name="__codelineno-0-57" href="#__codelineno-0-57"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">N</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="n">llList</span><span class="p">.</span><span class="n">arrive</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+</span><span id="__span-0-58"><a id="__codelineno-0-58" name="__codelineno-0-58" href="#__codelineno-0-58"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">N</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="n">llList</span><span class="p">.</span><span class="n">serve</span><span class="p">();</span>
+</span><span id="__span-0-59"><a id="__codelineno-0-59" name="__codelineno-0-59" href="#__codelineno-0-59"></a><span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">end2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">high_resolution_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+</span><span id="__span-0-60"><a id="__codelineno-0-60" name="__codelineno-0-60" href="#__codelineno-0-60"></a><span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">linkedMs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">duration_cast</span><span class="o">&lt;</span><span class="n">duration</span><span class="o">&lt;</span><span class="kt">double</span><span class="p">,</span><span class="w"> </span><span class="n">milli</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="n">end2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start2</span><span class="p">).</span><span class="n">count</span><span class="p">();</span>
+</span><span id="__span-0-61"><a id="__codelineno-0-61" name="__codelineno-0-61" href="#__codelineno-0-61"></a>
+</span><span id="__span-0-62"><a id="__codelineno-0-62" name="__codelineno-0-62" href="#__codelineno-0-62"></a><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">N</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; arrivals + &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">N</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; serves, both O(1) per operation:&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+</span><span id="__span-0-63"><a id="__codelineno-0-63" name="__codelineno-0-63" href="#__codelineno-0-63"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">linkedMs</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">arrayMs</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-64"><a id="__codelineno-0-64" name="__codelineno-0-64" href="#__codelineno-0-64"></a><span class="w">        </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;  Array-based finished first (contiguous memory, no new/delete overhead)&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+</span><span id="__span-0-65"><a id="__codelineno-0-65" name="__codelineno-0-65" href="#__codelineno-0-65"></a><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-66"><a id="__codelineno-0-66" name="__codelineno-0-66" href="#__codelineno-0-66"></a><span class="w">        </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;  Linked-based finished first&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+</span><span id="__span-0-67"><a id="__codelineno-0-67" name="__codelineno-0-67" href="#__codelineno-0-67"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-0-68"><a id="__codelineno-0-68" name="__codelineno-0-68" href="#__codelineno-0-68"></a><span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">ratio</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">arrayMs</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0.0001</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">linkedMs</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">arrayMs</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">);</span>
+</span><span id="__span-0-69"><a id="__codelineno-0-69" name="__codelineno-0-69" href="#__codelineno-0-69"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ratio</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">2.0</span><span class="p">)</span><span class="w"> </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;  Linked-based took at least 2x longer than array-based&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+</span><span id="__span-0-70"><a id="__codelineno-0-70" name="__codelineno-0-70" href="#__codelineno-0-70"></a><span class="w">    </span><span class="k">else</span><span class="w"> </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;  Both finished within 2x of each other&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+</span><span id="__span-0-71"><a id="__codelineno-0-71" name="__codelineno-0-71" href="#__codelineno-0-71"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-0-72"><a id="__codelineno-0-72" name="__codelineno-0-72" href="#__codelineno-0-72"></a><span class="p">}</span>
 </span></code></pre></div>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>$ g++ -std=c++17 -o waiting_list_comparison waiting_list_comparison.cpp
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>$ ./waiting_list_comparison
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>5000 arrivals + 5000 serves:
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>  Array-based:  29 microseconds
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>  Linked-based: 460 microseconds
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>5000 arrivals + 5000 serves, both O(1) per operation:
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>  Array-based finished first (contiguous memory, no new/delete overhead)
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>  Linked-based took at least 2x longer than array-based
 </span></code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Both are O(1) per operation here — the array just has a smaller constant factor</p>
 <p>Notice both versions only ever <code>arrive()</code> at the end and <code>serve()</code> from the front —
-exactly the access pattern that's cheap for <em>both</em> structures. The array wins on raw
-speed because contiguous memory is friendlier to the CPU's cache, and there's no <code>new</code>/
-<code>delete</code> overhead per element. But if this problem also needed to remove a specific
-person from the <em>middle</em> of the line (they left early), the array version would need
-O(n) shifting while a linked list — given a pointer to that person's node — would not.
-The "right" answer depends entirely on which operations the real application performs,
-not on a single benchmark.</p>
+exactly the access pattern that's cheap for <em>both</em> structures. On the machine this book
+was tested on, 5000 arrivals plus 5000 serves took roughly 30 microseconds array-based
+versus several hundred microseconds linked-based — but raw microsecond counts like that
+aren't reproducible across machines or even across runs on the <em>same</em> machine (CPU
+scheduling noise, cache warmup, and background load all shift them), which is why the
+code above prints a <strong>verdict</strong> ("finished first", "at least 2x longer") computed from
+the measurement, rather than the raw number itself. The array wins because contiguous
+memory is friendlier to the CPU's cache, and there's no <code>new</code>/<code>delete</code> overhead per
+element. But if this problem also needed to remove a specific person from the <em>middle</em>
+of the line (they left early), the array version would need O(n) shifting while a linked
+list — given a pointer to that person's node — would not. The "right" answer depends
+entirely on which operations the real application performs, not on a single benchmark.</p>
 </div>
+<div class="admonition tip">
+<p class="admonition-title">Never trust a single raw timing number in your own reports</p>
+<p>If you ever write a benchmark for a lab report, resist the urge to paste a single
+microsecond count as proof of which approach is "faster" — it will not reproduce on the
+grader's machine, or even on yours tomorrow. Either average over many runs and report a
+ratio (as above), or use a Big-O argument backed by counting actual operations, the way
+Lecture 3 did.</p>
+</div>
+<h2 id="a-second-worked-application-the-josephus-problem">A Second Worked Application: The Josephus Problem<a class="headerlink" href="#a-second-worked-application-the-josephus-problem" title="Permanent link">&para;</a></h2>
+<p>The waiting-list example above only ever touched the <em>ends</em> of the structure — exactly
+the case both arrays and linked lists handle well. Now consider a problem that plays to a
+<strong>circular</strong> linked list's specific strength (Lecture 8): the <strong>Josephus problem</strong>. <code>n</code>
+people stand in a circle, numbered <code>1</code> through <code>n</code>. Starting from person 1, you count
+around the circle and eliminate every <code>k</code>-th person; counting continues from the next
+survivor. Who is the last person left?</p>
+<p>This isn't just a puzzle — the same shape shows up whenever something must cycle through
+a fixed set of participants, skipping ones that drop out, without ever restarting from
+the beginning: round-robin CPU scheduling skipping finished processes, a multiplayer game
+rotating turns past players who have been eliminated, or a playlist on "repeat" skipping
+tracks a listener has removed.</p>
+<pre class="mermaid"><code>flowchart LR
+    N1(("1")) --&gt; N2(("2")) --&gt; N3(("3")) --&gt; N4(("4")) --&gt; N5(("5")) --&gt; N6(("6")) --&gt; N7(("7")) --&gt; N1</code></pre>
+<p>A circular linked list is a perfect fit: there is no "end" to fall off, so eliminating a
+person is just the same "splice the node out, then delete it" operation from Lecture 8 —
+counting simply keeps calling <code>current = current-&gt;next</code> and wraps around forever.</p>
+<div class="language-cpp highlight"><span class="filename">josephus.cpp</span><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="k">struct</span><span class="w"> </span><span class="nc">Node</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">id</span><span class="p">;</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">    </span><span class="n">Node</span><span class="o">*</span><span class="w"> </span><span class="n">next</span><span class="p">;</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">    </span><span class="n">Node</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">id</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="w"> </span><span class="n">next</span><span class="p">(</span><span class="k">nullptr</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="p">};</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="c1">// Builds a circular linked list of `n` people numbered 1..n, then</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="c1">// repeatedly counts `k` people around the circle and eliminates the</span>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="c1">// k-th one, until only one person is left. Returns the survivor&#39;s id.</span>
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="kt">int</span><span class="w"> </span><span class="nf">josephus</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="w">    </span><span class="n">Node</span><span class="o">*</span><span class="w"> </span><span class="n">last</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Node</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="w">    </span><span class="n">Node</span><span class="o">*</span><span class="w"> </span><span class="n">current</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">last</span><span class="p">;</span>
+</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="w">        </span><span class="n">current</span><span class="o">-&gt;</span><span class="n">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Node</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+</span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a><span class="w">        </span><span class="n">current</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">current</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="w">    </span><span class="n">current</span><span class="o">-&gt;</span><span class="n">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">last</span><span class="p">;</span><span class="w">   </span><span class="c1">// close the circle: last node points back to node 1</span>
+</span><span id="__span-2-21"><a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a>
+</span><span id="__span-2-22"><a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a><span class="w">    </span><span class="n">current</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">last</span><span class="p">;</span><span class="w">   </span><span class="c1">// start counting from person 1</span>
+</span><span id="__span-2-23"><a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">current</span><span class="o">-&gt;</span><span class="n">next</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">current</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-24"><a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a><span class="w">        </span><span class="c1">// walk k-1 steps forward to land ON the person to eliminate</span>
+</span><span id="__span-2-25"><a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">step</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">step</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">k</span><span class="p">;</span><span class="w"> </span><span class="n">step</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-26"><a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a><span class="w">            </span><span class="n">current</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">current</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+</span><span id="__span-2-27"><a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-2-28"><a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a><span class="w">        </span><span class="n">Node</span><span class="o">*</span><span class="w"> </span><span class="n">toEliminate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">current</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+</span><span id="__span-2-29"><a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a><span class="w">        </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Eliminated: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">toEliminate</span><span class="o">-&gt;</span><span class="n">id</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+</span><span id="__span-2-30"><a id="__codelineno-2-30" name="__codelineno-2-30" href="#__codelineno-2-30"></a><span class="w">        </span><span class="n">current</span><span class="o">-&gt;</span><span class="n">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">toEliminate</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span><span class="w">   </span><span class="c1">// splice out BEFORE deleting</span>
+</span><span id="__span-2-31"><a id="__codelineno-2-31" name="__codelineno-2-31" href="#__codelineno-2-31"></a><span class="w">        </span><span class="k">delete</span><span class="w"> </span><span class="n">toEliminate</span><span class="p">;</span>
+</span><span id="__span-2-32"><a id="__codelineno-2-32" name="__codelineno-2-32" href="#__codelineno-2-32"></a><span class="w">        </span><span class="n">current</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">current</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span><span class="w">             </span><span class="c1">// continue counting from the next survivor</span>
+</span><span id="__span-2-33"><a id="__codelineno-2-33" name="__codelineno-2-33" href="#__codelineno-2-33"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-2-34"><a id="__codelineno-2-34" name="__codelineno-2-34" href="#__codelineno-2-34"></a>
+</span><span id="__span-2-35"><a id="__codelineno-2-35" name="__codelineno-2-35" href="#__codelineno-2-35"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">survivor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">current</span><span class="o">-&gt;</span><span class="n">id</span><span class="p">;</span>
+</span><span id="__span-2-36"><a id="__codelineno-2-36" name="__codelineno-2-36" href="#__codelineno-2-36"></a><span class="w">    </span><span class="k">delete</span><span class="w"> </span><span class="n">current</span><span class="p">;</span>
+</span><span id="__span-2-37"><a id="__codelineno-2-37" name="__codelineno-2-37" href="#__codelineno-2-37"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">survivor</span><span class="p">;</span>
+</span><span id="__span-2-38"><a id="__codelineno-2-38" name="__codelineno-2-38" href="#__codelineno-2-38"></a><span class="p">}</span>
+</span><span id="__span-2-39"><a id="__codelineno-2-39" name="__codelineno-2-39" href="#__codelineno-2-39"></a>
+</span><span id="__span-2-40"><a id="__codelineno-2-40" name="__codelineno-2-40" href="#__codelineno-2-40"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-41"><a id="__codelineno-2-41" name="__codelineno-2-41" href="#__codelineno-2-41"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
+</span><span id="__span-2-42"><a id="__codelineno-2-42" name="__codelineno-2-42" href="#__codelineno-2-42"></a><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; people in a circle, eliminating every &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;rd person:&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+</span><span id="__span-2-43"><a id="__codelineno-2-43" name="__codelineno-2-43" href="#__codelineno-2-43"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">survivor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">josephus</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="p">);</span>
+</span><span id="__span-2-44"><a id="__codelineno-2-44" name="__codelineno-2-44" href="#__codelineno-2-44"></a><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Survivor: person &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">survivor</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+</span><span id="__span-2-45"><a id="__codelineno-2-45" name="__codelineno-2-45" href="#__codelineno-2-45"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-2-46"><a id="__codelineno-2-46" name="__codelineno-2-46" href="#__codelineno-2-46"></a><span class="p">}</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>$ g++ -std=c++17 -o josephus josephus.cpp
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>$ ./josephus
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>7 people in a circle, eliminating every 3rd person:
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>Eliminated: 4
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>Eliminated: 1
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>Eliminated: 6
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>Eliminated: 5
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>Eliminated: 7
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>Eliminated: 3
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>Survivor: person 2
+</span></code></pre></div>
+<p>The diagram below traces the same run: the circle shrinking by one node at each
+elimination, ending with person 2 as the sole survivor.</p>
+<pre class="mermaid"><code>flowchart TD
+    S0["Circle: 1 2 3 4 5 6 7&lt;br/&gt;count 3 from 1 -&gt; lands on 4"] --&gt; S1["Eliminate 4&lt;br/&gt;Circle: 1 2 3 5 6 7&lt;br/&gt;count 3 from 5 -&gt; lands on 1"]
+    S1 --&gt; S2["Eliminate 1&lt;br/&gt;Circle: 2 3 5 6 7&lt;br/&gt;count 3 from 2 -&gt; lands on 6"]
+    S2 --&gt; S3["Eliminate 6&lt;br/&gt;Circle: 2 3 5 7&lt;br/&gt;count 3 from 7 -&gt; lands on 5"]
+    S3 --&gt; S4["Eliminate 5&lt;br/&gt;Circle: 2 3 7&lt;br/&gt;count 3 from 7 -&gt; lands on 7"]
+    S4 --&gt; S5["Eliminate 7&lt;br/&gt;Circle: 2 3&lt;br/&gt;count 3 from 2 -&gt; lands on 3"]
+    S5 --&gt; S6["Eliminate 3&lt;br/&gt;Circle: 2 only&lt;br/&gt;SURVIVOR"]</code></pre>
+<div class="admonition note">
+<p class="admonition-title">Why current-&gt;next != current is the right loop condition</p>
+<p>Once only one node is left, that node's own <code>next</code> points back to <em>itself</em> — it's the
+only node in the circle, so "the next node" and "this node" are the same object. That's
+exactly the signal <code>while (current-&gt;next != current)</code> checks for: as soon as it's true,
+exactly one survivor remains and the loop stops, mirroring how <code>head == nullptr</code> signals
+an empty singly linked list.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Splice before delete — the same rule as Lecture 5, in a circle</p>
+<p><code>current-&gt;next = toEliminate-&gt;next;</code> runs <em>before</em> <code>delete toEliminate;</code>, for the exact
+same reason as <code>deleteFromFront</code> in Lecture 5: reading <code>toEliminate-&gt;next</code> after freeing
+<code>toEliminate</code> would be undefined behavior. A circular list doesn't relax this rule at
+all — if anything it matters more here, since a mistake would corrupt the <em>only</em> path
+back into the remaining circle, not just one branch of it.</p>
+</div>
+<h3 id="complexity-why-a-circular-list-and-not-a-circular-array">Complexity: Why a Circular List, and Not a Circular Array?<a class="headerlink" href="#complexity-why-a-circular-list-and-not-a-circular-array" title="Permanent link">&para;</a></h3>
+<p>The outer <code>while</code> loop runs once per elimination — <code>n - 1</code> times total, since it stops
+with one survivor left. Each iteration walks <code>k - 1</code> steps before eliminating someone, so
+the total work is O(n · k). Nothing about that changes if you used an array instead of a
+circular linked list — so <em>why</em> is the linked list still the better choice here?</p>
+<p>The answer is the <strong>elimination step itself</strong>, not the counting. An array-based
+simulation would need to physically shift every remaining element after the removed one
+to close the gap (or track "removed" with a separate flag array and skip over dead slots
+during counting, which slowly degrades as more people are eliminated near the start). The
+circular linked list removes a node in O(1) once <code>current</code> is positioned — exactly the
+same "splice, don't shift" advantage from the array-vs-linked-list decision framework at
+the top of this lecture, just applied to a ring instead of a line.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Circular array (with shifting)</th>
+<th>Circular linked list</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Counting <code>k</code> steps</td>
+<td>O(k)</td>
+<td>O(k)</td>
+</tr>
+<tr>
+<td>Removing the counted person</td>
+<td>O(n) — shift everything after it</td>
+<td>O(1) — splice out</td>
+</tr>
+<tr>
+<td>Total for all <code>n - 1</code> eliminations</td>
+<td>O(n·k + n²)</td>
+<td>O(n·k)</td>
+</tr>
+</tbody>
+</table>
 <h2 id="combined-linear-structure-operations">Combined Linear Structure Operations<a class="headerlink" href="#combined-linear-structure-operations" title="Permanent link">&para;</a></h2>
 <p>Real problems often need more than one structure working together, not a single winner:</p>
 <ul>
@@ -3069,12 +3293,22 @@ not on a single benchmark.</p>
 </table>
 <h2 id="try-it-yourself">Try It Yourself<a class="headerlink" href="#try-it-yourself" title="Permanent link">&para;</a></h2>
 <ol>
-<li>Run <code>waiting_list_comparison.cpp</code> yourself with <code>N</code> increased to <code>50000</code>. Does the gap
-   between the two versions grow, shrink, or stay about the same proportionally? What does
+<li>Run <code>waiting_list_comparison.cpp</code> yourself with <code>N</code> increased to <code>50000</code>. Does the
+   printed verdict change, or does the array-based version keep finishing first? What does
    that tell you about each structure's growth rate for this access pattern?</li>
 <li>Pick one application from the "Real-World Applications" table, and argue for the
    <em>other</em> structure instead (e.g., why might an infinite-scroll feed use an array in some
    apps?). There's no single right answer — the goal is practicing the trade-off argument.</li>
+<li>Modify <code>josephus.cpp</code> to try <code>k = 2</code> (eliminate every <em>other</em> person) on the same
+   7-person circle. Predict the survivor by tracing it on paper first, then run the program
+   to check your prediction.</li>
+<li><code>josephus.cpp</code> leaks memory if <code>n</code> is 0 or negative (the initial <code>new Node(1)</code> runs
+   unconditionally). Add a guard at the top of <code>josephus</code> that handles <code>n &lt;= 0</code> safely —
+   what should the function do in that case, given there's no valid "survivor" to return?</li>
+<li>The current <code>josephus</code> function only prints eliminations and returns the survivor's
+   <code>id</code>. Modify it to also return, via an output parameter (<code>vector&lt;int&gt;&amp; eliminationOrder</code>),
+   the full sequence of eliminated IDs in order — useful if a caller wanted to display the
+   whole elimination history, not just watch it scroll by in <code>cout</code>.</li>
 </ol>
 <h2 id="key-takeaways">Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permanent link">&para;</a></h2>
 <ul>
@@ -3085,7 +3319,11 @@ not on a single benchmark.</p>
   when insertion/deletion (especially at the ends) is frequent and size is unpredictable.</li>
 <li>Even when both structures achieve the same Big-O complexity for an operation, their
   real-world constant factors can differ — arrays are typically faster in practice due to
-  cache-friendly contiguous memory.</li>
+  cache-friendly contiguous memory. Report that difference as a <strong>verdict or ratio</strong>, never
+  a raw timing number, since raw numbers don't reproduce across machines or runs.</li>
+<li>A <strong>circular linked list</strong> is the natural fit for any problem that cycles through a
+  shrinking set of participants without a fixed "end" — the Josephus problem, round-robin
+  scheduling, and turn rotation in multiplayer games all share this shape.</li>
 <li>Real applications frequently combine multiple structures, each handling the part of the
   problem it's naturally good at, rather than forcing one structure to do everything.</li>
 </ul>
@@ -3109,7 +3347,7 @@ not on a single benchmark.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 21, 2026 08:35:16 UTC">September 21, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 22, 2026 17:02:55 UTC">September 22, 2026</span>
   </span>
 
     

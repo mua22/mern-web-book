@@ -1595,6 +1595,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Printer Spoolers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-spoolers-queue-state-step-by-step" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Spooler's Queue State, Step by Step
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1624,6 +1641,17 @@
     <span class="md-ellipsis">
       
         Simulation Applications
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#level-by-level-processing-breadth-first-traversal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Level-by-Level Processing: Breadth-First Traversal
       
     </span>
   </a>
@@ -2796,6 +2824,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Printer Spoolers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-spoolers-queue-state-step-by-step" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Spooler's Queue State, Step by Step
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2825,6 +2870,17 @@
     <span class="md-ellipsis">
       
         Simulation Applications
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#level-by-level-processing-breadth-first-traversal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Level-by-Level Processing: Breadth-First Traversal
       
     </span>
   </a>
@@ -2925,7 +2981,9 @@ served) matters.</p>
 <h2 id="in-this-lecture">In This Lecture<a class="headerlink" href="#in-this-lecture" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Real applications of queues: scheduling, spoolers, buffers, resource management</li>
-<li>A worked simulation: a print spooler processing jobs in order</li>
+<li>A worked simulation: a print spooler processing jobs in order, with its queue state
+  traced step by step</li>
+<li>A second worked application: breadth-first, level-order processing with a queue</li>
 <li>A complete decision framework across every linear structure covered so far</li>
 </ul>
 <h2 id="job-scheduling">Job Scheduling<a class="headerlink" href="#job-scheduling" title="Permanent link">&para;</a></h2>
@@ -2975,6 +3033,30 @@ order they were submitted — a direct, everyday application of FIFO.</p>
 </span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>  Printing &quot;LabManual.pdf&quot; (12 pages)
 </span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>Total pages printed: 16
 </span></code></pre></div>
+<h3 id="the-spoolers-queue-state-step-by-step">The Spooler's Queue State, Step by Step<a class="headerlink" href="#the-spoolers-queue-state-step-by-step" title="Permanent link">&para;</a></h3>
+<p>It's worth watching the queue itself shrink from the front as <code>spooler.pop()</code> runs,
+exactly the FIFO discipline Lecture 13 introduced applied to a real job list:</p>
+<pre class="mermaid"><code>flowchart TD
+    subgraph T0["After all 3 jobs submitted"]
+    direction LR
+        J1["FRONT: Assignment1.pdf"] --- J2["Timetable.docx"] --- J3["LabManual.pdf: REAR"]
+    end
+    subgraph T1["After printing Assignment1.pdf"]
+    direction LR
+        K2["FRONT: Timetable.docx"] --- K3["LabManual.pdf: REAR"]
+    end
+    subgraph T2["After printing Timetable.docx"]
+    direction LR
+        L3["FRONT/REAR: LabManual.pdf"]
+    end
+    subgraph T3["After printing LabManual.pdf -- queue empty"]
+    direction LR
+        M0["(nothing left)"]
+    end
+    T0 --&gt; T1 --&gt; T2 --&gt; T3</code></pre>
+<p>Whichever job was submitted first is always the one sitting at <code>front()</code> — a later job
+can never "jump the line" no matter how small it is, which is precisely the fairness
+guarantee a real print queue promises its users.</p>
 <h2 id="router-and-network-buffers">Router and Network Buffers<a class="headerlink" href="#router-and-network-buffers" title="Permanent link">&para;</a></h2>
 <p>A network router receives data packets faster than it can forward them at times of high
 traffic — it holds the overflow in a queue (a <strong>buffer</strong>) and forwards packets in the
@@ -3038,6 +3120,100 @@ real bank branch to find out.</p>
 <p>With only one teller, customers who arrive close together (like customers 2 and 3, both
 around minute 2) end up waiting — this is exactly the kind of question a real simulation
 would explore by re-running with two tellers and comparing the average wait.</p>
+<h2 id="level-by-level-processing-breadth-first-traversal">Level-by-Level Processing: Breadth-First Traversal<a class="headerlink" href="#level-by-level-processing-breadth-first-traversal" title="Permanent link">&para;</a></h2>
+<p>Every application so far processed a genuinely <em>linear</em> list of waiting items. Queues have
+a second, less obvious use: processing a <strong>branching</strong> structure one whole level at a time.
+Unit 5 (starting with Lecture 16) introduces trees, where a single item can have multiple
+children — and a queue turns out to be exactly the right tool for visiting "everything at
+depth 0, then everything at depth 1, then depth 2," known as a <strong>breadth-first</strong> or
+<strong>level-order</strong> traversal.</p>
+<p>The idea: push the root into a queue. Repeatedly dequeue a node, process it, and push
+<em>its</em> children onto the back of the same queue. Because a queue is FIFO, every node at a
+shallower depth is guaranteed to be dequeued (and its children enqueued) before any node
+at the next depth down gets processed — the queue naturally enforces the level-by-level
+order without any explicit tracking of "which level am I on" logic beyond counting how
+many nodes are currently queued.</p>
+<div class="language-cpp highlight"><span class="filename">level_order_tasks.cpp</span><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;queue&gt;</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string&gt;</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="c1">// A small tree of delegated tasks: a manager assigns sub-tasks to team leads,</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="c1">// who assign further sub-tasks to individual contributors. Processing &quot;level</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="c1">// by level&quot; (all of the manager&#39;s direct tasks, then all of the team leads&#39;,</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="c1">// and so on) is exactly a queue-driven breadth-first traversal.</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="k">struct</span><span class="w"> </span><span class="nc">TaskNode</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">    </span><span class="n">string</span><span class="w"> </span><span class="n">name</span><span class="p">;</span>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">    </span><span class="n">TaskNode</span><span class="o">*</span><span class="w"> </span><span class="n">left</span><span class="p">;</span>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="w">    </span><span class="n">TaskNode</span><span class="o">*</span><span class="w"> </span><span class="n">right</span><span class="p">;</span>
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="w">    </span><span class="n">TaskNode</span><span class="p">(</span><span class="n">string</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">name</span><span class="p">(</span><span class="n">n</span><span class="p">),</span><span class="w"> </span><span class="n">left</span><span class="p">(</span><span class="k">nullptr</span><span class="p">),</span><span class="w"> </span><span class="n">right</span><span class="p">(</span><span class="k">nullptr</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span>
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="p">};</span>
+</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>
+</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-18"><a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a><span class="w">    </span><span class="c1">// Build a small task tree by hand:</span>
+</span><span id="__span-4-19"><a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a><span class="w">    </span><span class="c1">//              &quot;Ship v2.0&quot;</span>
+</span><span id="__span-4-20"><a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a><span class="w">    </span><span class="c1">//             /            \</span>
+</span><span id="__span-4-21"><a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a><span class="c1">    //     &quot;Backend work&quot;   &quot;Frontend work&quot;</span>
+</span><span id="__span-4-22"><a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a><span class="w">    </span><span class="c1">//       /                     \</span>
+</span><span id="__span-4-23"><a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a><span class="c1">    // &quot;Fix API bug&quot;          &quot;Polish UI&quot;</span>
+</span><span id="__span-4-24"><a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a><span class="w">    </span><span class="n">TaskNode</span><span class="o">*</span><span class="w"> </span><span class="n">root</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TaskNode</span><span class="p">(</span><span class="s">&quot;Ship v2.0&quot;</span><span class="p">);</span>
+</span><span id="__span-4-25"><a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a><span class="w">    </span><span class="n">root</span><span class="o">-&gt;</span><span class="n">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TaskNode</span><span class="p">(</span><span class="s">&quot;Backend work&quot;</span><span class="p">);</span>
+</span><span id="__span-4-26"><a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a><span class="w">    </span><span class="n">root</span><span class="o">-&gt;</span><span class="n">right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TaskNode</span><span class="p">(</span><span class="s">&quot;Frontend work&quot;</span><span class="p">);</span>
+</span><span id="__span-4-27"><a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a><span class="w">    </span><span class="n">root</span><span class="o">-&gt;</span><span class="n">left</span><span class="o">-&gt;</span><span class="n">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TaskNode</span><span class="p">(</span><span class="s">&quot;Fix API bug&quot;</span><span class="p">);</span>
+</span><span id="__span-4-28"><a id="__codelineno-4-28" name="__codelineno-4-28" href="#__codelineno-4-28"></a><span class="w">    </span><span class="n">root</span><span class="o">-&gt;</span><span class="n">right</span><span class="o">-&gt;</span><span class="n">right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TaskNode</span><span class="p">(</span><span class="s">&quot;Polish UI&quot;</span><span class="p">);</span>
+</span><span id="__span-4-29"><a id="__codelineno-4-29" name="__codelineno-4-29" href="#__codelineno-4-29"></a>
+</span><span id="__span-4-30"><a id="__codelineno-4-30" name="__codelineno-4-30" href="#__codelineno-4-30"></a><span class="w">    </span><span class="n">queue</span><span class="o">&lt;</span><span class="n">TaskNode</span><span class="o">*&gt;</span><span class="w"> </span><span class="n">pending</span><span class="p">;</span>
+</span><span id="__span-4-31"><a id="__codelineno-4-31" name="__codelineno-4-31" href="#__codelineno-4-31"></a><span class="w">    </span><span class="n">pending</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">root</span><span class="p">);</span>
+</span><span id="__span-4-32"><a id="__codelineno-4-32" name="__codelineno-4-32" href="#__codelineno-4-32"></a>
+</span><span id="__span-4-33"><a id="__codelineno-4-33" name="__codelineno-4-33" href="#__codelineno-4-33"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">level</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-4-34"><a id="__codelineno-4-34" name="__codelineno-4-34" href="#__codelineno-4-34"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">pending</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-35"><a id="__codelineno-4-35" name="__codelineno-4-35" href="#__codelineno-4-35"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">countAtThisLevel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pending</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w">   </span><span class="c1">// exactly how many nodes are on this level</span>
+</span><span id="__span-4-36"><a id="__codelineno-4-36" name="__codelineno-4-36" href="#__codelineno-4-36"></a><span class="w">        </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Level &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">level</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;: &quot;</span><span class="p">;</span>
+</span><span id="__span-4-37"><a id="__codelineno-4-37" name="__codelineno-4-37" href="#__codelineno-4-37"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">countAtThisLevel</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-38"><a id="__codelineno-4-38" name="__codelineno-4-38" href="#__codelineno-4-38"></a><span class="w">            </span><span class="n">TaskNode</span><span class="o">*</span><span class="w"> </span><span class="n">current</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pending</span><span class="p">.</span><span class="n">front</span><span class="p">();</span>
+</span><span id="__span-4-39"><a id="__codelineno-4-39" name="__codelineno-4-39" href="#__codelineno-4-39"></a><span class="w">            </span><span class="n">pending</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+</span><span id="__span-4-40"><a id="__codelineno-4-40" name="__codelineno-4-40" href="#__codelineno-4-40"></a><span class="w">            </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">current</span><span class="o">-&gt;</span><span class="n">name</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\&quot;</span><span class="s"> &quot;</span><span class="p">;</span>
+</span><span id="__span-4-41"><a id="__codelineno-4-41" name="__codelineno-4-41" href="#__codelineno-4-41"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">current</span><span class="o">-&gt;</span><span class="n">left</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">)</span><span class="w"> </span><span class="n">pending</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">current</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">);</span>
+</span><span id="__span-4-42"><a id="__codelineno-4-42" name="__codelineno-4-42" href="#__codelineno-4-42"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">current</span><span class="o">-&gt;</span><span class="n">right</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">)</span><span class="w"> </span><span class="n">pending</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">current</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">);</span>
+</span><span id="__span-4-43"><a id="__codelineno-4-43" name="__codelineno-4-43" href="#__codelineno-4-43"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-4-44"><a id="__codelineno-4-44" name="__codelineno-4-44" href="#__codelineno-4-44"></a><span class="w">        </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+</span><span id="__span-4-45"><a id="__codelineno-4-45" name="__codelineno-4-45" href="#__codelineno-4-45"></a><span class="w">        </span><span class="n">level</span><span class="o">++</span><span class="p">;</span>
+</span><span id="__span-4-46"><a id="__codelineno-4-46" name="__codelineno-4-46" href="#__codelineno-4-46"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-4-47"><a id="__codelineno-4-47" name="__codelineno-4-47" href="#__codelineno-4-47"></a>
+</span><span id="__span-4-48"><a id="__codelineno-4-48" name="__codelineno-4-48" href="#__codelineno-4-48"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-4-49"><a id="__codelineno-4-49" name="__codelineno-4-49" href="#__codelineno-4-49"></a><span class="p">}</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>$ g++ -std=c++17 -o level_order_tasks level_order_tasks.cpp
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>$ ./level_order_tasks
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>Level 0: &quot;Ship v2.0&quot; 
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>Level 1: &quot;Backend work&quot; &quot;Frontend work&quot; 
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>Level 2: &quot;Fix API bug&quot; &quot;Polish UI&quot; 
+</span></code></pre></div>
+<pre class="mermaid"><code>flowchart TD
+    subgraph Q0["Queue after pushing root"]
+    direction LR
+        R0["Ship v2.0"]
+    end
+    subgraph Q1["Queue after processing Level 0, pushing its children"]
+    direction LR
+        R1["Backend work"] --- R2["Frontend work"]
+    end
+    subgraph Q2["Queue after processing Level 1, pushing its children"]
+    direction LR
+        R3["Fix API bug"] --- R4["Polish UI"]
+    end
+    subgraph Q3["Queue empty -- Level 2 processed, no children left"]
+    direction LR
+        R5["(empty)"]
+    end
+    Q0 --&gt; Q1 --&gt; Q2 --&gt; Q3</code></pre>
+<p>The key line is <code>int countAtThisLevel = pending.size();</code>, captured <em>before</em> the inner loop
+starts. Without it, the loop would have no way to know where one level ends and the next
+begins — new children are being pushed onto the very same queue <em>while</em> the current
+level's nodes are still being popped off of it, so "snapshotting" the size first is what
+keeps the levels from bleeding into each other. This exact pattern — a queue driving a
+breadth-first walk over a branching structure — reappears throughout Unit 5 whenever a
+tree or graph needs to be processed level by level rather than depth by depth.</p>
 <h2 id="selecting-appropriate-linear-data-structures">Selecting Appropriate Linear Data Structures<a class="headerlink" href="#selecting-appropriate-linear-data-structures" title="Permanent link">&para;</a></h2>
 <p>Units 2 through 4 covered four linear structures. Here's the complete decision table:</p>
 <table>
@@ -3096,6 +3272,19 @@ right structure is chosen.</p>
    ride-sharing app matching drivers to the <em>next</em> rider in a busy area, &copy; storing a
    fixed-size window of the last 10 sensor readings, where the oldest reading is
    discarded as each new one arrives.</li>
+<li>Extend <code>level_order_tasks.cpp</code> so that <code>TaskNode</code> has a third child pointer (making it
+   no longer strictly binary), and update the traversal loop to push all three children
+   when present. Add a fourth level to the task tree and confirm the level-order output
+   still prints one clean line per depth.</li>
+<li>Modify <code>level_order_tasks.cpp</code> to also print, on each level's line, how many total
+   nodes have been processed <em>so far</em> (a running count across all levels, not just the
+   current one). This is the same running-total pattern the bank simulation used for
+   <code>totalWaitTime</code>.</li>
+<li>Trace by hand what would go wrong in <code>level_order_tasks.cpp</code> if the line
+   <code>int countAtThisLevel = pending.size();</code> were deleted and the inner <code>for</code> loop instead
+   ran <code>for (int i = 0; i &lt; pending.size(); i++)</code> directly (re-checking <code>pending.size()</code>
+   on every iteration, after children have already been pushed). Then make that change and
+   run it to confirm your prediction.</li>
 </ol>
 <h2 id="key-takeaways">Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permanent link">&para;</a></h2>
 <ul>
@@ -3104,11 +3293,18 @@ right structure is chosen.</p>
   simulations of real-world waiting lines.</li>
 <li>Discrete event simulation is a genuine, widely-used application of queues — modeling a
   system's behavior over time without needing to build the real thing.</li>
+<li>A queue isn't only for linear waiting lines — pushing a branching structure's root and
+  repeatedly dequeuing-then-enqueuing-its-children produces a <strong>breadth-first,
+  level-order traversal</strong>, visiting everything at one depth before moving to the next.
+  Snapshotting <code>size()</code> before each level's inner loop is what keeps levels from bleeding
+  into each other, since children are pushed onto the same queue mid-loop.</li>
 <li>The choice among array, linked list, stack, and queue comes down to one question: what
   <em>access pattern</em> does the problem actually need — random access, frequent
   insert/delete, most-recent-first, or arrival-order-first?</li>
 <li>This closes the four linear structures of Units 2–4. Unit 5 moves to <strong>non-linear</strong>
-  structures — trees — where an element can connect to more than just "the next one."</li>
+  structures — trees — where an element can connect to more than just "the next one," and
+  where this lecture's level-order traversal returns as one of the standard ways to walk
+  a tree.</li>
 </ul>
 
 
@@ -3130,7 +3326,7 @@ right structure is chosen.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 21, 2026 08:35:16 UTC">September 21, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 22, 2026 17:02:55 UTC">September 22, 2026</span>
   </span>
 
     

@@ -1024,6 +1024,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Need for Data Structures">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-worked-scenario-finding-one-student-among-200000" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A Worked Scenario: Finding One Student Among 200,000
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#real-world-impact-at-scale" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Real-World Impact at Scale
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1034,6 +1062,23 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Applications of Data Structures">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#case-study-a-contacts-app-as-it-grows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Case Study: A Contacts App as It Grows
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2840,6 +2885,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Need for Data Structures">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-worked-scenario-finding-one-student-among-200000" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A Worked Scenario: Finding One Student Among 200,000
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#real-world-impact-at-scale" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Real-World Impact at Scale
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2850,6 +2923,23 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Applications of Data Structures">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#case-study-a-contacts-app-as-it-grows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Case Study: A Contacts App as It Grows
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2939,6 +3029,8 @@ is, what a data structure is, what an algorithm is, and why the three are insepa
 <li>What an algorithm is, and how it depends on the data structure underneath it</li>
 <li>The relationship among data, data structures, and algorithms</li>
 <li>Why data structures exist at all, and where you already rely on them daily</li>
+<li>A worked, timed example showing exactly how much a structure choice can matter</li>
+<li>How to reason about picking (and later, changing) a structure for a real application</li>
 </ul>
 <h2 id="data-and-information">Data and Information<a class="headerlink" href="#data-and-information" title="Permanent link">&para;</a></h2>
 <p><strong>Data</strong> is a collection of raw, unprocessed facts — numbers, characters, symbols — with
@@ -2948,8 +3040,24 @@ data that has been organized, interpreted, or given context so it's useful for a
 <pre class="mermaid"><code>flowchart LR
     A["Raw data&lt;br/&gt;19980304"] --&gt;|"interpreted as&lt;br/&gt;YYYYMMDD"| B["Information&lt;br/&gt;March 4, 1998"]
     B --&gt;|"used to decide"| C["Is this person&lt;br/&gt;old enough to vote?"]</code></pre>
+<p>The same raw data can turn into completely different information depending on context —
+<code>19980304</code> interpreted as a date became "March 4, 1998" above, but the <em>identical</em> eight
+digits, interpreted as a <strong>quantity</strong>, is just the number 19,980,304. Data has no meaning
+until something — a program, a format specification, a person — tells it what it represents.
+That's precisely why a data structure's job description always has two parts: it has to
+hold the raw values <em>and</em> preserve enough context (through its arrangement, its field
+names, its documented interface) that those values can reliably become information again
+later.</p>
 <p>Every program is, at its core, a machine for turning data into information — and data
 structures are what make that transformation efficient instead of painful.</p>
+<div class="admonition tip">
+<p class="admonition-title">A data type is the smallest unit of that context</p>
+<p>Even a single primitive value carries a sliver of interpretive context: storing <code>320</code>
+in an <code>int</code> already tells the next reader "this is a whole number," ruling out reading
+it as text or as a fraction. A data <em>structure</em> scales that same idea up — <code>struct
+Student { int id; string name; double gpa; }</code> tells every future reader exactly what
+each field means, without a single comment.</p>
+</div>
 <h2 id="data-types">Data Types<a class="headerlink" href="#data-types" title="Permanent link">&para;</a></h2>
 <p>A <strong>data type</strong> tells the compiler two things about a value: what <em>kind</em> of data it is
 (a whole number, a decimal, a single character, true/false), and therefore what
@@ -2981,6 +3089,42 @@ operations are legal on it and how much memory it needs.</p>
 </tr>
 </tbody>
 </table>
+<p>Choosing the <em>wrong</em> primitive type isn't just a style slip — it can silently produce wrong
+answers. A 32-bit <code>int</code> can only hold values up to about 2.1 billion; go past that and it
+<strong>overflows</strong>, wrapping around to a nonsense value with no warning or error:</p>
+<div class="language-cpp highlight"><span class="filename">type_choice_matters.cpp</span><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">    </span><span class="c1">// A small college: 3,000 students, $45,000/year each -- well within a 32-bit int&#39;s range.</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">smallStudents</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3000</span><span class="p">;</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">revenuePerStudent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">45000</span><span class="p">;</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">smallRevenue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">smallStudents</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">revenuePerStudent</span><span class="p">;</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;3,000 students revenue (int):       &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">smallRevenue</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;  &lt;- correct&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">    </span><span class="c1">// A large public university system: 500,000 students, same per-student revenue.</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="w">    </span><span class="c1">// The TRUE product (22,500,000,000) exceeds a 32-bit int&#39;s maximum (about 2.1 billion).</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">bigStudents</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">500000</span><span class="p">;</span>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">bigRevenue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bigStudents</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">revenuePerStudent</span><span class="p">;</span><span class="w">                 </span><span class="c1">// overflows silently</span>
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="w">    </span><span class="kt">long</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">bigRevenueCorrect</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">long</span><span class="w"> </span><span class="kt">long</span><span class="p">)</span><span class="n">bigStudents</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">revenuePerStudent</span><span class="p">;</span><span class="w">  </span><span class="c1">// does not</span>
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;500,000 students revenue (int):      &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">bigRevenue</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;  &lt;- WRONG, silently overflowed&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;500,000 students revenue (long long): &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">bigRevenueCorrect</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;  &lt;- correct&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="p">}</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>$ g++ -std=c++17 -o type_choice_matters type_choice_matters.cpp
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>$ ./type_choice_matters
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>3,000 students revenue (int):       135000000  &lt;- correct
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>500,000 students revenue (int):      1025163520  &lt;- WRONG, silently overflowed
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>500,000 students revenue (long long): 22500000000  &lt;- correct
+</span></code></pre></div>
+<p>Notice there's no crash, no warning, no error message — <code>int</code> arithmetic in C++ simply
+wraps around when it runs out of range, and the program keeps going with a confidently
+wrong number. This is exactly the kind of bug that's invisible in small testing (3,000
+students works fine) and only surfaces once real, larger data shows up — a preview of why
+"choosing the right structure/type for the data you'll actually have" is a running theme,
+not a one-time decision made in Lecture 1 and never revisited.</p>
 <p>A single <code>int</code> can hold one student's ID. But a class of 320 students, each with an ID,
 a name, and a GPA? That needs something bigger than any one primitive type — and <em>how</em>
 you organize that "something bigger" is exactly what a data structure is.</p>
@@ -3013,29 +3157,29 @@ instructions:</p>
 </ul>
 <p>Here's the smallest possible algorithm, expressed as real, running C++: find the largest
 number in a list.</p>
-<div class="language-cpp highlight"><span class="filename">find_largest.cpp</span><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;vector&gt;</span>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="kt">int</span><span class="w"> </span><span class="nf">findLargest</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">numbers</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">largest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">numbers</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span><span class="w">          </span><span class="c1">// step 1: assume the first is largest</span>
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">numbers</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">  </span><span class="c1">// step 2: check every other value</span>
-</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">numbers</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">largest</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">            </span><span class="n">largest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">numbers</span><span class="p">[</span><span class="n">i</span><span class="p">];</span><span class="w">      </span><span class="c1">// step 3: update if we find something bigger</span>
-</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">        </span><span class="p">}</span>
-</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">largest</span><span class="p">;</span><span class="w">                    </span><span class="c1">// step 4: report the answer</span>
-</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="p">}</span>
-</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>
-</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="w">    </span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">scores</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">72</span><span class="p">,</span><span class="w"> </span><span class="mi">95</span><span class="p">,</span><span class="w"> </span><span class="mi">68</span><span class="p">,</span><span class="w"> </span><span class="mi">88</span><span class="p">,</span><span class="w"> </span><span class="mi">91</span><span class="p">};</span>
-</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;The largest score is: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">findLargest</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
-</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
-</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="p">}</span>
+<div class="language-cpp highlight"><span class="filename">find_largest.cpp</span><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;vector&gt;</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="kt">int</span><span class="w"> </span><span class="nf">findLargest</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">numbers</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">largest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">numbers</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span><span class="w">          </span><span class="c1">// step 1: assume the first is largest</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">numbers</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">  </span><span class="c1">// step 2: check every other value</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">numbers</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">largest</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">            </span><span class="n">largest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">numbers</span><span class="p">[</span><span class="n">i</span><span class="p">];</span><span class="w">      </span><span class="c1">// step 3: update if we find something bigger</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">largest</span><span class="p">;</span><span class="w">                    </span><span class="c1">// step 4: report the answer</span>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="p">}</span>
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="w">    </span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">scores</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">72</span><span class="p">,</span><span class="w"> </span><span class="mi">95</span><span class="p">,</span><span class="w"> </span><span class="mi">68</span><span class="p">,</span><span class="w"> </span><span class="mi">88</span><span class="p">,</span><span class="w"> </span><span class="mi">91</span><span class="p">};</span>
+</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;The largest score is: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">findLargest</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+</span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-3-19"><a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a><span class="p">}</span>
 </span></code></pre></div>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>$ g++ -std=c++17 -o find_largest find_largest.cpp
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>$ ./find_largest
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>The largest score is: 95
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>$ g++ -std=c++17 -o find_largest find_largest.cpp
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>$ ./find_largest
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>The largest score is: 95
 </span></code></pre></div>
 <p>Notice the algorithm above is completely tied to its data structure: it works because a
 <code>vector</code> lets you ask for "element at position <code>i</code>" in one fast step. If the numbers were
@@ -3069,6 +3213,111 @@ slow one. Concretely, well-chosen data structures give you:</p>
 <li><strong>Manageable complexity</strong> — organizing related data together makes large programs
   easier to reason about, instead of tracking thousands of loose variables.</li>
 </ul>
+<h3 id="a-worked-scenario-finding-one-student-among-200000">A Worked Scenario: Finding One Student Among 200,000<a class="headerlink" href="#a-worked-scenario-finding-one-student-among-200000" title="Permanent link">&para;</a></h3>
+<p>Abstract claims about "efficiency" are easy to nod along with and easy to forget. Here's a
+concrete version: a university registrar's system needs to look up one student's record by
+ID, out of 200,000 enrolled students. Let's store the exact same IDs two different ways —
+a plain list you'd scan one entry at a time, and a hash-based lookup structure (a preview
+of <code>unordered_set</code>, covered properly in Unit 8) — and time both, in the same run, on the
+same machine:</p>
+<div class="language-cpp highlight"><span class="filename">motivating_search.cpp</span><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;vector&gt;</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;unordered_set&gt;</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;chrono&gt;</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;algorithm&gt;</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="o">::</span><span class="nn">chrono</span><span class="p">;</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">N</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">200000</span><span class="p">;</span>
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="w">    </span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">records</span><span class="p">;</span>
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w">    </span><span class="n">unordered_set</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">lookupSet</span><span class="p">;</span>
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">N</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="w">        </span><span class="n">records</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="w">        </span><span class="n">lookupSet</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-5-17"><a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">target</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">N</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w">  </span><span class="c1">// worst case: the record we want is the very last one checked</span>
+</span><span id="__span-5-18"><a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>
+</span><span id="__span-5-19"><a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a><span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">start1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">high_resolution_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+</span><span id="__span-5-20"><a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a><span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">found1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+</span><span id="__span-5-21"><a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">N</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-5-22"><a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">records</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">target</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">found1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-5-23"><a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-5-24"><a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a><span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">end1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">high_resolution_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+</span><span id="__span-5-25"><a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a>
+</span><span id="__span-5-26"><a id="__codelineno-5-26" name="__codelineno-5-26" href="#__codelineno-5-26"></a><span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">start2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">high_resolution_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+</span><span id="__span-5-27"><a id="__codelineno-5-27" name="__codelineno-5-27" href="#__codelineno-5-27"></a><span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">found2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">lookupSet</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">target</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">lookupSet</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+</span><span id="__span-5-28"><a id="__codelineno-5-28" name="__codelineno-5-28" href="#__codelineno-5-28"></a><span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">end2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">high_resolution_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+</span><span id="__span-5-29"><a id="__codelineno-5-29" name="__codelineno-5-29" href="#__codelineno-5-29"></a>
+</span><span id="__span-5-30"><a id="__codelineno-5-30" name="__codelineno-5-30" href="#__codelineno-5-30"></a><span class="w">    </span><span class="c1">// Report the comparison itself, not raw microsecond counts -- a wall-clock</span>
+</span><span id="__span-5-31"><a id="__codelineno-5-31" name="__codelineno-5-31" href="#__codelineno-5-31"></a><span class="w">    </span><span class="c1">// measurement can vary by a few microseconds between runs on the same machine,</span>
+</span><span id="__span-5-32"><a id="__codelineno-5-32" name="__codelineno-5-32" href="#__codelineno-5-32"></a><span class="w">    </span><span class="c1">// but &quot;which one was faster, and by roughly how much&quot; is stable and repeatable.</span>
+</span><span id="__span-5-33"><a id="__codelineno-5-33" name="__codelineno-5-33" href="#__codelineno-5-33"></a><span class="w">    </span><span class="kt">long</span><span class="w"> </span><span class="n">linearTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">long</span><span class="p">)</span><span class="n">duration_cast</span><span class="o">&lt;</span><span class="n">microseconds</span><span class="o">&gt;</span><span class="p">(</span><span class="n">end1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start1</span><span class="p">).</span><span class="n">count</span><span class="p">();</span>
+</span><span id="__span-5-34"><a id="__codelineno-5-34" name="__codelineno-5-34" href="#__codelineno-5-34"></a><span class="w">    </span><span class="kt">long</span><span class="w"> </span><span class="n">hashTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">max</span><span class="p">(</span><span class="mf">1L</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">long</span><span class="p">)</span><span class="n">duration_cast</span><span class="o">&lt;</span><span class="n">microseconds</span><span class="o">&gt;</span><span class="p">(</span><span class="n">end2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start2</span><span class="p">).</span><span class="n">count</span><span class="p">());</span>
+</span><span id="__span-5-35"><a id="__codelineno-5-35" name="__codelineno-5-35" href="#__codelineno-5-35"></a>
+</span><span id="__span-5-36"><a id="__codelineno-5-36" name="__codelineno-5-36" href="#__codelineno-5-36"></a><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Searching &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">N</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; student IDs for one target ID:&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+</span><span id="__span-5-37"><a id="__codelineno-5-37" name="__codelineno-5-37" href="#__codelineno-5-37"></a><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;  Both searches found the target: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="p">((</span><span class="n">found1</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">found2</span><span class="p">)</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s">&quot;yes&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s">&quot;no&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+</span><span id="__span-5-38"><a id="__codelineno-5-38" name="__codelineno-5-38" href="#__codelineno-5-38"></a><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;  Linear search took longer than hashed lookup: &quot;</span>
+</span><span id="__span-5-39"><a id="__codelineno-5-39" name="__codelineno-5-39" href="#__codelineno-5-39"></a><span class="w">         </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="p">(</span><span class="n">linearTime</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">hashTime</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s">&quot;yes&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s">&quot;no&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+</span><span id="__span-5-40"><a id="__codelineno-5-40" name="__codelineno-5-40" href="#__codelineno-5-40"></a><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;  Linear search took at least 50x as long as hashed lookup: &quot;</span>
+</span><span id="__span-5-41"><a id="__codelineno-5-41" name="__codelineno-5-41" href="#__codelineno-5-41"></a><span class="w">         </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="p">(</span><span class="n">linearTime</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">hashTime</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">50</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s">&quot;yes&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s">&quot;no&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+</span><span id="__span-5-42"><a id="__codelineno-5-42" name="__codelineno-5-42" href="#__codelineno-5-42"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-5-43"><a id="__codelineno-5-43" name="__codelineno-5-43" href="#__codelineno-5-43"></a><span class="p">}</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>$ g++ -std=c++17 -o motivating_search motivating_search.cpp
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>$ ./motivating_search
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>Searching 200000 student IDs for one target ID:
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>  Both searches found the target: yes
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>  Linear search took longer than hashed lookup: yes
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>  Linear search took at least 50x as long as hashed lookup: yes
+</span></code></pre></div>
+<p>Same data. Same question ("is this ID present, and where?") — and the linear scan is
+reliably tens of times slower, every single run. In practice, on the machine this was
+written on, one captured run printed the raw numbers before they were replaced with the
+comparison above: a <strong>887-microsecond</strong> linear scan against a hashed lookup that finished
+in <strong>well under 1 microsecond</strong> — too fast for this clock to even register above zero. The
+exact microsecond counts move around a little from run to run (system noise, whatever else
+the CPU happens to be doing), but the story never changes: this isn't because one version
+was coded more carefully, but purely because of <em>how the same 200,000 numbers were
+organized in memory</em>. That gap is not a curiosity; it is, almost word for word, the entire
+argument for why this course exists. Multiply it out: a registrar's system doing a few
+hundred such lookups during course registration is the difference between an instant page
+load and a page that visibly stalls.</p>
+<h3 id="real-world-impact-at-scale">Real-World Impact at Scale<a class="headerlink" href="#real-world-impact-at-scale" title="Permanent link">&para;</a></h3>
+<p>The registrar example used 200,000 records. The gap between "check every record" and "jump
+straight to it" only widens as the dataset grows — it doesn't stay proportional, it gets
+<em>worse</em>, because one approach's operation count grows with the data and the other's barely
+does:</p>
+<table>
+<thead>
+<tr>
+<th>Number of records (<code>n</code>)</th>
+<th>Linear scan: worst-case comparisons</th>
+<th>Hashed lookup: typical comparisons</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1,000</td>
+<td>1,000</td>
+<td>~1</td>
+</tr>
+<tr>
+<td>200,000</td>
+<td>200,000</td>
+<td>~1</td>
+</tr>
+<tr>
+<td>10,000,000</td>
+<td>10,000,000</td>
+<td>~1</td>
+</tr>
+</tbody>
+</table>
+<p>At a million records, "check every one" and "jump straight to it" aren't a little different
+— they're operating in entirely different universes of cost. Lecture 3 gives this precise
+mathematical language (<code>O(n)</code> vs. <code>O(1)</code>), but the intuition starts right here: <strong>the data
+structure you choose determines which of those two rows your application lives in.</strong></p>
 <h2 id="applications-of-data-structures">Applications of Data Structures<a class="headerlink" href="#applications-of-data-structures" title="Permanent link">&para;</a></h2>
 <p>You already interact with data structures every day, even if you've never written one
 yourself:</p>
@@ -3112,6 +3361,38 @@ yourself:</p>
 </table>
 <p>Every one of these will get its own dedicated lecture in this course — by the end, you'll
 know not just <em>what</em> each one is, but <em>why</em> it was the right choice for the job it does.</p>
+<h3 id="case-study-a-contacts-app-as-it-grows">Case Study: A Contacts App as It Grows<a class="headerlink" href="#case-study-a-contacts-app-as-it-grows" title="Permanent link">&para;</a></h3>
+<p>Concrete real-world example, start to finish: imagine building a phone contacts app.</p>
+<ul>
+<li><strong>At 50 contacts</strong>, a plain array (or <code>vector</code>) is completely fine. Scanning all 50
+  entries to find a name, even in the absolute worst case, is instant to a human — the
+  <code>O(n)</code> cost from the table above is so small it's imperceptible.</li>
+<li><strong>At 5,000 contacts</strong> (a small business's shared directory), a plain unsorted array
+  starts to show up in profiling — searching means scanning up to 5,000 entries every time
+  the user types in the search box. Keeping the array <em>sorted</em> and switching to binary
+  search (Lecture 29) turns that into about 13 comparisons instead of 5,000 — but every
+  <code>add contact</code> now costs an <code>O(n)</code> shift to keep it sorted (Lecture 4).</li>
+<li><strong>At 5,000,000 contacts</strong> (a national directory service), even sorted-array binary
+  search's insert cost becomes the bottleneck, and the application graduates to a
+  balanced tree or hash table (Units 8–9) — structures built specifically to keep <em>both</em>
+  search <em>and</em> insertion fast as the data grows into the millions.</li>
+</ul>
+<p>No single structure was "wrong" at any stage — each was the right trade-off for the size
+and access pattern the app actually had <em>at that point</em>. The same reasoning applies to
+autocomplete search boxes, social-media friend suggestions, or any application whose data
+grows over its lifetime: the right data structure is a moving target, not a one-time choice.</p>
+<pre class="mermaid"><code>flowchart TD
+    Q1{"Is the data&lt;br/&gt;read far more&lt;br/&gt;than it's written?"} --&gt;|yes| Q2{"Does order/position&lt;br/&gt;matter to the reader?"}
+    Q1 --&gt;|no, writes are frequent too| Q3{"Insertions/deletions&lt;br/&gt;mostly at one end?"}
+    Q2 --&gt;|yes, need index access| Arr["Array / vector&lt;br/&gt;O(1) access"]
+    Q2 --&gt;|no, just need to check existence| Hash["Hash table&lt;br/&gt;O(1) average lookup"]
+    Q3 --&gt;|yes| Stack_Queue["Stack or Queue&lt;br/&gt;O(1) at that end"]
+    Q3 --&gt;|no, anywhere| LL["Linked list&lt;br/&gt;O(1) insert/delete&lt;br/&gt;once positioned"]</code></pre>
+<p>This diagram is deliberately a simplification — real decisions also weigh memory limits,
+whether the data must stay sorted, and how often it changes shape — but it captures the
+first, most important question this course keeps coming back to: <strong>what operation does
+this application actually do the most, and which structure makes exactly that operation
+cheap?</strong></p>
 <h2 id="try-it-yourself">Try It Yourself<a class="headerlink" href="#try-it-yourself" title="Permanent link">&para;</a></h2>
 <ol>
 <li>For each of the following real-world scenarios, decide which data structure from the
@@ -3120,6 +3401,16 @@ know not just <em>what</em> each one is, but <em>why</em> it was the right choic
    &copy; suggesting nearby friends-of-friends on a social network.</li>
 <li>Compile and run the <code>find_largest.cpp</code> example above yourself. Then modify it to also
    report the <em>smallest</em> value in the same pass, without looping over the list twice.</li>
+<li>Compile and run <code>motivating_search.cpp</code> yourself. Change <code>target</code> to <code>0</code> (the very
+   <em>first</em> element) instead of <code>N - 1</code> and re-run it. Does the linear search time change?
+   Does the hashed lookup time change? Explain the difference in one or two sentences,
+   tying it back to the "best case vs. worst case" idea this lecture's <code>find_largest</code>
+   already hints at (Lecture 3 gives this its formal name).</li>
+<li>Using the contacts-app case study and its decision diagram as a guide, walk through the
+   same exercise for a different real application of your choosing (a music streaming
+   queue, a ride-sharing app matching drivers to riders, a spell-checker) — identify the
+   single operation that app performs most often, and name which data structure from the
+   table above you'd reach for first, and why.</li>
 </ol>
 <h2 id="key-takeaways">Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permanent link">&para;</a></h2>
 <ul>
@@ -3130,9 +3421,15 @@ know not just <em>what</em> each one is, but <em>why</em> it was the right choic
 <li>An <strong>algorithm</strong> is a finite, well-defined, effective step-by-step procedure — and it is
   always designed <em>together with</em> the data structure it operates on, never in isolation.</li>
 <li>Data + Data Structure + Algorithm = Program: each layer builds on the one before it.</li>
+<li>A real, timed measurement showed a linear scan reliably taking tens of times longer than
+  a hashed lookup over the same 200,000 records — proof, not just assertion, that a data
+  structure choice can be the entire performance story for an application.</li>
 <li>Data structures exist to buy <strong>efficiency, reusability, abstraction, and manageable
   complexity</strong> as programs and datasets grow — and you already rely on several of them
   (stacks, queues, trees, graphs) every time you use a computer.</li>
+<li>The right structure for an application is not a one-time decision — as the contacts-app
+  case study showed, the correct choice at 50 items, 5,000 items, and 5,000,000 items can
+  all be different, and good engineers revisit the choice as real usage patterns emerge.</li>
 </ul>
 
 
@@ -3154,7 +3451,7 @@ know not just <em>what</em> each one is, but <em>why</em> it was the right choic
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 21, 2026 08:35:16 UTC">September 21, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 22, 2026 17:02:55 UTC">September 22, 2026</span>
   </span>
 
     

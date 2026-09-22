@@ -1567,6 +1567,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Circular Queue Concept">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tracing-the-wraparound-index-by-index" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tracing the Wraparound, Index by Index
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1593,6 +1610,17 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#building-a-deque-from-scratch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Building a Deque From Scratch
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#input-restricted-and-output-restricted-deques" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1616,6 +1644,23 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Priority Queue Concept">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#min-heap-vs-max-heap-its-just-the-comparator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Min-Heap vs. Max-Heap: It's Just the Comparator
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2791,6 +2836,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Circular Queue Concept">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tracing-the-wraparound-index-by-index" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tracing the Wraparound, Index by Index
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2817,6 +2879,17 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#building-a-deque-from-scratch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Building a Deque From Scratch
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#input-restricted-and-output-restricted-deques" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2840,6 +2913,23 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Priority Queue Concept">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#min-heap-vs-max-heap-its-just-the-comparator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Min-Heap vs. Max-Heap: It's Just the Comparator
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2917,9 +3007,12 @@ some elements matter more than others.</p>
 <ul>
 <li>The limitation of a simple array-based queue, and how a circular queue fixes it</li>
 <li>Implementing a circular queue with wraparound indices</li>
+<li>Tracing the wraparound itself, index by index, past the array's physical end</li>
 <li>The deque (double-ended queue): insertion and deletion at both ends</li>
+<li>Building a deque from scratch as a circular array, not just using <code>std::deque</code></li>
 <li>Input-restricted and output-restricted deques</li>
 <li>The priority queue concept: priority over arrival order</li>
+<li>Min-heap vs. max-heap priority queues, and how the comparator controls which one you get</li>
 </ul>
 <h2 id="limitations-of-a-simple-queue">Limitations of a Simple Queue<a class="headerlink" href="#limitations-of-a-simple-queue" title="Permanent link">&para;</a></h2>
 <p>Recall Lecture 13's problem exactly: <code>frontIndex</code> only ever increases, so once elements
@@ -3000,6 +3093,105 @@ around and reuse freed slots.</p>
 <p>Five enqueues total (<code>10, 20, 30, 40, 50, 60</code> is six — but only 5 fit at once, which is
 exactly the point) happened against a <code>CAPACITY</code> of 5, with two dequeues freeing room
 along the way — something the simple array queue from Lecture 13 could never have done.</p>
+<h3 id="tracing-the-wraparound-index-by-index">Tracing the Wraparound, Index by Index<a class="headerlink" href="#tracing-the-wraparound-index-by-index" title="Permanent link">&para;</a></h3>
+<p>The part that trips students up isn't the concept — it's watching <code>rearIndex</code> actually
+compute its way past index 4 and land back on index 0. Here's every step from the example
+above, with <code>frontIndex</code>, <code>count</code>, and the array contents shown explicitly:</p>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Operation</th>
+<th><code>frontIndex</code> before</th>
+<th><code>rearIndex = (frontIndex+count) % 5</code></th>
+<th>Array after</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>enqueue(10)</code></td>
+<td>0</td>
+<td>(0+0)%5 = <strong>0</strong></td>
+<td><code>[10, _, _, _, _]</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>enqueue(20)</code></td>
+<td>0</td>
+<td>(0+1)%5 = <strong>1</strong></td>
+<td><code>[10, 20, _, _, _]</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>enqueue(30)</code></td>
+<td>0</td>
+<td>(0+2)%5 = <strong>2</strong></td>
+<td><code>[10, 20, 30, _, _]</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>dequeue()</code> → 10</td>
+<td>0 → <strong>1</strong></td>
+<td>—</td>
+<td><code>[10, 20, 30, _, _]</code> (slot 0 now stale)</td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>dequeue()</code> → 20</td>
+<td>1 → <strong>2</strong></td>
+<td>—</td>
+<td>slots 0, 1 now stale</td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>enqueue(40)</code></td>
+<td>2</td>
+<td>(2+1)%5 = <strong>3</strong></td>
+<td><code>[.., .., 30, 40, _]</code></td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>enqueue(50)</code></td>
+<td>2</td>
+<td>(2+2)%5 = <strong>4</strong></td>
+<td><code>[.., .., 30, 40, 50]</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td><code>enqueue(60)</code></td>
+<td>2</td>
+<td>(2+3)%5 = <strong>0</strong> ← wraps!</td>
+<td><code>[60, .., 30, 40, 50]</code></td>
+</tr>
+</tbody>
+</table>
+<p>At step 8, <code>rearIndex</code> would arithmetically be <code>5</code> if the queue simply kept incrementing —
+but <code>5 % 5 = 0</code>, so <code>60</code> is written into slot <code>0</code>, the exact slot that <code>10</code> vacated back at
+step 4. That single <code>% CAPACITY</code> is the entire mechanism: it's what turns a straight line
+of array indices into a ring.</p>
+<pre class="mermaid"><code>flowchart LR
+    subgraph Before["Before enqueue(60): frontIndex=2, count=3"]
+    direction LR
+        P0["[0]stale"] --- P1["[1]stale"] --- P2["[2]=30&lt;br/&gt;FRONT"] --- P3["[3]=40"] --- P4["[4]=50&lt;br/&gt;REAR would be here"]
+    end
+    subgraph After["After enqueue(60): rearIndex wraps 5 -&gt; 0"]
+    direction LR
+        Q0["[0]=60&lt;br/&gt;NEW"] --- Q1["[1]stale"] --- Q2["[2]=30&lt;br/&gt;FRONT"] --- Q3["[3]=40"] --- Q4["[4]=50"]
+    end
+    Before --&gt;|"(2+3) % 5 = 0"| After</code></pre>
+<div class="admonition warning">
+<p class="admonition-title">The classic off-by-one trap</p>
+<p>It's tempting to compute <code>rearIndex</code> as a variable that increments independently and
+wraps with <code>if (rearIndex == CAPACITY) rearIndex = 0;</code>. That works too, but it's easy
+to get the <em>order</em> wrong relative to the write (wrap before writing? after?) and to
+forget to apply the same wrap to <code>frontIndex</code> in <code>dequeue</code>. Computing
+<code>rearIndex = (frontIndex + count) % CAPACITY</code> fresh every time, as <code>CircularQueue</code>
+does, sidesteps the whole class of bug — there's no separate <code>rearIndex</code> variable to
+forget to wrap, since it's always derived from <code>frontIndex</code> and <code>count</code> together. Trace
+the math by hand (as the table above does) whenever a circular structure misbehaves;
+guessing at the modulo arithmetic is exactly how off-by-one bugs slip through.</p>
+</div>
 <h2 id="advantages-of-a-circular-queue">Advantages of a Circular Queue<a class="headerlink" href="#advantages-of-a-circular-queue" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Uses a fixed-size array's memory efficiently — no slot is ever permanently wasted.</li>
@@ -3049,13 +3241,106 @@ allowed at <em>either</em> end, not just one.</p>
 </span></code></pre></div>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>$ g++ -std=c++17 -o deque_demo deque_demo.cpp
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>$ ./deque_demo
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>After push_back(10), push_back(20), push_front(5): 5 10 20
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>After pop_front(): 10 20
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>After pop_back(): 10
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>After push_back(10), push_back(20), push_front(5): 5 10 20 
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>After pop_front(): 10 20 
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>After pop_back(): 10 
 </span></code></pre></div>
 <p>A queue is really just a deque used with only two of its four possible operations
 (<code>push_back</code> and <code>pop_front</code>); a stack is a deque used with only <code>push_back</code> and
 <code>pop_back</code>. The deque is the more general structure both are built from.</p>
+<h3 id="building-a-deque-from-scratch">Building a Deque From Scratch<a class="headerlink" href="#building-a-deque-from-scratch" title="Permanent link">&para;</a></h3>
+<p><code>std::deque</code> is convenient, but it hides exactly how a deque achieves O(1) operations at
+<em>both</em> ends. The same circular-array trick from <code>CircularQueue</code> extends naturally: instead
+of only ever writing at <code>rearIndex</code>, a deque also needs to write <em>behind</em> <code>frontIndex</code> —
+which means <code>frontIndex</code> has to be able to move <strong>backward</strong>, wrapping to <code>CAPACITY - 1</code>
+instead of going negative.</p>
+<div class="language-cpp highlight"><span class="filename">array_deque.cpp</span><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdexcept&gt;</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="c1">// A fixed-capacity deque built the same way Lecture 14&#39;s CircularQueue was:</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="c1">// a circular array, with modulo arithmetic letting both ends wrap around.</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="k">class</span><span class="w"> </span><span class="nc">ArrayDeque</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="k">private</span><span class="o">:</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">CAPACITY</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="n">CAPACITY</span><span class="p">];</span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">frontIndex</span><span class="p">;</span>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">count</span><span class="p">;</span>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="k">public</span><span class="o">:</span>
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="w">    </span><span class="n">ArrayDeque</span><span class="p">()</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">frontIndex</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span><span class="w"> </span><span class="n">count</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span>
+</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>
+</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">isEmpty</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">count</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-4-18"><a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a><span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">isFull</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">count</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">CAPACITY</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-4-19"><a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>
+</span><span id="__span-4-20"><a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">insertRear</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-21"><a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">isFull</span><span class="p">())</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="n">overflow_error</span><span class="p">(</span><span class="s">&quot;Deque is full&quot;</span><span class="p">);</span>
+</span><span id="__span-4-22"><a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">rearIndex</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">frontIndex</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">count</span><span class="p">)</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">CAPACITY</span><span class="p">;</span>
+</span><span id="__span-4-23"><a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a><span class="w">        </span><span class="n">data</span><span class="p">[</span><span class="n">rearIndex</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">value</span><span class="p">;</span>
+</span><span id="__span-4-24"><a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a><span class="w">        </span><span class="n">count</span><span class="o">++</span><span class="p">;</span>
+</span><span id="__span-4-25"><a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-4-26"><a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a>
+</span><span id="__span-4-27"><a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">insertFront</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-28"><a id="__codelineno-4-28" name="__codelineno-4-28" href="#__codelineno-4-28"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">isFull</span><span class="p">())</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="n">overflow_error</span><span class="p">(</span><span class="s">&quot;Deque is full&quot;</span><span class="p">);</span>
+</span><span id="__span-4-29"><a id="__codelineno-4-29" name="__codelineno-4-29" href="#__codelineno-4-29"></a><span class="w">        </span><span class="c1">// moving frontIndex BACKWARD by one, wrapping to CAPACITY - 1 instead of -1</span>
+</span><span id="__span-4-30"><a id="__codelineno-4-30" name="__codelineno-4-30" href="#__codelineno-4-30"></a><span class="w">        </span><span class="n">frontIndex</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">frontIndex</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">CAPACITY</span><span class="p">)</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">CAPACITY</span><span class="p">;</span>
+</span><span id="__span-4-31"><a id="__codelineno-4-31" name="__codelineno-4-31" href="#__codelineno-4-31"></a><span class="w">        </span><span class="n">data</span><span class="p">[</span><span class="n">frontIndex</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">value</span><span class="p">;</span>
+</span><span id="__span-4-32"><a id="__codelineno-4-32" name="__codelineno-4-32" href="#__codelineno-4-32"></a><span class="w">        </span><span class="n">count</span><span class="o">++</span><span class="p">;</span>
+</span><span id="__span-4-33"><a id="__codelineno-4-33" name="__codelineno-4-33" href="#__codelineno-4-33"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-4-34"><a id="__codelineno-4-34" name="__codelineno-4-34" href="#__codelineno-4-34"></a>
+</span><span id="__span-4-35"><a id="__codelineno-4-35" name="__codelineno-4-35" href="#__codelineno-4-35"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">deleteFront</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-36"><a id="__codelineno-4-36" name="__codelineno-4-36" href="#__codelineno-4-36"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">isEmpty</span><span class="p">())</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="n">underflow_error</span><span class="p">(</span><span class="s">&quot;Deque is empty&quot;</span><span class="p">);</span>
+</span><span id="__span-4-37"><a id="__codelineno-4-37" name="__codelineno-4-37" href="#__codelineno-4-37"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="n">frontIndex</span><span class="p">];</span>
+</span><span id="__span-4-38"><a id="__codelineno-4-38" name="__codelineno-4-38" href="#__codelineno-4-38"></a><span class="w">        </span><span class="n">frontIndex</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">frontIndex</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">CAPACITY</span><span class="p">;</span>
+</span><span id="__span-4-39"><a id="__codelineno-4-39" name="__codelineno-4-39" href="#__codelineno-4-39"></a><span class="w">        </span><span class="n">count</span><span class="o">--</span><span class="p">;</span>
+</span><span id="__span-4-40"><a id="__codelineno-4-40" name="__codelineno-4-40" href="#__codelineno-4-40"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">value</span><span class="p">;</span>
+</span><span id="__span-4-41"><a id="__codelineno-4-41" name="__codelineno-4-41" href="#__codelineno-4-41"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-4-42"><a id="__codelineno-4-42" name="__codelineno-4-42" href="#__codelineno-4-42"></a>
+</span><span id="__span-4-43"><a id="__codelineno-4-43" name="__codelineno-4-43" href="#__codelineno-4-43"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">deleteRear</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-44"><a id="__codelineno-4-44" name="__codelineno-4-44" href="#__codelineno-4-44"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">isEmpty</span><span class="p">())</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="n">underflow_error</span><span class="p">(</span><span class="s">&quot;Deque is empty&quot;</span><span class="p">);</span>
+</span><span id="__span-4-45"><a id="__codelineno-4-45" name="__codelineno-4-45" href="#__codelineno-4-45"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">rearIndex</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">frontIndex</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">count</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">CAPACITY</span><span class="p">;</span>
+</span><span id="__span-4-46"><a id="__codelineno-4-46" name="__codelineno-4-46" href="#__codelineno-4-46"></a><span class="w">        </span><span class="n">count</span><span class="o">--</span><span class="p">;</span>
+</span><span id="__span-4-47"><a id="__codelineno-4-47" name="__codelineno-4-47" href="#__codelineno-4-47"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="n">rearIndex</span><span class="p">];</span>
+</span><span id="__span-4-48"><a id="__codelineno-4-48" name="__codelineno-4-48" href="#__codelineno-4-48"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-4-49"><a id="__codelineno-4-49" name="__codelineno-4-49" href="#__codelineno-4-49"></a><span class="p">};</span>
+</span><span id="__span-4-50"><a id="__codelineno-4-50" name="__codelineno-4-50" href="#__codelineno-4-50"></a>
+</span><span id="__span-4-51"><a id="__codelineno-4-51" name="__codelineno-4-51" href="#__codelineno-4-51"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-52"><a id="__codelineno-4-52" name="__codelineno-4-52" href="#__codelineno-4-52"></a><span class="w">    </span><span class="n">ArrayDeque</span><span class="w"> </span><span class="n">dq</span><span class="p">;</span>
+</span><span id="__span-4-53"><a id="__codelineno-4-53" name="__codelineno-4-53" href="#__codelineno-4-53"></a>
+</span><span id="__span-4-54"><a id="__codelineno-4-54" name="__codelineno-4-54" href="#__codelineno-4-54"></a><span class="w">    </span><span class="n">dq</span><span class="p">.</span><span class="n">insertRear</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+</span><span id="__span-4-55"><a id="__codelineno-4-55" name="__codelineno-4-55" href="#__codelineno-4-55"></a><span class="w">    </span><span class="n">dq</span><span class="p">.</span><span class="n">insertRear</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span>
+</span><span id="__span-4-56"><a id="__codelineno-4-56" name="__codelineno-4-56" href="#__codelineno-4-56"></a><span class="w">    </span><span class="n">dq</span><span class="p">.</span><span class="n">insertFront</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+</span><span id="__span-4-57"><a id="__codelineno-4-57" name="__codelineno-4-57" href="#__codelineno-4-57"></a><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;After insertRear(10), insertRear(20), insertFront(5):&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+</span><span id="__span-4-58"><a id="__codelineno-4-58" name="__codelineno-4-58" href="#__codelineno-4-58"></a><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;  deleteFront() -&gt; &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">dq</span><span class="p">.</span><span class="n">deleteFront</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; (should be 5)&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+</span><span id="__span-4-59"><a id="__codelineno-4-59" name="__codelineno-4-59" href="#__codelineno-4-59"></a>
+</span><span id="__span-4-60"><a id="__codelineno-4-60" name="__codelineno-4-60" href="#__codelineno-4-60"></a><span class="w">    </span><span class="n">dq</span><span class="p">.</span><span class="n">insertFront</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</span><span id="__span-4-61"><a id="__codelineno-4-61" name="__codelineno-4-61" href="#__codelineno-4-61"></a><span class="w">    </span><span class="n">dq</span><span class="p">.</span><span class="n">insertFront</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span><span id="__span-4-62"><a id="__codelineno-4-62" name="__codelineno-4-62" href="#__codelineno-4-62"></a><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;After insertFront(1), insertFront(0):&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+</span><span id="__span-4-63"><a id="__codelineno-4-63" name="__codelineno-4-63" href="#__codelineno-4-63"></a><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;  deleteRear() -&gt; &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">dq</span><span class="p">.</span><span class="n">deleteRear</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; (should be 20, the oldest rear value)&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+</span><span id="__span-4-64"><a id="__codelineno-4-64" name="__codelineno-4-64" href="#__codelineno-4-64"></a>
+</span><span id="__span-4-65"><a id="__codelineno-4-65" name="__codelineno-4-65" href="#__codelineno-4-65"></a><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Draining the rest from the front: &quot;</span><span class="p">;</span>
+</span><span id="__span-4-66"><a id="__codelineno-4-66" name="__codelineno-4-66" href="#__codelineno-4-66"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">dq</span><span class="p">.</span><span class="n">isEmpty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-67"><a id="__codelineno-4-67" name="__codelineno-4-67" href="#__codelineno-4-67"></a><span class="w">        </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">dq</span><span class="p">.</span><span class="n">deleteFront</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="p">;</span>
+</span><span id="__span-4-68"><a id="__codelineno-4-68" name="__codelineno-4-68" href="#__codelineno-4-68"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-4-69"><a id="__codelineno-4-69" name="__codelineno-4-69" href="#__codelineno-4-69"></a><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+</span><span id="__span-4-70"><a id="__codelineno-4-70" name="__codelineno-4-70" href="#__codelineno-4-70"></a>
+</span><span id="__span-4-71"><a id="__codelineno-4-71" name="__codelineno-4-71" href="#__codelineno-4-71"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-4-72"><a id="__codelineno-4-72" name="__codelineno-4-72" href="#__codelineno-4-72"></a><span class="p">}</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>$ g++ -std=c++17 -o array_deque array_deque.cpp
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>$ ./array_deque
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>After insertRear(10), insertRear(20), insertFront(5):
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>  deleteFront() -&gt; 5 (should be 5)
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>After insertFront(1), insertFront(0):
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>  deleteRear() -&gt; 20 (should be 20, the oldest rear value)
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>Draining the rest from the front: 0 1 10
+</span></code></pre></div>
+<p><code>frontIndex - 1 + CAPACITY) % CAPACITY</code> is the mirror image of the wraparound seen
+earlier: instead of overflowing past <code>CAPACITY - 1</code> back to <code>0</code>, <code>insertFront</code> has to
+underflow past <code>0</code> back to <code>CAPACITY - 1</code>. Adding <code>CAPACITY</code> before taking <code>%</code> is what
+makes that safe — in C++, <code>%</code> on a negative number does <em>not</em> automatically wrap to a
+positive result the way a mathematical modulo would, so <code>(frontIndex - 1) % CAPACITY</code>
+alone would produce <code>-1</code>, not <code>CAPACITY - 1</code>, whenever <code>frontIndex</code> was already <code>0</code>.</p>
 <h3 id="input-restricted-and-output-restricted-deques">Input-Restricted and Output-Restricted Deques<a class="headerlink" href="#input-restricted-and-output-restricted-deques" title="Permanent link">&para;</a></h3>
 <p>Real problems sometimes need a deque with one end locked down:</p>
 <ul>
@@ -3071,52 +3356,126 @@ one extra flexibility at just one end, without opening up full deque behavior ev
 <code>dequeue</code> always removes the <em>highest-priority</em> element first, regardless of arrival
 order. Two elements that arrive in the "wrong" order relative to each other will still
 come out in priority order.</p>
-<div class="language-cpp highlight"><span class="filename">priority_queue_demo.cpp</span><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;queue&gt;</span>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string&gt;</span>
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span>
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>
-</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="k">struct</span><span class="w"> </span><span class="nc">Task</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">    </span><span class="n">string</span><span class="w"> </span><span class="n">name</span><span class="p">;</span>
-</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">priority</span><span class="p">;</span><span class="w">   </span><span class="c1">// higher number = more urgent</span>
-</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="p">};</span>
-</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>
-</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="c1">// A comparator so std::priority_queue knows how to order Tasks: highest priority first.</span>
-</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="k">struct</span><span class="w"> </span><span class="nc">CompareTask</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="nf">operator</span><span class="p">()(</span><span class="k">const</span><span class="w"> </span><span class="n">Task</span><span class="o">&amp;</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Task</span><span class="o">&amp;</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">priority</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">priority</span><span class="p">;</span><span class="w">   </span><span class="c1">// smaller priority = &quot;less important&quot; = later</span>
-</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="p">};</span>
-</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>
-</span><span id="__span-4-18"><a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-4-19"><a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a><span class="w">    </span><span class="n">priority_queue</span><span class="o">&lt;</span><span class="n">Task</span><span class="p">,</span><span class="w"> </span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Task</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">CompareTask</span><span class="o">&gt;</span><span class="w"> </span><span class="n">pq</span><span class="p">;</span>
-</span><span id="__span-4-20"><a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>
-</span><span id="__span-4-21"><a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a><span class="w">    </span><span class="n">pq</span><span class="p">.</span><span class="n">push</span><span class="p">({</span><span class="s">&quot;Send weekly report&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">});</span>
-</span><span id="__span-4-22"><a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a><span class="w">    </span><span class="n">pq</span><span class="p">.</span><span class="n">push</span><span class="p">({</span><span class="s">&quot;Fix production outage&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">9</span><span class="p">});</span>
-</span><span id="__span-4-23"><a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a><span class="w">    </span><span class="n">pq</span><span class="p">.</span><span class="n">push</span><span class="p">({</span><span class="s">&quot;Reply to a comment&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">});</span>
-</span><span id="__span-4-24"><a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a><span class="w">    </span><span class="n">pq</span><span class="p">.</span><span class="n">push</span><span class="p">({</span><span class="s">&quot;Patch a security bug&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">});</span>
-</span><span id="__span-4-25"><a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a>
-</span><span id="__span-4-26"><a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Processing tasks by priority (highest first), not arrival order:&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
-</span><span id="__span-4-27"><a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">pq</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-4-28"><a id="__codelineno-4-28" name="__codelineno-4-28" href="#__codelineno-4-28"></a><span class="w">        </span><span class="n">Task</span><span class="w"> </span><span class="n">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pq</span><span class="p">.</span><span class="n">top</span><span class="p">();</span>
-</span><span id="__span-4-29"><a id="__codelineno-4-29" name="__codelineno-4-29" href="#__codelineno-4-29"></a><span class="w">        </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;  [&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">next</span><span class="p">.</span><span class="n">priority</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;] &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">next</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
-</span><span id="__span-4-30"><a id="__codelineno-4-30" name="__codelineno-4-30" href="#__codelineno-4-30"></a><span class="w">        </span><span class="n">pq</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
-</span><span id="__span-4-31"><a id="__codelineno-4-31" name="__codelineno-4-31" href="#__codelineno-4-31"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-4-32"><a id="__codelineno-4-32" name="__codelineno-4-32" href="#__codelineno-4-32"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
-</span><span id="__span-4-33"><a id="__codelineno-4-33" name="__codelineno-4-33" href="#__codelineno-4-33"></a><span class="p">}</span>
+<div class="language-cpp highlight"><span class="filename">priority_queue_demo.cpp</span><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;queue&gt;</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string&gt;</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="k">struct</span><span class="w"> </span><span class="nc">Task</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">    </span><span class="n">string</span><span class="w"> </span><span class="n">name</span><span class="p">;</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">priority</span><span class="p">;</span><span class="w">   </span><span class="c1">// higher number = more urgent</span>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="p">};</span>
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="c1">// A comparator so std::priority_queue knows how to order Tasks: highest priority first.</span>
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="k">struct</span><span class="w"> </span><span class="nc">CompareTask</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="nf">operator</span><span class="p">()(</span><span class="k">const</span><span class="w"> </span><span class="n">Task</span><span class="o">&amp;</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Task</span><span class="o">&amp;</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">priority</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">priority</span><span class="p">;</span><span class="w">   </span><span class="c1">// smaller priority = &quot;less important&quot; = later</span>
+</span><span id="__span-6-15"><a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-6-16"><a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a><span class="p">};</span>
+</span><span id="__span-6-17"><a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a>
+</span><span id="__span-6-18"><a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-6-19"><a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a><span class="w">    </span><span class="n">priority_queue</span><span class="o">&lt;</span><span class="n">Task</span><span class="p">,</span><span class="w"> </span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Task</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">CompareTask</span><span class="o">&gt;</span><span class="w"> </span><span class="n">pq</span><span class="p">;</span>
+</span><span id="__span-6-20"><a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a>
+</span><span id="__span-6-21"><a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a><span class="w">    </span><span class="n">pq</span><span class="p">.</span><span class="n">push</span><span class="p">({</span><span class="s">&quot;Send weekly report&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">});</span>
+</span><span id="__span-6-22"><a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a><span class="w">    </span><span class="n">pq</span><span class="p">.</span><span class="n">push</span><span class="p">({</span><span class="s">&quot;Fix production outage&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">9</span><span class="p">});</span>
+</span><span id="__span-6-23"><a id="__codelineno-6-23" name="__codelineno-6-23" href="#__codelineno-6-23"></a><span class="w">    </span><span class="n">pq</span><span class="p">.</span><span class="n">push</span><span class="p">({</span><span class="s">&quot;Reply to a comment&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">});</span>
+</span><span id="__span-6-24"><a id="__codelineno-6-24" name="__codelineno-6-24" href="#__codelineno-6-24"></a><span class="w">    </span><span class="n">pq</span><span class="p">.</span><span class="n">push</span><span class="p">({</span><span class="s">&quot;Patch a security bug&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">});</span>
+</span><span id="__span-6-25"><a id="__codelineno-6-25" name="__codelineno-6-25" href="#__codelineno-6-25"></a>
+</span><span id="__span-6-26"><a id="__codelineno-6-26" name="__codelineno-6-26" href="#__codelineno-6-26"></a><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Processing tasks by priority (highest first), not arrival order:&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+</span><span id="__span-6-27"><a id="__codelineno-6-27" name="__codelineno-6-27" href="#__codelineno-6-27"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">pq</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-6-28"><a id="__codelineno-6-28" name="__codelineno-6-28" href="#__codelineno-6-28"></a><span class="w">        </span><span class="n">Task</span><span class="w"> </span><span class="n">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pq</span><span class="p">.</span><span class="n">top</span><span class="p">();</span>
+</span><span id="__span-6-29"><a id="__codelineno-6-29" name="__codelineno-6-29" href="#__codelineno-6-29"></a><span class="w">        </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;  [&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">next</span><span class="p">.</span><span class="n">priority</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;] &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">next</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+</span><span id="__span-6-30"><a id="__codelineno-6-30" name="__codelineno-6-30" href="#__codelineno-6-30"></a><span class="w">        </span><span class="n">pq</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+</span><span id="__span-6-31"><a id="__codelineno-6-31" name="__codelineno-6-31" href="#__codelineno-6-31"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-6-32"><a id="__codelineno-6-32" name="__codelineno-6-32" href="#__codelineno-6-32"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-6-33"><a id="__codelineno-6-33" name="__codelineno-6-33" href="#__codelineno-6-33"></a><span class="p">}</span>
 </span></code></pre></div>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>$ g++ -std=c++17 -o priority_queue_demo priority_queue_demo.cpp
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>$ ./priority_queue_demo
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>Processing tasks by priority (highest first), not arrival order:
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>  [9] Fix production outage
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>  [8] Patch a security bug
-</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>  [2] Send weekly report
-</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>  [1] Reply to a comment
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>$ g++ -std=c++17 -o priority_queue_demo priority_queue_demo.cpp
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>$ ./priority_queue_demo
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>Processing tasks by priority (highest first), not arrival order:
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>  [9] Fix production outage
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>  [8] Patch a security bug
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>  [2] Send weekly report
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>  [1] Reply to a comment
 </span></code></pre></div>
 <p>"Fix production outage" was pushed <em>second</em>, but processed <em>first</em>, because its priority
 (9) beats every other task's — exactly the FIFO-breaking behavior a priority queue exists
 to provide. Lecture 23 builds a priority queue from scratch on top of a <strong>heap</strong>, the data
 structure <code>std::priority_queue</code> itself uses internally.</p>
+<h3 id="min-heap-vs-max-heap-its-just-the-comparator">Min-Heap vs. Max-Heap: It's Just the Comparator<a class="headerlink" href="#min-heap-vs-max-heap-its-just-the-comparator" title="Permanent link">&para;</a></h3>
+<p><code>CompareTask</code> above always pops the <em>highest</em> priority first — that's a <strong>max-heap</strong>
+behavior. Sometimes the opposite is what a problem needs: a hospital triage system where
+"priority 1" means <em>most</em> urgent, or a task scheduler that should always run whichever job
+has the <em>soonest</em> deadline first. <code>std::priority_queue</code> supports both — which one you get
+depends entirely on the comparator (or, for a plain <code>int</code>, whether you pass <code>less&lt;int&gt;</code>,
+the default, or <code>greater&lt;int&gt;</code>):</p>
+<div class="language-cpp highlight"><span class="filename">priority_queue_min_max.cpp</span><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;queue&gt;</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;vector&gt;</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;functional&gt;</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">values</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">40</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">90</span><span class="p">,</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="mi">70</span><span class="p">};</span>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="w">    </span><span class="c1">// Max-heap: std::priority_queue&#39;s DEFAULT ordering. top() is always the largest.</span>
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="w">    </span><span class="n">priority_queue</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">maxHeap</span><span class="p">;</span>
+</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">values</span><span class="p">)</span><span class="w"> </span><span class="n">maxHeap</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">v</span><span class="p">);</span>
+</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a>
+</span><span id="__span-8-14"><a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Max-heap pop order (largest first): &quot;</span><span class="p">;</span>
+</span><span id="__span-8-15"><a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">maxHeap</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-8-16"><a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="w">        </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">maxHeap</span><span class="p">.</span><span class="n">top</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="p">;</span>
+</span><span id="__span-8-17"><a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a><span class="w">        </span><span class="n">maxHeap</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+</span><span id="__span-8-18"><a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-8-19"><a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+</span><span id="__span-8-20"><a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a>
+</span><span id="__span-8-21"><a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a><span class="w">    </span><span class="c1">// Min-heap: swap the comparator to std::greater&lt;int&gt;. top() is always the smallest.</span>
+</span><span id="__span-8-22"><a id="__codelineno-8-22" name="__codelineno-8-22" href="#__codelineno-8-22"></a><span class="w">    </span><span class="n">priority_queue</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">greater</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">minHeap</span><span class="p">;</span>
+</span><span id="__span-8-23"><a id="__codelineno-8-23" name="__codelineno-8-23" href="#__codelineno-8-23"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">values</span><span class="p">)</span><span class="w"> </span><span class="n">minHeap</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">v</span><span class="p">);</span>
+</span><span id="__span-8-24"><a id="__codelineno-8-24" name="__codelineno-8-24" href="#__codelineno-8-24"></a>
+</span><span id="__span-8-25"><a id="__codelineno-8-25" name="__codelineno-8-25" href="#__codelineno-8-25"></a><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Min-heap pop order (smallest first): &quot;</span><span class="p">;</span>
+</span><span id="__span-8-26"><a id="__codelineno-8-26" name="__codelineno-8-26" href="#__codelineno-8-26"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">minHeap</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-8-27"><a id="__codelineno-8-27" name="__codelineno-8-27" href="#__codelineno-8-27"></a><span class="w">        </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">minHeap</span><span class="p">.</span><span class="n">top</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="p">;</span>
+</span><span id="__span-8-28"><a id="__codelineno-8-28" name="__codelineno-8-28" href="#__codelineno-8-28"></a><span class="w">        </span><span class="n">minHeap</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+</span><span id="__span-8-29"><a id="__codelineno-8-29" name="__codelineno-8-29" href="#__codelineno-8-29"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-8-30"><a id="__codelineno-8-30" name="__codelineno-8-30" href="#__codelineno-8-30"></a><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+</span><span id="__span-8-31"><a id="__codelineno-8-31" name="__codelineno-8-31" href="#__codelineno-8-31"></a>
+</span><span id="__span-8-32"><a id="__codelineno-8-32" name="__codelineno-8-32" href="#__codelineno-8-32"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-8-33"><a id="__codelineno-8-33" name="__codelineno-8-33" href="#__codelineno-8-33"></a><span class="p">}</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>$ g++ -std=c++17 -o priority_queue_min_max priority_queue_min_max.cpp
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>$ ./priority_queue_min_max
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>Max-heap pop order (largest first): 90 70 40 20 10 
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>Min-heap pop order (smallest first): 10 20 40 70 90 
+</span></code></pre></div>
+<p>The full template signature <code>priority_queue&lt;T, Container, Compare&gt;</code> reveals why this
+works: the default is <code>priority_queue&lt;T, vector&lt;T&gt;, less&lt;T&gt;&gt;</code>, and passing <code>less&lt;T&gt;</code>
+happens to produce a <em>max</em>-heap (<code>top()</code> returns the element nothing else is "less than").
+Swapping in <code>greater&lt;T&gt;</code> inverts the comparison, so <code>top()</code> instead returns the element
+nothing else is "greater than" — the smallest. The earlier <code>CompareTask</code> struct is exactly
+this same idea spelled out by hand, for a type (<code>Task</code>) that has no natural <code>&lt;</code> operator
+of its own to fall back on.</p>
+<table>
+<thead>
+<tr>
+<th>Comparator</th>
+<th><code>top()</code> returns</th>
+<th>Use it for...</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>less&lt;T&gt;</code> (the default)</td>
+<td>The <strong>largest</strong> element</td>
+<td>"Most urgent first" — outage tickets, highest-score leaderboard</td>
+</tr>
+<tr>
+<td><code>greater&lt;T&gt;</code></td>
+<td>The <strong>smallest</strong> element</td>
+<td>"Soonest first" — nearest deadline, lowest bid, shortest remaining time</td>
+</tr>
+</tbody>
+</table>
 <h2 id="try-it-yourself">Try It Yourself<a class="headerlink" href="#try-it-yourself" title="Permanent link">&para;</a></h2>
 <ol>
 <li>Compile and run <code>circular_queue.cpp</code>, then try to <code>enqueue</code> a 6<sup>th</sup> element while the
@@ -3127,19 +3486,44 @@ structure <code>std::priority_queue</code> itself uses internally.</p>
    existing one. Run it and observe which one comes out first — <code>std::priority_queue</code>
    makes no promise about the relative order of equal-priority elements, which is worth
    confirming for yourself rather than assuming.</li>
+<li>Using the wraparound table as a template, hand-trace <code>frontIndex</code>, <code>rearIndex</code>, and the
+   array contents for this exact sequence on a fresh <code>CircularQueue</code> (<code>CAPACITY = 5</code>):
+   <code>enqueue(1)</code>, <code>enqueue(2)</code>, <code>enqueue(3)</code>, <code>enqueue(4)</code>, <code>dequeue()</code>, <code>dequeue()</code>,
+   <code>dequeue()</code>, <code>enqueue(5)</code>, <code>enqueue(6)</code>. At which enqueue does the wraparound happen?
+   Then modify <code>circular_queue.cpp</code> to run that sequence and confirm your trace with
+   <code>peek()</code>-style prints after each step.</li>
+<li>Add an <code>insertFront</code>/<code>deleteRear</code> pair of calls to <code>array_deque.cpp</code>'s <code>main</code> that
+   deliberately fills the deque to its <code>CAPACITY</code> of 5, then attempt one more <code>insertRear</code>.
+   Confirm it throws <code>overflow_error</code> — the same capacity discipline a circular queue
+   enforces applies just as strictly to a circular deque.</li>
+<li>Change <code>priority_queue_min_max.cpp</code>'s <code>minHeap</code> to instead order <code>Task</code> structs (reuse
+   the <code>Task</code> struct and a new <code>CompareTaskMin</code> comparator, flipping the <code>&lt;</code> in
+   <code>CompareTask</code> from Lecture 14's earlier example) so that the task with the <em>lowest</em>
+   priority number comes out first — model a support-ticket system where priority <code>1</code>
+   means "critical, handle immediately."</li>
 </ol>
 <h2 id="key-takeaways">Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permanent link">&para;</a></h2>
 <ul>
 <li>A <strong>circular queue</strong> reuses freed array slots by wrapping indices with the modulo
   operator, fixing the wasted-space problem of a simple array-based queue while staying
   O(1) for every operation.</li>
+<li><code>rearIndex = (frontIndex + count) % CAPACITY</code>, recomputed fresh every time rather than
+  tracked as its own incrementing variable, is what makes the wraparound arithmetic safe
+  to reason about — trace it by hand (as the step-by-step table above does) whenever a
+  circular structure misbehaves, since off-by-one mistakes here are easy to make and hard
+  to spot by inspection alone.</li>
 <li>A <strong>deque</strong> generalizes the queue to allow insertion and deletion at both ends — a
   stack and a queue are both special cases of a deque used with only two of its four
-  operations.</li>
+  operations. Building one from scratch is the same circular-array trick as a circular
+  queue, extended so <code>frontIndex</code> can move <em>backward</em> (wrapping to <code>CAPACITY - 1</code>, not
+  a negative index) as well as forward.</li>
 <li><strong>Input-restricted</strong> and <strong>output-restricted</strong> deques lock down one end when a problem
   needs only a little extra flexibility, not the full generality of a deque.</li>
 <li>A <strong>priority queue</strong> deliberately breaks FIFO: elements come out in priority order, not
-  arrival order — the foundation for Lecture 23's heap-based implementation.</li>
+  arrival order.</li>
+<li>Whether <code>std::priority_queue</code> behaves as a <strong>max-heap</strong> or a <strong>min-heap</strong> is entirely a
+  function of its comparator — <code>less&lt;T&gt;</code> (the default) yields a max-heap, <code>greater&lt;T&gt;</code>
+  yields a min-heap — the foundation for Lecture 23's heap-based implementation.</li>
 </ul>
 
 
@@ -3161,7 +3545,7 @@ structure <code>std::priority_queue</code> itself uses internally.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 21, 2026 08:35:16 UTC">September 21, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 22, 2026 17:02:55 UTC">September 22, 2026</span>
   </span>
 
     
