@@ -249,6 +249,37 @@ function renderCodeImage(p, spec, helpers) {
   return s;
 }
 
+function renderCodeImageSide(p, spec, helpers) {
+  const s = p.addSlide();
+  bg(s, WHITE);
+  const y0 = header(s, spec, helpers);
+  const gap = 0.4;
+  const boxW = (CONTENT_W - gap) / 2;
+  const BOTTOM = 6.8;
+  const boxY = y0 + 0.1;
+  const boxH = BOTTOM - boxY;
+
+  const lineCount = spec.code.split("\n").length;
+  const FONT_FLOOR = 10;
+  const PAD = 0.6;
+  const lineH = (fs) => (fs * 1.5) / 72;
+  let fontSize = spec.fontSize || 13;
+  let needed = PAD + lineCount * lineH(fontSize);
+  if (needed > boxH) {
+    fontSize = Math.max(FONT_FLOOR, ((boxH - PAD) / lineCount) * (72 / 1.5));
+    needed = PAD + lineCount * lineH(fontSize);
+  }
+  const codeH = Math.min(needed, boxH);
+  const codeY = boxY + (boxH - codeH) / 2; // vertically center a short snippet against the full-height image
+  helpers.codeBox(s, spec.code, MARGIN_X, codeY, boxW, codeH, fontSize);
+
+  const imgX = MARGIN_X + boxW + gap;
+  helpers.screenshotFrame(s, spec.img, imgX, boxY, boxW, boxH);
+
+  pageFoot(s, helpers.nextNum());
+  return s;
+}
+
 function renderCallout(p, spec, helpers) {
   const s = p.addSlide();
   bg(s, WHITE);
@@ -369,6 +400,7 @@ const RENDERERS = {
   table: renderTable,
   code: renderCode,
   codeImage: renderCodeImage,
+  codeImageSide: renderCodeImageSide,
   callout: renderCallout,
   flow: renderFlowHoriz,
   layers: renderLayers,

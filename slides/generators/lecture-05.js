@@ -70,9 +70,9 @@ buildDeck({
       code: "* {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box;\n}",
       note: "* matches every single element on the page — most commonly seen in a \"CSS reset\" at the very top of a stylesheet." },
 
-    { type: "code", kicker: "Selectors", heading: "Combinators: Child and Sibling",
-      code: "nav > a   { color: navy; }    /* only DIRECT children, not grandchildren   */\nh2 + p    { font-weight: bold; } /* the paragraph immediately after an h2  */\nh2 ~ p    { color: gray; }       /* every p that follows an h2, not just one */",
-      note: "> is stricter than a plain descendant selector (space) — it skips anything nested more than one level deep." },
+    { type: "codeImageSide", kicker: "Selectors", heading: "Combinators: Child and Sibling",
+      code: "nav > a { color: navy; font-weight: bold; }\nh2 + p  { font-weight: bold; }\nh2 ~ p  { color: gray; }\n\n<nav>\n  <a>Direct link</a>\n  <div><a>Grandchild link</a></div>\n</nav>\n<h2>A Heading</h2>\n<p>Immediately after</p>\n<p>Further down</p>",
+      img: `${IMG}/combinators-demo.png` },
 
     { type: "table", kicker: "States", heading: "Common Pseudo-Classes",
       header: ["Pseudo-class", "Matches"], colW: [3.4, 8.6], leftCol: 0,
@@ -84,7 +84,7 @@ buildDeck({
         [":not(selector)", "Elements that do NOT match the given selector"],
       ] },
 
-    { type: "codeImage", kicker: "States", heading: "Pseudo-Classes, Rendered",
+    { type: "codeImageSide", kicker: "States", heading: "Pseudo-Classes, Rendered",
       intro: "li:first-child and button:disabled are states the browser can render up front.",
       code: "li:first-child {\n  font-weight: bold;\n}\n\nbutton:disabled {\n  opacity: 0.5;\n}",
       img: `${IMG}/pseudo-class-demo.png` },
@@ -133,6 +133,16 @@ buildDeck({
         ["Elements / pseudo-elements", "Number of these"],
       ],
       note: "#nav .item a:hover -> (0,1,2,1)  beats  nav ul li a -> (0,0,0,4) — one ID always outweighs any number of elements, no matter how long the other selector looks." },
+
+    { type: "table", kicker: "The Real Formula", heading: "How Specificity Is Calculated",
+      header: ["Part of the Selector", "Category", "Column It Counts Toward"], colW: [3.6, 3.4, 5.0], leftCol: 0, rowH: 0.62,
+      rows: [
+        ["#nav", "ID selector", "IDs: +1"],
+        [".item", "Class selector", "Classes / attrs / pseudo-classes: +1"],
+        [":hover", "Pseudo-class", "Classes / attrs / pseudo-classes: +1"],
+        ["a", "Element selector", "Elements / pseudo-elements: +1"],
+      ],
+      note: "#nav .item a:hover totals to (0 inline, 1 ID, 2 classes/pseudo, 1 element) = (0,1,2,1). Every part of nav ul li a is a plain element, so it totals to (0,0,0,4). Compare column by column, left to right: the IDs column differs first (1 vs. 0), so #nav .item a:hover wins outright — the comparison never even reaches the Elements column." },
 
     { type: "code", kicker: "Inheritance", heading: "An Example Where Inheritance Does NOT Happen",
       code: ".parent {\n  border: 4px solid crimson;\n  padding: 20px;\n  color: darkblue;\n}\n\n<div class=\"parent\">\n  Parent text is dark blue.\n  <p>Child paragraph is dark blue too.</p>\n</div>",
