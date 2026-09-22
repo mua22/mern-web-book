@@ -20,6 +20,8 @@ Data Type**, is one of the most important concepts in this entire course.
 - Six criteria used to classify any data structure
 - The standard operations every data structure exposes in some form
 - What an Abstract Data Type (ADT) is, and why interface and implementation are kept separate
+- The SAME ADT, implemented two completely different ways, proving interface and
+  implementation really are independent
 - Abstraction and encapsulation, and how C++ actually enforces them
 - The trade-offs — time vs. space, simplicity vs. efficiency — behind every design choice
 
@@ -89,6 +91,19 @@ you modify it, so you can go back and query "what did this look like before the 
 change?" — the kind of structure behind an editor's full undo history or Git's commit
 history, where nothing is ever truly overwritten.
 
+```mermaid
+flowchart TD
+    subgraph Ephemeral["Ephemeral: modifying overwrites the only copy"]
+    direction TB
+        E1["List: [10, 20]"] -->|"append(30)"| E2["List: [10, 20, 30]<br/>(the [10, 20] version<br/>no longer exists anywhere)"]
+    end
+    subgraph Persistent["Persistent: modifying creates a new version, old one survives"]
+    direction TB
+        P1["Version 1: [10, 20]"] -->|"append(30)"| P2["Version 2: [10, 20, 30]"]
+        P1 -.->|"still reachable"| P1
+    end
+```
+
 ## Operations on Data Structures
 
 Regardless of which structure you're using, the operations you perform on it fall into a
@@ -124,7 +139,9 @@ The **interface** is the ADT's public promise — the operation names, their inp
 their outputs. The **implementation** is the actual code that makes those operations
 work. C++'s `class` keyword lets you write both while keeping them visibly separate:
 
-```cpp title="int_bag.h — an ADT interface"
+```cpp
+// int_bag.h -- an ADT interface (declarations only, no main -- illustrative, not
+// meant to compile standalone; the runnable version follows immediately below)
 class IntBag {
 public:
     void add(int value);      // interface: what you can DO
@@ -182,6 +199,192 @@ tomorrow you could swap `data[100]` for a dynamically growing array, and every s
 line of code that *uses* `IntBag` would keep working, unchanged. That's the payoff of
 separating interface from implementation.
 
+### The Same ADT, Two Different Implementations
+
+That claim — "you could swap the implementation and nothing that calls it would notice" —
+is worth proving directly instead of just asserting. Below are **two separate classes**,
+`ArrayBag` and `VectorBag`. Both implement the exact same "Bag" ADT: `add`, `contains`,
+`size`, with identical meaning. One stores its elements in a fixed-size C-style array (the
+**static** classification from earlier this lecture); the other stores them in a
+`std::vector`, which grows automatically (**dynamic**). A single templated function runs
+the *identical sequence of operations* against both, having no idea which one it's talking
+to:
+
+```cpp title="bag_two_implementations.cpp"
+#include <iostream>
+#include <vector>
+using namespace std;
+
+// ---- Implementation 1: fixed-size array ----
+class ArrayBag {
+public:
+    void add(int value) { data[count++] = value; }
+    bool contains(int value) const {
+        for (int i = 0; i < count; i++) {
+            if (data[i] == value) return true;
+        }
+        return false;
+    }
+    int size() const { return count; }
+private:
+    int data[100];
+    int count = 0;
+};
+
+// ---- Implementation 2: dynamically growing vector ----
+class VectorBag {
+public:
+    void add(int value) { data.push_back(value); }
+    bool contains(int value) const {
+        for (int v : data) {
+            if (v == value) return true;
+        }
+        return false;
+    }
+    int size() const { return (int)data.size(); }
+private:
+    vector<int> data;
+};
+
+// Runs the SAME sequence of ADT operations against whichever bag is passed in.
+// This function doesn't know (and doesn't care) which implementation it got.
+template <typename Bag>
+void runSameOperations(Bag& bag, const string& label) {
+    bag.add(7);
+    bag.add(42);
+    bag.add(15);
+    cout << label << " -> size: " << bag.size()
+         << ", contains(42): " << (bag.contains(42) ? "yes" : "no")
+         << ", contains(99): " << (bag.contains(99) ? "yes" : "no") << endl;
+}
+
+int main() {
+    ArrayBag arrayBag;
+    VectorBag vectorBag;
+
+    runSameOperations(arrayBag, "ArrayBag ");
+    runSameOperations(vectorBag, "VectorBag");
+    return 0;
+}
+```
+
+```text
+$ g++ -std=c++17 -o bag_two_implementations bag_two_implementations.cpp
+$ ./bag_two_implementations
+ArrayBag  -> size: 3, contains(42): yes, contains(99): no
+VectorBag -> size: 3, contains(42): yes, contains(99): no
+```
+
+Identical output from two completely different pieces of code. `runSameOperations` calls
+`bag.add(...)`, `bag.contains(...)`, and `bag.size()` exactly the same way in both cases —
+it never touches `data` or `count` directly, so it genuinely cannot tell (and doesn't need
+to know) whether it's holding a fixed array or a growable vector underneath. *That* is what
+"interface and implementation are independent" means in practice, not just in theory.
+
+The two implementations aren't equivalent in every respect, though — they inherit the exact
+trade-offs the classification section above already named:
+
+| | `ArrayBag` (static) | `VectorBag` (dynamic) |
+|---|---|---|
+| Maximum capacity | Fixed at 100 forever | Unlimited — grows as needed |
+| Memory allocated up front | 100 slots, whether used or not | Only what's currently needed |
+| Adding past capacity | Silent buffer overflow — undefined behavior | Automatically reallocates and grows |
+| Extra bookkeeping | None beyond a `count` | Vector's internal capacity management |
+
+```mermaid
+flowchart LR
+    subgraph Before["Before: SmallArrayBag holding 3/3 (full)"]
+    direction LR
+        A1["[10]"] --- A2["[20]"] --- A3["[30]"]
+    end
+    subgraph AfterArray["add(40) on ArrayBag: REJECTED"]
+    direction LR
+        B1["[10]"] --- B2["[20]"] --- B3["[30]"]
+        BX["40 has nowhere to go —<br/>capacity is fixed"]
+    end
+    subgraph AfterVector["add(40) on VectorBag: accepted"]
+    direction LR
+        C1["[10]"] --- C2["[20]"] --- C3["[30]"] --- C4["[40]<br/>new capacity allocated"]
+    end
+    Before --> AfterArray
+    Before --> AfterVector
+```
+
+That silent-overflow risk in the fixed-capacity version is real, not theoretical — the next
+example demonstrates it safely, by having `add` *check* the capacity and report failure
+instead of writing past the end of the array:
+
+```cpp title="bag_capacity_limit.cpp"
+#include <iostream>
+#include <vector>
+using namespace std;
+
+// A small, fixed-capacity array-backed bag -- capacity is baked in at compile time.
+class SmallArrayBag {
+public:
+    bool add(int value) {
+        if (count >= 3) return false;   // out of room -- this IS the static limitation
+        data[count++] = value;
+        return true;
+    }
+    int size() const { return count; }
+private:
+    int data[3];   // capacity fixed at 3, forever
+    int count = 0;
+};
+
+// A vector-backed bag has no such ceiling -- it reallocates as needed.
+class GrowableBag {
+public:
+    bool add(int value) { data.push_back(value); return true; }   // always succeeds
+    int size() const { return (int)data.size(); }
+private:
+    vector<int> data;
+};
+
+int main() {
+    SmallArrayBag smallBag;
+    GrowableBag growableBag;
+
+    int valuesToAdd[] = {10, 20, 30, 40, 50};
+    for (int v : valuesToAdd) {
+        bool arrayOk = smallBag.add(v);
+        bool vectorOk = growableBag.add(v);
+        cout << "add(" << v << ") -> SmallArrayBag: " << (arrayOk ? "ok" : "REJECTED (full)")
+             << ", GrowableBag: " << (vectorOk ? "ok" : "REJECTED") << endl;
+    }
+    cout << "Final sizes -> SmallArrayBag: " << smallBag.size()
+         << ", GrowableBag: " << growableBag.size() << endl;
+    return 0;
+}
+```
+
+```text
+$ g++ -std=c++17 -o bag_capacity_limit bag_capacity_limit.cpp
+$ ./bag_capacity_limit
+add(10) -> SmallArrayBag: ok, GrowableBag: ok
+add(20) -> SmallArrayBag: ok, GrowableBag: ok
+add(30) -> SmallArrayBag: ok, GrowableBag: ok
+add(40) -> SmallArrayBag: REJECTED (full), GrowableBag: ok
+add(50) -> SmallArrayBag: REJECTED (full), GrowableBag: ok
+Final sizes -> SmallArrayBag: 3, GrowableBag: 5
+```
+
+Both bags received the exact same five `add` calls, through the exact same ADT interface —
+and behaved completely differently, purely because of what's happening behind that
+interface. This is the practical payoff of separating interface from implementation: an
+application can be written entirely against the *interface* (`add`, `contains`, `size`),
+and the choice of *implementation* can be swapped later — or compared side by side, as
+just shown — without touching any of the code that uses it.
+
+!!! note "This IS the array-vs-linked-list trade-off from Lecture 4, one level up"
+    Notice the shape of this trade-off is identical to arrays vs. linked lists: a
+    fixed-capacity structure is simple and has zero bookkeeping overhead, but hits a hard
+    wall; a dynamically growing structure avoids that wall but pays a small ongoing cost
+    (here, `std::vector`'s internal reallocation logic) to do it. You will see this exact
+    tension resurface for nearly every ADT this course covers — Stack, Queue, and beyond —
+    because it's a property of *static vs. dynamic storage*, not of any one ADT.
+
 ### Abstraction and Encapsulation
 
 **Abstraction** means exposing only what a user of the ADT needs to know (`add`,
@@ -235,6 +438,15 @@ treating the first choice as permanent.
 2. Extend the `IntBag` example with a `remove(int value)` method that deletes the first
    occurrence of `value` (shift later elements left by one to fill the gap). Compile and
    run it to confirm `size()` decreases correctly after a removal.
+3. Write a *third* implementation of the same Bag ADT used in `bag_two_implementations.cpp`
+   — `SortedArrayBag` — that keeps its internal array sorted on every `add` (insert the new
+   value at the position that keeps it sorted, shifting later elements right, similar to
+   Lecture 4's `insertAt`). Pass it to `runSameOperations` alongside `ArrayBag` and
+   `VectorBag` and confirm the printed `size`/`contains` results are identical to the other
+   two, even though `add` is now doing meaningfully more work per call.
+4. In one or two sentences each, explain why `SmallArrayBag` from `bag_capacity_limit.cpp`
+   is a **static** data structure and `GrowableBag` is a **dynamic** one, using the exact
+   definitions from the "Static vs. Dynamic" section earlier in this lecture.
 
 ## Key Takeaways
 
@@ -246,6 +458,12 @@ treating the first choice as permanent.
 - An **Abstract Data Type (ADT)** describes *what* a structure does, completely separate
   from *how* it's implemented — this is what lets an implementation change without
   breaking any code that uses it.
+- Two genuinely different implementations of the same ADT (`ArrayBag` and `VectorBag`)
+  produced byte-for-byte identical output when driven through the same interface — proof,
+  not just assertion, that interface and implementation are independent.
+- Static (fixed-capacity) and dynamic (growable) implementations of the same ADT trade a
+  hard capacity ceiling against small ongoing reallocation overhead — the same time/space
+  tension resurfaces for essentially every ADT later in this course.
 - **Abstraction** (expose only what's needed) and **encapsulation** (C++'s `private`
   keyword enforcing that) are how ADTs are actually built in real code.
 - Every design is a trade-off — usually time vs. space, or simplicity vs. efficiency —

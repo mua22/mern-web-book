@@ -19,7 +19,8 @@ precedence or parentheses — `postfix`.
 - Real applications of stacks: function calls, backtracking, undo/redo
 - Infix, prefix, and postfix expression notation
 - Operator precedence and associativity
-- Converting infix to postfix using a stack
+- Converting infix to postfix using a stack, traced token by token
+- A second, harder trace exercising precedence and parentheses together
 - Evaluating a postfix expression using a stack
 
 ## Applications of Stacks
@@ -75,6 +76,38 @@ turn to be placed in the output:
    have *greater or equal* precedence, then push the current operator.
 6. After scanning the whole expression, pop and output any remaining operators.
 
+```mermaid
+flowchart TD
+    Start(["Next token"]) --> Q1{"What kind<br/>of token?"}
+    Q1 -->|"operand"| A1["Append directly<br/>to output"]
+    Q1 -->|"'('"| A2["Push onto<br/>the stack"]
+    Q1 -->|"')'"| A3["Pop + output until<br/>'(' is popped,<br/>then discard it"]
+    Q1 -->|"operator"| A4["Pop + output while stack top<br/>has >= precedence,<br/>then push this operator"]
+    A1 --> Start
+    A2 --> Start
+    A3 --> Start
+    A4 --> Start
+    Start -->|"no tokens left"| End["Pop + output<br/>everything remaining"]
+```
+
+Before looking at the code, trace the algorithm by hand on the simplest example,
+`3+4*2`, one token at a time — this is exactly what the code below does, just with a real
+stack instead of a table:
+
+| Token | Action | Stack (bottom → top) | Output so far |
+|---|---|---|---|
+| `3` | operand: append | *(empty)* | `3` |
+| `+` | stack empty, push | `+` | `3` |
+| `4` | operand: append | `+` | `3 4` |
+| `*` | `+` has *lower* precedence than `*` — don't pop, push | `+ *` | `3 4` |
+| `2` | operand: append | `+ *` | `3 4 2` |
+| *(end)* | pop everything remaining: `*`, then `+` | *(empty)* | `3 4 2 * +` |
+
+That matches the program's actual output below exactly — `3 4 2 * +` — and shows *why*
+`*` ends up before `+` in the postfix result even though `+` appears first in the infix
+expression: `*` was pushed *after* `+` (since it binds tighter) and so it's popped and
+output *before* `+` is, once the stack finally unwinds at the end.
+
 ```cpp title="infix_to_postfix.cpp"
 #include <iostream>
 #include <stack>
@@ -125,7 +158,7 @@ string infixToPostfix(const string& infix) {
 }
 
 int main() {
-    string expressions[] = {"3+4*2", "(3+4)*2", "3+4*2-1", "2^3^2"};
+    string expressions[] = {"3+4*2", "(3+4)*2", "3+4*2-1", "2^3^2", "5*(3+2)-8/4^2"};
     for (const string& expr : expressions) {
         cout << "Infix:   " << expr << endl;
         cout << "Postfix: " << infixToPostfix(expr) << endl << endl;
@@ -148,6 +181,9 @@ Postfix: 3 4 2 * + 1 -
 
 Infix:   2^3^2
 Postfix: 2 3 ^ 2 ^
+
+Infix:   5*(3+2)-8/4^2
+Postfix: 5 3 2 + * 8 4 2 ^ / -
 ```
 
 !!! note "Why the spacing works out correctly even for multi-digit numbers"
@@ -156,6 +192,62 @@ Postfix: 2 3 ^ 2 ^
     space before doing anything else. The result is that digits belonging to one number
     stay glued together, while distinct tokens always end up separated — try it yourself
     with `"12+34"` and confirm the output is `12 34 +`, not `1234+` or `1 2 3 4 +`.
+
+## A Second, Harder Trace: Precedence, Parentheses, and Exponents Together
+
+`3+4*2` only ever needed the stack to hold at most two operators at once, and never
+exercised parentheses at all. A more demanding expression, `5*(3+2)-8/4^2`, exercises
+every rule in the algorithm: a `(`/`)` pair that must be fully resolved before anything
+outside it, a lower-precedence `-` that has to wait behind a completed multiplication,
+and a right-associative `^` competing with `/` for precedence.
+
+| Token | Action | Stack (bottom → top) | Output so far |
+|---|---|---|---|
+| `5` | operand: append | *(empty)* | `5` |
+| `*` | stack empty, push | `*` | `5` |
+| `(` | always push | `* (` | `5` |
+| `3` | operand: append | `* (` | `5 3` |
+| `+` | top is `(` — never pop past it, push | `* ( +` | `5 3` |
+| `2` | operand: append | `* ( +` | `5 3 2` |
+| `)` | pop + output until `(`: pops `+`, then discards `(` | `*` | `5 3 2 +` |
+| `-` | top `*` has *higher* precedence — pop + output it, then push `-` | `-` | `5 3 2 + *` |
+| `8` | operand: append | `-` | `5 3 2 + * 8` |
+| `/` | top `-` has *lower* precedence — don't pop, push | `- /` | `5 3 2 + * 8` |
+| `4` | operand: append | `- /` | `5 3 2 + * 8 4` |
+| `^` | top `/` has *lower* precedence (2 < 3) — don't pop, push | `- / ^` | `5 3 2 + * 8 4` |
+| `2` | operand: append | `- / ^` | `5 3 2 + * 8 4 2` |
+| *(end)* | pop everything remaining: `^`, `/`, `-` | *(empty)* | `5 3 2 + * 8 4 2 ^ / -` |
+
+This is the fifth pair `infix_to_postfix.cpp` prints (its `expressions` array above already
+includes `"5*(3+2)-8/4^2"`) — the real, compiled output is `5 3 2 + * 8 4 2 ^ / -`, matching
+the hand trace exactly.
+
+```mermaid
+flowchart LR
+    subgraph K1["After token '(' (step 3)"]
+        direction LR
+        s1a["*"] --- s1b["("]
+    end
+    subgraph K2["After token ')' resolves (step 7)"]
+        direction LR
+        s2a["*"]
+    end
+    subgraph K3["After token '-' pushes (step 8)"]
+        direction LR
+        s3a["-"]
+    end
+    K1 -->|"'+' pushed inside,<br/>then ')' pops it<br/>and discards '('"| K2
+    K2 -->|"'*' has higher<br/>precedence than '-':<br/>popped + output first"| K3
+```
+
+Two things are worth noticing in this trace that `3+4*2` never exercised. First, the `-`
+token forces `*` off the stack *before* pushing itself (row 9): `*` was left sitting on
+top from step 2, waiting the entire time the `(...)` group was being processed, since
+parentheses never let anything pop past them prematurely. Second, `^` never has to compete
+with another `^` here (there's only one), so this particular trace doesn't actually test
+right-associativity — that's exactly what the earlier `2^3^2` example (further up this
+lecture) is for. Comparing the two traces side by side is a good exercise: `5*(3+2)-8/4^2`
+stresses parentheses and mixed precedence, while `2^3^2` isolates associativity alone.
 
 ## Postfix Expression Evaluation
 
@@ -214,6 +306,30 @@ The last example, `5 1 2 + 4 * + 3 -`, corresponds to the infix expression
 `5 + (1 + 2) * 4 - 3` — worth tracing by hand with the stack, one token at a time, to see
 exactly how `(1 + 2) * 4` gets computed with no parentheses in sight at all.
 
+| Token | Action | Stack (bottom → top) |
+|---|---|---|
+| `5` | push operand | `5` |
+| `1` | push operand | `5 1` |
+| `2` | push operand | `5 1 2` |
+| `+` | pop `2, 1` -> `1+2=3`, push `3` | `5 3` |
+| `4` | push operand | `5 3 4` |
+| `*` | pop `4, 3` -> `3*4=12`, push `12` | `5 12` |
+| `+` | pop `12, 5` -> `5+12=17`, push `17` | `17` |
+| `3` | push operand | `17 3` |
+| `-` | pop `3, 17` -> `17-3=14`, push `14` | `14` |
+
+The final stack holds exactly one value, `14` — which matches the program's real output
+above, and is also the last value ever pushed, since a well-formed postfix expression
+always leaves precisely one operand on the stack once every token has been consumed.
+
+!!! note "Operand order matters for non-commutative operators"
+    Notice the `+` and `-` rows always pop the value that was pushed *second* into the
+    left-hand slot when it matters (e.g. `b = values.top(); values.pop(); a = values.top();`
+    in the code, then `a - b`, not `b - a`). For `+` and `*` this wouldn't matter since
+    they're commutative, but for `-` and `/` getting the operand order backwards would
+    silently produce a wrong (but plausible-looking) answer — a bug that's easy to
+    introduce and easy to miss without a trace like the one above.
+
 ## Try It Yourself
 
 1. Trace `infix_to_postfix.cpp`'s algorithm by hand for `2^3^2`, one token at a time,
@@ -223,6 +339,18 @@ exactly how `(1 + 2) * 4` gets computed with no parentheses in sight at all.
    treating `^` as left-associative).
 2. Extend `evaluatePostfix` to handle the `^` (exponent) operator using `pow()` from
    `<cmath>` (remember to cast the result back to `int`), and test it on `"2 3 ^"`.
+3. Trace `infix_to_postfix.cpp` by hand for `"5*(3+2)-8/4^2"`, exactly like the table
+   earlier in this lecture — but this time start your own table from a blank page before
+   checking it against the one shown, rather than reading it top to bottom. Where did you
+   make a mistake, if any, and why?
+4. Write a `main` that converts `"5*(3+2)-8/4^2"` to postfix with `infixToPostfix`, then
+   feeds that exact result string into `evaluatePostfix` (after adding `^` support from
+   exercise 2), printing the final numeric answer. Confirm it matches what you'd get by
+   evaluating the original infix expression using normal order-of-operations arithmetic.
+5. `infixToPostfix` doesn't check for a mismatched `)` with no matching `(` — trace what
+   happens to `operators.pop()` in the `)` branch if the stack is already empty when it's
+   called (hint: this is undefined behavior on `std::stack`). Add a check that throws a
+   clear exception instead, and test it on the malformed input `"3+4)"`.
 
 ## Key Takeaways
 
@@ -232,6 +360,12 @@ exactly how `(1 + 2) * 4` gets computed with no parentheses in sight at all.
   or parentheses needed — which is exactly why compilers and calculators convert to it
   internally.
 - Infix-to-postfix conversion works by holding operators on a stack until an operator of
-  *lower or equal* precedence forces earlier ones to be output first.
+  *lower or equal* precedence forces earlier ones to be output first — and parentheses act
+  as a hard wall that nothing on either side can pop past.
+- A harder expression like `5*(3+2)-8/4^2` shows the algorithm handling parentheses,
+  mixed precedence, and a right-associative operator all at once — tracing the stack's
+  contents token by token, as the tables in this lecture do, is the fastest way to make
+  the algorithm's behavior concrete rather than abstract.
 - Postfix evaluation is the mirror operation: push operands, and whenever an operator
-  appears, pop the two most recent operands, apply it, and push the result back.
+  appears, pop the two most recent operands, apply it (in the right order — operand
+  order matters for `-` and `/`), and push the result back.
