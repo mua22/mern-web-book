@@ -9,6 +9,12 @@
 
   Keep in sync with the upstream file when upgrading mkdocs-material --
   only the "else" branch inside the `nav_item.children` case was changed.
+
+  A tab's dropdown always lists its OWN immediate children (e.g. "Courses"
+  lists the 3 courses, not each course's own units) -- `first_leaf` below
+  just walks down through however many nested "first child" levels it
+  takes to find a real page, purely to give the tab's own <a href> a valid
+  destination when the immediate children aren't pages themselves.
 -#}
 {% macro render_content(nav_item, ref) %}
   {% set ref = ref or nav_item %}
@@ -19,13 +25,15 @@
   {% endif %}
   {{ ref.title }}
 {% endmacro %}
+{% macro first_leaf_url(nav_item) %}
+  {%- if nav_item.children -%}
+    {{ first_leaf_url(nav_item.children | first) }}
+  {%- else -%}
+    {{ nav_item.url | url }}
+  {%- endif -%}
+{% endmacro %}
 {% macro render_submenu_link(child) %}
-  {% if child.children %}
-    {% set child_first = child.children | first %}
-    <a href="{{ child_first.url | url }}">{{ child.title }}</a>
-  {% else %}
-    <a href="{{ child.url | url }}">{{ child.title }}</a>
-  {% endif %}
+  <a href="{{ first_leaf_url(child) }}">{{ child.title }}</a>
 {% endmacro %}
 {% macro render(nav_item, ref) %}
   {% set ref = ref or nav_item %}
@@ -35,23 +43,19 @@
   {% endif %}
   {% if nav_item.children %}
     {% set first = nav_item.children | first %}
-    {% if first.children %}
-      {{ render(first, ref) }}
-    {% else %}
-      {% set has_dropdown = nav_item.children | length > 1 %}
-      <li class="{{ class }}{% if has_dropdown %} md-tabs__item--dropdown{% endif %}">
-        <a href="{{ first.url | url }}" class="md-tabs__link">
-          {{ render_content(first, ref) }}
-        </a>
-        {% if has_dropdown %}
-          <ul class="md-tabs__submenu">
-            {% for child in nav_item.children %}
-              <li>{{ render_submenu_link(child) }}</li>
-            {% endfor %}
-          </ul>
-        {% endif %}
-      </li>
-    {% endif %}
+    {% set has_dropdown = nav_item.children | length > 1 %}
+    <li class="{{ class }}{% if has_dropdown %} md-tabs__item--dropdown{% endif %}">
+      <a href="{{ first_leaf_url(nav_item) }}" class="md-tabs__link">
+        {{ render_content(first, ref) }}
+      </a>
+      {% if has_dropdown %}
+        <ul class="md-tabs__submenu">
+          {% for child in nav_item.children %}
+            <li>{{ render_submenu_link(child) }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </li>
   {% else %}
     <li class="{{ class }}">
       <a href="{{ nav_item.url | url }}" class="md-tabs__link">
