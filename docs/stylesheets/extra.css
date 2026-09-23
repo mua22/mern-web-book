@@ -2,34 +2,48 @@
 /* cuinotes — custom theme (dark + light), replacing Material's defaults  */
 /* ---------------------------------------------------------------------- */
 
-:root,
+/* IMPORTANT: these two blocks target [data-md-color-scheme="default"|"slate"]
+   ONLY -- never combined with :root in the same selector list. :root always
+   matches <html> regardless of which scheme is active, so pairing it with
+   [data-md-color-scheme="default"] made the "light" declarations apply to
+   <html> unconditionally; combined with !important (needed below) that tied
+   in specificity against the "slate" block on the very element the scheme
+   attribute lives on, and the light values won every time regardless of
+   source order -- children inherited the wrong (light) values even while
+   <html> itself measured correctly, because the tie was resolved per
+   property occurrence, not per element. Keeping each scheme in its own
+   attribute-only selector removes the tie entirely. */
 [data-md-color-scheme="default"] {
-  /* Material variables Material itself reads directly */
-  --md-primary-fg-color: #FFFFFF;
-  --md-primary-fg-color--light: #F0F2F5;
-  --md-primary-fg-color--dark: #E2E5EB;
-  --md-primary-bg-color: #14181F;
-  --md-primary-bg-color--light: #14181F;
+  /* !important is required here: mkdocs-material injects a SEPARATE,
+     later-loaded palette.<hash>.min.css chunk (generated for the
+     primary/accent choice in mkdocs.yml) that redeclares some of these same
+     custom properties -- without !important, that stylesheet's declarations
+     can win over this file's for properties it also sets. */
+  --md-primary-fg-color: #FFFFFF !important;
+  --md-primary-fg-color--light: #F0F2F5 !important;
+  --md-primary-fg-color--dark: #E2E5EB !important;
+  --md-primary-bg-color: #14181F !important;
+  --md-primary-bg-color--light: #14181F !important;
 
-  --md-accent-fg-color: #0C8C76;
-  --md-accent-fg-color--transparent: rgba(12, 140, 118, 0.10);
-  --md-accent-bg-color: #FFFFFF;
+  --md-accent-fg-color: #0C8C76 !important;
+  --md-accent-fg-color--transparent: rgba(12, 140, 118, 0.10) !important;
+  --md-accent-bg-color: #FFFFFF !important;
 
-  --md-default-fg-color: #14181F;
-  --md-default-fg-color--light: #4B5565;
-  --md-default-fg-color--lighter: #7A8496;
-  --md-default-fg-color--lightest: #E2E5EB;
-  --md-default-bg-color: #FFFFFF;
+  --md-default-fg-color: #14181F !important;
+  --md-default-fg-color--light: #4B5565 !important;
+  --md-default-fg-color--lighter: #7A8496 !important;
+  --md-default-fg-color--lightest: #E2E5EB !important;
+  --md-default-bg-color: #FFFFFF !important;
 
-  --md-typeset-color: #14181F;
-  --md-code-bg-color: #F5F6F8;
-  --md-code-fg-color: #1C212B;
+  --md-typeset-color: #14181F !important;
+  --md-code-bg-color: #F5F6F8 !important;
+  --md-code-fg-color: #1C212B !important;
 
-  --md-footer-bg-color: #0B0E14;
-  --md-footer-bg-color--dark: #06080C;
-  --md-footer-fg-color: #ECEFF4;
-  --md-footer-fg-color--light: rgba(236, 239, 244, 0.7);
-  --md-footer-fg-color--lighter: rgba(236, 239, 244, 0.45);
+  --md-footer-bg-color: #0B0E14 !important;
+  --md-footer-bg-color--dark: #06080C !important;
+  --md-footer-fg-color: #ECEFF4 !important;
+  --md-footer-fg-color--light: rgba(236, 239, 244, 0.7) !important;
+  --md-footer-fg-color--lighter: rgba(236, 239, 244, 0.45) !important;
 
   /* cuinotes design tokens */
   --cu-bg: #FFFFFF;
@@ -49,31 +63,31 @@
 }
 
 [data-md-color-scheme="slate"] {
-  --md-primary-fg-color: #090C12;
-  --md-primary-fg-color--light: #232B3D;
-  --md-primary-fg-color--dark: #06080C;
-  --md-primary-bg-color: #ECEFF4;
-  --md-primary-bg-color--light: #ECEFF4;
+  --md-primary-fg-color: #090C12 !important;
+  --md-primary-fg-color--light: #232B3D !important;
+  --md-primary-fg-color--dark: #06080C !important;
+  --md-primary-bg-color: #ECEFF4 !important;
+  --md-primary-bg-color--light: #ECEFF4 !important;
 
-  --md-accent-fg-color: #35E7C4;
-  --md-accent-fg-color--transparent: rgba(53, 231, 196, 0.14);
-  --md-accent-bg-color: #06110D;
+  --md-accent-fg-color: #35E7C4 !important;
+  --md-accent-fg-color--transparent: rgba(53, 231, 196, 0.14) !important;
+  --md-accent-bg-color: #06110D !important;
 
-  --md-default-fg-color: #ECEFF4;
-  --md-default-fg-color--light: #94A1B8;
-  --md-default-fg-color--lighter: #5B6577;
-  --md-default-fg-color--lightest: #1F2733;
-  --md-default-bg-color: #090C12;
+  --md-default-fg-color: #ECEFF4 !important;
+  --md-default-fg-color--light: #94A1B8 !important;
+  --md-default-fg-color--lighter: #5B6577 !important;
+  --md-default-fg-color--lightest: #1F2733 !important;
+  --md-default-bg-color: #090C12 !important;
 
-  --md-typeset-color: #C9D1E0;
-  --md-code-bg-color: #0C1017;
-  --md-code-fg-color: #C9D1E0;
+  --md-typeset-color: #C9D1E0 !important;
+  --md-code-bg-color: #0C1017 !important;
+  --md-code-fg-color: #C9D1E0 !important;
 
-  --md-footer-bg-color: #060810;
-  --md-footer-bg-color--dark: #030408;
-  --md-footer-fg-color: #ECEFF4;
-  --md-footer-fg-color--light: rgba(236, 239, 244, 0.7);
-  --md-footer-fg-color--lighter: rgba(236, 239, 244, 0.45);
+  --md-footer-bg-color: #060810 !important;
+  --md-footer-bg-color--dark: #030408 !important;
+  --md-footer-fg-color: #ECEFF4 !important;
+  --md-footer-fg-color--light: rgba(236, 239, 244, 0.7) !important;
+  --md-footer-fg-color--lighter: rgba(236, 239, 244, 0.45) !important;
 
   --cu-bg: #090C12;
   --cu-surface: #10151F;
@@ -126,13 +140,15 @@
 
 /* ---- Header ----------------------------------------------------------- */
 
-.md-header {
-  background-color: var(--cu-header-bg);
+.md-header,
+.md-header--shadow,
+.md-header[data-md-state="shadow"] {
+  background-color: var(--cu-header-bg) !important;
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  color: var(--cu-text);
+  color: var(--cu-text) !important;
   border-bottom: 1px solid var(--cu-border);
-  box-shadow: none;
+  box-shadow: none !important;
 }
 
 .md-header__title,
@@ -171,7 +187,7 @@
 /* ---- Tabs (top-level nav bar) ------------------------------------------ */
 
 .md-tabs {
-  background-color: var(--cu-header-bg);
+  background-color: var(--cu-header-bg) !important;
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--cu-border);
