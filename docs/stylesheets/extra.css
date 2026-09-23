@@ -580,12 +580,32 @@
 /* Homepage — hero, stats, course cards, features, authors, activity, CTA  */
 /* ======================================================================= */
 
-.cu-page {
-  margin: -1.2rem -0.8rem -3rem;
+/* The homepage hides navigation + toc (see docs/index.md front matter) so
+   it can break out of Material's centered, max-width reading column and
+   run full-bleed edge to edge, like a real landing page. Each inner band
+   (.cu-hero, .cu-stats, .cu-section, .cu-cta) re-centers its own content
+   at a comfortable reading width -- only the OUTER page shell goes full
+   width here. :has() support is required for this rule; without it the
+   homepage still reads fine, just at Material's normal content width. */
+.md-grid:has(.cu-page) {
+  max-width: 100%;
 }
 
-@media screen and (min-width: 76.25em) {
-  .cu-page { margin: -1.2rem -1.6rem -3rem; }
+.md-content:has(.cu-page) {
+  max-width: none;
+}
+
+.md-content__inner:has(.cu-page) {
+  margin: 0;
+  padding: 0;
+}
+
+.md-content__inner:has(.cu-page)::before {
+  display: none;
+}
+
+.cu-page {
+  margin: -1.2rem 0 -3rem;
 }
 
 .cu-section {
@@ -699,6 +719,11 @@
   flex-wrap: wrap;
 }
 
+/* .md-typeset a.cu-btn (not just .cu-btn): Material's own ".md-typeset a"
+   rule colors every link with the accent color, at (0,1,1) specificity --
+   a single class here loses that tie-break and a teal-on-teal button text
+   goes invisible. The compound selector below matches its specificity. */
+.md-typeset a.cu-btn,
 .cu-btn {
   display: inline-flex;
   align-items: center;
@@ -717,6 +742,7 @@
   border-color: var(--cu-teal);
 }
 
+.md-typeset a.cu-btn-primary,
 .cu-btn-primary {
   background: var(--cu-teal-fill);
   border-color: var(--cu-teal-fill);
@@ -842,15 +868,33 @@
 
 .cu-authors-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
+/* .cu-card is a <div>, not an <a> -- python-markdown's md_in_html treats
+   <a> as an inline element, and using it as a block-level flow container
+   (wrapping a heading + paragraph) makes it emit the tag TWICE: once as an
+   empty auto-wrapped <p><a ...></a></p>, once as the real block. Cards use
+   the same div-plus-stretched-link overlay pattern as the old .wdb-card. */
 .cu-card {
+  position: relative;
   background: var(--cu-surface);
   border: 1px solid var(--cu-border);
   border-radius: 14px;
   padding: 1.5rem;
   display: block;
   color: var(--cu-text);
-  text-decoration: none;
   transition: border-color 0.12s ease, transform 0.12s ease;
+}
+
+.cu-card-link {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+
+/* md_in_html auto-wraps the empty overlay anchor in its own <p> (it's the
+   first line inside the card div) -- collapse that wrapper's margin so it
+   doesn't add a blank gap above the card's real content. */
+.cu-card > p:first-child:has(> .cu-card-link:only-child) {
+  margin: 0;
 }
 
 .cu-card:hover {
