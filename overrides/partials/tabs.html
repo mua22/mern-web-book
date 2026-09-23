@@ -1,0 +1,56 @@
+{#-
+  Override of material/templates/partials/tabs.html.
+
+  Groups the three course tabs into one "Courses" dropdown, purely for
+  the top nav bar display -- mkdocs.yml keeps each course as its OWN
+  top-level nav entry (not nested under a shared "Courses" parent).
+
+  That distinction matters: nesting all three courses under one real nav
+  parent made Material's navigation.sections render ALL THREE courses'
+  full unit/lecture trees stacked together in the primary sidebar
+  whenever you were on ANY course page (each course is 30+ pages), since
+  "sections" shows the active top-level tab's whole subtree. Keeping
+  them as separate top-level entries restores correct per-course sidebar
+  scoping, so this file fakes the "Courses" grouping only at the tab-bar
+  level by intercepting those three specific titles as tabs.html's own
+  loop reaches them, using tabs-item.html's first_leaf_url/
+  render_submenu_link helpers to link into each course normally.
+-#}
+{% import "partials/tabs-item.html" as item with context %}
+{% set course_titles = [
+  "Algorithms and Data Structures (CSC211)",
+  "Web Technologies (CSC336)",
+  "Advanced Web Technologies (CSC337)"
+] %}
+{% set ns = namespace(courses=[], active=false, rendered=false) %}
+{% for nav_item in nav.items %}
+  {% if nav_item.title in course_titles %}
+    {% set ns.courses = ns.courses + [nav_item] %}
+    {% if nav_item.active %}{% set ns.active = true %}{% endif %}
+  {% endif %}
+{% endfor %}
+<nav class="md-tabs" aria-label="{{ lang.t('tabs') }}" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      {% for nav_item in nav.items %}
+        {% if nav_item.title in course_titles %}
+          {% if not ns.rendered %}
+            {% set ns.rendered = true %}
+            <li class="md-tabs__item md-tabs__item--dropdown{% if ns.active %} md-tabs__item--active{% endif %}">
+              <a href="{{ item.first_leaf_url(ns.courses | first) }}" class="md-tabs__link">
+                Courses
+              </a>
+              <ul class="md-tabs__submenu">
+                {% for course in ns.courses %}
+                  <li>{{ item.render_submenu_link(course) }}</li>
+                {% endfor %}
+              </ul>
+            </li>
+          {% endif %}
+        {% else %}
+          {{ item.render(nav_item) }}
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+</nav>
