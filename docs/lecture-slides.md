@@ -4,9 +4,44 @@ title: Lecture Slides
 
 # Lecture Slides
 
-Presentation-style slide decks for the CSC336 Web Technologies lectures, one slide per PDF
-page — use full-screen view in your PDF reader for a proper presentation, or print them for
-offline study.
+Presentation-style slide decks for the course lectures, one slide per PDF page — use
+full-screen view in your PDF reader for a proper presentation, or print them for offline
+study.
+
+## CSC211 Lecture Slides (Lectures 1–32)
+
+- [Lecture 1: Introduction to Data Structures](downloads/lecture-slides/CSC211-Lecture-01-Introduction-to-Data-Structures.pdf)
+- [Lecture 2: Classification, Operations, and ADTs](downloads/lecture-slides/CSC211-Lecture-02-Classification-Operations-and-ADTs.pdf)
+- [Lecture 3: Algorithm Analysis and Complexity](downloads/lecture-slides/CSC211-Lecture-03-Algorithm-Analysis-and-Complexity.pdf)
+- [Lecture 4: Arrays and Sequential Storage](downloads/lecture-slides/CSC211-Lecture-04-Arrays-and-Sequential-Storage.pdf)
+- [Lecture 5: Linked Lists: Fundamentals](downloads/lecture-slides/CSC211-Lecture-05-Linked-Lists-Fundamentals.pdf)
+- [Lecture 6: Singly Linked List Operations](downloads/lecture-slides/CSC211-Lecture-06-Singly-Linked-List-Operations.pdf)
+- [Lecture 7: Doubly Linked Lists](downloads/lecture-slides/CSC211-Lecture-07-Doubly-Linked-Lists.pdf)
+- [Lecture 8: Circular Linked Lists](downloads/lecture-slides/CSC211-Lecture-08-Circular-Linked-Lists.pdf)
+- [Lecture 9: Linear Structures: Applications](downloads/lecture-slides/CSC211-Lecture-09-Linear-Structures-Applications.pdf)
+- [Lecture 10: Stack ADT and Implementation](downloads/lecture-slides/CSC211-Lecture-10-Stack-ADT-and-Implementation.pdf)
+- [Lecture 11: Stack Applications: Expression Conversion](downloads/lecture-slides/CSC211-Lecture-11-Stack-Applications-Expression-Conversion.pdf)
+- [Lecture 12: Recursion](downloads/lecture-slides/CSC211-Lecture-12-Recursion.pdf)
+- [Lecture 13: Queue ADT and Implementation](downloads/lecture-slides/CSC211-Lecture-13-Queue-ADT-and-Implementation.pdf)
+- [Lecture 14: Circular Queue, Deque, and Priority Queue](downloads/lecture-slides/CSC211-Lecture-14-Circular-Queue-Deque-and-Priority-Queue.pdf)
+- [Lecture 15: Queue Applications](downloads/lecture-slides/CSC211-Lecture-15-Queue-Applications.pdf)
+- [Lecture 16: Trees and General Trees](downloads/lecture-slides/CSC211-Lecture-16-Trees-and-General-Trees.pdf)
+- [Lecture 17: Binary Trees and Representation](downloads/lecture-slides/CSC211-Lecture-17-Binary-Trees-and-Representation.pdf)
+- [Lecture 18: Midterm Review](downloads/lecture-slides/CSC211-Lecture-18-Midterm-Review.pdf)
+- [Lecture 19: Binary Tree Traversals](downloads/lecture-slides/CSC211-Lecture-19-Binary-Tree-Traversals.pdf)
+- [Lecture 20: BST: Search and Insertion](downloads/lecture-slides/CSC211-Lecture-20-BST-Search-and-Insertion.pdf)
+- [Lecture 21: BST: Deletion and Analysis](downloads/lecture-slides/CSC211-Lecture-21-BST-Deletion-and-Analysis.pdf)
+- [Lecture 22: AVL Trees](downloads/lecture-slides/CSC211-Lecture-22-AVL-Trees.pdf)
+- [Lecture 23: Heap and Priority Queue](downloads/lecture-slides/CSC211-Lecture-23-Heap-and-Priority-Queue.pdf)
+- [Lecture 24: Tree Applications](downloads/lecture-slides/CSC211-Lecture-24-Tree-Applications.pdf)
+- [Lecture 25: Graphs and Representation](downloads/lecture-slides/CSC211-Lecture-25-Graphs-and-Representation.pdf)
+- [Lecture 26: Graph Traversal: BFS and DFS](downloads/lecture-slides/CSC211-Lecture-26-Graph-Traversal-BFS-and-DFS.pdf)
+- [Lecture 27: Shortest Path: Dijkstra's Algorithm](downloads/lecture-slides/CSC211-Lecture-27-Dijkstras-Algorithm.pdf)
+- [Lecture 28: Minimum Spanning Trees](downloads/lecture-slides/CSC211-Lecture-28-Minimum-Spanning-Trees.pdf)
+- [Lecture 29: Searching Algorithms](downloads/lecture-slides/CSC211-Lecture-29-Searching-Algorithms.pdf)
+- [Lecture 30: Sorting: Elementary Algorithms](downloads/lecture-slides/CSC211-Lecture-30-Sorting-Elementary-Algorithms.pdf)
+- [Lecture 31: Sorting: Efficient Algorithms](downloads/lecture-slides/CSC211-Lecture-31-Sorting-Efficient-Algorithms.pdf)
+- [Lecture 32: Hashing and Efficient Data Access](downloads/lecture-slides/CSC211-Lecture-32-Hashing-and-Efficient-Data-Access.pdf)
 
 ## CSC336 Lecture Slides (Lectures 1–32)
 
