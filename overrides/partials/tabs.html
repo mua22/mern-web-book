@@ -1,48 +1,77 @@
 {#-
   Override of material/templates/partials/tabs.html.
 
-  Groups the three course tabs into one "Courses" dropdown, purely for
-  the top nav bar display -- mkdocs.yml keeps each course as its OWN
-  top-level nav entry (not nested under a shared "Courses" parent).
+  Groups top-level nav entries into named dropdowns (currently "Courses"
+  and "Labs") purely for the top nav bar display -- mkdocs.yml keeps each
+  course/lab-book as its OWN top-level nav entry, never nested under a
+  shared "Courses"/"Labs" parent.
 
-  That distinction matters: nesting all three courses under one real nav
-  parent made Material's navigation.sections render ALL THREE courses'
-  full unit/lecture trees stacked together in the primary sidebar
-  whenever you were on ANY course page (each course is 30+ pages), since
-  "sections" shows the active top-level tab's whole subtree. Keeping
-  them as separate top-level entries restores correct per-course sidebar
-  scoping, so this file fakes the "Courses" grouping only at the tab-bar
-  level by intercepting those three specific titles as tabs.html's own
-  loop reaches them, using tabs-item.html's first_leaf_url/
-  render_submenu_link helpers to link into each course normally.
+  That distinction matters: nesting several multi-page books under one
+  real nav parent makes Material's navigation.sections render ALL of
+  that parent's siblings' full page trees stacked together in the
+  primary sidebar whenever you're on ANY one of them, since "sections"
+  shows the active top-level tab's whole subtree. Keeping them as
+  separate top-level entries restores correct per-book sidebar scoping,
+  so this file fakes the grouping only at the tab-bar level by
+  intercepting known titles as tabs.html's own loop reaches them, using
+  tabs-item.html's first_leaf_url/render_submenu_link helpers to link
+  into each book normally.
+
+  Adding a new grouped book later (another course, another labs book):
+  add its exact nav title to the matching group's `titles` list below,
+  and keep it as its own top-level entry in mkdocs.yml -- nothing else
+  in this file needs to change.
+
+  Jinja note: plain `{% set %}` inside a `{% for %}` loop does NOT
+  persist across iterations (each iteration gets its own scope) -- any
+  value that needs to accumulate across loop iterations below uses a
+  fresh `namespace()` object instead, which is mutable by reference.
 -#}
 {% import "partials/tabs-item.html" as item with context %}
-{% set course_titles = [
-  "Algorithms and Data Structures (CSC211)",
-  "Web Technologies (CSC336)",
-  "Advanced Web Technologies (CSC337)"
+{% set groups = [
+  {
+    "label": "Courses",
+    "titles": [
+      "Algorithms and Data Structures (CSC211)",
+      "Web Technologies (CSC336)",
+      "Advanced Web Technologies (CSC337)"
+    ]
+  },
+  {
+    "label": "Labs",
+    "titles": [
+      "Web Technologies (CSC336) Labs"
+    ]
+  }
 ] %}
-{% set ns = namespace(courses=[], active=false, rendered=false) %}
-{% for nav_item in nav.items %}
-  {% if nav_item.title in course_titles %}
-    {% set ns.courses = ns.courses + [nav_item] %}
-    {% if nav_item.active %}{% set ns.active = true %}{% endif %}
-  {% endif %}
-{% endfor %}
+{% set ns = namespace(rendered_labels=[]) %}
 <nav class="md-tabs" aria-label="{{ lang.t('tabs') }}" data-md-component="tabs">
   <div class="md-grid">
     <ul class="md-tabs__list">
       {% for nav_item in nav.items %}
-        {% if nav_item.title in course_titles %}
-          {% if not ns.rendered %}
-            {% set ns.rendered = true %}
-            <li class="md-tabs__item md-tabs__item--dropdown{% if ns.active %} md-tabs__item--active{% endif %}">
-              <a href="{{ item.first_leaf_url(ns.courses | first) }}" class="md-tabs__link">
-                Courses
+        {% set mg = namespace(group=none) %}
+        {% for group in groups %}
+          {% if nav_item.title in group.titles %}
+            {% set mg.group = group %}
+          {% endif %}
+        {% endfor %}
+        {% if mg.group %}
+          {% if mg.group.label not in ns.rendered_labels %}
+            {% set ns.rendered_labels = ns.rendered_labels + [mg.group.label] %}
+            {% set gm = namespace(items=[], active=false) %}
+            {% for candidate in nav.items %}
+              {% if candidate.title in mg.group.titles %}
+                {% set gm.items = gm.items + [candidate] %}
+                {% if candidate.active %}{% set gm.active = true %}{% endif %}
+              {% endif %}
+            {% endfor %}
+            <li class="md-tabs__item md-tabs__item--dropdown{% if gm.active %} md-tabs__item--active{% endif %}">
+              <a href="{{ item.first_leaf_url(gm.items | first) }}" class="md-tabs__link">
+                {{ mg.group.label }}
               </a>
               <ul class="md-tabs__submenu">
-                {% for course in ns.courses %}
-                  <li>{{ item.render_submenu_link(course) }}</li>
+                {% for member in gm.items %}
+                  <li>{{ item.render_submenu_link(member) }}</li>
                 {% endfor %}
               </ul>
             </li>

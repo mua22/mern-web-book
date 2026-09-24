@@ -240,7 +240,7 @@ A companion repository of small, self-contained demos and mini projects, one fol
 </div>
 
 <div class="cu-card" markdown>
-<a class="cu-card-link" href="labs/" aria-label="Open Labs"></a>
+<a class="cu-card-link" href="labs/web-technologies/" aria-label="Open Labs"></a>
 <span class="cu-chip cu-chip-teal">15 LABS · CODE + SOLUTIONS</span>
 
 ### Labs

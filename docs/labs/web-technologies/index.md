@@ -1,8 +1,8 @@
 ---
-title: Labs (CSC336) — Overview
+title: Web Technologies (CSC336) Labs — Overview
 ---
 
-# Labs (CSC336 Web Technologies)
+# Web Technologies (CSC336) Labs
 
 The topics include: HTML; CSS; JavaScript; jQuery/AJAX/JSON; Server-Side Technologies
 (Node.js/Express); Database Connectivity (MongoDB/Mongoose); REST APIs; React.js; and Web
