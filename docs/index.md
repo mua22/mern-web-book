@@ -239,6 +239,15 @@ Self-contained, beginner-to-intermediate walkthroughs alongside the lecture chap
 A companion repository of small, self-contained demos and mini projects, one folder per topic — open `index.html` and run.
 </div>
 
+<div class="cu-card" markdown>
+<a class="cu-card-link" href="labs/" aria-label="Open Labs"></a>
+<span class="cu-chip cu-chip-teal">15 LABS · CODE + SOLUTIONS</span>
+
+### Labs
+
+Hands-on CSC336 lab manual: 15 labs from HTML basics to REST APIs and React, each with solved activities and graded lab tasks.
+</div>
+
 </div>
 </div>
 
