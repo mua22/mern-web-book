@@ -1119,3 +1119,268 @@
   .cu-hero-actions { flex-direction: column; align-items: stretch; }
   .cu-cta .cu-hero-actions { flex-direction: row; }
 }
+
+/* =========================================================================
+   Diagram toolkit (db-*) -- enriched UI flow/ER/table diagrams built from
+   plain HTML+CSS instead of Mermaid. Theme-aware via the --cu-* tokens
+   already defined above, so every diagram adapts to light/dark automatically.
+   ========================================================================= */
+
+.db-diagram {
+  background: var(--cu-surface);
+  border: 1px solid var(--cu-border);
+  border-radius: 14px;
+  padding: 1.6rem 1.8rem;
+  margin: 1.6rem 0;
+  overflow-x: auto;
+}
+
+.db-diagram-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cu-faint);
+  margin: 0 0 0.9rem;
+}
+
+/* ---- Flow: a row/column of step boxes connected by arrows -------------- */
+
+.db-flow {
+  display: flex;
+  align-items: stretch;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.db-flow.db-flow-vertical {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.db-flow-vertical .db-arrow { align-self: center; }
+
+.db-node {
+  background: var(--cu-surface-alt);
+  border: 1px solid var(--cu-border);
+  border-radius: 10px;
+  padding: 0.85rem 1.1rem;
+  min-width: 9rem;
+  flex: 1 1 9rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.2rem;
+}
+
+.db-node-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--cu-text);
+}
+
+.db-node-sub {
+  font-size: 0.8rem;
+  color: var(--cu-muted);
+  line-height: 1.35;
+}
+
+.db-node-teal { border-color: var(--cu-teal); box-shadow: inset 0 0 0 1px var(--cu-teal); }
+.db-node-teal .db-node-title { color: var(--cu-teal); }
+.db-node-purple { border-color: var(--cu-purple); box-shadow: inset 0 0 0 1px var(--cu-purple); }
+.db-node-purple .db-node-title { color: var(--cu-purple); }
+.db-node-orange { border-color: var(--cu-orange); box-shadow: inset 0 0 0 1px var(--cu-orange); }
+.db-node-orange .db-node-title { color: var(--cu-orange); }
+
+.db-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2rem;
+  color: var(--cu-faint);
+  font-size: 1.3rem;
+  flex: 0 0 auto;
+}
+
+.db-flow-vertical .db-arrow::after { content: "\2193"; }
+.db-flow:not(.db-flow-vertical) .db-arrow::after { content: "\2192"; }
+
+.db-arrow-label {
+  font-size: 0.68rem;
+  color: var(--cu-faint);
+  text-align: center;
+}
+
+/* ---- Stack: layered architecture (top-to-bottom bands) ----------------- */
+
+.db-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.db-stack-layer {
+  background: var(--cu-surface-alt);
+  border: 1px solid var(--cu-border);
+  border-radius: 10px;
+  padding: 0.75rem 1.1rem;
+  text-align: center;
+}
+
+.db-stack-layer .db-node-title { font-size: 0.9rem; }
+.db-stack-layer .db-node-sub { font-size: 0.78rem; }
+
+/* ---- Entity / ER diagram cards ------------------------------------------ */
+
+.db-erd {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.25rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.db-entity {
+  background: var(--cu-bg);
+  border: 1.5px solid var(--cu-border-soft);
+  border-radius: 10px;
+  min-width: 11rem;
+  flex: 0 0 auto;
+  overflow: hidden;
+}
+
+.db-entity-name {
+  background: var(--cu-teal-fill);
+  color: var(--cu-on-accent);
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-align: center;
+  padding: 0.5rem 0.8rem;
+}
+
+.db-entity-weak .db-entity { border-style: double; border-width: 3px; }
+.db-entity-weak .db-entity-name { background: var(--cu-purple); }
+
+.md-typeset .db-entity-attrs {
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0.5rem 0.9rem !important;
+  font-size: 0.82rem;
+  line-height: 1.7;
+  color: var(--cu-text);
+}
+
+.md-typeset .db-entity-attrs li {
+  margin: 0 !important;
+}
+
+.md-typeset .db-entity-attrs li.db-pk {
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+}
+
+.md-typeset .db-entity-attrs li.db-fk { font-style: italic; color: var(--cu-muted); }
+.md-typeset .db-entity-attrs li.db-multi::after { content: " {}"; color: var(--cu-faint); font-size: 0.75em; }
+
+.db-relate {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.4rem;
+  align-self: center;
+  min-width: 4.5rem;
+}
+
+.db-relate-name {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--cu-text);
+  background: var(--cu-surface-alt);
+  border: 1px solid var(--cu-border);
+  border-radius: 999px;
+  padding: 0.2rem 0.7rem;
+  white-space: nowrap;
+}
+
+.db-relate-line {
+  width: 100%;
+  height: 2px;
+  background: var(--cu-border-soft);
+  margin: 0.35rem 0;
+  position: relative;
+}
+
+.db-relate-card {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--cu-orange);
+}
+
+/* ---- Badges (cardinality, keys, status) --------------------------------- */
+
+.db-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.6rem;
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  background: var(--cu-surface-alt);
+  border: 1px solid var(--cu-border);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--cu-text);
+}
+
+.db-badge-teal { border-color: var(--cu-teal); color: var(--cu-teal); }
+.db-badge-purple { border-color: var(--cu-purple); color: var(--cu-purple); }
+.db-badge-orange { border-color: var(--cu-orange); color: var(--cu-orange); }
+
+/* ---- Relation / table diagrams ------------------------------------------ */
+
+.db-relation {
+  border: 1px solid var(--cu-border-soft);
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 0 0 1rem;
+}
+
+.db-relation:last-child { margin-bottom: 0; }
+
+.db-relation-name {
+  background: var(--cu-surface-alt);
+  padding: 0.45rem 0.9rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--cu-text);
+  border-bottom: 1px solid var(--cu-border-soft);
+}
+
+.db-relation table {
+  margin: 0 !important;
+  border: none !important;
+  font-size: 0.82rem;
+}
+
+.db-relation table th {
+  background: var(--cu-bg) !important;
+}
+
+.db-relation table th.db-pk-col { text-decoration: underline; }
+
+/* ---- Generic responsive grid for side-by-side diagrams ------------------ */
+
+.db-grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.db-grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+
+@media screen and (max-width: 45em) {
+  .db-grid-2, .db-grid-3 { grid-template-columns: 1fr; }
+  .db-erd { flex-direction: column; align-items: stretch; }
+  .db-relate { flex-direction: row; min-width: 0; padding: 0.4rem 0; }
+  .db-relate-line { width: 2px; height: 100%; min-height: 1.5rem; }
+}
