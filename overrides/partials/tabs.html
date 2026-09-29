@@ -22,6 +22,16 @@
   and keep it as its own top-level entry in mkdocs.yml -- nothing else
   in this file needs to change.
 
+  A group can also name a `landing_title`: a top-level nav entry (a
+  single standalone page, e.g. "Courses" -> courses.md) whose own URL
+  becomes the dropdown tab's <a href> instead of the default fallback
+  (the first course's first leaf page). That entry must appear in
+  mkdocs.yml's nav BEFORE the group's own titled entries, so its URL is
+  captured before the dropdown is first rendered. The landing entry is
+  never rendered as its own separate tab -- it's absorbed into the
+  group entirely, only supplying the dropdown's link target (and, if
+  the landing page itself is the active page, the tab's active state).
+
   Jinja note: plain `{% set %}` inside a `{% for %}` loop does NOT
   persist across iterations (each iteration gets its own scope) -- any
   value that needs to accumulate across loop iterations below uses a
@@ -31,6 +41,7 @@
 {% set groups = [
   {
     "label": "Courses",
+    "landing_title": "Courses",
     "titles": [
       "Algorithms and Data Structures (CSC211)",
       "Web Technologies (CSC336)",
@@ -40,45 +51,61 @@
   },
   {
     "label": "Labs",
+    "landing_title": none,
     "titles": [
       "Web Technologies (CSC336) Labs"
     ]
   }
 ] %}
-{% set ns = namespace(rendered_labels=[]) %}
+{% set ns = namespace(rendered_labels=[], landing_urls={}, landing_active={}) %}
 <nav class="md-tabs" aria-label="{{ lang.t('tabs') }}" data-md-component="tabs">
   <div class="md-grid">
     <ul class="md-tabs__list">
       {% for nav_item in nav.items %}
-        {% set mg = namespace(group=none) %}
+        {% set lg = namespace(match=none) %}
         {% for group in groups %}
-          {% if nav_item.title in group.titles %}
-            {% set mg.group = group %}
+          {% if group.landing_title and nav_item.title == group.landing_title %}
+            {% set lg.match = group %}
           {% endif %}
         {% endfor %}
-        {% if mg.group %}
-          {% if mg.group.label not in ns.rendered_labels %}
-            {% set ns.rendered_labels = ns.rendered_labels + [mg.group.label] %}
-            {% set gm = namespace(items=[], active=false) %}
-            {% for candidate in nav.items %}
-              {% if candidate.title in mg.group.titles %}
-                {% set gm.items = gm.items + [candidate] %}
-                {% if candidate.active %}{% set gm.active = true %}{% endif %}
-              {% endif %}
-            {% endfor %}
-            <li class="md-tabs__item md-tabs__item--dropdown{% if gm.active %} md-tabs__item--active{% endif %}">
-              <a href="{{ item.first_leaf_url(gm.items | first) }}" class="md-tabs__link">
-                {{ mg.group.label }}
-              </a>
-              <ul class="md-tabs__submenu">
-                {% for member in gm.items %}
-                  <li>{{ item.render_submenu_link(member) }}</li>
-                {% endfor %}
-              </ul>
-            </li>
-          {% endif %}
+        {% if lg.match %}
+          {% set _ = ns.landing_urls.update({lg.match.label: nav_item.url | url}) %}
+          {% set _ = ns.landing_active.update({lg.match.label: nav_item.active}) %}
         {% else %}
-          {{ item.render(nav_item) }}
+          {% set mg = namespace(group=none) %}
+          {% for group in groups %}
+            {% if nav_item.title in group.titles %}
+              {% set mg.group = group %}
+            {% endif %}
+          {% endfor %}
+          {% if mg.group %}
+            {% if mg.group.label not in ns.rendered_labels %}
+              {% set ns.rendered_labels = ns.rendered_labels + [mg.group.label] %}
+              {% set gm = namespace(items=[], active=false) %}
+              {% for candidate in nav.items %}
+                {% if candidate.title in mg.group.titles %}
+                  {% set gm.items = gm.items + [candidate] %}
+                  {% if candidate.active %}{% set gm.active = true %}{% endif %}
+                {% endif %}
+              {% endfor %}
+              {% if mg.group.label in ns.landing_active and ns.landing_active[mg.group.label] %}
+                {% set gm.active = true %}
+              {% endif %}
+              {% set href = ns.landing_urls[mg.group.label] if mg.group.label in ns.landing_urls else item.first_leaf_url(gm.items | first) %}
+              <li class="md-tabs__item md-tabs__item--dropdown{% if gm.active %} md-tabs__item--active{% endif %}">
+                <a href="{{ href }}" class="md-tabs__link">
+                  {{ mg.group.label }}
+                </a>
+                <ul class="md-tabs__submenu">
+                  {% for member in gm.items %}
+                    <li>{{ item.render_submenu_link(member) }}</li>
+                  {% endfor %}
+                </ul>
+              </li>
+            {% endif %}
+          {% else %}
+            {{ item.render(nav_item) }}
+          {% endif %}
         {% endif %}
       {% endfor %}
     </ul>
