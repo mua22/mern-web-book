@@ -1,0 +1,3927 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Free textbooks, lecture slides, and runnable code for undergraduate Computer Science — Algorithms & Data Structures, Web Technologies, and Advanced Web Technologies — from the Department of Computer Science, COMSATS University Islamabad, Lahore Campus.">
+      
+      
+        <meta name="author" content="Usman Akram">
+      
+      
+        <link rel="canonical" href="https://cuinotes.com/database-systems/lecture-07-relational-algebra-unary-and-set-operations/">
+      
+      
+        <link rel="prev" href="../lecture-06-integrity-constraints/">
+      
+      
+        <link rel="next" href="../lecture-08-join-and-division-operations/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/logo.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>7. Relational Algebra: Unary and Set Operations - cuinotes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+  
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+  
+  <style>:root{--md-admonition-icon--note:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M20%2011h3v2h-3zM1%2011h3v2H1zM13%201v3h-2V1zM4.92%203.5l2.13%202.14-1.42%201.41L3.5%204.93zm12.03%202.13%202.12-2.13%201.43%201.43-2.13%202.12zM12%206a6%206%200%200%201%206%206c0%202.22-1.21%204.16-3%205.2V19a1%201%200%200%201-1%201h-4a1%201%200%200%201-1-1v-1.8c-1.79-1.04-3-2.98-3-5.2a6%206%200%200%201%206-6m2%2015v1a1%201%200%200%201-1%201h-2a1%201%200%200%201-1-1v-1zm-3-3h2v-2.13c1.73-.44%203-2.01%203-3.87a4%204%200%200%200-4-4%204%204%200%200%200-4%204c0%201.86%201.27%203.43%203%203.87z%22/%3E%3C/svg%3E');--md-admonition-icon--tip:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M12%203%201%209l4%202.18v6L12%2021l7-3.82v-6l2-1.09V17h2V9zm6.82%206L12%2012.72%205.18%209%2012%205.28zM17%2016l-5%202.72L7%2016v-3.73L12%2015l5-2.73z%22/%3E%3C/svg%3E');--md-admonition-icon--warning:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M12%202%201%2021h22M12%206l7.53%2013H4.47M11%2010v4h2v-4m-2%206v2h2v-2%22/%3E%3C/svg%3E');--md-admonition-icon--example:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M19%203H5c-1.1%200-2%20.9-2%202v14c0%201.1.9%202%202%202h14c1.1%200%202-.9%202-2V5c0-1.1-.9-2-2-2m-8%205H9v2c0%201.1-.9%202-2%202%201.1%200%202%20.9%202%202v2h2v2H9c-1.1%200-2-.9-2-2v-1c0-1.1-.9-2-2-2v-2c1.1%200%202-.9%202-2V8c0-1.1.9-2%202-2h2zm8%205c-1.1%200-2%20.9-2%202v1c0%201.1-.9%202-2%202h-2v-2h2v-2c0-1.1.9-2%202-2-1.1%200-2-.9-2-2V8h-2V6h2c1.1%200%202%20.9%202%202v1c0%201.1.9%202%202%202z%22/%3E%3C/svg%3E');}</style>
+
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sora:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Sora";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&display=swap">
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XCX5GHHFLZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-XCX5GHHFLZ');
+</script>
+
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="teal">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#7-relational-algebra-unary-and-set-operations" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="cuinotes" class="md-header__button md-logo" aria-label="cuinotes" data-md-component="logo">
+      
+  <img src="../../assets/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            cuinotes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              7. Relational Algebra: Unary and Set Operations
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="teal"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="teal"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+
+
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+        
+          
+        
+          
+        
+        
+          
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+        
+      
+        
+        
+          
+            
+          
+        
+          
+        
+        
+          
+            
+            
+            
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+            <li class="md-tabs__item md-tabs__item--dropdown md-tabs__item--active">
+              <a href="../../algorithms-and-data-structures/" class="md-tabs__link">
+                Courses
+              </a>
+              <ul class="md-tabs__submenu">
+                
+                  <li>
+  <a href="../../algorithms-and-data-structures/">Algorithms and Data Structures (CSC211)</a>
+</li>
+                
+                  <li>
+  <a href="../../web-technologies/">Web Technologies (CSC336)</a>
+</li>
+                
+                  <li>
+  <a href="../../advanced-web-technologies/">Advanced Web Technologies (CSC337)</a>
+</li>
+                
+                  <li>
+  <a href="../">Database Systems (CSC270)</a>
+</li>
+                
+              </ul>
+            </li>
+          
+        
+      
+        
+        
+          
+            
+          
+        
+          
+        
+        
+          
+        
+      
+        
+        
+          
+            
+          
+        
+          
+        
+        
+          
+        
+      
+        
+        
+          
+            
+          
+        
+          
+        
+        
+          
+        
+      
+        
+        
+          
+        
+          
+            
+          
+        
+        
+          
+            
+            
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+                
+                
+              
+            
+              
+            
+              
+            
+              
+            
+            <li class="md-tabs__item md-tabs__item--dropdown">
+              <a href="../../labs/web-technologies/" class="md-tabs__link">
+                Labs
+              </a>
+              <ul class="md-tabs__submenu">
+                
+                  <li>
+  <a href="../../labs/web-technologies/">Web Technologies (CSC336) Labs</a>
+</li>
+                
+              </ul>
+            </li>
+          
+        
+      
+        
+        
+          
+        
+          
+        
+        
+          
+  
+  
+  
+  
+    
+    
+    <li class="md-tabs__item md-tabs__item--dropdown">
+      <a href="../../demos/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Helping Material
+
+      </a>
+      
+        <ul class="md-tabs__submenu">
+          
+            <li>
+  <a href="../../demos/">Demos</a>
+</li>
+          
+            <li>
+  <a href="../../downloads/">Downloads</a>
+</li>
+          
+            <li>
+  <a href="../../lecture-slides/">Lecture Slides</a>
+</li>
+          
+            <li>
+  <a href="../../tutorials/">Tutorials</a>
+</li>
+          
+        </ul>
+      
+    </li>
+  
+
+        
+      
+        
+        
+          
+        
+          
+        
+        
+          
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../tags/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Tags
+
+      </a>
+    </li>
+  
+
+        
+      
+        
+        
+          
+        
+          
+        
+        
+          
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://usmanlive.com" class="md-tabs__link">
+        
+  
+  
+    
+  
+  usmanlive.com
+
+      </a>
+    </li>
+  
+
+        
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="cuinotes" class="md-nav__button md-logo" aria-label="cuinotes" data-md-component="logo">
+      
+  <img src="../../assets/logo.svg" alt="logo">
+
+    </a>
+    cuinotes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../algorithms-and-data-structures/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Algorithms and Data Structures (CSC211)
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../web-technologies/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Web Technologies (CSC336)
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../advanced-web-technologies/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced Web Technologies (CSC337)
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Database Systems (CSC270)
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Database Systems (CSC270)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unit 1 — Foundations of Database Systems
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Unit 1 — Foundations of Database Systems
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-01-introduction-to-databases-and-information-systems/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Introduction to Databases and Information Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-02-the-database-approach/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. The Database Approach
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-03-database-languages-and-functions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Database Languages and Functions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-04-database-architecture-and-data-independence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Database Architecture and Data Independence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_3" id="__nav_5_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unit 2 — The Relational Model
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Unit 2 — The Relational Model
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-05-the-relational-model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. The Relational Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-06-integrity-constraints/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Integrity Constraints
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5_4" id="__nav_5_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unit 3 — Relational Algebra and Calculus
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Unit 3 — Relational Algebra and Calculus
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Relational Algebra: Unary and Set Operations
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Relational Algebra: Unary and Set Operations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#in-this-lecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        In This Lecture
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introduction-to-relational-algebra" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction to Relational Algebra
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#select-filtering-rows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SELECT (σ) — Filtering Rows
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project-filtering-columns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PROJECT (π) — Filtering Columns
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#composing-select-and-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Composing SELECT and PROJECT
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#set-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Set Operations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Set Operations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#union-compatibility" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Union-Compatibility
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#union" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        UNION (∪)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#intersection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        INTERSECTION (∩)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-difference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SET DIFFERENCE (−)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cartesian-product" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CARTESIAN PRODUCT (×)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Takeaways
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-08-join-and-division-operations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Join and Division Operations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-09-aggregation-and-grouping/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Aggregation and Grouping
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-10-relational-calculus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Relational Calculus
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_5" id="__nav_5_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unit 4 — Data Modeling: ER and EER
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Unit 4 — Data Modeling: ER and EER
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-11-data-modeling-and-database-design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Data Modeling and Database Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-12-the-entity-relationship-model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. The Entity-Relationship Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-13-er-modeling-issues-and-problems/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. ER Modeling: Issues and Problems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-14-the-enhanced-er-model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. The Enhanced ER Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-15-eer-modeling-a-case-study/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15. EER Modeling: A Case Study
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-16-mapping-eer-models-to-relational-schemas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16. Mapping EER Models to Relational Schemas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-17-midterm-review/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17. Midterm Review
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_6" id="__nav_5_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unit 5 — Normalization
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Unit 5 — Normalization
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-18-normalization-purpose-and-concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    18. Normalization: Purpose and Concepts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-19-the-normalization-process-1nf-2nf-3nf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    19. The Normalization Process: 1NF, 2NF, 3NF
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-20-advanced-normalization-functional-dependencies-and-bcnf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20. Advanced Normalization: Functional Dependencies and BCNF
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-21-bcnf-schema-design-by-decomposition/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    21. BCNF Schema Design by Decomposition
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-22-multi-valued-dependencies-and-fourth-normal-form/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    22. Multi-Valued Dependencies and Fourth Normal Form
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_7" id="__nav_5_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unit 6 — Views, Security, and Indexing
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Unit 6 — Views, Security, and Indexing
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-23-views-and-materialized-views/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    23. Views and Materialized Views
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-24-database-authorization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    24. Database Authorization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-25-indexing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    25. Indexing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_8" id="__nav_5_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unit 7 — NoSQL and MongoDB
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Unit 7 — NoSQL and MongoDB
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-26-introduction-to-nosql-databases/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    26. Introduction to NoSQL Databases
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-27-mongodb-and-the-document-model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    27. MongoDB and the Document Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-28-mongodb-sharding-and-replication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    28. MongoDB Sharding and Replication
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_9" id="__nav_5_9_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unit 8 — Transaction Management
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Unit 8 — Transaction Management
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-29-database-transactions-and-acid-properties/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    29. Database Transactions and ACID Properties
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-30-transaction-management-concurrency-control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    30. Transaction Management: Concurrency Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-31-failure-and-recovery-in-transaction-management/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    31. Failure and Recovery in Transaction Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lecture-32-course-review/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    32. Course Review
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../labs/web-technologies/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Web Technologies (CSC336) Labs
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../demos/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Helping Material
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tags
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://usmanlive.com" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    usmanlive.com
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#in-this-lecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        In This Lecture
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introduction-to-relational-algebra" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction to Relational Algebra
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#select-filtering-rows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SELECT (σ) — Filtering Rows
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project-filtering-columns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PROJECT (π) — Filtering Columns
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#composing-select-and-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Composing SELECT and PROJECT
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#set-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Set Operations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Set Operations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#union-compatibility" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Union-Compatibility
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#union" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        UNION (∪)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#intersection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        INTERSECTION (∩)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-difference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SET DIFFERENCE (−)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cartesian-product" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CARTESIAN PRODUCT (×)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Takeaways
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="Navigation" >
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../.." class="md-path__link">
+        
+  <span class="md-ellipsis">
+    Home
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Database Systems (CSC270)
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="./" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Unit 3 — Relational Algebra and Calculus
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <a href="../../tags/#tag:csc270" class="md-tag">CSC270</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../tags/#tag:project" class="md-tag">PROJECT</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../tags/#tag:relational-algebra" class="md-tag">Relational Algebra</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../tags/#tag:select" class="md-tag">SELECT</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../tags/#tag:set-operations" class="md-tag">Set Operations</a>
+      
+    
+  </nav>
+
+
+
+<h1 id="7-relational-algebra-unary-and-set-operations">7. Relational Algebra: Unary and Set Operations<a class="headerlink" href="#7-relational-algebra-unary-and-set-operations" title="Permanent link">&para;</a></h1>
+<p>You now know what a valid relation looks like (<a href="../lecture-05-the-relational-model/">Lecture 5</a>)
+and what keeps it correct (<a href="../lecture-06-integrity-constraints/">Lecture 6</a>). This lecture
+starts <em>asking it questions</em>. <strong>Relational algebra</strong> is the formal query language the
+relational model comes with — every operator takes one or two relations as input and
+produces a brand-new relation as output, which is precisely why these operators can be
+chained together into arbitrarily complex queries. SQL, which you'll start writing in a
+later unit, is really just relational algebra (plus relational calculus ideas) wearing a
+more English-like syntax — understanding the algebra first means SQL will feel like
+translation, not memorization.</p>
+<p>We continue with the property rental agency's <code>Branch</code>, <code>Staff</code>, <code>PrivateOwner</code>, and
+<code>PropertyForRent</code> relations from Lectures 5–6, and introduce one new relation, <code>Client</code>, to
+give the set operations and Cartesian product something realistic to combine.</p>
+<div class="db-relation">
+<div class="db-relation-name">Client (<u>clientNo</u>, name, telNo, prefType, maxRent)</div>
+<table>
+<thead>
+<tr>
+<th>clientNo</th>
+<th>name</th>
+<th>telNo</th>
+<th>prefType</th>
+<th>maxRent</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CR56</td>
+<td>Aline Stewart</td>
+<td>042-121-1121</td>
+<td>Flat</td>
+<td>25000</td>
+</tr>
+<tr>
+<td>CR62</td>
+<td>Mike Ritchie</td>
+<td>042-123-4599</td>
+<td>House</td>
+<td>30000</td>
+</tr>
+<tr>
+<td>CR76</td>
+<td>John Kay</td>
+<td>021-987-1212</td>
+<td>Flat</td>
+<td>20000</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="in-this-lecture">In This Lecture<a class="headerlink" href="#in-this-lecture" title="Permanent link">&para;</a></h2>
+<ul>
+<li>What relational algebra is, and its defining <strong>closure property</strong></li>
+<li><strong>SELECT</strong> (σ) — filtering tuples by a predicate</li>
+<li><strong>PROJECT</strong> (π) — filtering attributes (columns)</li>
+<li>Composing SELECT and PROJECT together</li>
+<li><strong>Set operations</strong> — UNION (∪), INTERSECTION (∩), SET DIFFERENCE (−) — and the
+  union-compatibility rule that governs when they're legal</li>
+<li><strong>CARTESIAN PRODUCT</strong> (×) — combining every tuple of one relation with every tuple of
+  another</li>
+</ul>
+<h2 id="introduction-to-relational-algebra">Introduction to Relational Algebra<a class="headerlink" href="#introduction-to-relational-algebra" title="Permanent link">&para;</a></h2>
+<p><strong>Relational algebra</strong> is a <strong>procedural</strong> query language: every query is written as a
+sequence of operations applied, step by step, to relations, where you specify <em>how</em> to
+derive the answer (this relation, filtered this way, then combined with that relation) —
+in contrast to a <strong>declarative</strong> language like SQL, where you mostly state <em>what</em> you want
+and leave the "how" to the DBMS's query optimizer. Studying the algebra first is exactly
+what lets you understand <em>what SQL is doing internally</em>, and later, why one SQL query can
+run dramatically faster than another logically-equivalent one.</p>
+<p>Every relational algebra operator obeys the same contract:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>operator(relation(s)) -&gt; relation
+</span></code></pre></div>
+<p>This is the <strong>closure property</strong>: because every operator's <em>output</em> is itself a valid
+relation (same rules from Lecture 5 — a set of tuples, atomic values, and so on), that
+output can immediately be fed as <em>input</em> into another operator. Closure is what makes the
+algebra genuinely algebraic — like ordinary arithmetic, where <code>(3 + 4) * 2</code> nests operations
+because <code>+</code> produces a number that <code>*</code> can consume, relational algebra lets you nest
+<code>π(σ(Staff))</code> because <code>σ</code> produces a relation that <code>π</code> can consume. Every example in this
+lecture and the next builds on that one fact.</p>
+<div class="db-diagram">
+<p class="db-diagram-label">Closure: an operator's output feeds directly into the next operator</p>
+<div class="db-flow">
+<div class="db-node db-node-teal">
+<p><span class="db-node-title">Staff (relation)</span>
+<span class="db-node-sub">5 tuples, 5 attributes</span></p>
+</div>
+<div class="db-arrow"></div>
+<div class="db-node db-node-purple">
+<p><span class="db-node-title">σ salary&gt;20000 (Staff)</span>
+<span class="db-node-sub">still a relation — 2 tuples, 5 attributes</span></p>
+</div>
+<div class="db-arrow"></div>
+<div class="db-node db-node-orange">
+<p><span class="db-node-title">π staffNo, name ( ... )</span>
+<span class="db-node-sub">still a relation — 2 tuples, 2 attributes</span></p>
+</div>
+</div>
+</div>
+<p>The operators split into two families, covered across this lecture and the next:</p>
+<table>
+<thead>
+<tr>
+<th>Family</th>
+<th>Operators</th>
+<th>Covered in</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Unary</strong> (one input relation)</td>
+<td>SELECT (σ), PROJECT (π)</td>
+<td>This lecture</td>
+</tr>
+<tr>
+<td><strong>Set</strong> (two union-compatible input relations)</td>
+<td>UNION (∪), INTERSECTION (∩), DIFFERENCE (−)</td>
+<td>This lecture</td>
+</tr>
+<tr>
+<td>Cartesian PRODUCT (two input relations, any schema)</td>
+<td>×</td>
+<td>This lecture</td>
+</tr>
+<tr>
+<td><strong>Join / Division</strong> (two input relations, related through a common attribute)</td>
+<td>⋈, θ-join, ÷</td>
+<td><a href="../lecture-08-join-and-division-operations/">Lecture 8</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="select-filtering-rows">SELECT (σ) — Filtering Rows<a class="headerlink" href="#select-filtering-rows" title="Permanent link">&para;</a></h2>
+<p><strong>SELECT</strong>, written σ (sigma), extracts the subset of tuples from a relation that satisfy a
+given predicate — it filters <em>rows</em>, keeping every attribute (all columns) of the tuples
+that pass.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>σ &lt;predicate&gt; (RelationName)
+</span></code></pre></div>
+<p><strong>Query:</strong> find every staff member earning more than 20,000.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>σ salary&gt;20000 (Staff)
+</span></code></pre></div>
+<div class="db-relation">
+<div class="db-relation-name">Input: Staff</div>
+<table>
+<thead>
+<tr>
+<th>staffNo</th>
+<th>name</th>
+<th>position</th>
+<th>salary</th>
+<th>branchNo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SL21</td>
+<td>John White</td>
+<td>Manager</td>
+<td>30000</td>
+<td>B005</td>
+</tr>
+<tr>
+<td>SG37</td>
+<td>Ann Beech</td>
+<td>Assistant</td>
+<td>12000</td>
+<td>B003</td>
+</tr>
+<tr>
+<td>SG14</td>
+<td>David Ford</td>
+<td>Supervisor</td>
+<td>18000</td>
+<td>B003</td>
+</tr>
+<tr>
+<td>SA9</td>
+<td>Mary Howe</td>
+<td>Assistant</td>
+<td>9000</td>
+<td>B007</td>
+</tr>
+<tr>
+<td>SL41</td>
+<td>Julie Lee</td>
+<td>Manager</td>
+<td>22000</td>
+<td>B005</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="db-relation">
+<div class="db-relation-name">Output: σ salary&gt;20000 (Staff)</div>
+<table>
+<thead>
+<tr>
+<th>staffNo</th>
+<th>name</th>
+<th>position</th>
+<th>salary</th>
+<th>branchNo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SL21</td>
+<td>John White</td>
+<td>Manager</td>
+<td>30000</td>
+<td>B005</td>
+</tr>
+<tr>
+<td>SL41</td>
+<td>Julie Lee</td>
+<td>Manager</td>
+<td>22000</td>
+<td>B005</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Tracing it by hand: 30000 &gt; 20000 ✓, 12000 &gt; 20000 ✗, 18000 &gt; 20000 ✗, 9000 &gt; 20000 ✗,
+22000 &gt; 20000 ✓ — exactly the two rows kept above. SELECT never adds, drops, or changes an
+attribute; the output relation has the <em>same degree</em> (5) as the input, only fewer (or
+equal) tuples.</p>
+<p>Predicates combine comparison operators (<code>=</code>, <code>≠</code>, <code>&lt;</code>, <code>&gt;</code>, <code>≤</code>, <code>≥</code>) with the logical
+connectives <strong>∧</strong> (AND), <strong>∨</strong> (OR), and <strong>¬</strong> (NOT), exactly like a Boolean expression in
+any programming language.</p>
+<p><strong>Query:</strong> find every staff member at branch <code>B003</code> earning more than 15,000.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>σ branchNo=&#39;B003&#39; ∧ salary&gt;15000 (Staff)
+</span></code></pre></div>
+<p>Tracing it: <code>SL21</code> → branch B005, fails the first condition. <code>SG37</code> → branch B003 ✓, salary
+12000, fails the second. <code>SG14</code> → branch B003 ✓, salary 18000 &gt; 15000 ✓ — <strong>kept</strong>. <code>SA9</code> →
+branch B007, fails. <code>SL41</code> → branch B005, fails. Result: <code>{SG14}</code> only.</p>
+<div class="db-relation">
+<div class="db-relation-name">Output: σ branchNo='B003' ∧ salary&gt;15000 (Staff)</div>
+<table>
+<thead>
+<tr>
+<th>staffNo</th>
+<th>name</th>
+<th>position</th>
+<th>salary</th>
+<th>branchNo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SG14</td>
+<td>David Ford</td>
+<td>Supervisor</td>
+<td>18000</td>
+<td>B003</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">SELECT here is not the SQL SELECT</p>
+<p>This is the single most common point of confusion for students moving between algebra
+and SQL: relational-algebra <strong>SELECT (σ)</strong> corresponds to SQL's <code>WHERE</code> clause (row
+filtering). SQL's own <code>SELECT</code> keyword actually corresponds to relational algebra's
+<strong>PROJECT (π)</strong> — choosing <em>columns</em>. <code>SELECT staffNo, name FROM Staff WHERE
+salary &gt; 20000</code> is really <code>π staffNo, name (σ salary&gt;20000 (Staff))</code> underneath, in
+exactly that order of operations.</p>
+</div>
+<h2 id="project-filtering-columns">PROJECT (π) — Filtering Columns<a class="headerlink" href="#project-filtering-columns" title="Permanent link">&para;</a></h2>
+<p><strong>PROJECT</strong>, written π (pi), extracts a subset of <em>attributes</em> (columns) from a relation,
+discarding the rest — keeping every tuple that passes (all rows), narrowed to fewer columns.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>π &lt;attribute list&gt; (RelationName)
+</span></code></pre></div>
+<p><strong>Query:</strong> list just the name and salary of every staff member.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>π name, salary (Staff)
+</span></code></pre></div>
+<div class="db-relation">
+<div class="db-relation-name">Output: π name, salary (Staff)</div>
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>salary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>John White</td>
+<td>30000</td>
+</tr>
+<tr>
+<td>Ann Beech</td>
+<td>12000</td>
+</tr>
+<tr>
+<td>David Ford</td>
+<td>18000</td>
+</tr>
+<tr>
+<td>Mary Howe</td>
+<td>9000</td>
+</tr>
+<tr>
+<td>Julie Lee</td>
+<td>22000</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Because a relation can never contain duplicate tuples (Lecture 5's second property),
+PROJECT <strong>automatically removes any duplicate rows</strong> that result from dropping columns.</p>
+<p><strong>Query:</strong> which distinct property types does the agency rent?</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>π type (PropertyForRent)
+</span></code></pre></div>
+<div class="db-relation">
+<div class="db-relation-name">Input: PropertyForRent (relevant columns only, for reference)</div>
+<table>
+<thead>
+<tr>
+<th>propertyNo</th>
+<th>type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PA14</td>
+<td>House</td>
+</tr>
+<tr>
+<td>PL94</td>
+<td>Flat</td>
+</tr>
+<tr>
+<td>PG4</td>
+<td>House</td>
+</tr>
+<tr>
+<td>PG36</td>
+<td>Flat</td>
+</tr>
+<tr>
+<td>PG16</td>
+<td>House</td>
+</tr>
+<tr>
+<td>PG21</td>
+<td>Flat</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="db-relation">
+<div class="db-relation-name">Output: π type (PropertyForRent)</div>
+<table>
+<thead>
+<tr>
+<th>type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>House</td>
+</tr>
+<tr>
+<td>Flat</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Six input tuples collapse to <strong>two</strong> output tuples — <code>House</code> appears three times and <code>Flat</code>
+appears three times in the source data, but the projected relation, being a true set, keeps
+each distinct value exactly once. This duplicate-elimination step is exactly why, in SQL,
+you sometimes need <code>SELECT DISTINCT</code> to get algebra-faithful behavior: plain SQL <code>SELECT</code>
+does <em>not</em> remove duplicates by default, one of the few places SQL deliberately diverges
+from the pure algebra.</p>
+<h2 id="composing-select-and-project">Composing SELECT and PROJECT<a class="headerlink" href="#composing-select-and-project" title="Permanent link">&para;</a></h2>
+<p>Closure means you can nest these two freely, and most real queries need both.</p>
+<p><strong>Query:</strong> list just the staff number and name of every staff member earning more than
+20,000.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>π staffNo, name (σ salary&gt;20000 (Staff))
+</span></code></pre></div>
+<p>Read inside-out: first σ filters <code>Staff</code> down to the two high earners found earlier
+(<code>SL21</code>, <code>SL41</code>), <em>then</em> π narrows those two rows down to just <code>staffNo</code> and <code>name</code>.</p>
+<div class="db-relation">
+<div class="db-relation-name">Output: π staffNo, name (σ salary&gt;20000 (Staff))</div>
+<table>
+<thead>
+<tr>
+<th>staffNo</th>
+<th>name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SL21</td>
+<td>John White</td>
+</tr>
+<tr>
+<td>SL41</td>
+<td>Julie Lee</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Order matters for what's still available — not for what the query can express</p>
+<p><code>π staffNo, name (σ salary&gt;20000 (Staff))</code> works because σ runs first, while <code>salary</code>
+is still present to filter on. Flip the order to <code>σ salary&gt;20000 (π staffNo, name
+(Staff))</code> and it <strong>fails outright</strong> — by the time σ runs, <code>salary</code> has already been
+projected away, so the predicate has nothing to compare against. This is exactly why
+the inside-out reading habit matters: always identify what each nested operator needs
+available <em>at the moment it runs</em>.</p>
+</div>
+<h2 id="set-operations">Set Operations<a class="headerlink" href="#set-operations" title="Permanent link">&para;</a></h2>
+<p>Relational algebra borrows three operators directly from set theory — <strong>UNION</strong> (∪),
+<strong>INTERSECTION</strong> (∩), and <strong>SET DIFFERENCE</strong> (−) — because a relation <em>is</em> a set of tuples.
+All three take exactly two relations and require them to be <strong>union-compatible</strong> first.</p>
+<h3 id="union-compatibility">Union-Compatibility<a class="headerlink" href="#union-compatibility" title="Permanent link">&para;</a></h3>
+<p>Two relations $R$ and $S$ are <strong>union-compatible</strong> (also called <em>type-compatible</em>) when:</p>
+<ol>
+<li>They have the <strong>same degree</strong> — the same number of attributes.</li>
+<li>Each corresponding pair of attributes is drawn from the <strong>same domain</strong> (the $i$-th
+   attribute of $R$ and the $i$-th attribute of $S$ must hold comparable kinds of values —
+   attribute <em>names</em> don't have to match, but their domains do).</li>
+</ol>
+<p><code>π staffNo (Staff)</code> and <code>π clientNo (Client)</code> are union-compatible: both are degree-1
+relations, both drawn from a domain of short alphanumeric identifier codes — even though one
+column is literally named <code>staffNo</code> and the other <code>clientNo</code>. By contrast, <code>Staff</code> (degree
+5: staffNo, name, position, salary, branchNo) and <code>Branch</code> (degree 4: branchNo, street,
+city, postcode) are <strong>not</strong> union-compatible — different degree, and even attribute-by
+attribute the domains don't line up (<code>salary</code>, a number, against <code>postcode</code>, a string).
+Attempting <code>Staff ∪ Branch</code> is simply not a legal expression.</p>
+<h3 id="union">UNION (∪)<a class="headerlink" href="#union" title="Permanent link">&para;</a></h3>
+<p>$R \cup S$ returns every tuple that appears in $R$, in $S$, or in both — duplicates
+collapsed to one, as always.</p>
+<p><strong>Query:</strong> find the staff number of every staff member who works at branch <code>B003</code>, <em>or</em>
+earns more than 20,000 (or both).</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>π staffNo (σ branchNo=&#39;B003&#39; (Staff)) ∪ π staffNo (σ salary&gt;20000 (Staff))
+</span></code></pre></div>
+<div class="db-relation">
+<div class="db-relation-name">π staffNo (σ branchNo='B003' (Staff))</div>
+<table>
+<thead>
+<tr>
+<th>staffNo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SG37</td>
+</tr>
+<tr>
+<td>SG14</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="db-relation">
+<div class="db-relation-name">π staffNo (σ salary&gt;20000 (Staff))</div>
+<table>
+<thead>
+<tr>
+<th>staffNo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SL21</td>
+</tr>
+<tr>
+<td>SL41</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="db-relation">
+<div class="db-relation-name">Output: UNION of the two relations above</div>
+<table>
+<thead>
+<tr>
+<th>staffNo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SG37</td>
+</tr>
+<tr>
+<td>SG14</td>
+</tr>
+<tr>
+<td>SL21</td>
+</tr>
+<tr>
+<td>SL41</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>No overlap between the two input sets here, so the union is simply all four rows combined —
+<code>{SG37, SG14} ∪ {SL21, SL41} = {SG37, SG14, SL21, SL41}</code>.</p>
+<h3 id="intersection">INTERSECTION (∩)<a class="headerlink" href="#intersection" title="Permanent link">&para;</a></h3>
+<p>$R \cap S$ returns only the tuples that appear in <strong>both</strong> $R$ and $S$.</p>
+<p><strong>Query:</strong> find the staff number of every staff member who works at branch <code>B003</code> <strong>and</strong>
+earns more than 15,000.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>π staffNo (σ branchNo=&#39;B003&#39; (Staff)) ∩ π staffNo (σ salary&gt;15000 (Staff))
+</span></code></pre></div>
+<p><code>π staffNo (σ branchNo='B003' (Staff))</code> = <code>{SG37, SG14}</code> (unchanged from above).
+<code>π staffNo (σ salary&gt;15000 (Staff))</code>: 30000&gt;15000 ✓ (SL21), 12000&gt;15000 ✗ (SG37),
+18000&gt;15000 ✓ (SG14), 9000&gt;15000 ✗ (SA9), 22000&gt;15000 ✓ (SL41) → <code>{SL21, SG14, SL41}</code>.</p>
+<div class="db-relation">
+<div class="db-relation-name">Output: {SG37, SG14} ∩ {SL21, SG14, SL41}</div>
+<table>
+<thead>
+<tr>
+<th>staffNo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SG14</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Only <code>SG14</code> appears in <em>both</em> input sets — <code>SG37</code> is a B003 employee but doesn't clear the
+15,000 salary bar, and <code>SL21</code>/<code>SL41</code> clear the salary bar but don't work at B003.</p>
+<h3 id="set-difference">SET DIFFERENCE (−)<a class="headerlink" href="#set-difference" title="Permanent link">&para;</a></h3>
+<p>$R - S$ returns every tuple that is in $R$ <strong>but not</strong> in $S$ — order matters here, unlike
+UNION and INTERSECTION, since $R - S$ and $S - R$ generally give different answers.</p>
+<p><strong>Query:</strong> find the staff number of every staff member who works at branch <code>B003</code> but does
+<strong>not</strong> earn more than 15,000.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>π staffNo (σ branchNo=&#39;B003&#39; (Staff)) − π staffNo (σ salary&gt;15000 (Staff))
+</span></code></pre></div>
+<p><code>{SG37, SG14} − {SL21, SG14, SL41}</code>: keep every element of the left set that does <strong>not</strong>
+appear in the right set. <code>SG37</code> is not in <code>{SL21, SG14, SL41}</code> → keep. <code>SG14</code> <strong>is</strong> in that
+set → remove.</p>
+<div class="db-relation">
+<div class="db-relation-name">Output: {SG37, SG14} − {SL21, SG14, SL41}</div>
+<table>
+<thead>
+<tr>
+<th>staffNo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SG37</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Only <code>SG37</code> remains — the B003 employee whose salary (12,000) does <em>not</em> exceed 15,000.</p>
+<div class="admonition note">
+<p class="admonition-title">Sanity-check identity</p>
+<p>For any two sets, $(R \cap S)$ and $(R - S)$ together always reconstruct $R$ exactly,
+with no overlap: here <code>{SG14}</code> (the intersection) plus <code>{SG37}</code> (the difference) gives
+back <code>{SG37, SG14}</code> — the original B003 staff set. This identity is a useful way to
+double-check your own by-hand tracing of INTERSECTION and DIFFERENCE queries built from
+the same two inputs.</p>
+</div>
+<h2 id="cartesian-product">CARTESIAN PRODUCT (×)<a class="headerlink" href="#cartesian-product" title="Permanent link">&para;</a></h2>
+<p>$R \times S$ combines <strong>every</strong> tuple of $R$ with <strong>every</strong> tuple of $S$, producing a
+relation whose degree is the sum of the two input degrees, and whose cardinality is the
+<em>product</em> of the two input cardinalities. Unlike the set operators, the two input relations
+do <strong>not</strong> need to be union-compatible — they can have completely unrelated schemas.</p>
+<p><strong>Query:</strong> list every possible (client, Lahore property) pairing, as a starting point for
+"which properties should we suggest to which clients?"</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>π clientNo (Client) × π propertyNo (σ city=&#39;Lahore&#39; (PropertyForRent))
+</span></code></pre></div>
+<p><code>π clientNo (Client)</code> = <code>{CR56, CR62, CR76}</code> (3 tuples). <code>σ city='Lahore'
+(PropertyForRent)</code> keeps <code>PA14</code>, <code>PG4</code>, <code>PG36</code> (checking each: PA14 Lahore ✓, PL94
+Islamabad ✗, PG4 Lahore ✓, PG36 Lahore ✓, PG16 Islamabad ✗, PG21 Karachi ✗), so
+<code>π propertyNo (...)</code> = <code>{PA14, PG4, PG36}</code> (3 tuples).</p>
+<div class="db-relation">
+<div class="db-relation-name">Output: 3 clients × 3 Lahore properties = 9 tuples</div>
+<table>
+<thead>
+<tr>
+<th>clientNo</th>
+<th>propertyNo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CR56</td>
+<td>PA14</td>
+</tr>
+<tr>
+<td>CR56</td>
+<td>PG4</td>
+</tr>
+<tr>
+<td>CR56</td>
+<td>PG36</td>
+</tr>
+<tr>
+<td>CR62</td>
+<td>PA14</td>
+</tr>
+<tr>
+<td>CR62</td>
+<td>PG4</td>
+</tr>
+<tr>
+<td>CR62</td>
+<td>PG36</td>
+</tr>
+<tr>
+<td>CR76</td>
+<td>PA14</td>
+</tr>
+<tr>
+<td>CR76</td>
+<td>PG4</td>
+</tr>
+<tr>
+<td>CR76</td>
+<td>PG36</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Every one of the $3 \times 3 = 9$ possible pairings is present, with no filtering applied
+at all — including plainly unhelpful pairs, like pairing <code>CR76</code> (whose <code>maxRent</code> is 20,000)
+with <code>PG4</code> (rent 35,000), which nothing here rules out. This is exactly the limitation that
+motivates Lecture 8: a raw Cartesian product is rarely the answer you actually want — you
+almost always want it <em>combined with a SELECT</em> that keeps only the pairs satisfying some
+condition across both relations (e.g., "the property's branch matches the client's preferred
+branch"). That combination — Cartesian product followed by a selection on a matching
+condition — is precisely what the <strong>join</strong> operators formalize, next.</p>
+<div class="db-diagram">
+<p class="db-diagram-label">Where Lecture 8 picks up</p>
+<div class="db-flow">
+<div class="db-node db-node-teal">
+<p><span class="db-node-title">R × S</span>
+<span class="db-node-sub">every possible pairing — usually far too many rows to be useful on its own</span></p>
+</div>
+<div class="db-arrow"></div>
+<div class="db-node db-node-purple">
+<p><span class="db-node-title">σ &lt;matching predicate&gt; (R × S)</span>
+<span class="db-node-sub">keep only pairs that satisfy a condition across both relations</span></p>
+</div>
+<div class="db-arrow"></div>
+<div class="db-node db-node-orange">
+<p><span class="db-node-title">= a JOIN</span>
+<span class="db-node-sub">exactly what Lecture 8 formalizes as its own named operator</span></p>
+</div>
+</div>
+</div>
+<h2 id="key-takeaways">Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Relational algebra is a <strong>procedural</strong> query language: every operator takes relation(s)
+  and produces a relation, which is the <strong>closure property</strong> that lets operators nest
+  arbitrarily deeply.</li>
+<li><strong>SELECT (σ)</strong> filters rows by a predicate; <strong>PROJECT (π)</strong> filters columns and
+  automatically removes any resulting duplicate tuples.</li>
+<li>SQL's <code>SELECT</code>/<code>WHERE</code> split maps onto algebra's π/σ almost exactly backwards from the
+  naming — don't let the shared word "SELECT" mislead you.</li>
+<li><strong>UNION (∪)</strong>, <strong>INTERSECTION (∩)</strong>, and <strong>SET DIFFERENCE (−)</strong> require the two input
+  relations to be <strong>union-compatible</strong>: same degree, corresponding attributes from the same
+  domain.</li>
+<li><strong>CARTESIAN PRODUCT (×)</strong> needs no compatibility at all — it pairs every tuple of one
+  relation with every tuple of the other, producing (rows₁ × rows₂) tuples of combined
+  degree — and is almost always followed by a SELECT to keep only the meaningful pairings,
+  which is exactly the idea Lecture 8's join operators formalize.</li>
+</ul>
+<p>Continue to <a href="../lecture-08-join-and-division-operations/">Lecture 8 — Join and Division Operations</a>,
+where Cartesian product plus a matching condition becomes a first-class operator in its own
+right.</p>
+
+
+
+
+
+
+
+  
+    
+  
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 29, 2026 08:13:25 UTC">September 29, 2026</span>
+  </span>
+
+    
+    
+    
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../lecture-06-integrity-constraints/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 6. Integrity Constraints">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                6. Integrity Constraints
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../lecture-08-join-and-division-operations/" class="md-footer__link md-footer__link--next" aria-label="Next: 8. Join and Division Operations">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                8. Join and Division Operations
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 cuinotes.com · Usman Akram &amp; Asif Shehzad, COMSATS University Islamabad — Lahore Campus
+    </div>
+  
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/in/usman-akram-21400327" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77m282.1 320h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://usmanlive.com" target="_blank" rel="noopener" title="usmanlive.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M351.9 280H161c2.9 64.5 17.2 123.9 37.5 167.4 11.4 24.5 23.7 41.8 35.1 52.4 11.2 10.5 18.9 12.2 22.9 12.2s11.7-1.7 22.9-12.2c11.4-10.6 23.7-28 35.1-52.4 20.3-43.5 34.6-102.9 37.5-167.4zm-191-48h190.9c-2.8-64.5-17.1-123.9-37.4-167.4-11.4-24.4-23.7-41.8-35.1-52.4C268.1 1.7 260.4 0 256.4 0s-11.7 1.7-22.9 12.2c-11.4 10.6-23.7 28-35.1 52.4-20.3 43.5-34.6 102.9-37.5 167.4m-48 0c3.5-85.6 25.6-165.1 57.9-217.3C78.7 47.3 10.9 131.2 1.5 232zM1.5 280c9.4 100.8 77.2 184.7 169.3 217.3-32.3-52.2-54.4-131.7-57.9-217.3zm398.4 0c-3.5 85.6-25.6 165.1-57.9 217.3 92.1-32.7 159.9-116.5 169.3-217.3zm111.4-48C501.9 131.2 434.1 47.3 342 14.7c32.3 52.2 54.4 131.7 57.9 217.3z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.indexes", "navigation.top", "navigation.footer", "navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.prune", "navigation.path", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "header.autohide"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
