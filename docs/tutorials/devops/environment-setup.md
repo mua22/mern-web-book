@@ -308,7 +308,7 @@ you don't have one).
 Installing Git and GitHub Desktop is the last item on *this* checklist — actually
 **using** them (making commits, branching, connecting to GitHub, and creating your first
 repository step by step with GitHub Desktop) is covered in full in the
-[Git and GitHub tutorial](../git-version-control/git-and-github.md). Read that next.
+[Git and GitHub tutorial](git-and-github.md). Read that next.
 
 ---
 
@@ -353,5 +353,5 @@ For MongoDB Atlas (cloud) users: instead of a command, confirm you can log in to
   for getting started fast) or installed **locally**; either way, **Compass** or the
   MongoDB VS Code extension lets you see your data.
 - **Git** and **GitHub Desktop** just need to be installed here — the
-  [Git and GitHub tutorial](../git-version-control/git-and-github.md) covers how to actually use them, including
+  [Git and GitHub tutorial](git-and-github.md) covers how to actually use them, including
   a full step-by-step first-repository, commit, and push walkthrough.

@@ -1,5 +1,5 @@
 ---
-title: HTML & CSS Fundamentals — Tutorials
+title: HTML & CSS — Tutorials
 description: >-
   Eight beginner-to-intermediate tutorials on building real pages and layouts —
   the box model, float, positioning, Flexbox, transitions, and responsive design.
@@ -9,7 +9,7 @@ tags:
   - CSS
 ---
 
-# HTML &amp; CSS Fundamentals
+# HTML &amp; CSS
 
 Eight tutorials, meant to be worked through roughly in order. Together they take you
 from a single styled page to a complete, responsive, multi-column site shell, using
