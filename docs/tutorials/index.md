@@ -1,28 +1,74 @@
 ---
 title: Tutorials
+description: >-
+  Standalone, tool-focused tutorials for MERN-stack web development — environment
+  setup, HTML & CSS fundamentals, and Git & version control — each self-contained
+  with runnable, copy-pasteable examples.
 ---
 
 # Tutorials
 
-Standalone, tool-focused tutorials that sit alongside the CSC336/CSC337 lecture chapters —
-things every developer needs regardless of which course unit you're on. Each one is
-self-contained, written from beginner to intermediate level, with runnable, copy-pasteable
-examples.
+Standalone, tool-focused tutorials that sit alongside the course chapters — things
+every developer needs regardless of which course unit you're on. Each one is
+self-contained, written from beginner to intermediate level, with runnable,
+copy-pasteable examples. Pick a category below.
 
-## Available Tutorials
+<div class="cu-cards-3" markdown>
 
-| Tutorial | Level | What it covers |
-|---|---|---|
-| [MERN Environment Setup](environment-setup.md) | Beginner | Installing VS Code (and essential extensions), Node.js/npm, nodemon, MongoDB (Atlas or local), and Git/GitHub Desktop |
-| [Your First HTML + CSS Page](first-html-css-app.md) | Beginner | Combining HTML structure and CSS (colors, the box model, centering, hover transitions) into one complete, real page |
-| [Layout Designing with div, span, and Float](layout-designing.md) | Beginner | `<div>`/`<span>`, `id` vs. `class`, and building a header + nav menu + three-column layout + footer with `float`, `width`, and `overflow` |
-| [CSS Positioning](css-positioning.md) | Beginner to Intermediate | `static`/`relative`/`absolute`/`fixed`/`sticky`, `z-index` and stacking, and real patterns like tooltips and a centered modal |
-| [Flexbox Layout](flexbox.md) | Beginner to Intermediate | `display: flex`, both axes, `flex-direction`, `justify-content`, `align-items`, `flex-wrap`, `gap`, `flex-grow`/`shrink`/`basis`, `align-self`, and real navbar/centering patterns |
-| [Multilevel Navigation with Positioning](multilevel-navigation.md) | Intermediate | Building a dropdown menu from scratch: a single-level bar, then a second-level dropdown with `relative`/`absolute`, then a guided challenge to add a third-level flyout yourself |
-| [Complete Page Layout with Float and Positioning](full-page-layout.md) | Intermediate | Combining both tutorials above into one real page: a sticky toolbar with a logo, horizontal menu, and notification badge; a vertical sidebar menu; a floated three-column body; a floated four-column footer; and a fixed "back to top" button |
-| [CSS Transitions and Animations](css-animations.md) | Beginner to Intermediate | `transition` properties and timing functions, `@keyframes`, `animation` properties, a spinner, a pulsing badge, a fade-in entrance, plus performance and accessibility notes |
-| [Responsive Web Design](responsive-design.md) | Beginner to Intermediate | The viewport tag, mobile-first design, media queries, responsive units, `clamp()`, responsive images, and a complete responsive three-card layout |
-| [Git and GitHub](git-and-github.md) | Beginner to Intermediate | Version control fundamentals, everyday Git commands, branching and merging, undoing mistakes, collaborating on GitHub with forks and pull requests, and GitHub Desktop / GUI alternatives |
-| [Submitting Coursework via GitHub](assignment-submission.md) | Beginner | This course's actual submission workflow: one repository, a required folder structure, and what counts as an on-time, valid submission |
+<div class="cu-card" markdown>
+<a class="cu-card-link" href="environment-tooling/" aria-label="Open Environment &amp; Tooling tutorials"></a>
+<div class="cu-card-top" markdown>
+<span class="cu-icon-badge" style="background: rgba(185,114,14,0.10);">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B9720E" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18v3h3l6.3-6.3a4 4 0 0 0 5.4-5.4l-2.8 2.8-2-2Z"/></svg>
+</span>
+</div>
 
-More tutorials will be added here over time.
+### Environment &amp; Tooling
+
+Get your editor, Node.js, MongoDB, and Git set up before you write a line of code.
+
+<div class="cu-card-foot" markdown>
+<span>1 tutorial</span>
+<span class="cu-go">Browse →</span>
+</div>
+</div>
+
+<div class="cu-card" markdown>
+<a class="cu-card-link" href="html-css/" aria-label="Open HTML &amp; CSS Fundamentals tutorials"></a>
+<div class="cu-card-top" markdown>
+<span class="cu-icon-badge" style="background: rgba(108,79,245,0.10);">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6C4FF5" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 7 4 12l5 5M15 7l5 5-5 5"/></svg>
+</span>
+</div>
+
+### HTML &amp; CSS Fundamentals
+
+Real pages and real layouts: the box model, float, positioning, Flexbox, animations, and responsive design.
+
+<div class="cu-card-foot" markdown>
+<span>8 tutorials</span>
+<span class="cu-go">Browse →</span>
+</div>
+</div>
+
+<div class="cu-card" markdown>
+<a class="cu-card-link" href="git-version-control/" aria-label="Open Git &amp; Version Control tutorials"></a>
+<div class="cu-card-top" markdown>
+<span class="cu-icon-badge" style="background: rgba(53,231,196,0.10);">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#12B394" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.2"/><circle cx="6" cy="18" r="2.2"/><circle cx="18" cy="12" r="2.2"/><path d="M6 8.2V15.8M8.2 12H15.8"/></svg>
+</span>
+</div>
+
+### Git &amp; Version Control
+
+Version control fundamentals, branching and collaboration on GitHub, and this course's own submission workflow.
+
+<div class="cu-card-foot" markdown>
+<span>2 tutorials</span>
+<span class="cu-go">Browse →</span>
+</div>
+</div>
+
+</div>
+
+More tutorials and categories will be added here over time.

@@ -20,7 +20,7 @@ responsive images — and finishes by combining them into one complete, real exa
 row of cards that reflows from three columns down to one.
 
 **Prerequisites:** [Flexbox Layouts](flexbox.md) and
-[Lecture 10: Responsive Design and Framework Fundamentals](../web-technologies/lecture-10-responsive-design-and-frameworks.md).
+[Lecture 10: Responsive Design and Framework Fundamentals](../../web-technologies/lecture-10-responsive-design-and-frameworks.md).
 
 ## In This Tutorial
 
@@ -230,13 +230,13 @@ that replaces what would otherwise take two or three separate media queries.
 Rendered at a desktop width, `5vw` comfortably exceeds the `3rem` maximum, so the
 heading is clamped to its largest allowed size:
 
-![Rendered output: a large bold heading reading "Fluid Heading with clamp()" in dark blue, below it monospace text reading "font-size: clamp(1.5rem, 5vw, 3rem);", at a desktop width where the heading has clamped to its 3rem maximum size](../assets/img/tutorials/responsive/clamp-heading-wide.png)
+![Rendered output: a large bold heading reading "Fluid Heading with clamp()" in dark blue, below it monospace text reading "font-size: clamp(1.5rem, 5vw, 3rem);", at a desktop width where the heading has clamped to its 3rem maximum size](../../assets/img/tutorials/responsive/clamp-heading-wide.png)
 
 Rendered at a narrow mobile width, `5vw` now works out to less than `1.5rem`, so the same
 heading clamps instead to its smallest allowed size — visibly smaller than the desktop
 version, but never below `1.5rem`:
 
-![Rendered output: the same heading "Fluid Heading with clamp()" now noticeably smaller, at a mobile width where the heading has clamped to its 1.5rem minimum size](../assets/img/tutorials/responsive/clamp-heading-narrow.png)
+![Rendered output: the same heading "Fluid Heading with clamp()" now noticeably smaller, at a mobile width where the heading has clamped to its 1.5rem minimum size](../../assets/img/tutorials/responsive/clamp-heading-narrow.png)
 
 !!! note "clamp() works for more than font-size"
     Anywhere CSS accepts a length — `width`, `padding`, `margin`, `gap` — you can use
@@ -267,13 +267,13 @@ Here, an 800×400px placeholder image sits inside a container fixed at 60% of th
 width. Rendered at a desktop width, the container itself is wide, so the image displays
 close to its natural size:
 
-![Rendered output: an 800 by 400 pixel blue placeholder image labeled "800 x 400" inside a dashed-border container fixed at 60% of the page width, at a desktop width where the container and image are both large](../assets/img/tutorials/responsive/responsive-image-wide.png)
+![Rendered output: an 800 by 400 pixel blue placeholder image labeled "800 x 400" inside a dashed-border container fixed at 60% of the page width, at a desktop width where the container and image are both large](../../assets/img/tutorials/responsive/responsive-image-wide.png)
 
 Rendered at a narrow mobile width, the same 60%-wide container is now much smaller in
 absolute pixels — and thanks to `max-width: 100%; height: auto;`, the image has shrunk
 right along with it instead of overflowing:
 
-![Rendered output: the same blue placeholder image and dashed container, both now much smaller because the page itself is narrow, at a mobile width where the image has scaled down to match its container](../assets/img/tutorials/responsive/responsive-image-narrow.png)
+![Rendered output: the same blue placeholder image and dashed container, both now much smaller because the page itself is narrow, at a mobile width where the image has scaled down to match its container](../../assets/img/tutorials/responsive/responsive-image-narrow.png)
 
 ## Part 8: Complete Example — A Responsive Three-Card Row
 
@@ -335,13 +335,13 @@ Walking through the CSS:
 Rendered at a desktop width, above the 768px breakpoint, the three cards sit side by
 side in a single row:
 
-![Rendered output: three dark blue rounded cards labeled Card 1, Card 2, and Card 3 arranged side by side in a single row, at a desktop width above the 768px breakpoint](../assets/img/tutorials/responsive/three-card-layout-wide.png)
+![Rendered output: three dark blue rounded cards labeled Card 1, Card 2, and Card 3 arranged side by side in a single row, at a desktop width above the 768px breakpoint](../../assets/img/tutorials/responsive/three-card-layout-wide.png)
 
 Rendered at a narrow mobile width, below the 768px breakpoint, the mobile-first base rule
 is all that applies — the same three cards stack into a single column, each one filling
 the full row width:
 
-![Rendered output: the same three dark blue rounded cards now stacked one above the other in a single column, at a narrow mobile width below the 768px breakpoint](../assets/img/tutorials/responsive/three-card-layout-narrow.png)
+![Rendered output: the same three dark blue rounded cards now stacked one above the other in a single column, at a narrow mobile width below the 768px breakpoint](../../assets/img/tutorials/responsive/three-card-layout-narrow.png)
 
 No JavaScript, and no separate mobile stylesheet, is involved anywhere in this example —
 the same handful of CSS rules produce both layouts, purely because of the media query's

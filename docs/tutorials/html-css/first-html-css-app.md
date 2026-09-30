@@ -15,8 +15,8 @@ semantic HTML and CSS you already know, combined into something you can actually
 proud of and show someone. By the end, you'll have a working two-file project and a
 clear mental model of how every line of CSS connects to what you see on screen.
 
-**Prerequisites:** [HTML and HTML5 Fundamentals](../web-technologies/lecture-03-html-html5-fundamentals.md)
-and CSS through [the box model](../web-technologies/lecture-06-css-box-model-and-display.md)
+**Prerequisites:** [HTML and HTML5 Fundamentals](../../web-technologies/lecture-03-html-html5-fundamentals.md)
+and CSS through [the box model](../../web-technologies/lecture-06-css-box-model-and-display.md)
 (colors, fonts, spacing, borders, `border-radius`, `box-shadow`). This project
 deliberately does **not** use Flexbox, Grid, or `position` — those come later, and a
 solid page like this one doesn't need them yet.
@@ -50,7 +50,7 @@ a blank file wondering what to build next — you already have a checklist.
 
 Create a new folder, and inside it, two empty files: `index.html` and `style.css`. Link
 the stylesheet from the HTML file's `<head>`, exactly as you learned in
-[CSS Fundamentals](../web-technologies/lecture-05-css-fundamentals.md):
+[CSS Fundamentals](../../web-technologies/lecture-05-css-fundamentals.md):
 
 ```html
 <link rel="stylesheet" href="style.css">
@@ -126,7 +126,7 @@ A few things worth noticing:
   CSS will use to center the whole page and give it a card-like shape.
 - `class="avatar"`, `class="profile-header"`, `class="tagline"`, and `class="btn"` don't
   do anything by themselves — they're just hooks for the CSS you'll write next, exactly
-  like you learned with [class selectors](../web-technologies/lecture-05-css-fundamentals.md#class-selector).
+  like you learned with [class selectors](../../web-technologies/lecture-05-css-fundamentals.md#class-selector).
 - Replace `"Muhammad Hassan"`, the initials, the tagline, and the email address with your
   own — this is *your* page.
 
@@ -270,7 +270,7 @@ Walking through the interesting parts:
 Open `index.html` directly in your browser (double-click it, or right-click → Open
 With). Here is what this exact HTML and CSS produce:
 
-![Rendered output: a centered white card on a light gray page, with a dark blue header containing an orange circular avatar showing the initials MH, the name "Muhammad Hassan" and a tagline, followed by About Me, What I'm Learning, and Get In Touch sections, and an orange "Email Me" button](../assets/img/tutorials/first-html-css-app.png)
+![Rendered output: a centered white card on a light gray page, with a dark blue header containing an orange circular avatar showing the initials MH, the name "Muhammad Hassan" and a tagline, followed by About Me, What I'm Learning, and Get In Touch sections, and an orange "Email Me" button](../../assets/img/tutorials/first-html-css-app.png)
 
 Try hovering your mouse over the **Email Me** button in your own browser — you'll see the
 color change and the slight upward movement that `.btn:hover` and `transition` produce

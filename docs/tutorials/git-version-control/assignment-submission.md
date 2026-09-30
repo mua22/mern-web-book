@@ -18,7 +18,7 @@ deadline. This tutorial explains exactly how that works, so there's no ambiguity
 what counts as a valid, on-time submission.
 
 This tutorial assumes you've already completed the
-[MERN Environment Setup](environment-setup.md) and
+[MERN Environment Setup](../environment-tooling/environment-setup.md) and
 [Git and GitHub](git-and-github.md) tutorials — it builds directly on the commit/push
 workflow taught there.
 

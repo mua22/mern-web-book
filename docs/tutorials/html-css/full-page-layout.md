@@ -102,7 +102,7 @@ Start with the header. The logo and the menu sit side by side — that's a job f
 }
 ```
 
-![Rendered output: a dark blue toolbar with "MH Studio" logo on the left, a horizontal Home/Services/Messages/Contact menu on the right, and a small orange "3" badge floating on the top-right corner of "Messages"](../assets/img/tutorials/full-layout/toolbar-header.png)
+![Rendered output: a dark blue toolbar with "MH Studio" logo on the left, a horizontal Home/Services/Messages/Contact menu on the right, and a small orange "3" badge floating on the top-right corner of "Messages"](../../assets/img/tutorials/full-layout/toolbar-header.png)
 
 Three separate things are happening here, and it's worth naming each one:
 
@@ -221,7 +221,7 @@ float-and-width technique from Layout Designing:
 }
 ```
 
-![Rendered output: the toolbar above a three-column body, with a light gray Dashboard sidebar (vertical menu) on the left, a white main content area with a welcome heading and paragraphs in the middle, and a light gray widgets column with Quick Stats and About cards on the right](../assets/img/tutorials/full-layout/three-column-body.png)
+![Rendered output: the toolbar above a three-column body, with a light gray Dashboard sidebar (vertical menu) on the left, a white main content area with a welcome heading and paragraphs in the middle, and a light gray widgets column with Quick Stats and About cards on the right](../../assets/img/tutorials/full-layout/three-column-body.png)
 
 This is the same `overflow: hidden` clearfix from Layout Designing, applied for exactly
 the same reason: `#sidebar-menu`, `#main-content`, and `#widgets` are all floated, so
@@ -290,7 +290,7 @@ columns, each `25%` wide, inside a container with `overflow: hidden`:
 }
 ```
 
-![Rendered output: a dark footer with four columns — MH Studio with a short description, Quick Links, Contact with an email and phone number wrapped onto two lines, and Follow Us — followed by a centered copyright line below a divider](../assets/img/tutorials/full-layout/four-column-footer.png)
+![Rendered output: a dark footer with four columns — MH Studio with a short description, Quick Links, Contact with an email and phone number wrapped onto two lines, and Follow Us — followed by a centered copyright line below a divider](../../assets/img/tutorials/full-layout/four-column-footer.png)
 
 !!! warning "A real bug worth knowing about: `overflow-wrap: break-word`"
     Without it, a long unbreakable string like `muhammad.hassan@example.com` will not
@@ -549,7 +549,7 @@ body { margin: 0; font-family: Arial, Helvetica, sans-serif; color: #333; }
 
 Here is the finished page, as it looks when you first load it (before scrolling):
 
-![Rendered output: the complete page showing the sticky dark blue toolbar with logo and horizontal menu with badge, the three-column body below it with a vertical sidebar menu, main content, and widgets, the four-column dark footer, and an orange "Top" button fixed in the bottom-right corner of the browser window](../assets/img/tutorials/full-layout/full-page-layout.png)
+![Rendered output: the complete page showing the sticky dark blue toolbar with logo and horizontal menu with badge, the three-column body below it with a vertical sidebar menu, main content, and widgets, the four-column dark footer, and an orange "Top" button fixed in the bottom-right corner of the browser window](../../assets/img/tutorials/full-layout/full-page-layout.png)
 
 ### Which Technique Does What
 

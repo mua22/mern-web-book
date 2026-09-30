@@ -1,0 +1,20 @@
+{#-
+  Override of material/templates/partials/content.html.
+
+  Stock Material has no hook for injecting content between the article body
+  and its footer (source-file/feedback/comments), so this is a full copy of
+  the upstream file with one addition: {% include "partials/share.html" %}
+  right after page.content, giving every page a share row before the "last
+  updated" line. Keep in sync with upstream when upgrading mkdocs-material --
+  only that one include line was added.
+-#}
+{% include "partials/tags.html" %}
+{% include "partials/actions.html" %}
+{% if "<h1" not in page.content %}
+  <h1>{{ page.title | d(config.site_name, true)}}</h1>
+{% endif %}
+{{ page.content }}
+{% include "partials/share.html" %}
+{% include "partials/source-file.html" %}
+{% include "partials/feedback.html" %}
+{% include "partials/comments.html" %}

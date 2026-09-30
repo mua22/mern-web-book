@@ -17,9 +17,9 @@ CSS `float` property. This tutorial teaches that technique properly, from the gr
 `overflow` to build one complete page — a header with a navigation menu, a three-column
 layout, and a footer.
 
-**Prerequisites:** [HTML and HTML5 Fundamentals](../web-technologies/lecture-03-html-html5-fundamentals.md),
-[CSS Fundamentals](../web-technologies/lecture-05-css-fundamentals.md), and
-[the CSS Box Model](../web-technologies/lecture-06-css-box-model-and-display.md).
+**Prerequisites:** [HTML and HTML5 Fundamentals](../../web-technologies/lecture-03-html-html5-fundamentals.md),
+[CSS Fundamentals](../../web-technologies/lecture-05-css-fundamentals.md), and
+[the CSS Box Model](../../web-technologies/lecture-06-css-box-model-and-display.md).
 
 ## In This Tutorial
 
@@ -126,7 +126,7 @@ longer "sees" it when calculating its own height. If every child inside a contai
 floated, the parent's height collapses to almost nothing, because as far as the parent is
 concerned, it has no content at all.
 
-![Rendered output: two identical pairs of orange floated boxes inside a dark blue bordered container; the top container's border has collapsed to a thin line above the boxes, while the bottom container's border fully encloses them](../assets/img/tutorials/float-collapse-fix.png)
+![Rendered output: two identical pairs of orange floated boxes inside a dark blue bordered container; the top container's border has collapsed to a thin line above the boxes, while the bottom container's border fully encloses them](../../assets/img/tutorials/float-collapse-fix.png)
 
 The fix is one line of CSS on the **parent**: `overflow: hidden`. This forces the parent
 to properly enclose ("contain") its floated children, without changing how anything
@@ -336,7 +336,7 @@ body {
 
 Here is the finished page:
 
-![Rendered output: a dark blue header with the title "Muhammad Hassan's Blog" and a horizontal Home/Articles/About/Contact menu, below it three columns (a light gray Categories sidebar, a wider white main content area with a highlighted word "float", and a light gray About the Author sidebar), and a dark blue footer](../assets/img/tutorials/layout-designing.png)
+![Rendered output: a dark blue header with the title "Muhammad Hassan's Blog" and a horizontal Home/Articles/About/Contact menu, below it three columns (a light gray Categories sidebar, a wider white main content area with a highlighted word "float", and a light gray About the Author sidebar), and a dark blue footer](../../assets/img/tutorials/layout-designing.png)
 
 Notice how each piece from earlier parts shows up here:
 

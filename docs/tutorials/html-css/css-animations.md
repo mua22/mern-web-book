@@ -17,7 +17,7 @@ is loading. This tutorial builds five of these effects from scratch — a button
 loading spinner, a pulsing badge, and a fade-in entrance — so you come away able to build
 your own.
 
-**Prerequisites:** [Lecture 8: CSS3 Features](../web-technologies/lecture-08-css3-features.md),
+**Prerequisites:** [Lecture 8: CSS3 Features](../../web-technologies/lecture-08-css3-features.md),
 which introduces transitions and `@keyframes` from the lecture's perspective. This tutorial
 is the hands-on, project-style companion to that lecture — expect to write and run a lot
 more CSS here than you read.
@@ -147,7 +147,7 @@ actually hovering the button in a browser — but it can honestly show the two e
 transition moves between: the button at rest, and the `:hover` styles applied directly as
 the end state.
 
-![Rendered output: two blue rounded "Click Me" buttons, the left a lighter blue at normal position labeled "Default", the right a darker navy blue, raised slightly with a larger shadow, labeled "On hover (end state)"](../assets/img/tutorials/animations/transition-button-default-hover.png)
+![Rendered output: two blue rounded "Click Me" buttons, the left a lighter blue at normal position labeled "Default", the right a darker navy blue, raised slightly with a larger shadow, labeled "On hover (end state)"](../../assets/img/tutorials/animations/transition-button-default-hover.png)
 
 ## Part 4: A Card Hover-Lift, Built the Same Way
 
@@ -174,7 +174,7 @@ Again, the default card next to its `:hover` end state — a bigger lift than th
 above, paired with a noticeably larger, softer shadow, which is what sells the illusion that
 the card has physically risen off the page:
 
-![Rendered output: two white rounded cards reading "Course Card", the left sitting flat with a small soft shadow labeled "Default", the right raised higher with a much larger, softer shadow labeled "On hover (end state)"](../assets/img/tutorials/animations/card-hover-lift-default-hover.png)
+![Rendered output: two white rounded cards reading "Course Card", the left sitting flat with a small soft shadow labeled "Default", the right raised higher with a much larger, softer shadow labeled "On hover (end state)"](../../assets/img/tutorials/animations/card-hover-lift-default-hover.png)
 
 !!! tip "Why transform and not top/margin?"
     You could move the card up with `margin-top: -10px` or `top: -10px` instead of
@@ -290,7 +290,7 @@ honestly is several fixed rotation angles side by side, each applied directly wi
 `transform: rotate(...)` instead of through the running animation, to represent points along
 one full spin:
 
-![Rendered output: four identical spinner circles (light gray ring with one darker blue segment) rotated to four different angles, labeled "0deg", "90deg", "180deg", and "270deg"](../assets/img/tutorials/animations/spinner-rotation-frames.png)
+![Rendered output: four identical spinner circles (light gray ring with one darker blue segment) rotated to four different angles, labeled "0deg", "90deg", "180deg", and "270deg"](../../assets/img/tutorials/animations/spinner-rotation-frames.png)
 
 ## Part 8: A Pulsing "New!" Badge
 
@@ -320,7 +320,7 @@ Notice this `@keyframes` rule has three steps, not two — something a `transiti
 never express on its own, since a transition only ever knows about "old value" and "new
 value." Again, shown as three static frames rather than a claim of real motion:
 
-![Rendered output: three "New!" badges — the first and third solid red at normal size labeled "0% (scale 1, opacity 1)" and "100% (scale 1, opacity 1)", the middle one larger and lighter/pinker labeled "50% (scale 1.3, opacity 0.6)"](../assets/img/tutorials/animations/badge-pulse-frames.png)
+![Rendered output: three "New!" badges — the first and third solid red at normal size labeled "0% (scale 1, opacity 1)" and "100% (scale 1, opacity 1)", the middle one larger and lighter/pinker labeled "50% (scale 1.3, opacity 0.6)"](../../assets/img/tutorials/animations/badge-pulse-frames.png)
 
 ## Part 9: A Fade-In-and-Slide-Up Entrance
 
@@ -355,7 +355,7 @@ screenshot — so the "before" frame below is rendered at a low but nonzero opac
 you can see its starting position and size; the actual animation really does start from
 `opacity: 0`.
 
-![Rendered output: two dashed-outline placeholder frames side by side; the left frame shows a faint, barely visible blue box positioned in the lower half, labeled "Before: opacity 0, translateY(20px) (shown here at low opacity so the starting position is visible)"; the right frame shows the same box fully solid and positioned at the top, labeled "After: opacity 1, translateY(0)"](../assets/img/tutorials/animations/fade-in-slide-up-frames.png)
+![Rendered output: two dashed-outline placeholder frames side by side; the left frame shows a faint, barely visible blue box positioned in the lower half, labeled "Before: opacity 0, translateY(20px) (shown here at low opacity so the starting position is visible)"; the right frame shows the same box fully solid and positioned at the top, labeled "After: opacity 1, translateY(0)"](../../assets/img/tutorials/animations/fade-in-slide-up-frames.png)
 
 ## Part 10: Performance — Prefer transform and opacity
 

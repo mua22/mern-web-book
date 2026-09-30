@@ -77,7 +77,7 @@ navigation menu is naturally a list of links, so it's built with a `<ul>` inside
 }
 ```
 
-![Rendered output: a dark blue horizontal navigation bar with four white links, Home, About, Services, and Contact, evenly spaced left to right](../assets/img/tutorials/multilevel-nav/step1-single-level.png)
+![Rendered output: a dark blue horizontal navigation bar with four white links, Home, About, Services, and Contact, evenly spaced left to right](../../assets/img/tutorials/multilevel-nav/step1-single-level.png)
 
 A few things worth noting before adding a second level:
 
@@ -145,7 +145,7 @@ nested inside the `<li>` it belongs to:
 }
 ```
 
-![Rendered output: two versions of the same navigation bar stacked vertically; the top one shows the closed resting state; the bottom one shows the Services item with a vertical dropdown open below it, listing Web Design, Web Development, and SEO on a lighter purple background with a drop shadow](../assets/img/tutorials/multilevel-nav/step2-dropdown.png)
+![Rendered output: two versions of the same navigation bar stacked vertically; the top one shows the closed resting state; the bottom one shows the Services item with a vertical dropdown open below it, listing Web Design, Web Development, and SEO on a lighter purple background with a drop shadow](../../assets/img/tutorials/multilevel-nav/step2-dropdown.png)
 
 !!! note "You can't screenshot `:hover`"
     The "open" state above was captured by adding a second, separate copy of the markup

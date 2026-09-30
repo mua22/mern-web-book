@@ -17,8 +17,8 @@ want, relative to different reference points. This tutorial covers all five valu
 that controls which overlapping element renders on top, and two real-world UI patterns —
 tooltips and modal dialogs — built entirely from these tools.
 
-**Prerequisites:** [CSS Fundamentals](../web-technologies/lecture-05-css-fundamentals.md) and
-[the CSS Box Model](../web-technologies/lecture-06-css-box-model-and-display.md).
+**Prerequisites:** [CSS Fundamentals](../../web-technologies/lecture-05-css-fundamentals.md) and
+[the CSS Box Model](../../web-technologies/lecture-06-css-box-model-and-display.md).
 
 ## In This Tutorial
 
@@ -52,7 +52,7 @@ Formally, this default placement has a name: `position: static`. Every element s
 Here are three ordinary boxes with no positioning applied — this is the baseline everything
 else in this tutorial is compared against:
 
-![Rendered output: three light blue boxes labeled Box 1, Box 2, and Box 3, stacked vertically with equal spacing, each captioned "position: static (the default)"](../assets/img/tutorials/positioning/normal-flow-static-boxes.png)
+![Rendered output: three light blue boxes labeled Box 1, Box 2, and Box 3, stacked vertically with equal spacing, each captioned "position: static (the default)"](../../assets/img/tutorials/positioning/normal-flow-static-boxes.png)
 
 The other four values of `position` — `relative`, `absolute`, `fixed`, and `sticky` — are
 collectively called **positioned elements**. That label matters later: `z-index` and the
@@ -77,7 +77,7 @@ originally occupied is **still reserved** for it. Nothing else moves to fill the
 pushes it 40px to the right. (Think of `top`/`left`/`right`/`bottom` here as "push away from
 this edge," not "move toward it.")
 
-![Rendered output: Box 1 and Box 3 in their normal static positions, with Box 2 (yellow, labeled "position: relative; top: 20px; left: 40px;") shifted down and to the right so it overlaps Box 3, plus a caption explaining Box 3 did not move up to fill Box 2's original spot](../assets/img/tutorials/positioning/position-relative-shift.png)
+![Rendered output: Box 1 and Box 3 in their normal static positions, with Box 2 (yellow, labeled "position: relative; top: 20px; left: 40px;") shifted down and to the right so it overlaps Box 3, plus a caption explaining Box 3 did not move up to fill Box 2's original spot](../../assets/img/tutorials/positioning/position-relative-shift.png)
 
 Box 3 is still exactly where it would be if Box 2 had never moved — proof that Box 2's
 original space in the flow is untouched. Only Box 2's own rendered position changed.
@@ -118,7 +118,7 @@ and it's the basis of the classic "badge pinned to a card's corner" component:
 }
 ```
 
-![Rendered output: two cards side by side, both titled "Course Notes" with a red "NEW" badge; the left card has position: relative and its badge sits pinned neatly to the card's own top-right corner, while the right card has no position set and its badge has escaped to the top-right corner of the whole page instead](../assets/img/tutorials/positioning/position-absolute-badge-corner.png)
+![Rendered output: two cards side by side, both titled "Course Notes" with a red "NEW" badge; the left card has position: relative and its badge sits pinned neatly to the card's own top-right corner, while the right card has no position set and its badge has escaped to the top-right corner of the whole page instead](../../assets/img/tutorials/positioning/position-absolute-badge-corner.png)
 
 Both cards use the exact same `.badge` CSS. The only difference is whether `.card` itself is
 positioned. On the left, `.card { position: relative; }` makes the card the badge's nearest
@@ -149,7 +149,7 @@ top" buttons, and navigation bars that stay visible as you scroll.
 }
 ```
 
-![Rendered output: a page with a dark blue "Tutorial Page" header and a paragraph of body text, with a red circular "+" floating action button pinned to the bottom-right corner of the page, labeled "position: fixed; bottom: 20px; right: 20px;"](../assets/img/tutorials/positioning/position-fixed-fab.png)
+![Rendered output: a page with a dark blue "Tutorial Page" header and a paragraph of body text, with a red circular "+" floating action button pinned to the bottom-right corner of the page, labeled "position: fixed; bottom: 20px; right: 20px;"](../../assets/img/tutorials/positioning/position-fixed-fab.png)
 
 This screenshot only shows the button **at rest**. The entire point of `position: fixed` —
 that it stays pinned to that same corner while you scroll the rest of the page — cannot be
@@ -171,7 +171,7 @@ in place, until its container scrolls out of view entirely and takes it along.
 }
 ```
 
-![Rendered output: a scrollable box containing an intro line, a dark blue "Section Header" bar labeled "position: sticky; top: 0;", and paragraph content below it, all shown at rest before scrolling, with a caption noting this is the starting state](../assets/img/tutorials/positioning/position-sticky-header.png)
+![Rendered output: a scrollable box containing an intro line, a dark blue "Section Header" bar labeled "position: sticky; top: 0;", and paragraph content below it, all shown at rest before scrolling, with a caption noting this is the starting state](../../assets/img/tutorials/positioning/position-sticky-header.png)
 
 Just like `position: fixed` in Part 4, a still image can only show the "before" state — the
 header sitting in its ordinary spot, exactly where `position: relative` would put it. The
@@ -201,7 +201,7 @@ a `static` element does nothing at all, no matter how large the number is.
 }
 ```
 
-![Rendered output: three overlapping boxes — a gray box labeled "position: static, z-index: 99 (ignored)" sitting at the back despite its huge z-index, a blue box labeled "position: relative, z-index: 1" in the middle, and a red box labeled "position: relative, z-index: 2 (on top)" rendered above both, with an explanatory caption below](../assets/img/tutorials/positioning/z-index-stacking-order.png)
+![Rendered output: three overlapping boxes — a gray box labeled "position: static, z-index: 99 (ignored)" sitting at the back despite its huge z-index, a blue box labeled "position: relative, z-index: 1" in the middle, and a red box labeled "position: relative, z-index: 2 (on top)" rendered above both, with an explanatory caption below](../../assets/img/tutorials/positioning/z-index-stacking-order.png)
 
 The gray box proves the restriction: it has the highest `z-index` value of the three (`99`),
 but because it is still `position: static`, that `z-index` is completely ignored, and it
@@ -250,7 +250,7 @@ direct application of the `relative` parent / `absolute` child pattern from Part
 }
 ```
 
-![Rendered output: a dark blue "Hover me" button with a small dark tooltip bubble reading "position: absolute; bottom: 125%;" shown above it, with a small triangular pointer connecting the two, and a caption explaining the tooltip is forced visible here for illustration](../assets/img/tutorials/positioning/tooltip-absolute-position.png)
+![Rendered output: a dark blue "Hover me" button with a small dark tooltip bubble reading "position: absolute; bottom: 125%;" shown above it, with a small triangular pointer connecting the two, and a caption explaining the tooltip is forced visible here for illustration](../../assets/img/tutorials/positioning/tooltip-absolute-position.png)
 
 `bottom: 125%` positions the tooltip's bottom edge at 125% of `.tooltip-wrapper`'s height
 above its top — comfortably clear of the button, with a small gap. `left: 50%` alone would
@@ -294,7 +294,7 @@ they stay centered regardless of scrolling or page size.
 }
 ```
 
-![Rendered output: a page dimmed by a semi-transparent dark overlay, with a white "Confirm Action" dialog box centered on top of it containing a description and an OK button, and a caption below reading the exact CSS rule used to center it](../assets/img/tutorials/positioning/modal-overlay-centered.png)
+![Rendered output: a page dimmed by a semi-transparent dark overlay, with a white "Confirm Action" dialog box centered on top of it containing a description and an OK button, and a caption below reading the exact CSS rule used to center it](../../assets/img/tutorials/positioning/modal-overlay-centered.png)
 
 `top: 0; left: 0; right: 0; bottom: 0;` on `.overlay` is a compact way of stretching a fixed
 element to fill the entire viewport without knowing its size in advance. The `.modal`

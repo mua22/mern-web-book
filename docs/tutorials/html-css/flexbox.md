@@ -18,7 +18,7 @@ without the collapsing-parent workarounds that floats require. This tutorial bui
 every core Flexbox property from scratch, with a rendered screenshot for each one, and
 ends with two complete real-world layout patterns.
 
-**Prerequisites:** [the CSS Box Model](../web-technologies/lecture-06-css-box-model-and-display.md).
+**Prerequisites:** [the CSS Box Model](../../web-technologies/lecture-06-css-box-model-and-display.md).
 Familiarity with the `float` technique in [Layout Designing](layout-designing.md) is
 helpful for context but not required.
 
@@ -89,7 +89,7 @@ two things change immediately, even with no other CSS added:
 
 Here is the same three `<div>`s before and after adding `display: flex` to their parent.
 
-![Rendered output: two stacked panels; the top panel shows three full-width dark blue boxes stacked vertically labeled Item 1, Item 2, Item 3; the bottom panel shows the same three boxes now sitting side by side in a row, each only as wide as its text](../assets/img/tutorials/flexbox/display-flex-basic.png)
+![Rendered output: two stacked panels; the top panel shows three full-width dark blue boxes stacked vertically labeled Item 1, Item 2, Item 3; the bottom panel shows the same three boxes now sitting side by side in a row, each only as wide as its text](../../assets/img/tutorials/flexbox/display-flex-basic.png)
 
 Every other property in this tutorial only makes sense once you understand that a flex
 container has **two axes**:
@@ -128,7 +128,7 @@ laid out:
 Note that `row-reverse` and `column-reverse` only reverse the **visual order** — the
 underlying HTML source order (and so tab order, and screen-reader order) is unchanged.
 
-![Rendered output: four labeled boxes side by side; flex-direction row shows items 1,2,3 stacked as narrow vertical bars left to right; row-reverse shows the same three bars but in order 3,2,1; column shows three wide horizontal bars stacked top to bottom as 1,2,3; column-reverse shows the same three bars stacked as 3,2,1 top to bottom](../assets/img/tutorials/flexbox/flex-direction-comparison.png)
+![Rendered output: four labeled boxes side by side; flex-direction row shows items 1,2,3 stacked as narrow vertical bars left to right; row-reverse shows the same three bars but in order 3,2,1; column shows three wide horizontal bars stacked top to bottom as 1,2,3; column-reverse shows the same three bars stacked as 3,2,1 top to bottom](../../assets/img/tutorials/flexbox/flex-direction-comparison.png)
 
 !!! note "Main axis vs. cross axis, revisited"
     When `flex-direction` is `row` or `row-reverse`, the main axis is horizontal and the
@@ -159,7 +159,7 @@ default, the horizontal direction, since `flex-direction: row` is the default.
 | `space-around` | Equal space *around* each item (edges get half as much space as gaps between items) |
 | `space-evenly` | Perfectly equal space between and around every item, edges included |
 
-![Rendered output: six labeled rows, each a dashed-border container with three numbered boxes; flex-start packs them at the left; flex-end packs them at the right; center packs them in the middle; space-between spreads box 1 to the left edge and box 3 to the right edge with box 2 centered between; space-around gives each box roughly equal space on both sides; space-evenly spaces all three boxes and the two edges completely evenly](../assets/img/tutorials/flexbox/justify-content-comparison.png)
+![Rendered output: six labeled rows, each a dashed-border container with three numbered boxes; flex-start packs them at the left; flex-end packs them at the right; center packs them in the middle; space-between spreads box 1 to the left edge and box 3 to the right edge with box 2 centered between; space-around gives each box roughly equal space on both sides; space-evenly spaces all three boxes and the two edges completely evenly](../../assets/img/tutorials/flexbox/justify-content-comparison.png)
 
 `space-between` is the value you'll reach for most often in practice — it's exactly what
 a navbar with a logo on one side and links on the other needs, as you'll see in Part 10.
@@ -189,7 +189,7 @@ The difference between these only becomes visible when items have different size
 (otherwise there's nothing to align differently), so the screenshot below uses items of
 different heights — and, for `baseline`, items with different font sizes:
 
-![Rendered output: five labeled rows, each a dashed-border container roughly the same height with three items of different sizes; stretch makes all three items the full height of the container; flex-start aligns their tops; flex-end aligns their bottoms; center centers each vertically; baseline shows three boxes of very different sizes (small, medium, and large text) whose text sits on the same horizontal line despite the boxes themselves being very different heights](../assets/img/tutorials/flexbox/align-items-comparison.png)
+![Rendered output: five labeled rows, each a dashed-border container roughly the same height with three items of different sizes; stretch makes all three items the full height of the container; flex-start aligns their tops; flex-end aligns their bottoms; center centers each vertically; baseline shows three boxes of very different sizes (small, medium, and large text) whose text sits on the same horizontal line despite the boxes themselves being very different heights](../../assets/img/tutorials/flexbox/align-items-comparison.png)
 
 `baseline` is a niche value — you'll use `stretch`, `center`, and `flex-start` far more
 often — but it's worth recognizing: it aligns by where the *text* sits, not by the
@@ -231,7 +231,7 @@ changes that behavior:
 }
 ```
 
-![Rendered output: two labeled panels; nowrap shows five boxes forced onto a single line, spilling past the right edge of their dashed-border container since they can't shrink below their minimum width; wrap shows the same five boxes flowing onto two lines (three on the first line, two on the second) so all of them stay inside the container](../assets/img/tutorials/flexbox/flex-wrap-comparison.png)
+![Rendered output: two labeled panels; nowrap shows five boxes forced onto a single line, spilling past the right edge of their dashed-border container since they can't shrink below their minimum width; wrap shows the same five boxes flowing onto two lines (three on the first line, two on the second) so all of them stay inside the container](../../assets/img/tutorials/flexbox/flex-wrap-comparison.png)
 
 In the `nowrap` panel, the items can't shrink past their `min-width`, so they overflow
 the dashed container border entirely — a common surprise for beginners who forget that
@@ -258,7 +258,7 @@ didn't leave unwanted space at the container's edge. `gap` solves this directly 
 `gap` inserts even spacing **between** items only — never before the first item or after
 the last — with no per-item CSS needed at all.
 
-![Rendered output: two labeled panels; the first shows three boxes touching each other edge to edge with no space between them; the second shows the same three boxes with clear, even 20px gaps between each pair, and no extra space at the container's left or right edge](../assets/img/tutorials/flexbox/flex-gap-comparison.png)
+![Rendered output: two labeled panels; the first shows three boxes touching each other edge to edge with no space between them; the second shows the same three boxes with clear, even 20px gaps between each pair, and no extra space at the container's left or right edge](../../assets/img/tutorials/flexbox/flex-gap-comparison.png)
 
 `gap` also accepts two values (`gap: 10px 20px;` for row-gap and column-gap
 separately) and works the same way once `flex-wrap: wrap` produces multiple lines.
@@ -292,7 +292,7 @@ shares (1 + 2 + 1 = 4): `.item-a` and `.item-c` each get 1 share, and `.item-b` 
 shares — twice as much extra space as either of its siblings, not simply "twice as
 wide" overall.
 
-![Rendered output: one dashed-border container with three boxes labeled "flex-grow: 1", "flex-grow: 2", and "flex-grow: 1"; the middle box is visibly wider than the two side boxes, filling roughly twice as much of the leftover horizontal space](../assets/img/tutorials/flexbox/flex-grow-comparison.png)
+![Rendered output: one dashed-border container with three boxes labeled "flex-grow: 1", "flex-grow: 2", and "flex-grow: 1"; the middle box is visibly wider than the two side boxes, filling roughly twice as much of the leftover horizontal space](../../assets/img/tutorials/flexbox/flex-grow-comparison.png)
 
 In practice, you'll rarely set `flex-grow`, `flex-shrink`, and `flex-basis` separately.
 CSS provides a shorthand, `flex`, that sets all three at once, in that order:
@@ -326,7 +326,7 @@ container's `align-items` says").
 }
 ```
 
-![Rendered output: a dashed-border container with align-items center, containing four boxes; three of them (Item 1, Item 2, Item 4) are vertically centered as expected, but the third box, labeled "align-self: flex-end" and colored differently, sits at the bottom of the container instead](../assets/img/tutorials/flexbox/align-self-override.png)
+![Rendered output: a dashed-border container with align-items center, containing four boxes; three of them (Item 1, Item 2, Item 4) are vertically centered as expected, but the third box, labeled "align-self: flex-end" and colored differently, sits at the bottom of the container instead](../../assets/img/tutorials/flexbox/align-self-override.png)
 
 This is the tool to reach for whenever one item in a row genuinely needs different
 cross-axis alignment than the rest — for example, a "Pro" badge that should hug the
@@ -379,7 +379,7 @@ pinned to the right, with whatever space is left between them. This is exactly w
 }
 ```
 
-![Rendered output: a dark blue horizontal navbar with the bold white text "MyBrand" on the far left and three links, Home, About, and Contact, evenly spaced on the far right, all vertically centered within the bar](../assets/img/tutorials/flexbox/navbar-pattern.png)
+![Rendered output: a dark blue horizontal navbar with the bold white text "MyBrand" on the far left and three links, Home, About, and Contact, evenly spaced on the far right, all vertically centered within the bar](../../assets/img/tutorials/flexbox/navbar-pattern.png)
 
 Notice the `.nav-links` list is itself a flex container (with `gap` handling the
 spacing between individual links) nested inside the outer `.navbar` flex container —
@@ -412,7 +412,7 @@ With Flexbox, it's two declarations on the container:
 </div>
 ```
 
-![Rendered output: a large dashed-border box with a single smaller dark blue box containing the text "Perfectly Centered" sitting exactly in the middle of it, both horizontally and vertically](../assets/img/tutorials/flexbox/centering-pattern.png)
+![Rendered output: a large dashed-border box with a single smaller dark blue box containing the text "Perfectly Centered" sitting exactly in the middle of it, both horizontally and vertically](../../assets/img/tutorials/flexbox/centering-pattern.png)
 
 This works regardless of the centered item's size — unlike the old fixed-width,
 negative-margin tricks, you never need to know the item's exact dimensions in advance.
