@@ -28,6 +28,17 @@
 <meta name="twitter:description" content="{{ seo_description }}">
 <meta name="twitter:image" content="{{ seo_image }}">
 
+{#- Paginated category listing pages (docs/tutorials/*/page-N.md) carry
+   pagination_prev/pagination_next in their frontmatter, written by
+   .claude/skills/tutorial-pagination/scripts/generate_tutorials.py --
+   surfaces the standard pagination link relation for crawlers/readers. -#}
+{% if page.meta and page.meta.pagination_prev %}
+<link rel="prev" href="{{ page.meta.pagination_prev }}">
+{% endif %}
+{% if page.meta and page.meta.pagination_next %}
+<link rel="next" href="{{ page.meta.pagination_next }}">
+{% endif %}
+
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-XCX5GHHFLZ"></script>
 <script>

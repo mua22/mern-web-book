@@ -1,26 +1,17 @@
 ---
-title: HTML & CSS — Tutorials
-description: >-
-  Eight beginner-to-intermediate tutorials on building real pages and layouts —
-  the box model, float, positioning, Flexbox, transitions, and responsive design.
+title: "HTML & CSS — Tutorials"
+description: "Real pages and real layouts: the box model, float, positioning, Flexbox, animations, and responsive design."
 tags:
-  - Tutorials
-  - HTML
-  - CSS
+  - "Tutorials"
+  - "HTML"
+  - "CSS"
 ---
 
-# HTML &amp; CSS
+# HTML & CSS
 
-Eight tutorials, meant to be worked through roughly in order. Together they take you
-from a single styled page to a complete, responsive, multi-column site shell, using
-nothing but HTML and CSS — no framework, no build step, just files you can open
-directly in a browser. Each one builds on ideas from the ones before it, so later
-tutorials will point back to earlier ones ("Prerequisites: ...") rather than
-re-explaining a technique from scratch.
+Eight tutorials, meant to be worked through roughly in order. Together they take you from a single styled page to a complete, responsive, multi-column site shell, using nothing but HTML and CSS — no framework, no build step, just files you can open directly in a browser. Each one builds on ideas from the ones before it, so later tutorials will point back to earlier ones ("Prerequisites: ...") rather than re-explaining a technique from scratch.
 
-<div class="cu-paginated" data-page-size="4" markdown>
-
-<div class="cu-paginated-item cu-card" markdown>
+<div class="cu-card" markdown>
 <a class="cu-card-link" href="first-html-css-app/" aria-label="Open Your First HTML + CSS Page tutorial"></a>
 <div class="cu-tut-top" markdown>
 <span class="cu-chip cu-chip-teal">Beginner</span>
@@ -36,8 +27,8 @@ Combining HTML structure and CSS (colors, the box model, centering, hover transi
 </div>
 </div>
 
-<div class="cu-paginated-item cu-card" markdown>
-<a class="cu-card-link" href="layout-designing/" aria-label="Open Layout Designing tutorial"></a>
+<div class="cu-card" markdown>
+<a class="cu-card-link" href="layout-designing/" aria-label="Open Layout Designing with div, span, and Float tutorial"></a>
 <div class="cu-tut-top" markdown>
 <span class="cu-chip cu-chip-teal">Beginner</span>
 </div>
@@ -52,7 +43,7 @@ Combining HTML structure and CSS (colors, the box model, centering, hover transi
 </div>
 </div>
 
-<div class="cu-paginated-item cu-card" markdown>
+<div class="cu-card" markdown>
 <a class="cu-card-link" href="css-positioning/" aria-label="Open CSS Positioning tutorial"></a>
 <div class="cu-tut-top" markdown>
 <span class="cu-chip cu-chip-purple">Beginner to Intermediate</span>
@@ -68,7 +59,7 @@ Combining HTML structure and CSS (colors, the box model, centering, hover transi
 </div>
 </div>
 
-<div class="cu-paginated-item cu-card" markdown>
+<div class="cu-card" markdown>
 <a class="cu-card-link" href="flexbox/" aria-label="Open Flexbox Layout tutorial"></a>
 <div class="cu-tut-top" markdown>
 <span class="cu-chip cu-chip-purple">Beginner to Intermediate</span>
@@ -84,8 +75,8 @@ Combining HTML structure and CSS (colors, the box model, centering, hover transi
 </div>
 </div>
 
-<div class="cu-paginated-item cu-card" markdown>
-<a class="cu-card-link" href="multilevel-navigation/" aria-label="Open Multilevel Navigation tutorial"></a>
+<div class="cu-card" markdown>
+<a class="cu-card-link" href="multilevel-navigation/" aria-label="Open Multilevel Navigation with Positioning tutorial"></a>
 <div class="cu-tut-top" markdown>
 <span class="cu-chip cu-chip-orange">Intermediate</span>
 </div>
@@ -100,8 +91,8 @@ Building a dropdown menu from scratch: a single-level bar, then a second-level d
 </div>
 </div>
 
-<div class="cu-paginated-item cu-card" markdown>
-<a class="cu-card-link" href="full-page-layout/" aria-label="Open Complete Page Layout tutorial"></a>
+<div class="cu-card" markdown>
+<a class="cu-card-link" href="full-page-layout/" aria-label="Open Complete Page Layout with Float and Positioning tutorial"></a>
 <div class="cu-tut-top" markdown>
 <span class="cu-chip cu-chip-orange">Intermediate</span>
 </div>
@@ -116,7 +107,7 @@ Combining both tutorials above into one real page: a sticky toolbar, a vertical 
 </div>
 </div>
 
-<div class="cu-paginated-item cu-card" markdown>
+<div class="cu-card" markdown>
 <a class="cu-card-link" href="css-animations/" aria-label="Open CSS Transitions and Animations tutorial"></a>
 <div class="cu-tut-top" markdown>
 <span class="cu-chip cu-chip-purple">Beginner to Intermediate</span>
@@ -132,7 +123,7 @@ Combining both tutorials above into one real page: a sticky toolbar, a vertical 
 </div>
 </div>
 
-<div class="cu-paginated-item cu-card" markdown>
+<div class="cu-card" markdown>
 <a class="cu-card-link" href="responsive-design/" aria-label="Open Responsive Web Design tutorial"></a>
 <div class="cu-tut-top" markdown>
 <span class="cu-chip cu-chip-purple">Beginner to Intermediate</span>
@@ -146,6 +137,4 @@ The viewport tag, mobile-first design, media queries, responsive units, `clamp()
 <span>8 of 8</span>
 <span class="cu-go">Start tutorial →</span>
 </div>
-</div>
-
 </div>

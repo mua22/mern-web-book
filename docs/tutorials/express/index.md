@@ -1,20 +1,15 @@
 ---
-title: Express — Tutorials
-description: >-
-  Standalone Express.js tutorials — building REST APIs, middleware, and
-  server-side apps with Node's most-used web framework. Coming soon.
+title: "Express — Tutorials"
+description: "Routing, middleware, request/response handling, and connecting to MongoDB with Node's most-used web framework."
 tags:
-  - Tutorials
-  - Express
-  - Node.js
+  - "Tutorials"
+  - "Express"
+  - "Node.js"
 ---
 
 # Express
 
-Hands-on tutorials for Express.js, the "E" in MERN: routing, middleware, request/
-response handling, connecting to MongoDB, and structuring a real API — building on
-the server-side chapters already in the [Web Technologies](../../web-technologies/index.md)
-book, but as standalone, project-based walkthroughs.
+Hands-on tutorials for Express.js, the "E" in MERN: routing, middleware, request/response handling, connecting to MongoDB, and structuring a real API — building on the server-side chapters already in the [Web Technologies](../../web-technologies/index.md) book, but as standalone, project-based walkthroughs.
 
 <div class="cu-empty" markdown>
 <span class="cu-empty-icon">

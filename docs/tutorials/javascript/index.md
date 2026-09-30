@@ -1,20 +1,14 @@
 ---
-title: JavaScript — Tutorials
-description: >-
-  Standalone JavaScript tutorials — the language itself, separate from the DOM and
-  browser APIs already covered in the CSC336 book. Coming soon.
+title: "JavaScript — Tutorials"
+description: "The language itself: closures and scope, modules, `this`, and patterns you'll lean on in Express and React."
 tags:
-  - Tutorials
-  - JavaScript
+  - "Tutorials"
+  - "JavaScript"
 ---
 
 # JavaScript
 
-Tool-focused tutorials on the JavaScript language itself — beyond what's already
-covered in the [Web Technologies](../../web-technologies/index.md) book chapters on
-core JavaScript, array methods, and async/await. Think deeper dives and standalone
-projects: closures and scope, the module system, working with `this`, and patterns
-you'll lean on constantly once you get to Express and React.
+Tool-focused tutorials on the JavaScript language itself — beyond what's already covered in the [Web Technologies](../../web-technologies/index.md) book chapters on core JavaScript, array methods, and async/await. Think deeper dives and standalone projects: closures and scope, the module system, working with `this`, and patterns you'll lean on constantly once you get to Express and React.
 
 <div class="cu-empty" markdown>
 <span class="cu-empty-icon">

@@ -16,14 +16,14 @@ copy-pasteable examples. Pick a category below.
 <div class="cu-cards-3" markdown>
 
 <div class="cu-card" markdown>
-<a class="cu-card-link" href="html-css/" aria-label="Open HTML &amp; CSS tutorials"></a>
+<a class="cu-card-link" href="html-css/" aria-label="Open HTML & CSS tutorials"></a>
 <div class="cu-card-top" markdown>
 <span class="cu-icon-badge" style="background: rgba(108,79,245,0.10);">
 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6C4FF5" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 7 4 12l5 5M15 7l5 5-5 5"/></svg>
 </span>
 </div>
 
-### HTML &amp; CSS
+### HTML & CSS
 
 Real pages and real layouts: the box model, float, positioning, Flexbox, animations, and responsive design.
 
@@ -71,7 +71,7 @@ Routing, middleware, request/response handling, and connecting to MongoDB with N
 <a class="cu-card-link" href="react/" aria-label="Open React tutorials"></a>
 <div class="cu-card-top" markdown>
 <span class="cu-icon-badge" style="background: rgba(108,79,245,0.10);">
-<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6C4FF5" stroke-width="1.5"><circle cx="12" cy="12" r="1.6" fill="#6C4FF5" stroke="none"/><ellipse cx="12" cy="12" rx="9" ry="3.6"/><ellipse cx="12" cy="12" rx="9" ry="3.6" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9" ry="3.6" transform="rotate(120 12 12)"/></svg>
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6C4FF5" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1.6" fill="#6C4FF5" stroke="none"/><ellipse cx="12" cy="12" rx="9" ry="3.6"/><ellipse cx="12" cy="12" rx="9" ry="3.6" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9" ry="3.6" transform="rotate(120 12 12)"/></svg>
 </span>
 </div>
 

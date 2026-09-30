@@ -1,20 +1,14 @@
 ---
-title: React — Tutorials
-description: >-
-  Standalone React tutorials — components, hooks, state management, and routing
-  for building real front-end applications. Coming soon.
+title: "React — Tutorials"
+description: "Components and props, hooks and state, routing, and talking to a real API."
 tags:
-  - Tutorials
-  - React
+  - "Tutorials"
+  - "React"
 ---
 
 # React
 
-Hands-on tutorials for React, the "R" in MERN: components and props, hooks and
-state, routing, and talking to a real API — building on the front-end chapters
-already in the [Web Technologies](../../web-technologies/index.md) and
-[Advanced Web Technologies](../../advanced-web-technologies/index.md) books, but as
-standalone, project-based walkthroughs.
+Hands-on tutorials for React, the "R" in MERN: components and props, hooks and state, routing, and talking to a real API — building on the front-end chapters already in the [Web Technologies](../../web-technologies/index.md) and [Advanced Web Technologies](../../advanced-web-technologies/index.md) books, but as standalone, project-based walkthroughs.
 
 <div class="cu-empty" markdown>
 <span class="cu-empty-icon">
