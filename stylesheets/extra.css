@@ -1395,3 +1395,162 @@
   .db-relate { flex-direction: row; min-width: 0; padding: 0.4rem 0; }
   .db-relate-line { width: 2px; height: 100%; min-height: 1.5rem; }
 }
+
+/* ======================================================================= */
+/* Share row (overrides/partials/share.html, injected by content.html on   */
+/* every page) -- icon badges from Material's own bundled FontAwesome      */
+/* brand set (.icons/fontawesome/brands/*.svg), colored via currentColor.  */
+/* ======================================================================= */
+
+/* .md-typeset a.cu-share-btn (not just .cu-share-btn): same specificity
+   tie-break as .cu-btn above -- Material's ".md-typeset a" rule would
+   otherwise win the accent-color fight at (0,1,1) specificity. */
+.md-typeset a.cu-share-btn,
+.cu-share-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: var(--cu-surface);
+  border: 1px solid var(--cu-border);
+  color: var(--cu-muted);
+  transition: color 0.15s ease, border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.cu-share {
+  margin: 2.6rem 0 0;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--cu-border);
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  flex-wrap: wrap;
+}
+
+.cu-share-label {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--cu-purple);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  flex: none;
+}
+
+.cu-share-links {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.cu-share-btn svg {
+  width: 17px;
+  height: 17px;
+  fill: currentColor;
+}
+
+.cu-share-btn:hover {
+  transform: translateY(-2px);
+}
+
+.cu-share-whatsapp:hover {
+  color: #25D366;
+  border-color: #25D366;
+  box-shadow: 0 6px 18px rgba(37, 211, 102, 0.25);
+}
+
+.cu-share-facebook:hover {
+  color: #1877F2;
+  border-color: #1877F2;
+  box-shadow: 0 6px 18px rgba(24, 119, 242, 0.25);
+}
+
+.cu-share-x:hover {
+  color: var(--cu-text);
+  border-color: var(--cu-border-soft);
+  box-shadow: 0 6px 18px rgba(20, 24, 31, 0.12);
+}
+[data-md-color-scheme="slate"] .cu-share-x:hover {
+  box-shadow: 0 6px 18px rgba(236, 239, 244, 0.14);
+}
+
+.cu-share-linkedin:hover {
+  color: #0A66C2;
+  border-color: #0A66C2;
+  box-shadow: 0 6px 18px rgba(10, 102, 194, 0.25);
+}
+
+/* ======================================================================= */
+/* Category listing pages (Tutorials, and any future category-style hub)   */
+/* -- paginated item list (docs/javascripts/pagination.js) + its controls  */
+/* ======================================================================= */
+
+.cu-paginated {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1.6rem;
+}
+
+/* Reuses .cu-card's look (border/padding/hover-lift) via that class being
+   added alongside .cu-paginated-item on each item -- only the parts unique
+   to a row-style item (as opposed to a grid card) are defined here. */
+.cu-paginated-item.cu-card {
+  display: block;
+}
+
+.cu-tut-top {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.cu-paginated-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.8rem;
+  flex-wrap: wrap;
+}
+
+.md-typeset button.cu-page-btn,
+.cu-page-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.3rem;
+  height: 2.3rem;
+  padding: 0 0.65rem;
+  border-radius: 8px;
+  border: 1px solid var(--cu-border);
+  background: var(--cu-surface);
+  color: var(--cu-muted);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+
+.cu-page-btn:hover:not(:disabled) {
+  border-color: var(--cu-teal);
+  color: var(--cu-text);
+}
+
+.cu-page-btn.active {
+  background: var(--cu-teal-fill);
+  border-color: var(--cu-teal-fill);
+  color: var(--cu-on-accent);
+}
+
+.cu-page-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.cu-page-btn.cu-page-nav {
+  font-family: var(--cu-font-display);
+  padding: 0 1rem;
+}
