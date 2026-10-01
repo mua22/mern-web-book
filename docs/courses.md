@@ -97,6 +97,26 @@ Relational theory, ER/EER modeling, normalization, SQL, MongoDB and transactions
 </div>
 </div>
 
+<div class="cu-card" markdown>
+<div class="cu-card-top" markdown>
+<span class="cu-chip cu-chip-purple">CSC323</span>
+<span class="cu-icon-badge" style="background: rgba(108,79,245,0.10);">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6C4FF5" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M9 3v3M12 3v3M15 3v3M9 18v3M12 18v3M15 18v3M3 9h3M3 12h3M3 15h3M18 9h3M18 12h3M18 15h3"/></svg>
+</span>
+</div>
+
+### Operating Systems
+
+Processes, threads, CPU scheduling, synchronization, deadlocks, memory management and file systems — what's really running underneath your code.
+
+<p class="cu-card-meta">3 credit hours · No pre-requisite · 4th semester · 32 lectures</p>
+
+<div class="cu-card-foot" markdown>
+<a class="cu-go" href="../operating-systems/">View Book →</a>
+<span>Slides coming soon</span>
+</div>
+</div>
+
 </div>
 </div>
 

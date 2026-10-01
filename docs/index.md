@@ -31,9 +31,9 @@ hide:
 </div>
 <div class="cu-terminal-body" markdown>
 <span class="cu-prompt">$</span> <span class="cu-cmd">cd csc211-notes &amp;&amp; make run</span><br>
-<span class="cu-prompt">✓</span> 128 lectures loaded<br>
+<span class="cu-prompt">✓</span> 160 lectures loaded<br>
 <span class="cu-prompt">✓</span> 139+ code samples ready<br>
-<span class="cu-prompt">✓</span> 4 courses, 0 paywalls<br>
+<span class="cu-prompt">✓</span> 5 courses, 0 paywalls<br>
 <span class="cu-prompt">$</span> <span class="cu-cmd">_</span><span class="cu-cursor"></span>
 </div>
 </div>
@@ -43,8 +43,8 @@ hide:
 
 <div class="cu-stats" markdown>
 <div class="cu-stats-inner" markdown>
-<div class="cu-stat"><div class="cu-stat-num">4</div><div class="cu-stat-label">courses</div></div>
-<div class="cu-stat"><div class="cu-stat-num">128</div><div class="cu-stat-label">lectures</div></div>
+<div class="cu-stat"><div class="cu-stat-num">5</div><div class="cu-stat-label">courses</div></div>
+<div class="cu-stat"><div class="cu-stat-num">160</div><div class="cu-stat-label">lectures</div></div>
 <div class="cu-stat"><div class="cu-stat-num">139+</div><div class="cu-stat-label">code samples</div></div>
 <div class="cu-stat"><div class="cu-stat-num cu-accent">Free</div><div class="cu-stat-label">no signup, ever</div></div>
 </div>
@@ -54,7 +54,7 @@ hide:
 
 <span class="cu-section-label">// courses</span>
 
-## Four courses, start to finish
+## Five courses, start to finish
 
 <p class="cu-section-sub">Each course is a complete package — textbook, slide deck, and working code for every lecture.</p>
 
@@ -129,6 +129,25 @@ React, REST APIs, authentication and databases — building and deploying produc
 ### Database Systems
 
 Relational theory, ER/EER modeling, normalization, SQL, MongoDB and transactions — designing databases that hold up.
+
+<div class="cu-card-foot" markdown>
+<span>32 lectures</span>
+<span class="cu-go">View course →</span>
+</div>
+</div>
+
+<div class="cu-card" markdown>
+<a class="cu-card-link" href="operating-systems/" aria-label="Open Operating Systems (CSC323)"></a>
+<div class="cu-card-top" markdown>
+<span class="cu-chip cu-chip-purple">CSC323</span>
+<span class="cu-icon-badge" style="background: rgba(108,79,245,0.10);">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6C4FF5" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M9 3v3M12 3v3M15 3v3M9 18v3M12 18v3M15 18v3M3 9h3M3 12h3M3 15h3M18 9h3M18 12h3M18 15h3"/></svg>
+</span>
+</div>
+
+### Operating Systems
+
+Processes, threads, CPU scheduling, synchronization, deadlocks, memory management and file systems — what's really running underneath your code.
 
 <div class="cu-card-foot" markdown>
 <span>32 lectures</span>

@@ -29,3 +29,8 @@ The source documents this book is generated from, as PDFs.
 - [Course Description Form (CDF)](downloads/course-cdf/CSC270_DB_CDF_V4.0.pdf)
 - [Lecture-wise Plan](downloads/course-cdf/CSC270%20Database%20Systems%20-%20Lecture-wise%20Plan.pdf)
 - [Syllabus](downloads/course-cdf/CSC270_DB_Syllabus_V3.1.pdf)
+
+**Operating Systems (CSC323)**
+
+- [Course Description Form (CDF)](downloads/course-cdf/CSC323_OS_CDF_V5.0.pdf)
+- [Lecture-wise Plan](downloads/course-cdf/CSC323%20Operating%20Systems%20-%20Lecture-wise%20Plan.pdf)

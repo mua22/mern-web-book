@@ -1590,3 +1590,122 @@
 .cu-empty p a {
   color: var(--cu-teal);
 }
+
+/* ======================================================================= */
+/* OS diagram toolkit additions (os-*) -- CSC323 Operating Systems.        */
+/* Most OS diagrams reuse the existing db-* toolkit (db-diagram, db-flow,  */
+/* db-node, db-stack, db-grid-2/3, db-badge, db-relation) -- those names   */
+/* were always generic, not database-specific. Only genuinely new shapes  */
+/* get new classes here: a Gantt-style scheduling timeline (os-gantt) and */
+/* a vertical register/table readout (os-regs). Process-state diagrams    */
+/* and resource-allocation graphs are hand-authored inline SVG (arbitrary */
+/* node/edge topology doesn't fit a fixed CSS component) -- see the       */
+/* worked SVG templates in the CSC323 content brief for the expected      */
+/* style (stroke/fill via the same --cu-* tokens as everywhere else).     */
+/* ======================================================================= */
+
+.os-gantt {
+  margin: 0.4rem 0;
+}
+
+.os-gantt-row {
+  display: flex;
+  align-items: stretch;
+  height: 3rem;
+}
+
+.os-gantt-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 2px solid var(--cu-bg);
+  color: var(--cu-on-accent);
+  font-family: "JetBrains Mono", monospace;
+  font-weight: 700;
+  font-size: 0.92rem;
+  min-width: 2.4rem;
+}
+
+.os-gantt-bar:last-child { border-right: none; }
+
+.os-gantt-bar-a { background: var(--cu-teal-fill); }
+.os-gantt-bar-b { background: var(--cu-purple); }
+.os-gantt-bar-c { background: var(--cu-orange); }
+.os-gantt-bar-idle {
+  background: repeating-linear-gradient(
+    45deg, var(--cu-surface-alt), var(--cu-surface-alt) 6px,
+    var(--cu-border) 6px, var(--cu-border) 12px
+  );
+  color: var(--cu-faint);
+}
+
+.os-gantt-ticks {
+  display: flex;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.7rem;
+  color: var(--cu-faint);
+  margin-top: 0.3rem;
+}
+
+.os-gantt-ticks span {
+  flex: none;
+  text-align: left;
+}
+
+/* Small labeled key-value readout -- register contents, page-table rows,
+   or any other "label: value" list that isn't quite a full db-relation
+   table. Reuses the db-diagram card wrapper for the outer frame. */
+.os-regs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: 0.6rem;
+}
+
+.os-reg {
+  background: var(--cu-surface);
+  border: 1px solid var(--cu-border);
+  border-radius: 8px;
+  padding: 0.6rem 0.8rem;
+}
+
+.os-reg-label {
+  display: block;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.68rem;
+  color: var(--cu-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.os-reg-value {
+  display: block;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--cu-text);
+  margin-top: 0.15rem;
+}
+
+/* Wrapper for hand-authored inline SVG diagrams (state machines, resource-
+   allocation graphs) so they get the same card treatment as db-diagram
+   without forcing SVG content through the flow/node DOM structure. */
+.os-svg-diagram {
+  background: var(--cu-surface);
+  border: 1px solid var(--cu-border);
+  border-radius: 14px;
+  padding: 1.4rem;
+  margin: 1.2rem 0;
+  overflow-x: auto;
+}
+
+.os-svg-diagram svg {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  height: auto;
+}
+
+@media screen and (max-width: 45em) {
+  .os-gantt-row { flex-wrap: wrap; height: auto; }
+  .os-gantt-bar { min-width: 3.2rem; height: 2.6rem; }
+}
