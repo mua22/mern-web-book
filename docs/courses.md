@@ -113,7 +113,7 @@ Processes, threads, CPU scheduling, synchronization, deadlocks, memory managemen
 
 <div class="cu-card-foot" markdown>
 <a class="cu-go" href="../operating-systems/">View Book →</a>
-<span>Slides coming soon</span>
+<a class="cu-go" href="../lecture-slides/csc323/">View Slides →</a>
 </div>
 </div>
 

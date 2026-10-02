@@ -58,6 +58,22 @@ study. Pick a course below.
 </div>
 </div>
 
+<div class="cu-card" markdown>
+<a class="cu-card-link" href="csc323/" aria-label="Open Operating Systems (CSC323) Lecture Slides"></a>
+<div class="cu-card-top" markdown>
+<span class="cu-chip cu-chip-purple">CSC323</span>
+</div>
+
+### Operating Systems
+
+32 lectures, one slide deck each.
+
+<div class="cu-card-foot" markdown>
+<span>32 decks</span>
+<span class="cu-go">View slides →</span>
+</div>
+</div>
+
 </div>
 
 ## Legacy Lecture Slides
