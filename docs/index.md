@@ -278,12 +278,12 @@ A companion repository of small, self-contained demos and mini projects, one fol
 </div>
 
 <div class="cu-card" markdown>
-<a class="cu-card-link" href="labs/web-technologies/" aria-label="Open Labs"></a>
-<span class="cu-chip cu-chip-teal">15 LABS · CODE + SOLUTIONS</span>
+<a class="cu-card-link" href="labs.md" aria-label="Open Labs"></a>
+<span class="cu-chip cu-chip-teal">30 LABS · CODE + SOLUTIONS</span>
 
 ### Labs
 
-Hands-on CSC336 lab manual: 15 labs from HTML basics to REST APIs and React, each with solved activities and graded lab tasks.
+Hands-on lab manuals: 15 CSC336 labs from HTML basics to REST APIs and React, plus 15 CSC270 labs from SQL fundamentals to MongoDB — each with solved activities and graded lab tasks.
 </div>
 
 </div>
