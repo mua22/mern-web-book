@@ -219,7 +219,7 @@ $Z$ = `{language}`:
 
 Notice exactly what happened to the row count: the original relation needed **five** rows
 (four for E1 alone, cross-multiplied) to represent information that these two tables
-together represent in **five** rows total, but with zero spurious pairing — `EmpSkills` says
+together store in **six** rows (three each), but with zero spurious pairing — `EmpSkills` says
 only "E1 knows Java and Python," `EmpLanguages` says only "E1 speaks English and Urdu,"
 and neither table claims any specific skill-language pairing exists, because none does.
 Adding a third skill for E1 now costs exactly **one** new row in `EmpSkills`, not two.
