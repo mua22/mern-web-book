@@ -21,7 +21,23 @@ Tool-focused tutorials on the JavaScript language itself — beyond what's alrea
 Build a small interactive page — a live preview, a greeting, a theme switcher, and dark mode — binding every event with plain HTML attributes.
 
 <div class="cu-card-foot" markdown>
-<span>1 of 1</span>
+<span>1 of 2</span>
+<span class="cu-go">Start tutorial →</span>
+</div>
+</div>
+
+<div class="cu-card" markdown>
+<a class="cu-card-link" href="todo-list-app/" aria-label="Open Build a Dynamic To-Do List tutorial"></a>
+<div class="cu-tut-top" markdown>
+<span class="cu-chip cu-chip-teal">Beginner</span>
+</div>
+
+### Build a Dynamic To-Do List
+
+Create, toggle, and delete tasks by building real DOM elements from a JavaScript array — the pattern behind most real to-do lists and shopping carts.
+
+<div class="cu-card-foot" markdown>
+<span>2 of 2</span>
 <span class="cu-go">Start tutorial →</span>
 </div>
 </div>

@@ -508,13 +508,20 @@ the page (background, card color, inputs, counter text, footer text) from a sing
 
 ## Part 6: See It Running
 
-Open `index.html` directly in your browser. Type a name, click **Greet Me** a couple of
-times, switch the theme, and try the dark mode button — here's what it looks like after
-typing a name and clicking Greet Me once:
+!!! tip "Try it live"
+    This project is deployed right here on the site — open the
+    **[live demo](first-javascript-app-demo/index.html){: target="_blank" }**
+    in a new tab and play with it for real before (or instead of) typing it out yourself.
+    It's the exact three files below, running with no build step of any kind.
+
+Open `index.html` directly in your own browser once you've built it. Type a name, click
+**Greet Me** a couple of times, switch the theme, and try the dark mode button — here's
+what it looks like after typing a name and clicking Greet Me once:
 
 ![Rendered output: a white card titled "Welcome Panel" on a light gray page, showing a name input with "Ayesha" typed in, a live preview reading "Preview: Ayesha", a "Greet Me" button, the message "Hello, Ayesha! Welcome to JavaScript.", a click counter reading 1, a theme color dropdown set to Indigo, and a "Turn On Dark Mode" button](../../assets/img/tutorials/first-javascript-app.png)
 
-A still image can't show the live behavior, but in your own browser you'll see: the
+A still image can't show the live behavior, but in your own browser (or the
+[live demo](first-javascript-app-demo/index.html){: target="_blank" } above) you'll see: the
 preview text updating on every keystroke (before you even click anything), the click
 counter incrementing on each click, the header and buttons instantly switching color
 when you pick a different theme, and the whole page smoothly fading between light and
