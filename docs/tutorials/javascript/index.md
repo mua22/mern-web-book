@@ -10,13 +10,18 @@ tags:
 
 Tool-focused tutorials on the JavaScript language itself — beyond what's already covered in the [Web Technologies](../../web-technologies/index.md) book chapters on core JavaScript, array methods, and async/await. Think deeper dives and standalone projects: closures and scope, the module system, working with `this`, and patterns you'll lean on constantly once you get to Express and React.
 
-<div class="cu-empty" markdown>
-<span class="cu-empty-icon">
-<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
-</span>
+<div class="cu-card" markdown>
+<a class="cu-card-link" href="first-javascript-app/" aria-label="Open Your First JavaScript Program tutorial"></a>
+<div class="cu-tut-top" markdown>
+<span class="cu-chip cu-chip-teal">Beginner</span>
+</div>
 
-### Coming soon
+### Your First JavaScript Program
 
-Tutorials for this category haven't been written yet. In the meantime, start with
-[HTML &amp; CSS](../html-css/index.md) or [DevOps](../devops/index.md), both available now.
+Build a small interactive page — a live preview, a greeting, a theme switcher, and dark mode — binding every event with plain HTML attributes.
+
+<div class="cu-card-foot" markdown>
+<span>1 of 1</span>
+<span class="cu-go">Start tutorial →</span>
+</div>
 </div>
