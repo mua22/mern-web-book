@@ -46,7 +46,7 @@ Real pages and real layouts: the box model, float, positioning, Flexbox, animati
 The language itself: closures and scope, modules, `this`, and patterns you'll lean on in Express and React.
 
 <div class="cu-card-foot" markdown>
-<span>2 tutorials</span>
+<span>3 tutorials</span>
 <span class="cu-go">Browse →</span>
 </div>
 </div>

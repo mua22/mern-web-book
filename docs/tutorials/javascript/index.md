@@ -21,7 +21,7 @@ Tool-focused tutorials on the JavaScript language itself — beyond what's alrea
 Build a small interactive page — a live preview, a greeting, a theme switcher, and dark mode — binding every event with plain HTML attributes.
 
 <div class="cu-card-foot" markdown>
-<span>1 of 2</span>
+<span>1 of 3</span>
 <span class="cu-go">Start tutorial →</span>
 </div>
 </div>
@@ -37,7 +37,23 @@ Build a small interactive page — a live preview, a greeting, a theme switcher,
 Create, toggle, and delete tasks by building real DOM elements from a JavaScript array — the pattern behind most real to-do lists and shopping carts.
 
 <div class="cu-card-foot" markdown>
-<span>2 of 2</span>
+<span>2 of 3</span>
+<span class="cu-go">Start tutorial →</span>
+</div>
+</div>
+
+<div class="cu-card" markdown>
+<a class="cu-card-link" href="countdown-timer-app/" aria-label="Open Build a Countdown Timer tutorial"></a>
+<div class="cu-tut-top" markdown>
+<span class="cu-chip cu-chip-teal">Beginner</span>
+</div>
+
+### Build a Countdown Timer
+
+Start, pause, and reset a ticking countdown using setInterval — the first project in this series driven by time instead of clicks.
+
+<div class="cu-card-foot" markdown>
+<span>3 of 3</span>
 <span class="cu-go">Start tutorial →</span>
 </div>
 </div>
