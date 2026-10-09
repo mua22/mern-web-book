@@ -3498,13 +3498,13 @@ all there). Once installed, confirm it worked:</p>
 </span></code></pre></div>
 <p>Git needs to know who you are before you can commit, since every commit is stamped with
 an author name and email:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>user.name<span class="w"> </span><span class="s2">&quot;Your Name&quot;</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>user.email<span class="w"> </span><span class="s2">&quot;you@example.com&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>user.name<span class="w"> </span><span class="s2">"Your Name"</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>user.email<span class="w"> </span><span class="s2">"you@example.com"</span>
 </span></code></pre></div>
 <p>A few other one-time settings that make life easier:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>init.defaultBranch<span class="w"> </span>main<span class="w">   </span><span class="c1"># new repos start on &quot;main&quot;, not &quot;master&quot;</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>core.editor<span class="w"> </span><span class="s2">&quot;code --wait&quot;</span><span class="w"> </span><span class="c1"># use VS Code for commit messages, if installed</span>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>git<span class="w"> </span>config<span class="w"> </span>--list<span class="w">                             </span><span class="c1"># see everything you&#39;ve configured</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>init.defaultBranch<span class="w"> </span>main<span class="w">   </span><span class="c1"># new repos start on "main", not "master"</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>core.editor<span class="w"> </span><span class="s2">"code --wait"</span><span class="w"> </span><span class="c1"># use VS Code for commit messages, if installed</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>git<span class="w"> </span>config<span class="w"> </span>--list<span class="w">                             </span><span class="c1"># see everything you've configured</span>
 </span></code></pre></div>
 <h3 id="the-three-trees-working-directory-staging-area-repository">The Three Trees: Working Directory, Staging Area, Repository<a class="headerlink" href="#the-three-trees-working-directory-staging-area-repository" title="Permanent link">&para;</a></h3>
 <p>Understanding these three areas is the single most useful mental model for everything
@@ -3537,15 +3537,15 @@ Nothing is tracked yet; you have to tell Git what to track.</p>
 <p><code>git status</code> is the command you will run more than any other — it tells you what's
 changed, what's staged, and what Git doesn't know about yet. A typical first run on a new
 project shows every file as "untracked."</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;# My Project&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>README.md
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">"# My Project"</span><span class="w"> </span>&gt;<span class="w"> </span>README.md
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>git<span class="w"> </span>status
 </span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="c1"># README.md shown as untracked</span>
 </span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
 </span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>git<span class="w"> </span>add<span class="w"> </span>README.md
 </span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>git<span class="w"> </span>status
-</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="c1"># README.md shown as staged (&quot;Changes to be committed&quot;)</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="c1"># README.md shown as staged ("Changes to be committed")</span>
 </span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>
-</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Add project README&quot;</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">"Add project README"</span>
 </span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>git<span class="w"> </span>status
 </span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="c1"># nothing to commit, working tree clean</span>
 </span></code></pre></div>
@@ -3615,7 +3615,7 @@ else's public project):</p>
 <p><code>clone</code> automatically sets up the <code>origin</code> remote for you — there's no need to run
 <code>git remote add</code> after cloning.</p>
 <h3 id="pulling-and-fetching">Pulling and Fetching<a class="headerlink" href="#pulling-and-fetching" title="Permanent link">&para;</a></h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>git<span class="w"> </span>fetch<span class="w"> </span>origin<span class="w">    </span><span class="c1"># download new commits from GitHub, but don&#39;t touch your working files</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>git<span class="w"> </span>fetch<span class="w"> </span>origin<span class="w">    </span><span class="c1"># download new commits from GitHub, but don't touch your working files</span>
 </span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>git<span class="w"> </span>pull<span class="w"> </span>origin<span class="w"> </span>main<span class="w"> </span><span class="c1"># fetch AND immediately merge into your current branch</span>
 </span></code></pre></div>
 <pre class="mermaid"><code>sequenceDiagram
@@ -3649,7 +3649,7 @@ feature or fix a bug without risking <code>main</code> until the work is ready.<
     commit id: "Deploy v1.1"</code></pre>
 <h3 id="creating-and-switching-branches">Creating and Switching Branches<a class="headerlink" href="#creating-and-switching-branches" title="Permanent link">&para;</a></h3>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>git<span class="w"> </span>branch<span class="w">                     </span><span class="c1"># list local branches, * marks the current one</span>
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>git<span class="w"> </span>branch<span class="w"> </span>feature-login<span class="w">       </span><span class="c1"># create a new branch (doesn&#39;t switch to it)</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>git<span class="w"> </span>branch<span class="w"> </span>feature-login<span class="w">       </span><span class="c1"># create a new branch (doesn't switch to it)</span>
 </span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>git<span class="w"> </span>switch<span class="w"> </span>feature-login<span class="w">       </span><span class="c1"># switch to it</span>
 </span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>git<span class="w"> </span>switch<span class="w"> </span>-c<span class="w"> </span>feature-signup<span class="w">   </span><span class="c1"># create AND switch in one step (shorthand: -c)</span>
 </span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>
@@ -3676,9 +3676,9 @@ beginners — both work, but reach for <code>switch</code> when your goal is jus
 branches, and Git can't decide which version is correct — it needs you to decide. Git
 marks the conflicting section directly in the file:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
-</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>const greeting = &quot;Hello, world!&quot;;
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>const greeting = "Hello, world!";
 </span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>=======
-</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>const greeting = &quot;Hey there, world!&quot;;
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>const greeting = "Hey there, world!";
 </span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>&gt;&gt;&gt;&gt;&gt;&gt;&gt; feature-login
 </span></code></pre></div>
 <p>To resolve it:</p>
@@ -3737,7 +3737,7 @@ different situation.</p>
 </tbody>
 </table>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="c1"># Fix a typo in the commit message you JUST made, before pushing:</span>
-</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>git<span class="w"> </span>commit<span class="w"> </span>--amend<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Add login form validation&quot;</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>git<span class="w"> </span>commit<span class="w"> </span>--amend<span class="w"> </span>-m<span class="w"> </span><span class="s2">"Add login form validation"</span>
 </span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>
 </span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="c1"># Undo the last commit but keep the changes staged, ready to re-commit differently:</span>
 </span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>git<span class="w"> </span>reset<span class="w"> </span>--soft<span class="w"> </span>HEAD~1
@@ -3778,7 +3778,7 @@ back via a <strong>pull request (PR)</strong>.</p>
 </span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="c1"># ... make your changes ...</span>
 </span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>
 </span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>git<span class="w"> </span>add<span class="w"> </span>.
-</span><span id="__span-15-9"><a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Fix typo in installation docs&quot;</span>
+</span><span id="__span-15-9"><a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">"Fix typo in installation docs"</span>
 </span><span id="__span-15-10"><a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a>git<span class="w"> </span>push<span class="w"> </span>-u<span class="w"> </span>origin<span class="w"> </span>fix-typo-in-docs
 </span><span id="__span-15-11"><a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a><span class="c1"># then open a Pull Request on github.com from your branch into the original repo</span>
 </span></code></pre></div>
@@ -3803,7 +3803,7 @@ project for this course), you skip the "fork" step and just branch directly:
 <h3 id="stashing-work-in-progress">Stashing Work in Progress<a class="headerlink" href="#stashing-work-in-progress" title="Permanent link">&para;</a></h3>
 <p>If you need to switch branches but aren't ready to commit your current changes:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>git<span class="w"> </span>stash<span class="w">            </span><span class="c1"># temporarily shelve uncommitted changes, restore a clean working directory</span>
-</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>git<span class="w"> </span>stash<span class="w"> </span>list<span class="w">        </span><span class="c1"># see everything you&#39;ve stashed</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>git<span class="w"> </span>stash<span class="w"> </span>list<span class="w">        </span><span class="c1"># see everything you've stashed</span>
 </span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>git<span class="w"> </span>stash<span class="w"> </span>pop<span class="w">          </span><span class="c1"># re-apply the most recent stash and remove it from the list</span>
 </span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>git<span class="w"> </span>stash<span class="w"> </span>apply<span class="w">         </span><span class="c1"># re-apply without removing it from the list</span>
 </span></code></pre></div>

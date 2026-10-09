@@ -3908,13 +3908,13 @@ what you want for a read-only reporting role.</p>
 directly into a SQL string instead of being passed as a properly separated parameter,
 letting an attacker inject their own SQL logic:
 <div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>-- Application builds this string directly from user input:
-</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>&quot;SELECT * FROM Staff WHERE staffNo = &#39;&quot; + userInput + &quot;&#39;&quot;
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>"SELECT * FROM Staff WHERE staffNo = '" + userInput + "'"
 </span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>
 </span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>-- Attacker submits, as userInput:
-</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>&#39; OR &#39;1&#39;=&#39;1
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>' OR '1'='1
 </span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>
 </span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>-- Resulting statement actually executed:
-</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>SELECT * FROM Staff WHERE staffNo = &#39;&#39; OR &#39;1&#39;=&#39;1&#39;
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>SELECT * FROM Staff WHERE staffNo = '' OR '1'='1'
 </span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>-- returns EVERY row, bypassing the intended filter entirely
 </span></code></pre></div>
 A more damaging payload can chain a second statement (<code>'; DROP TABLE Staff; --</code>) if the
@@ -3922,7 +3922,7 @@ driver allows multiple statements per call. The fix is <strong>parameterized que
 prepared statements</strong>, never string concatenation:
 <div class="language-sql highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="c1">-- Prepared statement -- user input is bound as a parameter, never parsed as SQL</span>
 </span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="k">PREPARE</span><span class="w"> </span><span class="n">getStaff</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">Staff</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">staffNo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">$</span><span class="mi">1</span><span class="p">;</span>
-</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="k">EXECUTE</span><span class="w"> </span><span class="n">getStaff</span><span class="p">(</span><span class="s1">&#39;SG37&#39;</span><span class="p">);</span>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="k">EXECUTE</span><span class="w"> </span><span class="n">getStaff</span><span class="p">(</span><span class="s1">'SG37'</span><span class="p">);</span>
 </span></code></pre></div>
 Authorization and parameterized queries are complementary, not substitutes for each
 other: even a perfectly parameterized application still needs the <em>user account it
