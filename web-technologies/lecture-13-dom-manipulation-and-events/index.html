@@ -1868,16 +1868,27 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#bubbling-capturing-and-event-delegation" class="md-nav__link">
+  <a href="#the-event-life-cycle-capturing-target-and-bubbling" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Bubbling, Capturing, and Event Delegation
+        The Event Life Cycle: Capturing, Target, and Bubbling
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Bubbling, Capturing, and Event Delegation">
+    <nav class="md-nav" aria-label="The Event Life Cycle: Capturing, Target, and Bubbling">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#watching-all-three-phases-in-order" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Watching All Three Phases in Order
+      
+    </span>
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#event-delegation" class="md-nav__link">
@@ -1895,6 +1906,56 @@
     <span class="md-ellipsis">
       
         preventDefault and stopPropagation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unobtrusive-javascript" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Unobtrusive JavaScript
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Unobtrusive JavaScript">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-problem-running-script-before-the-page-is-ready" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Problem: Running Script Before the Page Is Ready
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#windowonload-waits-for-everything" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        window.onload — Waits for Everything
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#domcontentloaded-waits-only-for-the-html" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DOMContentLoaded — Waits Only for the HTML
       
     </span>
   </a>
@@ -3482,16 +3543,27 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#bubbling-capturing-and-event-delegation" class="md-nav__link">
+  <a href="#the-event-life-cycle-capturing-target-and-bubbling" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Bubbling, Capturing, and Event Delegation
+        The Event Life Cycle: Capturing, Target, and Bubbling
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Bubbling, Capturing, and Event Delegation">
+    <nav class="md-nav" aria-label="The Event Life Cycle: Capturing, Target, and Bubbling">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#watching-all-three-phases-in-order" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Watching All Three Phases in Order
+      
+    </span>
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#event-delegation" class="md-nav__link">
@@ -3509,6 +3581,56 @@
     <span class="md-ellipsis">
       
         preventDefault and stopPropagation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unobtrusive-javascript" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Unobtrusive JavaScript
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Unobtrusive JavaScript">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-problem-running-script-before-the-page-is-ready" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Problem: Running Script Before the Page Is Ready
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#windowonload-waits-for-everything" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        window.onload — Waits for Everything
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#domcontentloaded-waits-only-for-the-html" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DOMContentLoaded — Waits Only for the HTML
       
     </span>
   </a>
@@ -3668,7 +3790,10 @@ JavaScript reads, changes, and reacts to the structure of a web page.</p>
 <li>Creating, updating, and removing elements</li>
 <li>Working with <code>classList</code> and inline styles</li>
 <li>Handling events with <code>addEventListener</code> and the event object</li>
-<li>Event bubbling, capturing, delegation, <code>preventDefault</code>, and <code>stopPropagation</code></li>
+<li>The event life cycle — capturing, target, and bubbling — plus delegation,
+  <code>preventDefault</code>, and <code>stopPropagation</code></li>
+<li>Unobtrusive JavaScript, and why <code>addEventListener("DOMContentLoaded", ...)</code> is usually
+  a better choice than <code>window.onload</code></li>
 </ul>
 <h2 id="the-dom-tree-nodes-and-the-document-object">The DOM Tree, Nodes, and the <code>document</code> Object<a class="headerlink" href="#the-dom-tree-nodes-and-the-document-object" title="Permanent link">&para;</a></h2>
 <p>The <strong>DOM</strong> (Document Object Model) is a live, in-memory, tree-shaped representation of an HTML
@@ -3823,38 +3948,85 @@ can remove a specific one later with <code>removeEventListener</code>.</p>
 </span></code></pre></div>
 <p>Common events you will use constantly: <code>click</code>, <code>submit</code>, <code>input</code>, <code>change</code>, <code>keydown</code>,
 <code>keyup</code>, <code>mouseover</code>, <code>mouseout</code>, <code>load</code>, <code>DOMContentLoaded</code>.</p>
-<h2 id="bubbling-capturing-and-event-delegation">Bubbling, Capturing, and Event Delegation<a class="headerlink" href="#bubbling-capturing-and-event-delegation" title="Permanent link">&para;</a></h2>
+<h2 id="the-event-life-cycle-capturing-target-and-bubbling">The Event Life Cycle: Capturing, Target, and Bubbling<a class="headerlink" href="#the-event-life-cycle-capturing-target-and-bubbling" title="Permanent link">&para;</a></h2>
 <p>When an event fires on an element nested inside other elements, it doesn't just affect that one
-element — it travels through the DOM tree in two phases:</p>
+element — it travels through the entire DOM tree in <strong>three</strong> ordered phases. Together these are
+called the event's <strong>life cycle</strong>:</p>
 <ol>
-<li><strong>Capturing phase</strong>: the event travels <strong>down</strong> from <code>document</code> to the target element.</li>
-<li><strong>Bubbling phase</strong>: the event then travels back <strong>up</strong> from the target element to <code>document</code>.</li>
+<li><strong>Capturing phase</strong>: the event starts at <code>document</code> and travels <strong>down</strong> the tree, through
+   every ancestor of the element it's heading for, without yet having reached it.</li>
+<li><strong>Target phase</strong>: the event arrives at the exact element the user interacted with — the
+   <strong>target</strong>. Both capturing-phase and bubbling-phase listeners registered directly on the
+   target fire here.</li>
+<li><strong>Bubbling phase</strong>: the event then travels back <strong>up</strong> the tree, through the same ancestors,
+   in reverse order, all the way back to <code>document</code>.</li>
 </ol>
 <pre class="mermaid"><code>flowchart TD
     subgraph Capturing["1. Capturing (top to bottom)"]
-        D1[document] --&gt; B1[body] --&gt; U1[ul] --&gt; L1["li (target)"]
+        D1[document] --&gt; B1[body] --&gt; U1[ul]
     end
-    subgraph Bubbling["2. Bubbling (bottom to top)"]
-        L2["li (target)"] --&gt; U2[ul] --&gt; B2[body] --&gt; D2[document]
-    end</code></pre>
-<p>By default, <code>addEventListener</code> listens during the <strong>bubbling</strong> phase. You can listen during the
-capturing phase instead by passing <code>true</code> as a third argument:</p>
+    subgraph Target["2. Target"]
+        L1["li (target)"]
+    end
+    subgraph Bubbling["3. Bubbling (bottom to top)"]
+        U2[ul] --&gt; B2[body] --&gt; D2[document]
+    end
+    Capturing --&gt; Target --&gt; Bubbling</code></pre>
+<p>By default, <code>addEventListener</code> only reacts during the <strong>target</strong> and <strong>bubbling</strong> phases. You can
+make it react during the <strong>capturing</strong> phase instead by passing <code>true</code> (or
+<code>{ capture: true }</code>) as a third argument:</p>
 <div class="language-javascript highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="nx">element</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;click&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">handler</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">);</span><span class="w"> </span><span class="c1">// capturing phase</span>
 </span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="nx">element</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;click&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">handler</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">);</span><span class="w"> </span><span class="c1">// bubbling phase (default)</span>
 </span></code></pre></div>
+<h3 id="watching-all-three-phases-in-order">Watching All Three Phases in Order<a class="headerlink" href="#watching-all-three-phases-in-order" title="Permanent link">&para;</a></h3>
+<p>The life cycle is easiest to believe once you log it. Given three nested elements —
+<code>&lt;div id="outer"&gt;&lt;div id="middle"&gt;&lt;button id="inner"&gt;Click&lt;/button&gt;&lt;/div&gt;&lt;/div&gt;</code> — attach both a
+capturing and a bubbling listener to <em>every</em> level, then click the innermost button:</p>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="p">[</span><span class="s2">&quot;outer&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;middle&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;inner&quot;</span><span class="p">].</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">id</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">el</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="nx">id</span><span class="p">);</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">  </span><span class="nx">el</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;click&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`CAPTURE: </span><span class="si">${</span><span class="nx">id</span><span class="si">}</span><span class="sb">`</span><span class="p">),</span><span class="w"> </span><span class="kc">true</span><span class="p">);</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="w">  </span><span class="nx">el</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;click&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`BUBBLE: </span><span class="si">${</span><span class="nx">id</span><span class="si">}</span><span class="sb">`</span><span class="p">),</span><span class="w"> </span><span class="kc">false</span><span class="p">);</span>
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="p">});</span>
+</span></code></pre></div>
+<p>Clicking the button logs, in this exact order:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>CAPTURE: outer
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>CAPTURE: middle
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>CAPTURE: inner
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>BUBBLE: inner
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>BUBBLE: middle
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>BUBBLE: outer
+</span></code></pre></div>
+<p>Notice <code>inner</code> (the target) logs <strong>both</strong> of its own listeners back-to-back — that's the target
+phase, sitting right in the middle between capturing going down and bubbling coming back up. You
+can check which phase a handler is currently running in from the event object itself:</p>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="nx">inner</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;click&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">event</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">eventPhase</span><span class="p">);</span><span class="w"> </span><span class="c1">// 1 = capturing, 2 = at target, 3 = bubbling</span>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">);</span><span class="w">        </span><span class="c1">// always #inner — where the click actually happened</span>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">currentTarget</span><span class="p">);</span><span class="w"> </span><span class="c1">// whichever element THIS listener is attached to</span>
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="p">});</span>
+</span></code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Why capturing exists at all</p>
+<p>Almost all real code only ever uses the bubbling phase — it's what event delegation (below)
+relies on. Capturing listeners are rare in application code, but they matter for one specific
+job: intercepting an event <em>before</em> anything closer to the target gets a chance to react to
+it or stop it, which is occasionally useful for logging, analytics, or a parent that needs the
+first word on every click inside it, no matter what a child's own handler does.</p>
+</div>
 <h3 id="event-delegation">Event Delegation<a class="headerlink" href="#event-delegation" title="Permanent link">&para;</a></h3>
 <p>Because events bubble up, you can attach <strong>one</strong> listener on a parent element instead of separate
 listeners on every child — this is called <strong>event delegation</strong>. It's especially useful for lists
 where items are added or removed dynamically, since a listener on individual items would need to
 be re-attached every time.</p>
-<div class="language-javascript highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="kd">const</span><span class="w"> </span><span class="nx">list</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&quot;#task-list&quot;</span><span class="p">);</span>
-</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>
-</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="c1">// One listener on the parent handles clicks on ANY current or future &lt;li&gt;</span>
-</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="nx">list</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;click&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">event</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">tagName</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s2">&quot;LI&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="w">    </span><span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">classList</span><span class="p">.</span><span class="nx">toggle</span><span class="p">(</span><span class="s2">&quot;done&quot;</span><span class="p">);</span>
-</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="w">  </span><span class="p">}</span>
-</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="p">});</span>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="kd">const</span><span class="w"> </span><span class="nx">list</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&quot;#task-list&quot;</span><span class="p">);</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="c1">// One listener on the parent handles clicks on ANY current or future &lt;li&gt;</span>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="nx">list</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;click&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">event</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">tagName</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s2">&quot;LI&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="w">    </span><span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">classList</span><span class="p">.</span><span class="nx">toggle</span><span class="p">(</span><span class="s2">&quot;done&quot;</span><span class="p">);</span>
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="p">});</span>
 </span></code></pre></div>
 <p>Here, <code>event.target</code> is the specific element that was actually clicked (a particular <code>&lt;li&gt;</code>),
 while <code>event.currentTarget</code> is the element the listener is attached to (<code>list</code> itself).</p>
@@ -3874,14 +4046,14 @@ things:</p>
   other elements — but the default browser behavior still happens unless you also call
   <code>preventDefault()</code>.</li>
 </ul>
-<div class="language-javascript highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&quot;a.disabled-link&quot;</span><span class="p">).</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;click&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">event</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">  </span><span class="nx">event</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span><span class="w"> </span><span class="c1">// the link will NOT navigate anywhere</span>
-</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="p">});</span>
-</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>
-</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&quot;.dropdown-toggle&quot;</span><span class="p">).</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;click&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">event</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="w">  </span><span class="nx">event</span><span class="p">.</span><span class="nx">stopPropagation</span><span class="p">();</span><span class="w"> </span><span class="c1">// clicking this button won&#39;t also trigger a listener</span>
-</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="w">                            </span><span class="c1">// on a parent element (e.g. a &quot;click outside to close&quot; handler)</span>
-</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="p">});</span>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&quot;a.disabled-link&quot;</span><span class="p">).</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;click&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">event</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">  </span><span class="nx">event</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span><span class="w"> </span><span class="c1">// the link will NOT navigate anywhere</span>
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="p">});</span>
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&quot;.dropdown-toggle&quot;</span><span class="p">).</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;click&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">event</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="w">  </span><span class="nx">event</span><span class="p">.</span><span class="nx">stopPropagation</span><span class="p">();</span><span class="w"> </span><span class="c1">// clicking this button won&#39;t also trigger a listener</span>
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="w">                            </span><span class="c1">// on a parent element (e.g. a &quot;click outside to close&quot; handler)</span>
+</span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="p">});</span>
 </span></code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title">Don't confuse the two</p>
@@ -3889,6 +4061,95 @@ things:</p>
 the event from <em>reaching other listeners</em> further up (or down) the tree. A single handler can
 call both when needed, but they solve different problems.</p>
 </div>
+<h2 id="unobtrusive-javascript">Unobtrusive JavaScript<a class="headerlink" href="#unobtrusive-javascript" title="Permanent link">&para;</a></h2>
+<p>Every earlier tutorial in this course bound events with an HTML attribute — <code>onclick="save()"</code>
+sitting right inside the tag. That's a fine way to learn, but it has real costs once a page grows:
+the behavior is scattered through the HTML instead of living in one place, the same attribute can
+only hold <em>one</em> handler, and some security policies (CSP) reject inline attribute handlers
+outright.</p>
+<p><strong>Unobtrusive JavaScript</strong> is the practice of keeping <em>all</em> behavior out of the HTML entirely —
+no <code>onclick</code>, no <code>onsubmit</code>, nothing. The HTML describes structure only; a separate <code>.js</code> file
+selects its own elements and attaches its own listeners with <code>addEventListener</code>.</p>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="cm">&lt;!-- Obtrusive: behavior is mixed into the markup --&gt;</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="p">&lt;</span><span class="nt">button</span> <span class="na">onclick</span><span class="o">=</span><span class="s">&quot;save()&quot;</span><span class="p">&gt;</span>Save<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+</span></code></pre></div>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="cm">&lt;!-- Unobtrusive: the markup says nothing about behavior --&gt;</span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="p">&lt;</span><span class="nt">button</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;save-btn&quot;</span><span class="p">&gt;</span>Save<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+</span></code></pre></div>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="c1">// script.js — all behavior lives here instead</span>
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;save-btn&quot;</span><span class="p">).</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;click&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">save</span><span class="p">);</span>
+</span></code></pre></div>
+<p>This separation is why <code>addEventListener</code> is the technique real production code reaches for, even
+though attribute binding is easier for a first project: the HTML stays reusable and readable on
+its own, and a single element can respond to the same event with more than one independent
+listener — try that with an <code>onclick</code> attribute and the second one you write simply overwrites
+the first.</p>
+<h3 id="the-problem-running-script-before-the-page-is-ready">The Problem: Running Script Before the Page Is Ready<a class="headerlink" href="#the-problem-running-script-before-the-page-is-ready" title="Permanent link">&para;</a></h3>
+<p>An unobtrusive script has to solve a timing problem attribute binding never had. <code>onclick="save()"</code>
+works no matter when it runs, because the browser doesn't even look at it until the button exists
+and is clicked. But a <code>&lt;script&gt;</code> that calls <code>document.getElementById("save-btn")</code> <strong>before</strong> that
+button has been parsed gets <code>null</code> back, and <code>.addEventListener</code> on <code>null</code> throws an error and
+stops your whole script.</p>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>  <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;script.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>   <span class="cm">&lt;!-- runs immediately, before &lt;body&gt; exists yet --&gt;</span>
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>  <span class="p">&lt;</span><span class="nt">button</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;save-btn&quot;</span><span class="p">&gt;</span>Save<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+</span><span id="__span-20-6"><a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a><span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></code></pre></div>
+<p>JavaScript needs to <strong>wait</strong> until the elements it wants to select actually exist. There are two
+standard ways to wait, and they wait for different things.</p>
+<h3 id="windowonload-waits-for-everything"><code>window.onload</code> — Waits for Everything<a class="headerlink" href="#windowonload-waits-for-everything" title="Permanent link">&para;</a></h3>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="nb">window</span><span class="p">.</span><span class="nx">onload</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="w">  </span><span class="c1">// Runs only after the HTML, CSS, images, and every other linked resource</span>
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="w">  </span><span class="c1">// has fully finished downloading.</span>
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="w">  </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;save-btn&quot;</span><span class="p">).</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;click&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">save</span><span class="p">);</span>
+</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a><span class="p">};</span>
+</span></code></pre></div>
+<p><code>window.onload</code> fires only once <em>every</em> resource the page references — every <code>&lt;img&gt;</code>, every
+stylesheet, every embedded video — has completely finished loading. That makes it reliable, but
+slow: a page with one large, slow-loading image delays <code>onload</code> by exactly as long as that image
+takes, even if your script has nothing to do with images at all.</p>
+<h3 id="domcontentloaded-waits-only-for-the-html"><code>DOMContentLoaded</code> — Waits Only for the HTML<a class="headerlink" href="#domcontentloaded-waits-only-for-the-html" title="Permanent link">&para;</a></h3>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;DOMContentLoaded&quot;</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="w">  </span><span class="c1">// Runs as soon as the HTML has been fully parsed into the DOM —</span>
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="w">  </span><span class="c1">// it does NOT wait for images, fonts, or other external resources.</span>
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="w">  </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;save-btn&quot;</span><span class="p">).</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;click&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">save</span><span class="p">);</span>
+</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a><span class="p">});</span>
+</span></code></pre></div>
+<p><code>DOMContentLoaded</code> fires as soon as the DOM tree itself is built — every element exists and can be
+selected — without waiting for images or other slow external resources to finish downloading.
+Since almost every unobtrusive script only needs the <em>elements</em> to exist (not the images inside
+them), <code>DOMContentLoaded</code> fires sooner and is the right choice for the vast majority of
+"wait until the page is ready" code.</p>
+<pre class="mermaid"><code>sequenceDiagram
+    participant HTML as HTML parsed
+    participant DCL as DOMContentLoaded
+    participant IMG as Images/CSS finish loading
+    participant OL as window.onload
+    HTML-&gt;&gt;DCL: fires immediately
+    DCL-&gt;&gt;IMG: images keep loading in the background
+    IMG-&gt;&gt;OL: fires only once EVERYTHING is done</code></pre>
+<div class="admonition tip">
+<p class="admonition-title">How to choose</p>
+<p>Use <code>addEventListener("DOMContentLoaded", ...)</code> for almost everything — selecting elements,
+attaching listeners, populating initial content. Reach for <code>window.onload</code> only when your code
+genuinely needs a fully loaded resource first — for example, reading <code>img.naturalWidth</code> from an
+<code>&lt;img&gt;</code>, which isn't accurate until the image data has actually arrived.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title"><code>window.onload = fn</code> only allows ONE handler</p>
+<p>Assigning directly to <code>window.onload</code> (or any <code>element.onclick</code>, <code>element.onsubmit</code>, etc.)
+silently <strong>replaces</strong> any handler already assigned there — it's really no different from the
+<code>onclick="..."</code> attribute in that respect. <code>addEventListener("DOMContentLoaded", fn)</code>, by
+contrast, can be called many times, and every listener still runs. This is one more reason
+<code>addEventListener</code> is the preferred, fully unobtrusive tool: <code>window.onload</code> is really a
+leftover from before <code>addEventListener</code> existed.</p>
+</div>
+<p>A script placed at the very end of <code>&lt;body&gt;</code> (after all the HTML above it) typically doesn't need
+either one — by the time the browser reaches that <code>&lt;script&gt;</code> tag, everything before it is already
+parsed. <code>DOMContentLoaded</code> becomes essential specifically when your script is loaded from <code>&lt;head&gt;</code>,
+or anywhere else that might run before the elements it needs actually exist.</p>
 <h2 id="try-it-yourself">Try It Yourself<a class="headerlink" href="#try-it-yourself" title="Permanent link">&para;</a></h2>
 <ol>
 <li>Build a simple to-do list: an <code>&lt;input&gt;</code>, an "Add" <code>&lt;button&gt;</code>, and an empty <code>&lt;ul id="list"&gt;</code>.
@@ -3898,6 +4159,13 @@ call both when needed, but they solve different problems.</p>
    line-through style) when any <code>&lt;li&gt;</code> is clicked, and removes the <code>&lt;li&gt;</code> entirely if the user
    clicks a small "×" you add inside each item — using <code>event.target</code> to tell which part was
    clicked.</li>
+<li>Build three nested <code>&lt;div&gt;</code>s and attach both a capturing and a bubbling listener to each, like
+   the example above. Log each firing to the page (not just the console) and confirm you see all
+   six lines in the exact capture-then-target-then-bubble order described above.</li>
+<li>Convert that same page to fully unobtrusive JavaScript: remove every <code>onclick</code> attribute,
+   move the script tag to <code>&lt;head&gt;</code>, and wrap all of your <code>document.getElementById</code>/
+   <code>addEventListener</code> setup code in a single <code>document.addEventListener("DOMContentLoaded", ...)</code>
+   call so it still works even though the script now runs before the body exists.</li>
 </ol>
 <h2 id="key-takeaways">Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permanent link">&para;</a></h2>
 <ul>
@@ -3911,10 +4179,20 @@ call both when needed, but they solve different problems.</p>
   reserve direct <code>style</code> changes for one-off, dynamic values.</li>
 <li><code>addEventListener</code> registers event handlers and supports multiple listeners per event; every
   handler receives an event object describing what happened.</li>
-<li>Events bubble up (and can capture down) through the DOM tree — this enables event delegation,
-  where one listener on a parent handles events from many (even future) children.</li>
+<li>Every event travels through three ordered phases — <strong>capturing</strong> (down from <code>document</code>),
+  <strong>target</strong> (at the element itself), and <strong>bubbling</strong> (back up to <code>document</code>) — and
+  <code>addEventListener</code>'s third argument chooses which of the first and last you listen on.</li>
+<li>Bubbling is what makes event delegation possible: one listener on a parent handles events from
+  many (even future) children, instead of attaching — and re-attaching — a separate listener to
+  every single one.</li>
 <li><code>preventDefault()</code> stops the browser's default action; <code>stopPropagation()</code> stops the event from
   reaching other listeners — they are not the same thing.</li>
+<li><strong>Unobtrusive JavaScript</strong> keeps all behavior in <code>.js</code> files and out of HTML attributes, using
+  <code>addEventListener</code> exclusively — this allows multiple independent listeners per element and
+  keeps structure and behavior separately maintainable.</li>
+<li>Wrap DOM setup code in <code>document.addEventListener("DOMContentLoaded", ...)</code> so it runs as soon
+  as the HTML is parsed, without waiting on slow-loading images the way <code>window.onload</code> does;
+  reach for <code>window.onload</code> only when you specifically need a resource to have finished loading.</li>
 </ul>
 
 
@@ -3963,7 +4241,7 @@ call both when needed, but they solve different problems.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 4, 2026 21:02:03 UTC">September 4, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="October 15, 2026 05:23:29 UTC">October 15, 2026</span>
   </span>
 
     
