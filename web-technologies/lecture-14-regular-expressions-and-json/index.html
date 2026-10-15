@@ -2001,6 +2001,45 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#client-side-vs-server-side-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Client-Side vs. Server-Side Validation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#schema-validation-with-joi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Schema Validation with Joi
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Schema Validation with Joi">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-use-joi-instead-of-writing-it-all-by-hand" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Use Joi Instead of Writing It All by Hand
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#json-javascript-object-notation" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3692,6 +3731,45 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#client-side-vs-server-side-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Client-Side vs. Server-Side Validation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#schema-validation-with-joi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Schema Validation with Joi
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Schema Validation with Joi">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-use-joi-instead-of-writing-it-all-by-hand" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Use Joi Instead of Writing It All by Hand
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#json-javascript-object-notation" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3878,6 +3956,8 @@ matching patterns in text, and <strong>JSON</strong>, the standard format the we
 <li>Groups, alternation, backreferences, and flags (<code>g</code>, <code>i</code>, <code>m</code>)</li>
 <li>JavaScript's regex methods: <code>test</code>, <code>exec</code>, <code>match</code>, <code>replace</code>, <code>split</code></li>
 <li>Validating and parsing form data with regex</li>
+<li>Client-side validation vs. server-side validation, and why only one of them can be trusted</li>
+<li>Schema validation with Joi, and why it scales better than hand-written regex</li>
 <li>JSON syntax, and converting between JSON and JavaScript objects with <code>JSON.stringify</code> and
   <code>JSON.parse</code></li>
 </ul>
@@ -4045,22 +4125,139 @@ email) for anything important.</p>
 <p>Tools like regex101.com let you build and test a pattern against sample strings with live
 highlighting — extremely useful while you're still learning the syntax.</p>
 </div>
+<h2 id="client-side-vs-server-side-validation">Client-Side vs. Server-Side Validation<a class="headerlink" href="#client-side-vs-server-side-validation" title="Permanent link">&para;</a></h2>
+<p>The <code>isValidEmail</code>/<code>isStrongPassword</code> functions above run <strong>in the browser</strong> — the instant a
+visitor types into a field, or the instant they click Submit, before anything is sent anywhere.
+This is <strong>client-side validation</strong>, and it exists for exactly one reason: speed of feedback. The
+visitor finds out their password is too weak in milliseconds, with no network round trip, no
+page reload, and a specific, friendly message pointing at the exact field that's wrong.</p>
+<p>But client-side validation can never be the <em>only</em> validation, because the browser running it is
+entirely under the visitor's control. Anyone can open DevTools and delete your <code>&lt;script&gt;</code> tag,
+disable JavaScript outright, or skip the browser completely and send a request straight to your
+server with <code>curl</code>, Postman, or a one-line <code>fetch</code> typed into an unrelated page's console. None of
+your carefully-written regex ever runs in any of those cases — your server receives exactly
+whatever the request says, validated or not.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Client-side validation</th>
+<th>Server-side validation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Runs where</strong></td>
+<td>In the visitor's browser (JavaScript, or HTML5 <code>required</code>/<code>pattern</code>)</td>
+<td>On your server, after the request arrives</td>
+</tr>
+<tr>
+<td><strong>Purpose</strong></td>
+<td>Fast, friendly feedback — catch obvious mistakes before submitting</td>
+<td>The actual gate — decide what's allowed into your system</td>
+</tr>
+<tr>
+<td><strong>Can it be bypassed?</strong></td>
+<td>Yes, trivially — disabled JS, DevTools, or a direct request</td>
+<td>No — the server controls its own code; nothing reaches your database without passing through it</td>
+</tr>
+<tr>
+<td><strong>Safe to rely on for security?</strong></td>
+<td><strong>Never</strong></td>
+<td><strong>Yes</strong> — this is the only validation you can actually trust</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">Never trust the client</p>
+<p>This is one of the most important rules in web development: <strong>any data arriving at your
+server could have come from anywhere</strong> — your own form, a modified copy of your form, or a
+request built by hand with no browser involved at all. Client-side validation is a courtesy
+that makes your UI pleasant to use. Server-side validation is what actually protects your
+data, and it must independently re-check everything the client was supposed to check,
+assuming the client-side check never ran at all.</p>
+</div>
+<p>The practical rule, then, is <strong>defense in depth</strong>: keep your client-side regex checks for instant
+UX feedback, but <em>never</em> skip re-validating the exact same data once it reaches your server —
+using the exact same rules, or stricter ones. The next section introduces the tool most real
+Node/Express backends use to do that server-side half well.</p>
+<h2 id="schema-validation-with-joi">Schema Validation with Joi<a class="headerlink" href="#schema-validation-with-joi" title="Permanent link">&para;</a></h2>
+<p>Hand-written regex works, but it has real limits once a form grows past two or three fields: every
+field needs its own bespoke pattern, "required" and "optional" have to be checked separately from
+shape, and a nested object (an address inside a user, say) turns into a tangle of manual <code>if</code>
+statements. <strong><a href="https://joi.dev">Joi</a></strong> is an npm package — <code>npm install joi</code> — that solves this by
+letting you describe what a valid object <em>looks like</em> as a <strong>schema</strong>, declaratively, instead of
+writing the checking logic yourself by hand.</p>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="kd">const</span><span class="w"> </span><span class="nx">Joi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s2">&quot;joi&quot;</span><span class="p">);</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="kd">const</span><span class="w"> </span><span class="nx">studentSchema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">Joi</span><span class="p">.</span><span class="nx">object</span><span class="p">({</span>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="w">  </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="nx">Joi</span><span class="p">.</span><span class="nx">string</span><span class="p">().</span><span class="nx">min</span><span class="p">(</span><span class="mf">2</span><span class="p">).</span><span class="nx">max</span><span class="p">(</span><span class="mf">50</span><span class="p">).</span><span class="nx">required</span><span class="p">(),</span>
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="w">  </span><span class="nx">email</span><span class="o">:</span><span class="w"> </span><span class="nx">Joi</span><span class="p">.</span><span class="nx">string</span><span class="p">().</span><span class="nx">email</span><span class="p">().</span><span class="nx">required</span><span class="p">(),</span>
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="w">  </span><span class="nx">age</span><span class="o">:</span><span class="w"> </span><span class="nx">Joi</span><span class="p">.</span><span class="nx">number</span><span class="p">().</span><span class="nx">integer</span><span class="p">().</span><span class="nx">min</span><span class="p">(</span><span class="mf">16</span><span class="p">).</span><span class="nx">max</span><span class="p">(</span><span class="mf">100</span><span class="p">),</span>
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="w">  </span><span class="nx">password</span><span class="o">:</span><span class="w"> </span><span class="nx">Joi</span><span class="p">.</span><span class="nx">string</span><span class="p">()</span>
+</span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="w">    </span><span class="p">.</span><span class="nx">pattern</span><span class="p">(</span><span class="sr">/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/</span><span class="p">)</span>
+</span><span id="__span-15-9"><a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a><span class="w">    </span><span class="p">.</span><span class="nx">required</span><span class="p">(),</span>
+</span><span id="__span-15-10"><a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a><span class="p">});</span>
+</span><span id="__span-15-11"><a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a>
+</span><span id="__span-15-12"><a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a><span class="kd">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">error</span><span class="p">,</span><span class="w"> </span><span class="nx">value</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">studentSchema</span><span class="p">.</span><span class="nx">validate</span><span class="p">({</span>
+</span><span id="__span-15-13"><a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a><span class="w">  </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Ayesha&quot;</span><span class="p">,</span>
+</span><span id="__span-15-14"><a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a><span class="w">  </span><span class="nx">email</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;ayesha@comsats.edu.pk&quot;</span><span class="p">,</span>
+</span><span id="__span-15-15"><a id="__codelineno-15-15" name="__codelineno-15-15" href="#__codelineno-15-15"></a><span class="w">  </span><span class="nx">age</span><span class="o">:</span><span class="w"> </span><span class="mf">22</span><span class="p">,</span>
+</span><span id="__span-15-16"><a id="__codelineno-15-16" name="__codelineno-15-16" href="#__codelineno-15-16"></a><span class="w">  </span><span class="nx">password</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Abcdefg1&quot;</span><span class="p">,</span>
+</span><span id="__span-15-17"><a id="__codelineno-15-17" name="__codelineno-15-17" href="#__codelineno-15-17"></a><span class="p">});</span>
+</span><span id="__span-15-18"><a id="__codelineno-15-18" name="__codelineno-15-18" href="#__codelineno-15-18"></a>
+</span><span id="__span-15-19"><a id="__codelineno-15-19" name="__codelineno-15-19" href="#__codelineno-15-19"></a><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-15-20"><a id="__codelineno-15-20" name="__codelineno-15-20" href="#__codelineno-15-20"></a><span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">error</span><span class="p">.</span><span class="nx">details</span><span class="p">[</span><span class="mf">0</span><span class="p">].</span><span class="nx">message</span><span class="p">);</span>
+</span><span id="__span-15-21"><a id="__codelineno-15-21" name="__codelineno-15-21" href="#__codelineno-15-21"></a><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-15-22"><a id="__codelineno-15-22" name="__codelineno-15-22" href="#__codelineno-15-22"></a><span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Valid:&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">value</span><span class="p">);</span><span class="w"> </span><span class="c1">// the same object, with types coerced where sensible</span>
+</span><span id="__span-15-23"><a id="__codelineno-15-23" name="__codelineno-15-23" href="#__codelineno-15-23"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>Notice the password rule still uses the exact same regex from the previous section —
+<code>.pattern()</code> lets a Joi schema wrap a hand-written regex for the one piece only regex can express,
+while Joi itself handles <code>.required()</code>, <code>.min()</code>, <code>.max()</code>, and <code>.email()</code> so you don't have to
+write and test patterns for those yourself.</p>
+<h3 id="why-use-joi-instead-of-writing-it-all-by-hand">Why Use Joi Instead of Writing It All by Hand<a class="headerlink" href="#why-use-joi-instead-of-writing-it-all-by-hand" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Readability</strong> — <code>Joi.string().email().required()</code> says exactly what it checks, at a glance;
+  the equivalent hand-rolled <code>if</code> chain checking type, presence, and shape separately is far
+  harder to scan.</li>
+<li><strong>One schema, one source of truth</strong> — the same <code>studentSchema</code> object can validate a signup
+  form's data, a "create student" API request body, and a database-seeding script, so the rules
+  for what counts as a valid student are defined exactly once.</li>
+<li><strong>Built-in validators for the shapes you'd otherwise write regex for</strong> — <code>.email()</code>, <code>.uri()</code>,
+  <code>.min()</code>/<code>.max()</code> for numbers <em>and</em> string length, <code>.integer()</code>, date validation — without
+  writing or testing a single pattern.</li>
+<li><strong>Detailed, structured errors</strong> — <code>error.details</code> is an array describing <em>every</em> rule that
+  failed (pass <code>{ abortEarly: false }</code> to <code>.validate()</code> to collect all of them instead of just the
+  first), which is far more useful to send back to a client than a single <code>true</code>/<code>false</code>.</li>
+<li><strong>Handles nested objects and arrays naturally</strong> — <code>Joi.object({ address: Joi.object({ city:
+  Joi.string().required() }) })</code> validates a nested shape in the same declarative style, something
+  that gets unwieldy fast with hand-written <code>if</code> statements.</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Where you'll actually use this</p>
+<p>Joi's natural home is <strong>server-side</strong>, inside an Express route handler, validating
+<code>req.body</code> before any of it touches your database — exactly the server-side half of the
+client/server validation split above. You'll use it for real starting in
+<a href="../lecture-25-rest-api-development-and-authentication/">Lecture 25: REST API Development and Authentication</a>,
+validating incoming API requests before they're trusted with anything.</p>
+</div>
 <h2 id="json-javascript-object-notation">JSON: JavaScript Object Notation<a class="headerlink" href="#json-javascript-object-notation" title="Permanent link">&para;</a></h2>
 <p><strong>JSON</strong> (JavaScript Object Notation) is a lightweight, text-based format for representing
 structured data. It looks a lot like a JavaScript object literal, which makes it easy to read, but
 it is a strict, language-independent format used to exchange data between a browser and a server
 (or between any two systems, in any programming language).</p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="p">{</span>
-</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Ayesha&quot;</span><span class="p">,</span>
-</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">  </span><span class="nt">&quot;age&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">22</span><span class="p">,</span>
-</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="w">  </span><span class="nt">&quot;isStudent&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="w">  </span><span class="nt">&quot;courses&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Web Technologies&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Databases&quot;</span><span class="p">],</span>
-</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="w">  </span><span class="nt">&quot;address&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="w">    </span><span class="nt">&quot;city&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Lahore&quot;</span><span class="p">,</span>
-</span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="w">    </span><span class="nt">&quot;zip&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;54000&quot;</span>
-</span><span id="__span-15-9"><a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a><span class="w">  </span><span class="p">},</span>
-</span><span id="__span-15-10"><a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a><span class="w">  </span><span class="nt">&quot;graduationYear&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
-</span><span id="__span-15-11"><a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="p">{</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Ayesha&quot;</span><span class="p">,</span>
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="w">  </span><span class="nt">&quot;age&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">22</span><span class="p">,</span>
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="w">  </span><span class="nt">&quot;isStudent&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="w">  </span><span class="nt">&quot;courses&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Web Technologies&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Databases&quot;</span><span class="p">],</span>
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="w">  </span><span class="nt">&quot;address&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="w">    </span><span class="nt">&quot;city&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Lahore&quot;</span><span class="p">,</span>
+</span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="w">    </span><span class="nt">&quot;zip&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;54000&quot;</span>
+</span><span id="__span-16-9"><a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a><span class="w">  </span><span class="p">},</span>
+</span><span id="__span-16-10"><a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a><span class="w">  </span><span class="nt">&quot;graduationYear&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
+</span><span id="__span-16-11"><a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a><span class="p">}</span>
 </span></code></pre></div>
 <p>JSON syntax rules are stricter than JavaScript object syntax:</p>
 <ul>
@@ -4070,44 +4267,68 @@ it is a strict, language-independent format used to exchange data between a brow
 <li><strong>No trailing commas</strong>, and <strong>no comments</strong> are allowed anywhere in JSON.</li>
 <li><strong>No functions, <code>undefined</code>, or dates</strong> — JSON only represents plain data.</li>
 </ul>
-<pre class="mermaid"><code>flowchart LR
-    JSObj["JavaScript object&lt;br/&gt;(in memory)"] --&gt;|JSON.stringify| JSONText["JSON text&lt;br/&gt;(a plain string)"]
-    JSONText --&gt;|send over network| Server["Server / File / API"]
-    Server --&gt;|response as JSON text| JSONText2["JSON text&lt;br/&gt;(a plain string)"]
-    JSONText2 --&gt;|JSON.parse| JSObj2["JavaScript object&lt;br/&gt;(in memory)"]</code></pre>
+<div class="cu-svg-diagram">
+<p><svg viewBox="0 0 720 280" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="json-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/>
+    </marker>
+  </defs>
+  <rect x="30" y="95" width="210" height="90" rx="12" fill="#C9680F"/>
+  <text x="135" y="134" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="17" fill="#FFFFFF">JavaScript Object</text>
+  <text x="135" y="156" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="12" fill="#FDE8D2">(in memory)</text>
+  <rect x="480" y="95" width="210" height="90" rx="12" fill="#1C7293"/>
+  <text x="585" y="134" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="17" fill="#FFFFFF">Server / File / API</text>
+  <text x="585" y="156" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="12" fill="#D2EEF5">(anywhere data moves)</text>
+  <path d="M240,100 C300,45 420,45 480,100" fill="none" stroke="var(--cu-muted)" stroke-width="2.5" marker-end="url(#json-arrow)"/>
+  <text x="360" y="28" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-weight="700" font-size="14" fill="var(--cu-text)">JSON.stringify()</text>
+  <rect x="300" y="50" width="120" height="26" rx="13" fill="var(--cu-surface)" stroke="var(--cu-border-soft)" stroke-width="1.5"/>
+  <text x="360" y="67" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="12" fill="var(--cu-muted)">"JSON text"</text>
+  <path d="M480,180 C420,235 300,235 240,180" fill="none" stroke="var(--cu-muted)" stroke-width="2.5" marker-end="url(#json-arrow)"/>
+  <text x="360" y="268" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-weight="700" font-size="14" fill="var(--cu-text)">JSON.parse()</text>
+  <rect x="300" y="204" width="120" height="26" rx="13" fill="var(--cu-surface)" stroke="var(--cu-border-soft)" stroke-width="1.5"/>
+  <text x="360" y="221" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="12" fill="var(--cu-muted)">"JSON text"</text>
+</svg></p>
+</div>
+<p>A JavaScript object only ever exists <em>in memory</em>, inside one running program — it can't be sent
+over a network or written to a file as-is. <code>JSON.stringify()</code> converts it into a plain string in
+JSON's strict text format, which <strong>can</strong> travel anywhere: over HTTP, into a file, into a database
+column. <code>JSON.parse()</code> reverses the conversion on the receiving end, turning that same text back
+into a real, usable JavaScript object. Every request body you send and every response body you
+receive through the Fetch API (next lecture) makes this exact round trip.</p>
 <h3 id="jsonstringify-object-to-json-text"><code>JSON.stringify()</code> — object to JSON text<a class="headerlink" href="#jsonstringify-object-to-json-text" title="Permanent link">&para;</a></h3>
 <p>Converts a JavaScript value into a JSON-formatted string, so it can be sent over the network or
 saved to a file.</p>
-<div class="language-javascript highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="kd">const</span><span class="w"> </span><span class="nx">student</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">  </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Bilal&quot;</span><span class="p">,</span>
-</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="w">  </span><span class="nx">age</span><span class="o">:</span><span class="w"> </span><span class="mf">21</span><span class="p">,</span>
-</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="w">  </span><span class="nx">courses</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Web Technologies&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;OOP&quot;</span><span class="p">],</span>
-</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="p">};</span>
-</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>
-</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="kd">const</span><span class="w"> </span><span class="nx">jsonText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">student</span><span class="p">);</span>
-</span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">jsonText</span><span class="p">);</span>
-</span><span id="__span-16-9"><a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a><span class="c1">// &#39;{&quot;name&quot;:&quot;Bilal&quot;,&quot;age&quot;:21,&quot;courses&quot;:[&quot;Web Technologies&quot;,&quot;OOP&quot;]}&#39;</span>
-</span><span id="__span-16-10"><a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a>
-</span><span id="__span-16-11"><a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a><span class="c1">// Pretty-print with indentation (useful for logging/debugging)</span>
-</span><span id="__span-16-12"><a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">student</span><span class="p">,</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"> </span><span class="mf">2</span><span class="p">));</span>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="kd">const</span><span class="w"> </span><span class="nx">student</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="w">  </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Bilal&quot;</span><span class="p">,</span>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="w">  </span><span class="nx">age</span><span class="o">:</span><span class="w"> </span><span class="mf">21</span><span class="p">,</span>
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="w">  </span><span class="nx">courses</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Web Technologies&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;OOP&quot;</span><span class="p">],</span>
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="p">};</span>
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>
+</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a><span class="kd">const</span><span class="w"> </span><span class="nx">jsonText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">student</span><span class="p">);</span>
+</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">jsonText</span><span class="p">);</span>
+</span><span id="__span-17-9"><a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a><span class="c1">// &#39;{&quot;name&quot;:&quot;Bilal&quot;,&quot;age&quot;:21,&quot;courses&quot;:[&quot;Web Technologies&quot;,&quot;OOP&quot;]}&#39;</span>
+</span><span id="__span-17-10"><a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a>
+</span><span id="__span-17-11"><a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a><span class="c1">// Pretty-print with indentation (useful for logging/debugging)</span>
+</span><span id="__span-17-12"><a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">student</span><span class="p">,</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"> </span><span class="mf">2</span><span class="p">));</span>
 </span></code></pre></div>
 <h3 id="jsonparse-json-text-to-object"><code>JSON.parse()</code> — JSON text to object<a class="headerlink" href="#jsonparse-json-text-to-object" title="Permanent link">&para;</a></h3>
 <p>Converts a JSON-formatted string back into a real JavaScript value you can work with.</p>
-<div class="language-javascript highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="kd">const</span><span class="w"> </span><span class="nx">jsonText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;{&quot;name&quot;:&quot;Bilal&quot;,&quot;age&quot;:21}&#39;</span><span class="p">;</span>
-</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="kd">const</span><span class="w"> </span><span class="nx">obj</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">jsonText</span><span class="p">);</span>
-</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span><span class="w"> </span><span class="c1">// &quot;Bilal&quot;</span>
-</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">age</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">1</span><span class="p">);</span><span class="w"> </span><span class="c1">// 22 — it&#39;s a real number, not a string</span>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="kd">const</span><span class="w"> </span><span class="nx">jsonText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;{&quot;name&quot;:&quot;Bilal&quot;,&quot;age&quot;:21}&#39;</span><span class="p">;</span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="kd">const</span><span class="w"> </span><span class="nx">obj</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">jsonText</span><span class="p">);</span>
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span><span class="w"> </span><span class="c1">// &quot;Bilal&quot;</span>
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">age</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">1</span><span class="p">);</span><span class="w"> </span><span class="c1">// 22 — it&#39;s a real number, not a string</span>
 </span></code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title">Invalid JSON throws an error</p>
 <p><code>JSON.parse</code> throws a <code>SyntaxError</code> if the string is not valid JSON (for example, if it uses
 single quotes or has a trailing comma). Always wrap <code>JSON.parse</code> on data from an external
 source in a <code>try...catch</code> block, which you'll practice more in the next lecture.
-<div class="language-javascript highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="k">try</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">someText</span><span class="p">);</span>
-</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s2">&quot;Invalid JSON:&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">error</span><span class="p">.</span><span class="nx">message</span><span class="p">);</span>
-</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="p">}</span>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">someText</span><span class="p">);</span>
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s2">&quot;Invalid JSON:&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">error</span><span class="p">.</span><span class="nx">message</span><span class="p">);</span>
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="p">}</span>
 </span></code></pre></div></p>
 </div>
 <p>You will use <code>JSON.stringify</code> and <code>JSON.parse</code> constantly starting in the next lecture, whenever
@@ -4124,6 +4345,15 @@ objects with <code>parse</code>.</p>
    inStock }</code> objects). Convert it to a pretty-printed JSON string with <code>JSON.stringify</code>, then
    parse it back with <code>JSON.parse</code> and use a <code>filter</code> (from the previous lecture) to log only the
    products where <code>inStock</code> is <code>true</code>.</li>
+<li>Write a Joi schema for a product (<code>name</code> required string, <code>price</code> required positive number,
+   <code>inStock</code> required boolean). Validate three test objects against it — one fully valid, one
+   missing a required field, and one with a <code>price</code> of <code>-5</code> — and log <code>error.details[0].message</code>
+   for the two that fail.</li>
+<li>Build a tiny HTML form (name + email) with a client-side <code>isValidEmail</code> check like this
+   lecture's, that blocks submission and shows an error message on an invalid address. Then write
+   out, in comments only (no server to run here yet), exactly what a malicious or buggy client
+   could still send straight to your server even with that check in place — this is the gap
+   server-side validation with Joi exists to close.</li>
 </ol>
 <h2 id="key-takeaways">Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permanent link">&para;</a></h2>
 <ul>
@@ -4135,6 +4365,14 @@ objects with <code>parse</code>.</p>
   string methods that also accept a regex.</li>
 <li>Regex is excellent for validating the <em>shape</em> of form input (emails, phone numbers, passwords)
   but cannot confirm the data is actually true or real.</li>
+<li>Client-side validation (JavaScript or HTML5 attributes) is for instant UX feedback only — it
+  can always be bypassed, so it must never be your only line of defense.</li>
+<li>Server-side validation is the only validation that can be trusted, since it's the only code the
+  visitor doesn't control; always re-check incoming data on the server, independent of whatever
+  the client already checked.</li>
+<li>Joi lets you describe a valid object as a declarative schema (<code>Joi.object({...})</code>) instead of
+  hand-writing <code>if</code> statements and regex for every field — the standard tool for server-side
+  validation in Express/Node, with structured errors and built-in validators like <code>.email()</code>.</li>
 <li>JSON is a strict, text-based data format — double-quoted keys and strings only, no comments, no
   trailing commas, no functions.</li>
 <li><code>JSON.stringify</code> converts a JavaScript value into JSON text; <code>JSON.parse</code> converts JSON text
@@ -4189,7 +4427,7 @@ objects with <code>parse</code>.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 4, 2026 21:02:03 UTC">September 4, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="October 15, 2026 05:59:55 UTC">October 15, 2026</span>
   </span>
 
     
