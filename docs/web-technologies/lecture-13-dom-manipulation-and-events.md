@@ -20,7 +20,10 @@ JavaScript reads, changes, and reacts to the structure of a web page.
 - Creating, updating, and removing elements
 - Working with `classList` and inline styles
 - Handling events with `addEventListener` and the event object
-- Event bubbling, capturing, delegation, `preventDefault`, and `stopPropagation`
+- The event life cycle — capturing, target, and bubbling — plus delegation,
+  `preventDefault`, and `stopPropagation`
+- Unobtrusive JavaScript, and why `addEventListener("DOMContentLoaded", ...)` is usually
+  a better choice than `window.onload`
 
 ## The DOM Tree, Nodes, and the `document` Object
 
@@ -214,31 +217,87 @@ document.querySelector("form").addEventListener("submit", (event) => {
 Common events you will use constantly: `click`, `submit`, `input`, `change`, `keydown`,
 `keyup`, `mouseover`, `mouseout`, `load`, `DOMContentLoaded`.
 
-## Bubbling, Capturing, and Event Delegation
+## The Event Life Cycle: Capturing, Target, and Bubbling
 
 When an event fires on an element nested inside other elements, it doesn't just affect that one
-element — it travels through the DOM tree in two phases:
+element — it travels through the entire DOM tree in **three** ordered phases. Together these are
+called the event's **life cycle**:
 
-1. **Capturing phase**: the event travels **down** from `document` to the target element.
-2. **Bubbling phase**: the event then travels back **up** from the target element to `document`.
+1. **Capturing phase**: the event starts at `document` and travels **down** the tree, through
+   every ancestor of the element it's heading for, without yet having reached it.
+2. **Target phase**: the event arrives at the exact element the user interacted with — the
+   **target**. Both capturing-phase and bubbling-phase listeners registered directly on the
+   target fire here.
+3. **Bubbling phase**: the event then travels back **up** the tree, through the same ancestors,
+   in reverse order, all the way back to `document`.
 
 ```mermaid
 flowchart TD
     subgraph Capturing["1. Capturing (top to bottom)"]
-        D1[document] --> B1[body] --> U1[ul] --> L1["li (target)"]
+        D1[document] --> B1[body] --> U1[ul]
     end
-    subgraph Bubbling["2. Bubbling (bottom to top)"]
-        L2["li (target)"] --> U2[ul] --> B2[body] --> D2[document]
+    subgraph Target["2. Target"]
+        L1["li (target)"]
     end
+    subgraph Bubbling["3. Bubbling (bottom to top)"]
+        U2[ul] --> B2[body] --> D2[document]
+    end
+    Capturing --> Target --> Bubbling
 ```
 
-By default, `addEventListener` listens during the **bubbling** phase. You can listen during the
-capturing phase instead by passing `true` as a third argument:
+By default, `addEventListener` only reacts during the **target** and **bubbling** phases. You can
+make it react during the **capturing** phase instead by passing `true` (or
+`{ capture: true }`) as a third argument:
 
 ```javascript
 element.addEventListener("click", handler, true); // capturing phase
 element.addEventListener("click", handler, false); // bubbling phase (default)
 ```
+
+### Watching All Three Phases in Order
+
+The life cycle is easiest to believe once you log it. Given three nested elements —
+`<div id="outer"><div id="middle"><button id="inner">Click</button></div></div>` — attach both a
+capturing and a bubbling listener to *every* level, then click the innermost button:
+
+```javascript
+["outer", "middle", "inner"].forEach((id) => {
+  const el = document.getElementById(id);
+
+  el.addEventListener("click", () => console.log(`CAPTURE: ${id}`), true);
+  el.addEventListener("click", () => console.log(`BUBBLE: ${id}`), false);
+});
+```
+
+Clicking the button logs, in this exact order:
+
+```text
+CAPTURE: outer
+CAPTURE: middle
+CAPTURE: inner
+BUBBLE: inner
+BUBBLE: middle
+BUBBLE: outer
+```
+
+Notice `inner` (the target) logs **both** of its own listeners back-to-back — that's the target
+phase, sitting right in the middle between capturing going down and bubbling coming back up. You
+can check which phase a handler is currently running in from the event object itself:
+
+```javascript
+inner.addEventListener("click", (event) => {
+  console.log(event.eventPhase); // 1 = capturing, 2 = at target, 3 = bubbling
+  console.log(event.target);        // always #inner — where the click actually happened
+  console.log(event.currentTarget); // whichever element THIS listener is attached to
+});
+```
+
+!!! note "Why capturing exists at all"
+    Almost all real code only ever uses the bubbling phase — it's what event delegation (below)
+    relies on. Capturing listeners are rare in application code, but they matter for one specific
+    job: intercepting an event *before* anything closer to the target gets a chance to react to
+    it or stop it, which is occasionally useful for logging, analytics, or a parent that needs the
+    first word on every click inside it, no matter what a child's own handler does.
 
 ### Event Delegation
 
@@ -293,6 +352,120 @@ document.querySelector(".dropdown-toggle").addEventListener("click", (event) => 
     the event from *reaching other listeners* further up (or down) the tree. A single handler can
     call both when needed, but they solve different problems.
 
+## Unobtrusive JavaScript
+
+Every earlier tutorial in this course bound events with an HTML attribute — `onclick="save()"`
+sitting right inside the tag. That's a fine way to learn, but it has real costs once a page grows:
+the behavior is scattered through the HTML instead of living in one place, the same attribute can
+only hold *one* handler, and some security policies (CSP) reject inline attribute handlers
+outright.
+
+**Unobtrusive JavaScript** is the practice of keeping *all* behavior out of the HTML entirely —
+no `onclick`, no `onsubmit`, nothing. The HTML describes structure only; a separate `.js` file
+selects its own elements and attaches its own listeners with `addEventListener`.
+
+```html
+<!-- Obtrusive: behavior is mixed into the markup -->
+<button onclick="save()">Save</button>
+```
+
+```html
+<!-- Unobtrusive: the markup says nothing about behavior -->
+<button id="save-btn">Save</button>
+```
+
+```javascript
+// script.js — all behavior lives here instead
+document.getElementById("save-btn").addEventListener("click", save);
+```
+
+This separation is why `addEventListener` is the technique real production code reaches for, even
+though attribute binding is easier for a first project: the HTML stays reusable and readable on
+its own, and a single element can respond to the same event with more than one independent
+listener — try that with an `onclick` attribute and the second one you write simply overwrites
+the first.
+
+### The Problem: Running Script Before the Page Is Ready
+
+An unobtrusive script has to solve a timing problem attribute binding never had. `onclick="save()"`
+works no matter when it runs, because the browser doesn't even look at it until the button exists
+and is clicked. But a `<script>` that calls `document.getElementById("save-btn")` **before** that
+button has been parsed gets `null` back, and `.addEventListener` on `null` throws an error and
+stops your whole script.
+
+```html
+<head>
+  <script src="script.js"></script>   <!-- runs immediately, before <body> exists yet -->
+</head>
+<body>
+  <button id="save-btn">Save</button>
+</body>
+```
+
+JavaScript needs to **wait** until the elements it wants to select actually exist. There are two
+standard ways to wait, and they wait for different things.
+
+### `window.onload` — Waits for Everything
+
+```javascript
+window.onload = function () {
+  // Runs only after the HTML, CSS, images, and every other linked resource
+  // has fully finished downloading.
+  document.getElementById("save-btn").addEventListener("click", save);
+};
+```
+
+`window.onload` fires only once *every* resource the page references — every `<img>`, every
+stylesheet, every embedded video — has completely finished loading. That makes it reliable, but
+slow: a page with one large, slow-loading image delays `onload` by exactly as long as that image
+takes, even if your script has nothing to do with images at all.
+
+### `DOMContentLoaded` — Waits Only for the HTML
+
+```javascript
+document.addEventListener("DOMContentLoaded", function () {
+  // Runs as soon as the HTML has been fully parsed into the DOM —
+  // it does NOT wait for images, fonts, or other external resources.
+  document.getElementById("save-btn").addEventListener("click", save);
+});
+```
+
+`DOMContentLoaded` fires as soon as the DOM tree itself is built — every element exists and can be
+selected — without waiting for images or other slow external resources to finish downloading.
+Since almost every unobtrusive script only needs the *elements* to exist (not the images inside
+them), `DOMContentLoaded` fires sooner and is the right choice for the vast majority of
+"wait until the page is ready" code.
+
+```mermaid
+sequenceDiagram
+    participant HTML as HTML parsed
+    participant DCL as DOMContentLoaded
+    participant IMG as Images/CSS finish loading
+    participant OL as window.onload
+    HTML->>DCL: fires immediately
+    DCL->>IMG: images keep loading in the background
+    IMG->>OL: fires only once EVERYTHING is done
+```
+
+!!! tip "How to choose"
+    Use `addEventListener("DOMContentLoaded", ...)` for almost everything — selecting elements,
+    attaching listeners, populating initial content. Reach for `window.onload` only when your code
+    genuinely needs a fully loaded resource first — for example, reading `img.naturalWidth` from an
+    `<img>`, which isn't accurate until the image data has actually arrived.
+
+!!! warning "`window.onload = fn` only allows ONE handler"
+    Assigning directly to `window.onload` (or any `element.onclick`, `element.onsubmit`, etc.)
+    silently **replaces** any handler already assigned there — it's really no different from the
+    `onclick="..."` attribute in that respect. `addEventListener("DOMContentLoaded", fn)`, by
+    contrast, can be called many times, and every listener still runs. This is one more reason
+    `addEventListener` is the preferred, fully unobtrusive tool: `window.onload` is really a
+    leftover from before `addEventListener` existed.
+
+A script placed at the very end of `<body>` (after all the HTML above it) typically doesn't need
+either one — by the time the browser reaches that `<script>` tag, everything before it is already
+parsed. `DOMContentLoaded` becomes essential specifically when your script is loaded from `<head>`,
+or anywhere else that might run before the elements it needs actually exist.
+
 ## Try It Yourself
 
 1. Build a simple to-do list: an `<input>`, an "Add" `<button>`, and an empty `<ul id="list">`.
@@ -302,6 +475,13 @@ document.querySelector(".dropdown-toggle").addEventListener("click", (event) => 
    line-through style) when any `<li>` is clicked, and removes the `<li>` entirely if the user
    clicks a small "×" you add inside each item — using `event.target` to tell which part was
    clicked.
+3. Build three nested `<div>`s and attach both a capturing and a bubbling listener to each, like
+   the example above. Log each firing to the page (not just the console) and confirm you see all
+   six lines in the exact capture-then-target-then-bubble order described above.
+4. Convert that same page to fully unobtrusive JavaScript: remove every `onclick` attribute,
+   move the script tag to `<head>`, and wrap all of your `document.getElementById`/
+   `addEventListener` setup code in a single `document.addEventListener("DOMContentLoaded", ...)`
+   call so it still works even though the script now runs before the body exists.
 
 ## Key Takeaways
 
@@ -315,7 +495,17 @@ document.querySelector(".dropdown-toggle").addEventListener("click", (event) => 
   reserve direct `style` changes for one-off, dynamic values.
 - `addEventListener` registers event handlers and supports multiple listeners per event; every
   handler receives an event object describing what happened.
-- Events bubble up (and can capture down) through the DOM tree — this enables event delegation,
-  where one listener on a parent handles events from many (even future) children.
+- Every event travels through three ordered phases — **capturing** (down from `document`),
+  **target** (at the element itself), and **bubbling** (back up to `document`) — and
+  `addEventListener`'s third argument chooses which of the first and last you listen on.
+- Bubbling is what makes event delegation possible: one listener on a parent handles events from
+  many (even future) children, instead of attaching — and re-attaching — a separate listener to
+  every single one.
 - `preventDefault()` stops the browser's default action; `stopPropagation()` stops the event from
   reaching other listeners — they are not the same thing.
+- **Unobtrusive JavaScript** keeps all behavior in `.js` files and out of HTML attributes, using
+  `addEventListener` exclusively — this allows multiple independent listeners per element and
+  keeps structure and behavior separately maintainable.
+- Wrap DOM setup code in `document.addEventListener("DOMContentLoaded", ...)` so it runs as soon
+  as the HTML is parsed, without waiting on slow-loading images the way `window.onload` does;
+  reach for `window.onload` only when you specifically need a resource to have finished loading.

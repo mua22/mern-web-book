@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event Inspector</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js"></script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Event Inspector</h1>
+      <p class="subtitle">
+        Watch capturing, target, and bubbling fire in real time — built with fully
+        unobtrusive JavaScript.
+      </p>
+    </header>
+
+    <main>
+      <section class="panel">
+        <h2>1. Capturing, Target, and Bubbling</h2>
+        <label class="capture-toggle">
+          <input type="checkbox" id="captureToggle">
+          Also listen during the capturing phase
+        </label>
+
+        <div id="outer" class="box box-outer">
+          outer
+          <div id="middle" class="box box-middle">
+            middle
+            <button id="inner" class="box box-inner" type="button">Click me (target)</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>2. Event Delegation</h2>
+        <div class="delegation-controls">
+          <input type="text" id="taskInput" placeholder="New task...">
+          <button id="addTaskBtn" type="button">Add</button>
+        </div>
+        <ul id="taskList" class="task-list"></ul>
+        <p class="hint">
+          One listener on &lt;ul&gt; handles every item — including ones added after the
+          page loaded. Click a task to mark it done; click × to remove it.
+        </p>
+      </section>
+
+      <section class="panel">
+        <h2>3. DOMContentLoaded vs. window.onload</h2>
+        <ul id="readinessLog" class="readiness-log"></ul>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Event Log</h2>
+          <button id="clearLogBtn" type="button">Clear</button>
+        </div>
+        <ul id="eventLog" class="event-log"></ul>
+      </section>
+    </main>
+
+    <footer>
+      <p>Built with HTML, CSS, and plain JavaScript — no frameworks.</p>
+    </footer>
+  </div>
+</body>
+</html>
