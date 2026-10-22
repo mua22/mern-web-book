@@ -3197,7 +3197,7 @@ visualizer below runs, step by step:</p>
 </span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>
 </span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">asyncFn</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;4: async start&quot;</span><span class="p">);</span>
-</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="w">  </span><span class="k">await</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="w">  </span><span class="k">await</span><span class="w"> </span><span class="nb">Promise</span><span class="p">.</span><span class="nx">resolve</span><span class="p">();</span>
 </span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;5: async resumed&quot;</span><span class="p">);</span>
 </span><span id="__span-7-15"><a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="p">}</span>
 </span><span id="__span-7-16"><a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a><span class="nx">asyncFn</span><span class="p">();</span>
@@ -3287,7 +3287,7 @@ visualizer below runs, step by step:</p>
     '',
     'async function asyncFn() {',
     '  console.log("4: async start");',
-    '  await null;',
+    '  await Promise.resolve();',
     '  console.log("5: async resumed");',
     '}',
     'asyncFn();',
@@ -3303,7 +3303,7 @@ visualizer below runs, step by step:</p>
     { hl: [7, 8, 9], stack: ['main()'], webapi: ['setTimeout (0ms)'], micro: ['Promise .then()'], macro: [], out: ['1: start'], note: 'Promise.resolve() is already fulfilled, so its .then() callback goes straight into the Microtask Queue.' },
     { hl: [16], stack: ['main()', 'asyncFn()'], webapi: ['setTimeout (0ms)'], micro: ['Promise .then()'], macro: [], out: ['1: start'], note: 'asyncFn() is called — a new frame is pushed onto the call stack.' },
     { hl: [12], stack: ['main()', 'asyncFn()'], webapi: ['setTimeout (0ms)'], micro: ['Promise .then()'], macro: [], out: ['1: start', '4: async start'], note: "Inside asyncFn, console.log('4: async start') runs synchronously, same as any normal function call." },
-    { hl: [13], stack: ['main()'], webapi: ['setTimeout (0ms)'], micro: ['Promise .then()', 'asyncFn (after await)'], macro: [], out: ['1: start', '4: async start'], note: "await null pauses asyncFn right here. Everything AFTER it is scheduled as a microtask, and asyncFn's frame pops off — control returns to main()." },
+    { hl: [13], stack: ['main()'], webapi: ['setTimeout (0ms)'], micro: ['Promise .then()', 'asyncFn (after await)'], macro: [], out: ['1: start', '4: async start'], note: "await pauses asyncFn right here, on an already-resolved promise. Everything AFTER it is scheduled as a microtask, and asyncFn's frame pops off — control returns to main()." },
     { hl: [18], stack: ['main()'], webapi: ['setTimeout (0ms)'], micro: ['Promise .then()', 'asyncFn (after await)'], macro: [], out: ['1: start', '4: async start', '6: end'], note: "console.log('6: end') runs — the last line of synchronous code in the script." },
     { hl: [], stack: [], webapi: ['setTimeout (0ms)'], micro: ['Promise .then()', 'asyncFn (after await)'], macro: [], out: ['1: start', '4: async start', '6: end'], note: 'Synchronous script finished — main() pops off. The call stack is now completely EMPTY.' },
     { hl: [8], stack: ['Promise .then()'], webapi: ['setTimeout (0ms)'], micro: ['asyncFn (after await)'], macro: [], out: ['1: start', '4: async start', '6: end'], note: 'Event loop: stack is empty, so it checks the Microtask Queue FIRST — before the Callback Queue — and takes the oldest microtask.' },
@@ -3504,7 +3504,7 @@ for any program you'll ever read or write.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="October 22, 2026 20:39:09 UTC">October 22, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="October 22, 2026 20:48:53 UTC">October 22, 2026</span>
   </span>
 
     
