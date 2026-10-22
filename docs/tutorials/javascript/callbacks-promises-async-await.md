@@ -235,7 +235,14 @@ Even with the timer's delay set to `0`, the real console output is **`1, 4, 6, 3
 <div class="elv-widget" id="elv-widget">
 <div class="elv-code-pane">
 <div class="elv-code-title">script.js</div>
-<pre class="elv-code" id="elv-code"></pre>
+<div class="elv-code" id="elv-code"></div>
+</div>
+<div class="elv-controls">
+<button type="button" id="elv-reset">&#8634; Reset</button>
+<button type="button" id="elv-prev">&#9664; Prev</button>
+<button type="button" id="elv-play">&#9654; Play</button>
+<button type="button" id="elv-next">Next &#9654;</button>
+<span class="elv-counter" id="elv-counter"></span>
 </div>
 <div class="elv-main">
 <div class="elv-panels">
@@ -262,13 +269,6 @@ Even with the timer's delay set to `0`, the real console output is **`1, 4, 6, 3
 </div>
 </div>
 <div class="elv-note" id="elv-note">Click <strong>Next</strong> (or <strong>Play</strong>) to start executing the script, one step at a time.</div>
-<div class="elv-controls">
-<button type="button" id="elv-reset">&#8634; Reset</button>
-<button type="button" id="elv-prev">&#9664; Prev</button>
-<button type="button" id="elv-play">&#9654; Play</button>
-<button type="button" id="elv-next">Next &#9654;</button>
-<span class="elv-counter" id="elv-counter"></span>
-</div>
 </div>
 <style>
 .elv-widget{border:1px solid var(--cu-border-soft,#D8DCE3);border-radius:14px;padding:1.2rem;margin:1.4rem 0;background:var(--cu-surface,#F7F8FA);font-family:Arial,Helvetica,sans-serif;}
@@ -292,7 +292,7 @@ Even with the timer's delay set to `0`, the real console output is **`1, 4, 6, 3
 .elv-console-lines{font-family:"Courier New",Courier,monospace;font-size:0.8rem;color:#1F2429;min-height:2rem;}
 .elv-console-lines div{padding:0.1rem 0;}
 .elv-note{margin-top:1rem;background:#E9EDFB;border:1px solid #6C7FD6;color:#262b40;border-radius:8px;padding:0.6rem 0.8rem;font-size:0.85rem;min-height:1.4em;}
-.elv-controls{display:flex;align-items:center;gap:0.5rem;margin-top:0.8rem;flex-wrap:wrap;}
+.elv-controls{display:flex;align-items:center;gap:0.5rem;margin-bottom:1rem;flex-wrap:wrap;}
 .elv-controls button{background:#c9680f;color:#fff;border:none;border-radius:6px;padding:0.4rem 0.8rem;font-weight:700;font-size:0.8rem;cursor:pointer;}
 .elv-controls button:disabled{background:#ccc;cursor:not-allowed;}
 .elv-counter{margin-left:auto;font-size:0.8rem;color:var(--cu-faint,#7A8496);font-family:"Courier New",Courier,monospace;}
