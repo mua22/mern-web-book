@@ -64,18 +64,35 @@ not the user's computer — and it is responsible for things like:
 The two sides communicate over HTTP, exactly the request-response pattern you learned in
 Lecture 1: the client (browser) sends a request, and the server sends back a response.
 
-```mermaid
-sequenceDiagram
-    participant Browser as Client (Browser)
-    participant Server as Server (Node.js + Express)
-    participant DB as Database
-
-    Browser->>Server: HTTP Request (e.g. GET /api/books)
-    Server->>DB: Query for book data
-    DB-->>Server: Book records
-    Server-->>Browser: HTTP Response (JSON data)
-    Note over Browser: JavaScript on the client<br/>uses the data to update the page
-```
+<div class="cu-svg-diagram" markdown>
+<svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="l16-seq1-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/>
+    </marker>
+  </defs>
+  <rect x="20" y="10" width="170" height="42" rx="8" fill="#2B2B7A"/>
+  <text x="105" y="36" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">Client (Browser)</text>
+  <rect x="265" y="10" width="190" height="42" rx="8" fill="#1C7293"/>
+  <text x="360" y="36" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12.5" fill="#FFFFFF">Server (Node.js + Express)</text>
+  <rect x="540" y="10" width="140" height="42" rx="8" fill="#6C4FF5"/>
+  <text x="610" y="36" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">Database</text>
+  <line x1="105" y1="52" x2="105" y2="275" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <line x1="360" y1="52" x2="360" y2="275" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <line x1="610" y1="52" x2="610" y2="275" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <line x1="105" y1="90" x2="352" y2="90" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l16-seq1-arrow)"/>
+  <text x="230" y="82" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="11" fill="var(--cu-text)">HTTP Request (e.g. GET /api/books)</text>
+  <line x1="360" y1="135" x2="602" y2="135" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l16-seq1-arrow)"/>
+  <text x="485" y="127" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="var(--cu-text)">Query for book data</text>
+  <line x1="610" y1="178" x2="368" y2="178" stroke="var(--cu-muted)" stroke-width="2" stroke-dasharray="5 3" marker-end="url(#l16-seq1-arrow)"/>
+  <text x="485" y="170" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="var(--cu-text)">Book records</text>
+  <line x1="360" y1="222" x2="113" y2="222" stroke="var(--cu-muted)" stroke-width="2" stroke-dasharray="5 3" marker-end="url(#l16-seq1-arrow)"/>
+  <text x="230" y="214" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="var(--cu-text)">HTTP Response (JSON data)</text>
+  <rect x="20" y="240" width="260" height="46" rx="8" fill="#FFF7E0" stroke="#E0C457" stroke-width="1"/>
+  <text x="150" y="258" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="#6B5A00">JavaScript on the client uses the</text>
+  <text x="150" y="273" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="#6B5A00">data to update the page</text>
+</svg>
+</div>
 
 ## Web Servers, Application Servers, and Runtime Environments
 
@@ -148,14 +165,38 @@ there a finished task waiting for its callback to run? If so, run it. If not, ke
 checking." This lets one Node.js process serve many clients at once, even though it is
 only doing one thing at any single instant.
 
-```mermaid
-flowchart LR
-    A[Request 1 arrives<br/>needs DB query] --> B[Node hands query<br/>to the OS/DB driver]
-    B --> C[Node is free —<br/>handles Request 2]
-    C --> D[Node is free —<br/>handles Request 3]
-    D --> E["Event Loop: DB query<br/>for Request 1 finished"]
-    E --> F[Node runs the callback<br/>and responds to Request 1]
-```
+<div class="cu-svg-diagram" markdown>
+<svg viewBox="0 0 720 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="l16-evloop-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/>
+    </marker>
+  </defs>
+  <rect x="20" y="20" width="200" height="60" rx="10" fill="#2B2B7A"/>
+  <text x="120" y="44" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12" fill="#FFFFFF">Request 1 arrives</text>
+  <text x="120" y="61" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#D9D9F2">needs DB query</text>
+  <line x1="220" y1="50" x2="248" y2="50" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l16-evloop-arrow)"/>
+  <rect x="250" y="20" width="200" height="60" rx="10" fill="#1C7293"/>
+  <text x="350" y="44" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12" fill="#FFFFFF">Node hands query</text>
+  <text x="350" y="61" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#D2EEF5">to the OS/DB driver</text>
+  <line x1="450" y1="50" x2="478" y2="50" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l16-evloop-arrow)"/>
+  <rect x="480" y="20" width="200" height="60" rx="10" fill="#3FA66B"/>
+  <text x="580" y="44" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12" fill="#FFFFFF">Node is free —</text>
+  <text x="580" y="61" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#E4F4EC">handles Request 2</text>
+  <line x1="580" y1="80" x2="580" y2="198" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l16-evloop-arrow)"/>
+  <rect x="480" y="200" width="200" height="60" rx="10" fill="#3FA66B"/>
+  <text x="580" y="224" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12" fill="#FFFFFF">Node is free —</text>
+  <text x="580" y="241" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#E4F4EC">handles Request 3</text>
+  <line x1="480" y1="230" x2="452" y2="230" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l16-evloop-arrow)"/>
+  <rect x="250" y="200" width="200" height="60" rx="10" fill="#C9680F"/>
+  <text x="350" y="218" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="11.5" fill="#FFFFFF">Event Loop: DB query</text>
+  <text x="350" y="235" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#FDE8D2">for Request 1 finished</text>
+  <line x1="250" y1="230" x2="222" y2="230" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l16-evloop-arrow)"/>
+  <rect x="20" y="200" width="200" height="60" rx="10" fill="#6C4FF5"/>
+  <text x="120" y="224" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12" fill="#FFFFFF">Node runs the callback</text>
+  <text x="120" y="241" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#EDE7FD">and responds to Request 1</text>
+</svg>
+</div>
 
 !!! tip
     This is exactly why you learned promises and `async`/`await` so thoroughly in Lecture
@@ -315,16 +356,32 @@ Open a browser and visit `http://localhost:3000` — you'll see your message app
 page. Every time you visit that page, your server function runs again and sends a fresh
 response.
 
-```mermaid
-sequenceDiagram
-    participant Browser
-    participant Node as Node.js Process<br/>(your index.js)
-
-    Note over Node: app.listen(3000) —<br/>server is now waiting
-    Browser->>Node: GET http://localhost:3000/
-    Node->>Node: Matches route app.get('/', ...)
-    Node-->>Browser: 200 OK "Hello, world!..."
-```
+<div class="cu-svg-diagram" markdown>
+<svg viewBox="0 0 640 260" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="l16-seq2-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/>
+    </marker>
+  </defs>
+  <rect x="20" y="10" width="150" height="42" rx="8" fill="#2B2B7A"/>
+  <text x="95" y="36" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">Browser</text>
+  <rect x="440" y="10" width="180" height="42" rx="8" fill="#1C7293"/>
+  <text x="530" y="30" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12" fill="#FFFFFF">Node.js Process</text>
+  <text x="530" y="45" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="10.5" fill="#D2EEF5">(your index.js)</text>
+  <line x1="95" y1="52" x2="95" y2="248" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <line x1="530" y1="52" x2="530" y2="248" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <rect x="420" y="66" width="220" height="40" rx="8" fill="#FFF7E0" stroke="#E0C457" stroke-width="1"/>
+  <text x="530" y="83" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="10.5" fill="#6B5A00">app.listen(3000) —</text>
+  <text x="530" y="98" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="#6B5A00">server is now waiting</text>
+  <line x1="95" y1="140" x2="522" y2="140" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l16-seq2-arrow)"/>
+  <text x="310" y="132" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="11" fill="var(--cu-text)">GET http://localhost:3000/</text>
+  <path d="M530,163 C590,163 590,183 530,183" fill="none" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l16-seq2-arrow)"/>
+  <text x="560" y="203" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="10" fill="var(--cu-text)">Matches route</text>
+  <text x="560" y="216" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="10" fill="var(--cu-text)">app.get('/', ...)</text>
+  <line x1="530" y1="236" x2="103" y2="236" stroke="var(--cu-muted)" stroke-width="2" stroke-dasharray="5 3" marker-end="url(#l16-seq2-arrow)"/>
+  <text x="310" y="228" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="11" fill="var(--cu-text)">200 OK "Hello, world!..."</text>
+</svg>
+</div>
 
 !!! tip
     `localhost` is a special hostname that always means "this same computer." While you

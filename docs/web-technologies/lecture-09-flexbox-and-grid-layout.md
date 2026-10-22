@@ -343,19 +343,19 @@ layout, because you can *see* the shape of the page directly in the CSS.
 
 ![Rendered output: a classic page layout with a full-width blue header bar across the top, a green sidebar column on the left, an orange main content area on the right, and a full-width purple footer bar across the bottom](../assets/img/lecture-09/named-grid-areas.png)
 
-```mermaid
-flowchart TB
-    subgraph Grid["grid-template-areas layout"]
-        H["header (spans both columns)"]
-        S["sidebar"]
-        M["main"]
-        F["footer (spans both columns)"]
-    end
-    H --- S
-    H --- M
-    S --- F
-    M --- F
-```
+<div class="cu-svg-diagram" markdown>
+<svg viewBox="0 0 620 310" xmlns="http://www.w3.org/2000/svg">
+  <text x="310" y="16" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="11" letter-spacing="1" fill="var(--cu-muted)">GRID-TEMPLATE-AREAS LAYOUT</text>
+  <rect x="40" y="30" width="540" height="55" rx="6" fill="#2B2B7A"/>
+  <text x="310" y="62" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">header (spans both columns)</text>
+  <rect x="40" y="95" width="170" height="130" rx="6" fill="#1C7293"/>
+  <text x="125" y="165" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">sidebar</text>
+  <rect x="230" y="95" width="350" height="130" rx="6" fill="#C9680F"/>
+  <text x="405" y="165" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">main</text>
+  <rect x="40" y="235" width="540" height="55" rx="6" fill="#6C4FF5"/>
+  <text x="310" y="267" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">footer (spans both columns)</text>
+</svg>
+</div>
 
 ## Choosing Flexbox vs. Grid
 

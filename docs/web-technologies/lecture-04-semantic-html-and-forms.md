@@ -274,17 +274,32 @@ example.
 
 Here is the journey a form's data takes when the user clicks submit:
 
-```mermaid
-sequenceDiagram
-    participant U as User (Browser)
-    participant S as Server
-
-    U->>U: Fills in form fields
-    U->>U: Clicks Submit button
-    U->>S: HTTP request (GET or POST) to the "action" URL,<br/>carrying the form data
-    S->>S: Processes the data
-    S-->>U: Sends back a response (e.g. a new page)
-```
+<div class="cu-svg-diagram" markdown>
+<svg viewBox="0 0 640 320" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="l04-form-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/>
+    </marker>
+  </defs>
+  <rect x="40" y="10" width="160" height="42" rx="8" fill="#2B2B7A"/>
+  <text x="120" y="36" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12.5" fill="#FFFFFF">User (Browser)</text>
+  <rect x="440" y="10" width="160" height="42" rx="8" fill="#1C7293"/>
+  <text x="520" y="36" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">Server</text>
+  <line x1="120" y1="52" x2="120" y2="300" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <line x1="520" y1="52" x2="520" y2="300" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <path d="M120,80 C180,80 180,100 120,100" fill="none" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l04-form-arrow)"/>
+  <text x="196" y="86" font-family="Calibri, Arial, sans-serif" font-size="11" fill="var(--cu-text)">Fills in form fields</text>
+  <path d="M120,118 C180,118 180,138 120,138" fill="none" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l04-form-arrow)"/>
+  <text x="196" y="124" font-family="Calibri, Arial, sans-serif" font-size="11" fill="var(--cu-text)">Clicks Submit button</text>
+  <text x="320" y="180" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="var(--cu-text)">HTTP request (GET or POST) to the "action" URL,</text>
+  <text x="320" y="193" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="var(--cu-text)">carrying the form data</text>
+  <line x1="120" y1="205" x2="512" y2="205" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l04-form-arrow)"/>
+  <path d="M520,223 C580,223 580,243 520,243" fill="none" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l04-form-arrow)"/>
+  <text x="408" y="229" text-anchor="end" font-family="Calibri, Arial, sans-serif" font-size="11" fill="var(--cu-text)">Processes the data</text>
+  <text x="320" y="270" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="var(--cu-text)">Sends back a response (e.g. a new page)</text>
+  <line x1="520" y1="282" x2="128" y2="282" stroke="var(--cu-muted)" stroke-width="2" stroke-dasharray="5 3" marker-end="url(#l04-form-arrow)"/>
+</svg>
+</div>
 
 ### The `<label>` Element
 

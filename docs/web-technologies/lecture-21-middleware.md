@@ -42,16 +42,42 @@ manual inspection — each one either lets it through to the next station or sto
 (if something is wrong). Express middleware works the same way: every request passes
 through a chain of stations before it reaches its final handler.
 
-```mermaid
-flowchart LR
-    A[Incoming Request] --> B[Middleware 1<br/>e.g. logging]
-    B --> C[Middleware 2<br/>e.g. parse JSON body]
-    C --> D[Middleware 3<br/>e.g. check authentication]
-    D --> E[Route Handler<br/>sends response]
-    D -.error.-> F[Error-Handling<br/>Middleware]
-    B -.error.-> F
-    C -.error.-> F
-```
+<div class="cu-svg-diagram" markdown>
+<svg viewBox="0 0 980 280" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="l21-flow-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/>
+    </marker>
+  </defs>
+  <rect x="10" y="40" width="140" height="55" rx="8" fill="#2B2B7A"/>
+  <text x="80" y="72" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12.5" fill="#FFFFFF">Incoming Request</text>
+  <rect x="190" y="40" width="160" height="55" rx="8" fill="#1C7293"/>
+  <text x="270" y="62" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12.5" fill="#FFFFFF">Middleware 1</text>
+  <text x="270" y="80" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="#D2EEF5">e.g. logging</text>
+  <rect x="390" y="40" width="170" height="55" rx="8" fill="#1C7293"/>
+  <text x="475" y="62" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12.5" fill="#FFFFFF">Middleware 2</text>
+  <text x="475" y="80" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="#D2EEF5">e.g. parse JSON body</text>
+  <rect x="600" y="40" width="170" height="55" rx="8" fill="#1C7293"/>
+  <text x="685" y="62" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12.5" fill="#FFFFFF">Middleware 3</text>
+  <text x="685" y="80" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="#D2EEF5">e.g. check authentication</text>
+  <rect x="810" y="40" width="150" height="55" rx="8" fill="#3FA66B"/>
+  <text x="885" y="62" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12.5" fill="#FFFFFF">Route Handler</text>
+  <text x="885" y="80" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="#E3F6EC">sends response</text>
+  <rect x="430" y="200" width="220" height="55" rx="8" fill="#D9534F"/>
+  <text x="540" y="222" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12.5" fill="#FFFFFF">Error-Handling</text>
+  <text x="540" y="240" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="#FBE0DE">Middleware</text>
+  <line x1="150" y1="67.5" x2="186" y2="67.5" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l21-flow-arrow)"/>
+  <line x1="350" y1="67.5" x2="386" y2="67.5" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l21-flow-arrow)"/>
+  <line x1="560" y1="67.5" x2="596" y2="67.5" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l21-flow-arrow)"/>
+  <line x1="770" y1="67.5" x2="806" y2="67.5" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l21-flow-arrow)"/>
+  <line x1="280" y1="95" x2="460" y2="198" stroke="var(--cu-muted)" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#l21-flow-arrow)"/>
+  <text x="330" y="140" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="var(--cu-text)">error</text>
+  <line x1="495" y1="95" x2="530" y2="198" stroke="var(--cu-muted)" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#l21-flow-arrow)"/>
+  <text x="505" y="150" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="var(--cu-text)">error</text>
+  <line x1="695" y1="95" x2="605" y2="198" stroke="var(--cu-muted)" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#l21-flow-arrow)"/>
+  <text x="675" y="150" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="var(--cu-text)">error</text>
+</svg>
+</div>
 
 !!! note
     This chain is often called the **request/response pipeline** — a series of stages

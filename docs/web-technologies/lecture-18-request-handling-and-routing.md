@@ -205,13 +205,33 @@ app.listen(3000);
 *before* Express tries to match it to a route. You must call `app.use(express.json())`
 before any route handler that expects to read `req.body`.
 
-```mermaid
-flowchart LR
-    A[Incoming Request] --> B["express.json() middleware<br/>parses body into req.body"]
-    B --> C["Route matching<br/>(method + path)"]
-    C --> D[Your route handler runs]
-    D --> E[Response sent to client]
-```
+<div class="cu-svg-diagram" markdown>
+<svg viewBox="0 0 1040 120" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="l18-mw-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/>
+    </marker>
+  </defs>
+  <rect x="10" y="30" width="150" height="56" rx="10" fill="#2B2B7A"/>
+  <text x="85" y="63" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12" fill="#FFFFFF">Incoming Request</text>
+  <line x1="160" y1="58" x2="200" y2="58" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l18-mw-arrow)"/>
+  <rect x="204" y="20" width="220" height="76" rx="10" fill="#1C7293"/>
+  <text x="314" y="52" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-weight="700" font-size="12" fill="#FFFFFF">express.json()</text>
+  <text x="314" y="52" dy="18" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#D2EEF5">middleware parses body</text>
+  <text x="314" y="52" dy="34" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="11" fill="#D2EEF5">into req.body</text>
+  <line x1="424" y1="58" x2="464" y2="58" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l18-mw-arrow)"/>
+  <rect x="468" y="20" width="190" height="76" rx="10" fill="#6C4FF5"/>
+  <text x="563" y="54" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12" fill="#FFFFFF">Route matching</text>
+  <text x="563" y="72" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#EDE7FD">(method + path)</text>
+  <line x1="658" y1="58" x2="698" y2="58" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l18-mw-arrow)"/>
+  <rect x="702" y="30" width="170" height="56" rx="10" fill="#C9680F"/>
+  <text x="787" y="63" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12" fill="#FFFFFF">Your route handler runs</text>
+  <line x1="872" y1="58" x2="912" y2="58" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l18-mw-arrow)"/>
+  <rect x="916" y="30" width="118" height="56" rx="10" fill="#3FA66B"/>
+  <text x="975" y="55" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="11.5" fill="#FFFFFF">Response sent</text>
+  <text x="975" y="71" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11.5" fill="#FFFFFF">to client</text>
+</svg>
+</div>
 
 !!! warning
     If you forget `app.use(express.json())` and the client sends a JSON body,
@@ -346,18 +366,50 @@ Calling `next(err)` skips all remaining normal routes/middleware and jumps strai
 the nearest error-handling middleware. This gives you **one** place to log errors and
 format error responses consistently, instead of repeating that logic everywhere.
 
-```mermaid
-flowchart TD
-    A[Request arrives] --> B["express.json() middleware"]
-    B --> C{"Matches a defined route?"}
-    C -- "Yes" --> D["Route handler runs"]
-    D --> E{"Error thrown or next(err) called?"}
-    E -- "No" --> F["Normal response sent"]
-    E -- "Yes" --> G["Error-handling middleware<br/>(4 params: err, req, res, next)"]
-    G --> H["Error response sent (e.g. 500)"]
-    C -- "No" --> I["Catch-all 404 handler"]
-    I --> J["404 response sent"]
-```
+<div class="cu-svg-diagram" markdown>
+<svg viewBox="0 0 700 580" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="l18-flow2-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/>
+    </marker>
+  </defs>
+  <rect x="150" y="20" width="200" height="44" rx="8" fill="#2B2B7A"/>
+  <text x="250" y="47" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12" fill="#FFFFFF">Request arrives</text>
+  <line x1="250" y1="64" x2="250" y2="92" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l18-flow2-arrow)"/>
+  <rect x="150" y="94" width="200" height="44" rx="8" fill="#1C7293"/>
+  <text x="250" y="121" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-weight="700" font-size="11.5" fill="#FFFFFF">express.json() middleware</text>
+  <line x1="250" y1="138" x2="250" y2="153" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l18-flow2-arrow)"/>
+  <polygon points="250,155 400,210 250,265 100,210" fill="var(--cu-surface)" stroke="var(--cu-border-soft)" stroke-width="2"/>
+  <text x="250" y="214" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="11.5" fill="var(--cu-text)">Matches a defined route?</text>
+  <line x1="400" y1="210" x2="468" y2="210" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l18-flow2-arrow)"/>
+  <text x="435" y="202" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="var(--cu-muted)">No</text>
+  <rect x="470" y="185" width="180" height="50" rx="8" fill="#D9534F"/>
+  <text x="560" y="214" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12" fill="#FFFFFF">Catch-all 404 handler</text>
+  <line x1="560" y1="235" x2="560" y2="263" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l18-flow2-arrow)"/>
+  <rect x="470" y="265" width="180" height="50" rx="8" fill="#D9534F"/>
+  <text x="560" y="294" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12" fill="#FFFFFF">404 response sent</text>
+  <line x1="250" y1="265" x2="250" y2="306" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l18-flow2-arrow)"/>
+  <text x="285" y="290" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="var(--cu-muted)">Yes</text>
+  <rect x="150" y="308" width="200" height="44" rx="8" fill="#6C4FF5"/>
+  <text x="250" y="335" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12" fill="#FFFFFF">Route handler runs</text>
+  <line x1="250" y1="352" x2="250" y2="368" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l18-flow2-arrow)"/>
+  <polygon points="250,370 410,430 250,490 90,430" fill="var(--cu-surface)" stroke="var(--cu-border-soft)" stroke-width="2"/>
+  <text x="250" y="424" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="11.5" fill="var(--cu-text)">Error thrown or</text>
+  <text x="250" y="441" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="11.5" fill="var(--cu-text)">next(err) called?</text>
+  <line x1="250" y1="490" x2="250" y2="518" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l18-flow2-arrow)"/>
+  <text x="285" y="508" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="var(--cu-muted)">No</text>
+  <rect x="150" y="520" width="200" height="50" rx="8" fill="#3FA66B"/>
+  <text x="250" y="550" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12" fill="#FFFFFF">Normal response sent</text>
+  <line x1="410" y1="430" x2="448" y2="430" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l18-flow2-arrow)"/>
+  <text x="430" y="422" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="var(--cu-muted)">Yes</text>
+  <rect x="450" y="395" width="220" height="70" rx="8" fill="#D9534F"/>
+  <text x="560" y="423" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12" fill="#FFFFFF">Error-handling middleware</text>
+  <text x="560" y="443" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="10.5" fill="#FBE0DE">(4 params: err, req, res, next)</text>
+  <line x1="560" y1="465" x2="560" y2="493" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l18-flow2-arrow)"/>
+  <rect x="460" y="495" width="200" height="50" rx="8" fill="#D9534F"/>
+  <text x="560" y="525" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12" fill="#FFFFFF">Error response sent (e.g. 500)</text>
+</svg>
+</div>
 
 !!! tip
     Route and middleware **order matters** in Express. Middleware and routes are checked

@@ -30,13 +30,29 @@ An HTTP **status code** is a three-digit number sent at the start of every respo
 telling the client, at a glance, what kind of outcome occurred. The *first digit*
 determines which of five families it belongs to.
 
-```mermaid
-flowchart LR
-    A["1xx<br/>Informational"] --- B["2xx<br/>Success"]
-    B --- C["3xx<br/>Redirection"]
-    C --- D["4xx<br/>Client Error"]
-    D --- E["5xx<br/>Server Error"]
-```
+<div class="cu-svg-diagram" markdown>
+<svg viewBox="0 0 900 120" xmlns="http://www.w3.org/2000/svg">
+  <line x1="175" y1="60" x2="200" y2="60" stroke="var(--cu-muted)" stroke-width="2"/>
+  <line x1="350" y1="60" x2="375" y2="60" stroke="var(--cu-muted)" stroke-width="2"/>
+  <line x1="525" y1="60" x2="550" y2="60" stroke="var(--cu-muted)" stroke-width="2"/>
+  <line x1="700" y1="60" x2="725" y2="60" stroke="var(--cu-muted)" stroke-width="2"/>
+  <rect x="25" y="25" width="150" height="70" rx="10" fill="var(--cu-surface)" stroke="var(--cu-border-soft)" stroke-width="2"/>
+  <text x="100" y="56" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-weight="700" font-size="14" fill="var(--cu-text)">1xx</text>
+  <text x="100" y="75" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="var(--cu-muted)">Informational</text>
+  <rect x="200" y="25" width="150" height="70" rx="10" fill="#3FA66B"/>
+  <text x="275" y="56" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-weight="700" font-size="14" fill="#FFFFFF">2xx</text>
+  <text x="275" y="75" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#FFFFFF">Success</text>
+  <rect x="375" y="25" width="150" height="70" rx="10" fill="#1C7293"/>
+  <text x="450" y="56" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-weight="700" font-size="14" fill="#FFFFFF">3xx</text>
+  <text x="450" y="75" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#FFFFFF">Redirection</text>
+  <rect x="550" y="25" width="150" height="70" rx="10" fill="#C9680F"/>
+  <text x="625" y="56" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-weight="700" font-size="14" fill="#FFFFFF">4xx</text>
+  <text x="625" y="75" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#FFFFFF">Client Error</text>
+  <rect x="725" y="25" width="150" height="70" rx="10" fill="#D9534F"/>
+  <text x="800" y="56" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-weight="700" font-size="14" fill="#FFFFFF">5xx</text>
+  <text x="800" y="75" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#FFFFFF">Server Error</text>
+</svg>
+</div>
 
 | Family | Meaning | Who is usually "at fault"? |
 |---|---|---|
@@ -187,17 +203,33 @@ For example, a browser navigating directly to a URL sends
 app calling your API with `fetch` might instead send `Accept: application/json`, expecting
 raw data rather than a full page.
 
-```mermaid
-sequenceDiagram
-    participant Client
-    participant Server as Express Server
-
-    Client->>Server: GET /api/books<br/>Accept: application/json
-    Server-->>Client: 200 OK<br/>Content-Type: application/json<br/>{"books": [...]}
-
-    Client->>Server: GET /books<br/>Accept: text/html
-    Server-->>Client: 200 OK<br/>Content-Type: text/html<br/><html>...</html>
-```
+<div class="cu-svg-diagram" markdown>
+<svg viewBox="0 0 640 310" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="l19-cn-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/></marker>
+  </defs>
+  <rect x="40" y="10" width="150" height="42" rx="8" fill="#2B2B7A"/>
+  <text x="115" y="36" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">Client</text>
+  <rect x="400" y="10" width="190" height="42" rx="8" fill="#1C7293"/>
+  <text x="495" y="36" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">Express Server</text>
+  <line x1="115" y1="52" x2="115" y2="300" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <line x1="495" y1="52" x2="495" y2="300" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <line x1="115" y1="95" x2="487" y2="95" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l19-cn-arrow)"/>
+  <text x="307" y="76" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="10.5" fill="var(--cu-text)">GET /api/books</text>
+  <text x="307" y="89" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="10.5" fill="var(--cu-text)">Accept: application/json</text>
+  <line x1="495" y1="150" x2="123" y2="150" stroke="var(--cu-muted)" stroke-width="2" stroke-dasharray="5 3" marker-end="url(#l19-cn-arrow)"/>
+  <text x="307" y="131" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="10.5" fill="var(--cu-text)">200 OK</text>
+  <text x="307" y="144" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="10.5" fill="var(--cu-text)">Content-Type: application/json</text>
+  <text x="307" y="163" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="9.5" fill="var(--cu-muted)">{"books": [...]}</text>
+  <line x1="115" y1="215" x2="487" y2="215" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l19-cn-arrow)"/>
+  <text x="307" y="196" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="10.5" fill="var(--cu-text)">GET /books</text>
+  <text x="307" y="209" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="10.5" fill="var(--cu-text)">Accept: text/html</text>
+  <line x1="495" y1="270" x2="123" y2="270" stroke="var(--cu-muted)" stroke-width="2" stroke-dasharray="5 3" marker-end="url(#l19-cn-arrow)"/>
+  <text x="307" y="251" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="10.5" fill="var(--cu-text)">200 OK</text>
+  <text x="307" y="264" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="10.5" fill="var(--cu-text)">Content-Type: text/html</text>
+  <text x="307" y="283" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="9.5" fill="var(--cu-muted)">&lt;html&gt;...&lt;/html&gt;</text>
+</svg>
+</div>
 
 Express provides `res.format()` to respond differently depending on what the client
 requested via `Accept`:

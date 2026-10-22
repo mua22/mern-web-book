@@ -190,16 +190,43 @@ useEffect(() => {
 }, []);
 ```
 
-```mermaid
-stateDiagram-v2
-    [*] --> Mounted: Component first renders
-    Mounted --> EffectRuns: useEffect callback runs
-    EffectRuns --> Idle: Waiting for next render or unmount
-    Idle --> CleanupRuns: Dependencies changed
-    CleanupRuns --> EffectRuns: Effect runs again with new values
-    Idle --> CleanupRuns2: Component unmounts
-    CleanupRuns2 --> [*]: Component removed
-```
+<div class="cu-svg-diagram" markdown>
+<svg viewBox="0 0 760 540" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<marker id="l28-state-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+<path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/>
+</marker>
+</defs>
+<circle cx="380" cy="30" r="7" fill="var(--cu-muted)"/>
+<line x1="380" y1="37" x2="380" y2="70" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l28-state-arrow)"/>
+<text x="395" y="56" text-anchor="start" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="var(--cu-text)">Component first renders</text>
+<rect x="300" y="70" width="160" height="55" rx="10" fill="var(--cu-surface)" stroke="var(--cu-border-soft)" stroke-width="2"/>
+<text x="380" y="103" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="14" fill="var(--cu-text)">Mounted</text>
+<line x1="380" y1="125" x2="380" y2="175" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l28-state-arrow)"/>
+<text x="395" y="153" text-anchor="start" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="var(--cu-text)">useEffect callback runs</text>
+<rect x="300" y="175" width="160" height="55" rx="10" fill="var(--cu-surface)" stroke="var(--cu-border-soft)" stroke-width="2"/>
+<text x="380" y="208" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="14" fill="var(--cu-text)">EffectRuns</text>
+<line x1="380" y1="230" x2="380" y2="280" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l28-state-arrow)"/>
+<text x="395" y="258" text-anchor="start" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="var(--cu-text)">Waiting for next render or unmount</text>
+<rect x="300" y="280" width="160" height="55" rx="10" fill="var(--cu-surface)" stroke="var(--cu-border-soft)" stroke-width="2"/>
+<text x="380" y="313" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="14" fill="var(--cu-text)">Idle</text>
+<line x1="340" y1="335" x2="155" y2="383" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l28-state-arrow)"/>
+<text x="250" y="348" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="var(--cu-text)">Dependencies changed</text>
+<line x1="420" y1="335" x2="615" y2="383" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l28-state-arrow)"/>
+<text x="525" y="348" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="var(--cu-text)">Component unmounts</text>
+<rect x="60" y="385" width="190" height="55" rx="10" fill="var(--cu-surface)" stroke="var(--cu-border-soft)" stroke-width="2"/>
+<text x="155" y="418" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13.5" fill="var(--cu-text)">CleanupRuns</text>
+<rect x="520" y="385" width="190" height="55" rx="10" fill="var(--cu-surface)" stroke="var(--cu-border-soft)" stroke-width="2"/>
+<text x="615" y="418" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13.5" fill="var(--cu-text)">CleanupRuns2</text>
+<path d="M60,412 C10,412 10,202 300,202" fill="none" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l28-state-arrow)"/>
+<text x="95" y="283" text-anchor="start" font-family="Calibri, Arial, sans-serif" font-size="10" fill="var(--cu-text)">Effect runs again</text>
+<text x="95" y="296" text-anchor="start" font-family="Calibri, Arial, sans-serif" font-size="10" fill="var(--cu-text)">with new values</text>
+<line x1="615" y1="440" x2="615" y2="491" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l28-state-arrow)"/>
+<text x="630" y="468" text-anchor="start" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="var(--cu-text)">Component removed</text>
+<circle cx="615" cy="500" r="9" fill="none" stroke="var(--cu-muted)" stroke-width="2"/>
+<circle cx="615" cy="500" r="4" fill="var(--cu-muted)"/>
+</svg>
+</div>
 
 ## `useRef`
 

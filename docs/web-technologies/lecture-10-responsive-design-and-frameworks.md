@@ -48,13 +48,39 @@ Mobile-first is preferred today for two reasons: mobile traffic makes up the maj
 visits worldwide, and it is far easier to progressively *add* complexity (extra columns,
 a sidebar) as screen space grows than to strip complexity away.
 
-```mermaid
-flowchart LR
-    A["Base styles\n(no media query)\nsmall phone screens"] --> B["@media (min-width: 576px)\nlarge phones"]
-    B --> C["@media (min-width: 768px)\ntablets"]
-    C --> D["@media (min-width: 992px)\nlaptops"]
-    D --> E["@media (min-width: 1200px)\ndesktops"]
-```
+<div class="cu-svg-diagram" markdown>
+<svg viewBox="0 0 950 150" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="l10-mobile-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/>
+    </marker>
+  </defs>
+  <rect x="20" y="30" width="150" height="80" rx="10" fill="#2B2B7A"/>
+  <text x="95" y="58" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12.5" fill="#FFFFFF">Base styles</text>
+  <text x="95" y="76" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10" fill="#D8D8F0">(no media query)</text>
+  <text x="95" y="92" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10" fill="#D8D8F0">small phone screens</text>
+  <line x1="170" y1="70" x2="210" y2="70" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l10-mobile-arrow)"/>
+  <rect x="210" y="30" width="150" height="80" rx="10" fill="#1C7293"/>
+  <text x="285" y="64" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="10.5" fill="#FFFFFF">@media (min-width:</text>
+  <text x="285" y="78" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="10.5" fill="#FFFFFF">576px)</text>
+  <text x="285" y="96" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#D2EEF5">large phones</text>
+  <line x1="360" y1="70" x2="400" y2="70" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l10-mobile-arrow)"/>
+  <rect x="400" y="30" width="150" height="80" rx="10" fill="#3FA66B"/>
+  <text x="475" y="64" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="10.5" fill="#FFFFFF">@media (min-width:</text>
+  <text x="475" y="78" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="10.5" fill="#FFFFFF">768px)</text>
+  <text x="475" y="96" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#E4F5EB">tablets</text>
+  <line x1="550" y1="70" x2="590" y2="70" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l10-mobile-arrow)"/>
+  <rect x="590" y="30" width="150" height="80" rx="10" fill="#C9680F"/>
+  <text x="665" y="64" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="10.5" fill="#FFFFFF">@media (min-width:</text>
+  <text x="665" y="78" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="10.5" fill="#FFFFFF">992px)</text>
+  <text x="665" y="96" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#FDE8D2">laptops</text>
+  <line x1="740" y1="70" x2="780" y2="70" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l10-mobile-arrow)"/>
+  <rect x="780" y="30" width="150" height="80" rx="10" fill="#6C4FF5"/>
+  <text x="855" y="64" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="10.5" fill="#FFFFFF">@media (min-width:</text>
+  <text x="855" y="78" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="10.5" fill="#FFFFFF">1200px)</text>
+  <text x="855" y="96" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#E8E1FD">desktops</text>
+</svg>
+</div>
 
 ### The viewport meta tag
 
@@ -767,11 +793,28 @@ the preprocessor's language, then *compile* it into plain CSS that a browser can
 read. **Sass** and **LESS** are the two most widely used preprocessors, and Sass in
 particular is what Bootstrap itself is written in.
 
-```mermaid
-flowchart LR
-    A["your-styles.scss\n(Sass source you write)"] -->|"compile\n(sass CLI / build tool)"| B["your-styles.css\n(plain CSS)"]
-    B --> C["Browser\n(links styles.css normally)"]
-```
+<div class="cu-svg-diagram" markdown>
+<svg viewBox="0 0 760 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="l10-sass-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/>
+    </marker>
+  </defs>
+  <rect x="20" y="70" width="200" height="80" rx="12" fill="#6C4FF5"/>
+  <text x="120" y="104" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-weight="700" font-size="14" fill="#FFFFFF">your-styles.scss</text>
+  <text x="120" y="126" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#E8E1FD">(Sass source you write)</text>
+  <line x1="220" y1="110" x2="290" y2="110" stroke="var(--cu-muted)" stroke-width="2.5" marker-end="url(#l10-sass-arrow)"/>
+  <text x="255" y="90" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-weight="700" font-size="11.5" fill="var(--cu-text)">compile</text>
+  <text x="255" y="135" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="9.5" fill="var(--cu-muted)">(sass CLI / build tool)</text>
+  <rect x="290" y="70" width="180" height="80" rx="12" fill="#1C7293"/>
+  <text x="380" y="104" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-weight="700" font-size="14" fill="#FFFFFF">your-styles.css</text>
+  <text x="380" y="126" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#D2EEF5">(plain CSS)</text>
+  <line x1="470" y1="110" x2="540" y2="110" stroke="var(--cu-muted)" stroke-width="2.5" marker-end="url(#l10-sass-arrow)"/>
+  <rect x="540" y="70" width="200" height="80" rx="12" fill="#2B2B7A"/>
+  <text x="640" y="104" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="14" fill="#FFFFFF">Browser</text>
+  <text x="640" y="126" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#D8D8F0">(links styles.css normally)</text>
+</svg>
+</div>
 
 The browser never sees Sass or LESS directly — it only ever loads the compiled, plain `.css`
 output. This is exactly the same "source vs. what the browser runs" split you already know

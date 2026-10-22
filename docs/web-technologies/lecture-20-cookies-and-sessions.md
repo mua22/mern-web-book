@@ -42,17 +42,32 @@ page, then navigate to another page to keep shopping. Each of those is a *separa
 request. If the server truly remembers nothing between them, how does it know your cart
 still has that item in it when you check out?
 
-```mermaid
-sequenceDiagram
-    participant Browser
-    participant Server
-
-    Browser->>Server: GET /add-to-cart?item=book
-    Server-->>Browser: 200 OK ("added")
-    Note over Server: Without extra help, the server<br/>has already forgotten this happened.
-    Browser->>Server: GET /checkout
-    Server-->>Browser: "Your cart is empty" ??
-```
+<div class="cu-svg-diagram" markdown>
+<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<marker id="l20-seq1-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+<path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/>
+</marker>
+</defs>
+<rect x="40" y="10" width="160" height="42" rx="8" fill="#2B2B7A"/>
+<text x="120" y="36" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">Browser</text>
+<rect x="440" y="10" width="160" height="42" rx="8" fill="#1C7293"/>
+<text x="520" y="36" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">Server</text>
+<line x1="120" y1="52" x2="120" y2="305" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="520" y1="52" x2="520" y2="305" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="120" y1="90" x2="512" y2="90" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l20-seq1-arrow)"/>
+<text x="320" y="80" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="11" fill="var(--cu-text)">GET /add-to-cart?item=book</text>
+<line x1="520" y1="125" x2="128" y2="125" stroke="var(--cu-muted)" stroke-width="2" stroke-dasharray="5 3" marker-end="url(#l20-seq1-arrow)"/>
+<text x="320" y="115" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="var(--cu-text)">200 OK ("added")</text>
+<rect x="420" y="143" width="200" height="54" rx="8" fill="#FFF7E0" stroke="#E0C457" stroke-width="1"/>
+<text x="520" y="165" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="#6B5A00">Without extra help, the server</text>
+<text x="520" y="182" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="#6B5A00">has already forgotten this happened.</text>
+<line x1="120" y1="230" x2="512" y2="230" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l20-seq1-arrow)"/>
+<text x="320" y="220" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="11" fill="var(--cu-text)">GET /checkout</text>
+<line x1="520" y1="265" x2="128" y2="265" stroke="var(--cu-muted)" stroke-width="2" stroke-dasharray="5 3" marker-end="url(#l20-seq1-arrow)"/>
+<text x="320" y="255" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="var(--cu-text)">"Your cart is empty" ??</text>
+</svg>
+</div>
 
 The answer is **state management**: some mechanism that lets a stateless protocol *feel*
 stateful by carrying identifying information along with each request, so the server can
@@ -91,17 +106,34 @@ app.get('/get-theme', (req, res) => {
     `app.use(require('cookie-parser')())`) to read cookies sent by the browser. Setting
     cookies with `res.cookie()`, however, works out of the box.
 
-```mermaid
-sequenceDiagram
-    participant Browser
-    participant Server
-
-    Browser->>Server: GET /set-theme
-    Server-->>Browser: 200 OK<br/>Set-Cookie: theme=dark
-    Note over Browser: Browser stores the cookie
-    Browser->>Server: GET /get-theme<br/>Cookie: theme=dark
-    Note over Server: Server can now read<br/>"theme=dark" from this request
-```
+<div class="cu-svg-diagram" markdown>
+<svg viewBox="0 0 640 340" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<marker id="l20-seq2-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+<path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/>
+</marker>
+</defs>
+<rect x="40" y="10" width="160" height="42" rx="8" fill="#2B2B7A"/>
+<text x="120" y="36" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">Browser</text>
+<rect x="440" y="10" width="160" height="42" rx="8" fill="#1C7293"/>
+<text x="520" y="36" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">Server</text>
+<line x1="120" y1="52" x2="120" y2="315" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="520" y1="52" x2="520" y2="315" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="120" y1="90" x2="512" y2="90" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l20-seq2-arrow)"/>
+<text x="320" y="80" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="11" fill="var(--cu-text)">GET /set-theme</text>
+<line x1="520" y1="140" x2="128" y2="140" stroke="var(--cu-muted)" stroke-width="2" stroke-dasharray="5 3" marker-end="url(#l20-seq2-arrow)"/>
+<text x="320" y="117" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="var(--cu-text)">200 OK</text>
+<text x="320" y="131" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="10.5" fill="var(--cu-text)">Set-Cookie: theme=dark</text>
+<rect x="30" y="158" width="180" height="34" rx="6" fill="#FFF7E0" stroke="#E0C457" stroke-width="1"/>
+<text x="120" y="179" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="#6B5A00">Browser stores the cookie</text>
+<line x1="120" y1="240" x2="512" y2="240" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l20-seq2-arrow)"/>
+<text x="320" y="217" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="11" fill="var(--cu-text)">GET /get-theme</text>
+<text x="320" y="231" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="10.5" fill="var(--cu-text)">Cookie: theme=dark</text>
+<rect x="415" y="258" width="210" height="52" rx="8" fill="#FFF7E0" stroke="#E0C457" stroke-width="1"/>
+<text x="520" y="279" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="#6B5A00">Server can now read</text>
+<text x="520" y="296" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="10.5" fill="#6B5A00">"theme=dark" from this request</text>
+</svg>
+</div>
 
 ### Cookie Attributes
 
@@ -155,22 +187,42 @@ identifier** — a random, unique, hard-to-guess string that acts as a lookup ke
 - On every request, the browser sends back the session ID cookie; the server looks up
   that ID in its session store to retrieve the associated data.
 
-```mermaid
-sequenceDiagram
-    participant Browser
-    participant Server
-    participant Store as Session Store
-
-    Browser->>Server: POST /login (username, password)
-    Server->>Store: Create new session {userId: 7}
-    Store-->>Server: sessionId = "sid_9f8a..."
-    Server-->>Browser: 200 OK<br/>Set-Cookie: connect.sid=sid_9f8a...
-
-    Browser->>Server: GET /dashboard<br/>Cookie: connect.sid=sid_9f8a...
-    Server->>Store: Look up sid_9f8a...
-    Store-->>Server: {userId: 7}
-    Server-->>Browser: 200 OK (personalized dashboard for user 7)
-```
+<div class="cu-svg-diagram" markdown>
+<svg viewBox="0 0 760 470" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<marker id="l20-seq3-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+<path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/>
+</marker>
+</defs>
+<rect x="20" y="10" width="170" height="42" rx="8" fill="#2B2B7A"/>
+<text x="105" y="36" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">Browser</text>
+<rect x="305" y="10" width="170" height="42" rx="8" fill="#1C7293"/>
+<text x="390" y="36" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">Server</text>
+<rect x="590" y="10" width="170" height="42" rx="8" fill="#6C4FF5"/>
+<text x="675" y="36" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12.5" fill="#FFFFFF">Session Store</text>
+<line x1="105" y1="52" x2="105" y2="445" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="390" y1="52" x2="390" y2="445" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="675" y1="52" x2="675" y2="445" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="105" y1="90" x2="382" y2="90" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l20-seq3-arrow)"/>
+<text x="245" y="80" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="10.5" fill="var(--cu-text)">POST /login (username, password)</text>
+<line x1="390" y1="130" x2="667" y2="130" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l20-seq3-arrow)"/>
+<text x="530" y="120" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="10.5" fill="var(--cu-text)">Create new session {userId: 7}</text>
+<line x1="675" y1="170" x2="398" y2="170" stroke="var(--cu-muted)" stroke-width="2" stroke-dasharray="5 3" marker-end="url(#l20-seq3-arrow)"/>
+<text x="530" y="160" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="10.5" fill="var(--cu-text)">sessionId = "sid_9f8a..."</text>
+<line x1="390" y1="225" x2="113" y2="225" stroke="var(--cu-muted)" stroke-width="2" stroke-dasharray="5 3" marker-end="url(#l20-seq3-arrow)"/>
+<text x="245" y="202" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="var(--cu-text)">200 OK</text>
+<text x="245" y="216" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="10" fill="var(--cu-text)">Set-Cookie: connect.sid=sid_9f8a...</text>
+<line x1="105" y1="300" x2="382" y2="300" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l20-seq3-arrow)"/>
+<text x="245" y="267" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="10.5" fill="var(--cu-text)">GET /dashboard</text>
+<text x="245" y="281" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="10" fill="var(--cu-text)">Cookie: connect.sid=sid_9f8a...</text>
+<line x1="390" y1="340" x2="667" y2="340" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l20-seq3-arrow)"/>
+<text x="530" y="330" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="10.5" fill="var(--cu-text)">Look up sid_9f8a...</text>
+<line x1="675" y1="380" x2="398" y2="380" stroke="var(--cu-muted)" stroke-width="2" stroke-dasharray="5 3" marker-end="url(#l20-seq3-arrow)"/>
+<text x="530" y="370" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="10.5" fill="var(--cu-text)">{userId: 7}</text>
+<line x1="390" y1="420" x2="113" y2="420" stroke="var(--cu-muted)" stroke-width="2" stroke-dasharray="5 3" marker-end="url(#l20-seq3-arrow)"/>
+<text x="245" y="410" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="var(--cu-text)">200 OK (personalized dashboard for user 7)</text>
+</svg>
+</div>
 
 A common package for this in Express is `express-session`:
 
@@ -255,23 +307,45 @@ Putting it together, a typical login/logout flow looks like this:
    also expire the *server-side* data independently, so an old session can't be revived
    even by resending an old cookie.
 
-```mermaid
-sequenceDiagram
-    participant User
-    participant Browser
-    participant Server
-
-    User->>Browser: Enters username/password
-    Browser->>Server: POST /login
-    Server->>Server: Verify credentials
-    Server->>Server: Create session, store userId
-    Server-->>Browser: Set-Cookie: sessionId=...
-    Note over Browser,Server: Session cookie sent<br/>automatically on every future request
-    User->>Browser: Clicks "Logout"
-    Browser->>Server: POST /logout
-    Server->>Server: Destroy session
-    Server-->>Browser: Clear cookie
-```
+<div class="cu-svg-diagram" markdown>
+<svg viewBox="0 0 780 500" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<marker id="l20-seq4-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+<path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/>
+</marker>
+</defs>
+<rect x="20" y="10" width="150" height="42" rx="8" fill="#C9680F"/>
+<text x="95" y="36" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">User</text>
+<rect x="300" y="10" width="160" height="42" rx="8" fill="#2B2B7A"/>
+<text x="380" y="36" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">Browser</text>
+<rect x="580" y="10" width="160" height="42" rx="8" fill="#1C7293"/>
+<text x="660" y="36" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">Server</text>
+<line x1="95" y1="52" x2="95" y2="475" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="380" y1="52" x2="380" y2="475" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="660" y1="52" x2="660" y2="475" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="95" y1="90" x2="372" y2="90" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l20-seq4-arrow)"/>
+<text x="235" y="80" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="var(--cu-text)">Enters username/password</text>
+<line x1="380" y1="125" x2="652" y2="125" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l20-seq4-arrow)"/>
+<text x="520" y="115" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="11" fill="var(--cu-text)">POST /login</text>
+<path d="M660,150 C730,150 730,172 660,172" fill="none" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l20-seq4-arrow)"/>
+<text x="700" y="143" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10" fill="var(--cu-text)">Verify credentials</text>
+<path d="M660,195 C730,195 730,217 660,217" fill="none" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l20-seq4-arrow)"/>
+<text x="700" y="188" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10" fill="var(--cu-text)">Create session, store userId</text>
+<line x1="660" y1="255" x2="388" y2="255" stroke="var(--cu-muted)" stroke-width="2" stroke-dasharray="5 3" marker-end="url(#l20-seq4-arrow)"/>
+<text x="520" y="245" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="10.5" fill="var(--cu-text)">Set-Cookie: sessionId=...</text>
+<rect x="300" y="270" width="360" height="48" rx="8" fill="#FFF7E0" stroke="#E0C457" stroke-width="1"/>
+<text x="480" y="290" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="#6B5A00">Session cookie sent automatically</text>
+<text x="480" y="307" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="#6B5A00">on every future request</text>
+<line x1="95" y1="360" x2="372" y2="360" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l20-seq4-arrow)"/>
+<text x="235" y="350" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="var(--cu-text)">Clicks "Logout"</text>
+<line x1="380" y1="395" x2="652" y2="395" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l20-seq4-arrow)"/>
+<text x="520" y="385" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="11" fill="var(--cu-text)">POST /logout</text>
+<path d="M660,420 C730,420 730,442 660,442" fill="none" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l20-seq4-arrow)"/>
+<text x="700" y="413" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10" fill="var(--cu-text)">Destroy session</text>
+<line x1="660" y1="462" x2="388" y2="462" stroke="var(--cu-muted)" stroke-width="2" stroke-dasharray="5 3" marker-end="url(#l20-seq4-arrow)"/>
+<text x="520" y="452" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="var(--cu-text)">Clear cookie</text>
+</svg>
+</div>
 
 **Basic security considerations:**
 

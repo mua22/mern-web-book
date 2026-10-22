@@ -40,15 +40,49 @@ term is explained the first time it shows up.
 The 32 lectures are grouped into 7 units, matching the official course description form.
 Click a unit to jump straight to its first lecture.
 
-```mermaid
-flowchart TD
-    U1["Unit 1<br/>Foundations of the Web<br/>(L1–L2)"] --> U2["Unit 2<br/>Markup Languages<br/>(L3–L4)"]
-    U2 --> U3["Unit 3<br/>Styling with CSS<br/>(L5–L10)"]
-    U3 --> U4["Unit 4<br/>Modern JavaScript<br/>(L11–L15)"]
-    U4 --> U5["Unit 5<br/>Server-Side Development<br/>(L16–L25)"]
-    U5 --> U6["Unit 6<br/>React.js Front End<br/>(L26–L29)"]
-    U6 --> U7["Unit 7<br/>Security & Deployment<br/>(L30–L32)"]
-```
+<div class="cu-svg-diagram" markdown>
+<svg viewBox="0 0 480 770" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="wt-index-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/>
+    </marker>
+  </defs>
+  <rect x="40" y="10" width="400" height="70" rx="10" fill="#2B2B7A"/>
+  <text x="240" y="36" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">Unit 1</text>
+  <text x="240" y="54" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="12" fill="#FFFFFF">Foundations of the Web</text>
+  <text x="240" y="70" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#FFFFFF">(L1–L2)</text>
+  <line x1="240" y1="80" x2="240" y2="118" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#wt-index-arrow)"/>
+  <rect x="40" y="120" width="400" height="70" rx="10" fill="#1C7293"/>
+  <text x="240" y="146" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">Unit 2</text>
+  <text x="240" y="164" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="12" fill="#FFFFFF">Markup Languages</text>
+  <text x="240" y="180" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#FFFFFF">(L3–L4)</text>
+  <line x1="240" y1="190" x2="240" y2="228" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#wt-index-arrow)"/>
+  <rect x="40" y="230" width="400" height="70" rx="10" fill="#6C4FF5"/>
+  <text x="240" y="256" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">Unit 3</text>
+  <text x="240" y="274" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="12" fill="#FFFFFF">Styling with CSS</text>
+  <text x="240" y="290" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#FFFFFF">(L5–L10)</text>
+  <line x1="240" y1="300" x2="240" y2="338" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#wt-index-arrow)"/>
+  <rect x="40" y="340" width="400" height="70" rx="10" fill="#C9680F"/>
+  <text x="240" y="366" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">Unit 4</text>
+  <text x="240" y="384" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="12" fill="#FFFFFF">Modern JavaScript</text>
+  <text x="240" y="400" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#FFFFFF">(L11–L15)</text>
+  <line x1="240" y1="410" x2="240" y2="448" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#wt-index-arrow)"/>
+  <rect x="40" y="450" width="400" height="70" rx="10" fill="#3FA66B"/>
+  <text x="240" y="476" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">Unit 5</text>
+  <text x="240" y="494" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="12" fill="#FFFFFF">Server-Side Development</text>
+  <text x="240" y="510" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#FFFFFF">(L16–L25)</text>
+  <line x1="240" y1="520" x2="240" y2="558" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#wt-index-arrow)"/>
+  <rect x="40" y="560" width="400" height="70" rx="10" fill="#FF8A3D"/>
+  <text x="240" y="586" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#262b40">Unit 6</text>
+  <text x="240" y="604" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="12" fill="#262b40">React.js Front End</text>
+  <text x="240" y="620" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#262b40">(L26–L29)</text>
+  <line x1="240" y1="630" x2="240" y2="668" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#wt-index-arrow)"/>
+  <rect x="40" y="670" width="400" height="70" rx="10" fill="#D9534F"/>
+  <text x="240" y="696" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">Unit 7</text>
+  <text x="240" y="714" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="12" fill="#FFFFFF">Security &amp; Deployment</text>
+  <text x="240" y="730" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#FFFFFF">(L30–L32)</text>
+</svg>
+</div>
 
 | Unit | Topic | Lectures |
 |---|---|---|

@@ -534,14 +534,44 @@ wins" is a common but incorrect shortcut; always compare column by column.
     nothing to specificity. `div p` and `div > p` both score `(0,0,0,2)` — two elements,
     nothing more — and `*` alone scores `(0,0,0,0)`.
 
-```mermaid
-flowchart TD
-    A["Conflicting declarations<br/>on the same property"] --> B{"Do they differ in<br/>!important status?"}
-    B -- "One is !important,<br/>the other isn't" --> W1["The !important<br/>declaration wins"]
-    B -- "Both, or neither,<br/>are !important" --> C{"Compare specificity"}
-    C -- "One is higher" --> W2["More specific<br/>rule wins"]
-    C -- "Equal specificity" --> D["Rule written LATER<br/>in the source wins"]
-```
+<div class="cu-svg-diagram" markdown>
+<svg viewBox="0 0 860 500" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<marker id="l05-spec-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+<path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/>
+</marker>
+</defs>
+<rect x="240" y="10" width="280" height="50" rx="8" fill="#2B2B7A"/>
+<text x="380" y="30" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12.5" fill="#FFFFFF">Conflicting declarations</text>
+<text x="380" y="46" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#FFFFFF">on the same property</text>
+<polygon points="380,90 520,150 380,210 240,150" fill="#1C7293"/>
+<text x="380" y="145" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12" fill="#FFFFFF">Do they differ in</text>
+<text x="380" y="161" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12" fill="#FFFFFF">!important status?</text>
+<rect x="50" y="280" width="240" height="60" rx="10" fill="#3FA66B"/>
+<text x="170" y="305" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12.5" fill="#FFFFFF">The !important</text>
+<text x="170" y="321" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12.5" fill="#FFFFFF">declaration wins</text>
+<polygon points="600,245 710,300 600,355 490,300" fill="#1C7293"/>
+<text x="600" y="295" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12" fill="#FFFFFF">Compare</text>
+<text x="600" y="311" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12" fill="#FFFFFF">specificity</text>
+<rect x="360" y="420" width="220" height="60" rx="10" fill="#3FA66B"/>
+<text x="470" y="445" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12.5" fill="#FFFFFF">More specific</text>
+<text x="470" y="461" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12.5" fill="#FFFFFF">rule wins</text>
+<rect x="600" y="420" width="240" height="60" rx="10" fill="#3FA66B"/>
+<text x="720" y="445" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12.5" fill="#FFFFFF">Rule written LATER</text>
+<text x="720" y="461" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#FFFFFF">in the source wins</text>
+<line x1="380" y1="60" x2="380" y2="88" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l05-spec-arrow)"/>
+<line x1="240" y1="150" x2="182" y2="279" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l05-spec-arrow)"/>
+<text x="205" y="205" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="var(--cu-text)">One is !important,</text>
+<text x="205" y="218" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="var(--cu-text)">the other isn't</text>
+<line x1="520" y1="150" x2="595" y2="246" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l05-spec-arrow)"/>
+<text x="580" y="178" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="var(--cu-text)">Both, or neither,</text>
+<text x="580" y="191" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="var(--cu-text)">are !important</text>
+<line x1="490" y1="300" x2="472" y2="419" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l05-spec-arrow)"/>
+<text x="422" y="362" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="var(--cu-text)">One is higher</text>
+<line x1="710" y1="300" x2="722" y2="419" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l05-spec-arrow)"/>
+<text x="770" y="362" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="var(--cu-text)">Equal specificity</text>
+</svg>
+</div>
 
 ### Inheritance
 

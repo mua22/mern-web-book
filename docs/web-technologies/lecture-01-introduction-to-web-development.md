@@ -72,17 +72,30 @@ send me this page"), and the server sends back a **response** (the page itself, 
 error if something went wrong). The server does nothing until a client asks it to —
 it just waits and listens.
 
-```mermaid
-sequenceDiagram
-    participant Browser as Client (Browser)
-    participant Server as Web Server
-
-    Browser->>Server: HTTP Request (GET /index.html)
-    Server-->>Browser: HTTP Response (HTML page)
-    Browser->>Server: HTTP Request (GET /style.css)
-    Server-->>Browser: HTTP Response (CSS file)
-    Note over Browser: Browser renders the page<br/>using the HTML and CSS
-```
+<div class="cu-svg-diagram" markdown>
+<svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="l01-seq-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/></marker>
+  </defs>
+  <rect x="40" y="10" width="160" height="42" rx="8" fill="#2B2B7A"/>
+  <text x="120" y="36" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">Client (Browser)</text>
+  <rect x="400" y="10" width="160" height="42" rx="8" fill="#1C7293"/>
+  <text x="480" y="36" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">Web Server</text>
+  <line x1="120" y1="52" x2="120" y2="300" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <line x1="480" y1="52" x2="480" y2="300" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <line x1="120" y1="85" x2="472" y2="85" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l01-seq-arrow)"/>
+  <text x="300" y="77" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="10.5" fill="var(--cu-text)">HTTP Request: GET /index.html</text>
+  <line x1="480" y1="125" x2="128" y2="125" stroke="var(--cu-muted)" stroke-width="2" stroke-dasharray="5 3" marker-end="url(#l01-seq-arrow)"/>
+  <text x="300" y="117" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="10.5" fill="var(--cu-text)">HTTP Response: HTML page</text>
+  <line x1="120" y1="160" x2="472" y2="160" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l01-seq-arrow)"/>
+  <text x="300" y="152" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="10.5" fill="var(--cu-text)">HTTP Request: GET /style.css</text>
+  <line x1="480" y1="200" x2="128" y2="200" stroke="var(--cu-muted)" stroke-width="2" stroke-dasharray="5 3" marker-end="url(#l01-seq-arrow)"/>
+  <text x="300" y="192" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="10.5" fill="var(--cu-text)">HTTP Response: CSS file</text>
+  <rect x="30" y="230" width="280" height="54" rx="8" fill="#FFF7E0" stroke="#E0C457" stroke-width="1"/>
+  <text x="170" y="252" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="#6B5A00">Browser renders the page</text>
+  <text x="170" y="270" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="#6B5A00">using the HTML and CSS</text>
+</svg>
+</div>
 
 Notice that loading one web page can involve several request-response exchanges: one for
 the HTML file, another for a stylesheet, another for an image, and so on. The browser
@@ -194,12 +207,28 @@ use the **Domain Name System (DNS)** — essentially the phone book of the Inter
 you type `example.com` into your browser, DNS translates ("resolves") that human-readable
 name into the IP address of the server that hosts it.
 
-```mermaid
-flowchart LR
-    A[Browser types<br/>example.com] --> B[DNS Resolver]
-    B --> C[Finds matching<br/>IP address]
-    C --> D[Browser connects to<br/>93.184.216.34]
-```
+<div class="cu-svg-diagram" markdown>
+<svg viewBox="0 0 760 140" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="l01-dns-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/></marker>
+  </defs>
+  <rect x="20" y="35" width="160" height="70" rx="10" fill="#2B2B7A"/>
+  <text x="100" y="65" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12.5" fill="#FFFFFF">Browser types</text>
+  <text x="100" y="82" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="12" fill="#FFFFFF">example.com</text>
+  <line x1="180" y1="70" x2="212" y2="70" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l01-dns-arrow)"/>
+  <rect x="220" y="35" width="150" height="70" rx="10" fill="#1C7293"/>
+  <text x="295" y="76" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">DNS Resolver</text>
+  <line x1="370" y1="70" x2="402" y2="70" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l01-dns-arrow)"/>
+  <rect x="410" y="35" width="160" height="70" rx="10" fill="#C9680F"/>
+  <text x="490" y="65" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12.5" fill="#FFFFFF">Finds matching</text>
+  <text x="490" y="82" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12.5" fill="#FFFFFF">IP address</text>
+  <line x1="570" y1="70" x2="602" y2="70" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l01-dns-arrow)"/>
+  <rect x="610" y="35" width="140" height="70" rx="10" fill="#3FA66B"/>
+  <text x="680" y="60" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12" fill="#FFFFFF">Browser connects</text>
+  <text x="680" y="76" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12" fill="#FFFFFF">to</text>
+  <text x="680" y="92" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="11" fill="#FFFFFF">93.184.216.34</text>
+</svg>
+</div>
 
 That lookup is fast because answers are **cached** — by your browser, your operating
 system, and DNS servers along the way — for a set time. This is also why a DNS change
@@ -347,14 +376,36 @@ CSS, JavaScript).
 
 ### Comparing the Types
 
-```mermaid
-flowchart TD
-    A[Web Applications] --> B[Static]
-    A --> C[Dynamic]
-    C --> D["MPA<br/>(full page reload<br/>per navigation)"]
-    C --> E["SPA<br/>(one page,<br/>JS updates content)"]
-    E --> F["PWA<br/>(SPA/MPA + offline support,<br/>installable, notifications)"]
-```
+<div class="cu-svg-diagram" markdown>
+<svg viewBox="0 0 960 440" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="l01-types-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/></marker>
+  </defs>
+  <path d="M480,60 L220,115" fill="none" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l01-types-arrow)"/>
+  <path d="M480,60 L650,115" fill="none" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l01-types-arrow)"/>
+  <path d="M650,165 L530,213" fill="none" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l01-types-arrow)"/>
+  <path d="M650,165 L790,213" fill="none" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l01-types-arrow)"/>
+  <path d="M790,287 L790,325" fill="none" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l01-types-arrow)"/>
+  <rect x="395" y="10" width="170" height="50" rx="10" fill="#2B2B7A"/>
+  <text x="480" y="40" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="14" fill="#FFFFFF">Web Applications</text>
+  <rect x="145" y="115" width="150" height="50" rx="10" fill="#1C7293"/>
+  <text x="220" y="145" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="14" fill="#FFFFFF">Static</text>
+  <rect x="575" y="115" width="150" height="50" rx="10" fill="#C9680F"/>
+  <text x="650" y="145" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="14" fill="#FFFFFF">Dynamic</text>
+  <rect x="410" y="213" width="240" height="74" rx="10" fill="#6C4FF5"/>
+  <text x="530" y="240" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="14" fill="#FFFFFF">MPA</text>
+  <text x="530" y="260" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#FFFFFF">(full page reload</text>
+  <text x="530" y="275" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#FFFFFF">per navigation)</text>
+  <rect x="670" y="213" width="240" height="74" rx="10" fill="#3FA66B"/>
+  <text x="790" y="240" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="14" fill="#FFFFFF">SPA</text>
+  <text x="790" y="260" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#FFFFFF">(one page,</text>
+  <text x="790" y="275" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#FFFFFF">JS updates content)</text>
+  <rect x="650" y="325" width="280" height="90" rx="10" fill="#FF8A3D"/>
+  <text x="790" y="352" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="14" fill="#1F2429">PWA</text>
+  <text x="790" y="372" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#1F2429">(SPA/MPA + offline support,</text>
+  <text x="790" y="388" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#1F2429">installable, notifications)</text>
+</svg>
+</div>
 
 | Type | Content changes per user? | Full page reloads? | Typical use case |
 |---|---|---|---|
@@ -379,25 +430,43 @@ options — this course picks one path through the map, but you will meet people
 listings, and codebases that picked different ones, and you should be able to recognize
 them.
 
-```mermaid
-flowchart TB
-    subgraph Browser["Browser (Client)"]
-        direction LR
-        HTML["HTML<br/>structure"]
-        CSSL["CSS<br/>+ Bootstrap or Tailwind"]
-        JS["JavaScript<br/>+ jQuery / React"]
-    end
-    Browser -->|"HTTP request<br/>(often a REST API call)"| Server
-    subgraph Server["Server"]
-        NODE["Node.js + Express"]
-    end
-    Server -->|"queries"| Data
-    subgraph Data["Data Layer"]
-        DB["MongoDB<br/>(via Mongoose)"]
-    end
-    Data -->|"results"| Server
-    Server -->|"HTTP response<br/>(HTML or JSON)"| Browser
-```
+<div class="cu-svg-diagram" markdown>
+<svg viewBox="0 0 640 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="l01-stack-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/></marker>
+  </defs>
+  <rect x="40" y="20" width="560" height="120" rx="12" fill="none" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="60" y="40" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="var(--cu-text)">Browser (Client)</text>
+  <rect x="60" y="55" width="160" height="70" rx="10" fill="#2B2B7A"/>
+  <text x="140" y="85" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">HTML</text>
+  <text x="140" y="102" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#FFFFFF">structure</text>
+  <rect x="240" y="55" width="160" height="70" rx="10" fill="#1C7293"/>
+  <text x="320" y="85" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">CSS</text>
+  <text x="320" y="102" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#FFFFFF">+ Bootstrap or Tailwind</text>
+  <rect x="420" y="55" width="160" height="70" rx="10" fill="#C9680F"/>
+  <text x="500" y="85" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">JavaScript</text>
+  <text x="500" y="102" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#FFFFFF">+ jQuery / React</text>
+  <line x1="230" y1="140" x2="230" y2="280" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l01-stack-arrow)"/>
+  <text x="240" y="195" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="var(--cu-text)">HTTP request</text>
+  <text x="240" y="209" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="var(--cu-text)">(often a REST API call)</text>
+  <line x1="420" y1="280" x2="420" y2="140" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l01-stack-arrow)"/>
+  <text x="430" y="195" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="var(--cu-text)">HTTP response</text>
+  <text x="430" y="209" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="var(--cu-text)">(HTML or JSON)</text>
+  <rect x="180" y="280" width="280" height="90" rx="12" fill="none" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="200" y="300" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="var(--cu-text)">Server</text>
+  <rect x="220" y="312" width="200" height="45" rx="8" fill="#6C4FF5"/>
+  <text x="320" y="339" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">Node.js + Express</text>
+  <line x1="280" y1="370" x2="280" y2="480" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l01-stack-arrow)"/>
+  <text x="290" y="425" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="var(--cu-text)">queries</text>
+  <line x1="420" y1="480" x2="420" y2="370" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l01-stack-arrow)"/>
+  <text x="430" y="425" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="var(--cu-text)">results</text>
+  <rect x="180" y="480" width="280" height="90" rx="12" fill="none" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="200" y="500" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="var(--cu-text)">Data Layer</text>
+  <rect x="210" y="512" width="240" height="45" rx="8" fill="#3FA66B"/>
+  <text x="330" y="533" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12.5" fill="#FFFFFF">MongoDB</text>
+  <text x="330" y="548" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="#FFFFFF">(via Mongoose)</text>
+</svg>
+</div>
 
 ### Markup: Structuring Content
 

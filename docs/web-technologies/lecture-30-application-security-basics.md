@@ -45,12 +45,34 @@ Security professionals often describe the goals of a secure system using three w
 known as the **CIA triad**. This has nothing to do with the intelligence agency — it
 stands for **Confidentiality, Integrity, and Availability**.
 
-```mermaid
-flowchart TD
-    CIA["CIA Triad"] --> C["Confidentiality<br/>Only the right people can see data"]
-    CIA --> I["Integrity<br/>Data cannot be changed<br/>without permission"]
-    CIA --> A["Availability<br/>The system stays up<br/>and usable"]
-```
+<div class="cu-svg-diagram" markdown>
+<svg viewBox="0 0 760 260" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="l30-cia-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/>
+    </marker>
+  </defs>
+  <rect x="290" y="15" width="180" height="50" rx="10" fill="#2B2B7A"/>
+  <text x="380" y="46" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="15" fill="#FFFFFF">CIA Triad</text>
+  <line x1="380" y1="65" x2="380" y2="95" stroke="var(--cu-muted)" stroke-width="2"/>
+  <line x1="130" y1="95" x2="630" y2="95" stroke="var(--cu-muted)" stroke-width="2"/>
+  <line x1="130" y1="95" x2="130" y2="128" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l30-cia-arrow)"/>
+  <line x1="380" y1="95" x2="380" y2="128" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l30-cia-arrow)"/>
+  <line x1="630" y1="95" x2="630" y2="128" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l30-cia-arrow)"/>
+  <rect x="20" y="130" width="220" height="110" rx="10" fill="#1C7293"/>
+  <text x="130" y="160" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="14" fill="#FFFFFF">Confidentiality</text>
+  <text x="130" y="184" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11.5" fill="#FFFFFF">Only the right people</text>
+  <text x="130" y="200" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11.5" fill="#FFFFFF">can see data</text>
+  <rect x="270" y="130" width="220" height="110" rx="10" fill="#C9680F"/>
+  <text x="380" y="160" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="14" fill="#FFFFFF">Integrity</text>
+  <text x="380" y="184" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11.5" fill="#FFFFFF">Data cannot be changed</text>
+  <text x="380" y="200" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11.5" fill="#FFFFFF">without permission</text>
+  <rect x="520" y="130" width="220" height="110" rx="10" fill="#3FA66B"/>
+  <text x="630" y="160" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="14" fill="#FFFFFF">Availability</text>
+  <text x="630" y="184" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11.5" fill="#FFFFFF">The system stays up</text>
+  <text x="630" y="200" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11.5" fill="#FFFFFF">and usable</text>
+</svg>
+</div>
 
 - **Confidentiality** means that information is only visible to the people who are
   supposed to see it. For example, one user's private messages should not be readable
@@ -111,14 +133,40 @@ Think of it like a castle: a castle does not rely on just a tall outer wall. It 
 a moat, a drawbridge, guards, and an inner keep. If an attacker gets past the wall, they
 still have to deal with the moat, and so on.
 
-```mermaid
-flowchart LR
-    Attacker((Attacker)) --> L1["Layer 1:<br/>HTTPS + Firewall"]
-    L1 --> L2["Layer 2:<br/>Input validation"]
-    L2 --> L3["Layer 3:<br/>Authentication &amp; Authorization"]
-    L3 --> L4["Layer 4:<br/>Least-privilege database user"]
-    L4 --> L5["Layer 5:<br/>Encrypted, backed-up data"]
-```
+<div class="cu-svg-diagram" markdown>
+<svg viewBox="0 0 1220 190" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="l30-defense-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/>
+    </marker>
+  </defs>
+  <circle cx="50" cy="100" r="35" fill="#D9534F"/>
+  <text x="50" y="104" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="11" fill="#FFFFFF">Attacker</text>
+  <line x1="85" y1="100" x2="138" y2="100" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l30-defense-arrow)"/>
+  <rect x="140" y="55" width="180" height="90" rx="10" fill="#2B2B7A"/>
+  <text x="230" y="96" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12.5" fill="#FFFFFF">Layer 1:</text>
+  <text x="230" y="114" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11.5" fill="#FFFFFF">HTTPS + Firewall</text>
+  <line x1="320" y1="100" x2="358" y2="100" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l30-defense-arrow)"/>
+  <rect x="360" y="55" width="180" height="90" rx="10" fill="#1C7293"/>
+  <text x="450" y="96" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12.5" fill="#FFFFFF">Layer 2:</text>
+  <text x="450" y="114" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11.5" fill="#FFFFFF">Input validation</text>
+  <line x1="540" y1="100" x2="578" y2="100" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l30-defense-arrow)"/>
+  <rect x="580" y="55" width="180" height="90" rx="10" fill="#6C4FF5"/>
+  <text x="670" y="88" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12.5" fill="#FFFFFF">Layer 3:</text>
+  <text x="670" y="104" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11.5" fill="#FFFFFF">Authentication &amp;</text>
+  <text x="670" y="120" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11.5" fill="#FFFFFF">Authorization</text>
+  <line x1="760" y1="100" x2="798" y2="100" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l30-defense-arrow)"/>
+  <rect x="800" y="55" width="180" height="90" rx="10" fill="#C9680F"/>
+  <text x="890" y="88" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12.5" fill="#FFFFFF">Layer 4:</text>
+  <text x="890" y="104" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11.5" fill="#FFFFFF">Least-privilege</text>
+  <text x="890" y="120" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11.5" fill="#FFFFFF">database user</text>
+  <line x1="980" y1="100" x2="1018" y2="100" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l30-defense-arrow)"/>
+  <rect x="1020" y="55" width="180" height="90" rx="10" fill="#3FA66B"/>
+  <text x="1110" y="88" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12.5" fill="#FFFFFF">Layer 5:</text>
+  <text x="1110" y="104" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11.5" fill="#FFFFFF">Encrypted,</text>
+  <text x="1110" y="120" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11.5" fill="#FFFFFF">backed-up data</text>
+</svg>
+</div>
 
 In a web application, layers of defence might include:
 
@@ -169,19 +217,40 @@ browser checks that a trusted CA has vouched for it. If the certificate is missi
 expired, or does not match the domain, the browser shows a warning instead of loading
 the page.
 
-```mermaid
-sequenceDiagram
-    participant B as Browser
-    participant S as Server
-    participant CA as Certificate Authority
-
-    Note over S,CA: Server obtained a certificate from a CA in advance
-    B->>S: "Hello, I'd like to connect securely" (TLS handshake begins)
-    S->>B: Sends its TLS certificate
-    B->>B: Checks certificate is signed by a trusted CA<br/>and matches the domain name
-    B->>S: Confirms, negotiates an encryption key
-    Note over B,S: All further traffic is encrypted
-```
+<div class="cu-svg-diagram" markdown>
+<svg viewBox="0 0 700 340" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="l30-tls-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/>
+    </marker>
+  </defs>
+  <rect x="30" y="10" width="160" height="42" rx="8" fill="#2B2B7A"/>
+  <text x="110" y="36" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">Browser</text>
+  <rect x="280" y="10" width="160" height="42" rx="8" fill="#1C7293"/>
+  <text x="360" y="36" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">Server</text>
+  <rect x="520" y="10" width="160" height="42" rx="8" fill="#6C4FF5"/>
+  <text x="600" y="36" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="11.5" fill="#FFFFFF">Certificate Authority</text>
+  <line x1="110" y1="52" x2="110" y2="320" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <line x1="360" y1="52" x2="360" y2="320" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <line x1="600" y1="52" x2="600" y2="320" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <rect x="300" y="62" width="330" height="40" rx="6" fill="#FFF7E0" stroke="#E0C457" stroke-width="1"/>
+  <text x="465" y="78" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="#6B5A00">Server obtained a certificate</text>
+  <text x="465" y="92" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="#6B5A00">from a CA in advance</text>
+  <text x="235" y="112" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="9.5" fill="var(--cu-text)">"Hello, I'd like to connect securely"</text>
+  <text x="235" y="124" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="var(--cu-text)">(TLS handshake begins)</text>
+  <line x1="110" y1="136" x2="352" y2="136" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l30-tls-arrow)"/>
+  <text x="235" y="152" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="var(--cu-text)">Sends its TLS certificate</text>
+  <line x1="360" y1="164" x2="118" y2="164" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l30-tls-arrow)"/>
+  <path d="M110,180 C175,180 175,215 110,215" fill="none" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l30-tls-arrow)"/>
+  <text x="188" y="186" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="var(--cu-text)">Checks certificate is</text>
+  <text x="188" y="200" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="var(--cu-text)">signed by a trusted CA</text>
+  <text x="188" y="214" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="var(--cu-text)">and matches the domain name</text>
+  <text x="235" y="246" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="var(--cu-text)">Confirms, negotiates an encryption key</text>
+  <line x1="118" y1="258" x2="352" y2="258" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l30-tls-arrow)"/>
+  <rect x="60" y="270" width="350" height="40" rx="6" fill="#FFF7E0" stroke="#E0C457" stroke-width="1"/>
+  <text x="235" y="294" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="#6B5A00">All further traffic is encrypted</text>
+</svg>
+</div>
 
 !!! tip
     Free, automated certificate services like **Let's Encrypt** made HTTPS free and easy
@@ -229,14 +298,39 @@ more time before you ship anything.
   to perform a specific action, such as deleting another user's post or accessing an
   admin dashboard.
 
-```mermaid
-flowchart LR
-    Req[Incoming Request] --> Auth1{"Authentication:<br/>Who are you?"}
-    Auth1 -- "Not verified" --> Reject1["401 Unauthorized"]
-    Auth1 -- "Verified" --> Auth2{"Authorization:<br/>Are you allowed<br/>to do this?"}
-    Auth2 -- "Not permitted" --> Reject2["403 Forbidden"]
-    Auth2 -- "Permitted" --> Allow["Request proceeds"]
-```
+<div class="cu-svg-diagram" markdown>
+<svg viewBox="0 0 980 370" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="l30-authz-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/>
+    </marker>
+  </defs>
+  <rect x="20" y="160" width="140" height="50" rx="8" fill="#2B2B7A"/>
+  <text x="90" y="190" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12" fill="#FFFFFF">Incoming Request</text>
+  <line x1="160" y1="185" x2="178" y2="185" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l30-authz-arrow)"/>
+  <polygon points="290,130 400,185 290,240 180,185" fill="#1C7293"/>
+  <text x="290" y="178" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12" fill="#FFFFFF">Authentication:</text>
+  <text x="290" y="196" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11.5" fill="#FFFFFF">Who are you?</text>
+  <line x1="290" y1="240" x2="290" y2="298" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l30-authz-arrow)"/>
+  <text x="300" y="275" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="var(--cu-text)">Not verified</text>
+  <rect x="210" y="300" width="160" height="50" rx="8" fill="#D9534F"/>
+  <text x="290" y="330" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12" fill="#FFFFFF">401 Unauthorized</text>
+  <line x1="400" y1="185" x2="538" y2="185" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l30-authz-arrow)"/>
+  <text x="470" y="177" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="var(--cu-text)">Verified</text>
+  <polygon points="650,130 760,185 650,240 540,185" fill="#1C7293"/>
+  <text x="650" y="172" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12" fill="#FFFFFF">Authorization:</text>
+  <text x="650" y="190" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#FFFFFF">Are you allowed</text>
+  <text x="650" y="206" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#FFFFFF">to do this?</text>
+  <line x1="650" y1="240" x2="650" y2="298" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l30-authz-arrow)"/>
+  <text x="664" y="275" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="var(--cu-text)">Not permitted</text>
+  <rect x="570" y="300" width="160" height="50" rx="8" fill="#D9534F"/>
+  <text x="650" y="330" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12" fill="#FFFFFF">403 Forbidden</text>
+  <line x1="760" y1="185" x2="798" y2="185" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l30-authz-arrow)"/>
+  <text x="825" y="177" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="var(--cu-text)">Permitted</text>
+  <rect x="800" y="160" width="160" height="50" rx="8" fill="#3FA66B"/>
+  <text x="880" y="190" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12" fill="#FFFFFF">Request proceeds</text>
+</svg>
+</div>
 
 A simple way to remember which is which: authentication is like showing your student ID
 card at the university gate to prove who you are. Authorization is like the ID card

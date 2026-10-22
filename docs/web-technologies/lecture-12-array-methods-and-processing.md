@@ -200,12 +200,30 @@ const totalForExpensiveItems = orders
 console.log(totalForExpensiveItems); // 840
 ```
 
-```mermaid
-flowchart LR
-    A["orders array<br/>(3 items)"] -->|filter price > 5| B["[Book, Laptop]"]
-    B -->|map price * qty| C["[40, 800]"]
-    C -->|reduce sum| D["840"]
-```
+<div class="cu-svg-diagram" markdown>
+<svg viewBox="0 0 900 140" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="l12-chain-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/>
+    </marker>
+  </defs>
+  <rect x="15" y="40" width="170" height="60" rx="10" fill="#2B2B7A"/>
+  <text x="100" y="66" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">orders array</text>
+  <text x="100" y="84" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#D8D8F0">(3 items)</text>
+  <line x1="185" y1="70" x2="300" y2="70" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l12-chain-arrow)"/>
+  <text x="242" y="55" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="11" fill="var(--cu-text)">filter price &gt; 5</text>
+  <rect x="300" y="40" width="190" height="60" rx="10" fill="#1C7293"/>
+  <text x="395" y="75" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-weight="700" font-size="14" fill="#FFFFFF">[Book, Laptop]</text>
+  <line x1="490" y1="70" x2="610" y2="70" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l12-chain-arrow)"/>
+  <text x="550" y="55" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="11" fill="var(--cu-text)">map price * qty</text>
+  <rect x="610" y="40" width="110" height="60" rx="10" fill="#C9680F"/>
+  <text x="665" y="75" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-weight="700" font-size="14" fill="#FFFFFF">[40, 800]</text>
+  <line x1="720" y1="70" x2="810" y2="70" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l12-chain-arrow)"/>
+  <text x="765" y="55" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="10.5" fill="var(--cu-text)">reduce sum</text>
+  <rect x="810" y="40" width="80" height="60" rx="10" fill="#3FA66B"/>
+  <text x="850" y="75" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-weight="700" font-size="15" fill="#FFFFFF">840</text>
+</svg>
+</div>
 
 !!! tip "Read chains top to bottom"
     When a chain gets long, put each method call on its own line (as above). It reads like a

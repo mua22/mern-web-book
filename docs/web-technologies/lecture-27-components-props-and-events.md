@@ -96,13 +96,31 @@ Because `ProductCard` takes its data as an input rather than hard-coding it, the
 component can render *any* product just by passing it different data. This input mechanism
 is called **props**, and it is the subject of the next section.
 
-```mermaid
-flowchart TD
-    App --> Header
-    App --> PC1["ProductCard (Keyboard)"]
-    App --> PC2["ProductCard (Mouse)"]
-    App --> Footer
-```
+<div class="cu-svg-diagram" markdown>
+<svg viewBox="0 0 640 220" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="l27-tree-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/>
+    </marker>
+  </defs>
+  <rect x="270" y="10" width="100" height="42" rx="8" fill="#2B2B7A"/>
+  <text x="320" y="36" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-weight="700" font-size="13" fill="#FFFFFF">App</text>
+  <line x1="300" y1="52" x2="90" y2="118" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l27-tree-arrow)"/>
+  <line x1="315" y1="52" x2="245" y2="118" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l27-tree-arrow)"/>
+  <line x1="340" y1="52" x2="410" y2="118" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l27-tree-arrow)"/>
+  <line x1="365" y1="52" x2="560" y2="118" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l27-tree-arrow)"/>
+  <rect x="20" y="120" width="140" height="42" rx="8" fill="#1C7293"/>
+  <text x="90" y="146" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-weight="700" font-size="12.5" fill="#FFFFFF">Header</text>
+  <rect x="180" y="120" width="130" height="56" rx="8" fill="#3FA66B"/>
+  <text x="245" y="144" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-weight="700" font-size="11.5" fill="#FFFFFF">ProductCard</text>
+  <text x="245" y="160" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#E4F4EC">(Keyboard)</text>
+  <rect x="340" y="120" width="130" height="56" rx="8" fill="#3FA66B"/>
+  <text x="405" y="144" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-weight="700" font-size="11.5" fill="#FFFFFF">ProductCard</text>
+  <text x="405" y="160" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#E4F4EC">(Mouse)</text>
+  <rect x="500" y="120" width="120" height="42" rx="8" fill="#1C7293"/>
+  <text x="560" y="146" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-weight="700" font-size="12.5" fill="#FFFFFF">Footer</text>
+</svg>
+</div>
 
 ## Props
 
@@ -341,17 +359,38 @@ Here is what makes `<input>` "controlled":
 Because state changes trigger a re-render, and re-rendering recomputes `value={name}`, the
 input's displayed text always matches the state — a full, predictable loop.
 
-```mermaid
-sequenceDiagram
-    participant User
-    participant Input as input element
-    participant State as React state (name)
-    User->>Input: Types a character
-    Input->>State: onChange fires, calls setName(e.target.value)
-    State->>State: State updates, component re-renders
-    State-->>Input: New value prop passed down (value={name})
-    Input-->>User: Displays the updated text
-```
+<div class="cu-svg-diagram" markdown>
+<svg viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="l27-seq-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/>
+    </marker>
+  </defs>
+  <rect x="20" y="10" width="130" height="42" rx="8" fill="#2B2B7A"/>
+  <text x="85" y="36" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">User</text>
+  <rect x="300" y="10" width="160" height="42" rx="8" fill="#1C7293"/>
+  <text x="380" y="36" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-weight="700" font-size="12" fill="#FFFFFF">input element</text>
+  <rect x="560" y="10" width="140" height="42" rx="8" fill="#6C4FF5"/>
+  <text x="630" y="30" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12" fill="#FFFFFF">React state</text>
+  <text x="630" y="45" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="10.5" fill="#EDE7FD">(name)</text>
+  <line x1="85" y1="52" x2="85" y2="300" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <line x1="380" y1="52" x2="380" y2="300" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <line x1="630" y1="52" x2="630" y2="300" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <line x1="85" y1="90" x2="372" y2="90" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l27-seq-arrow)"/>
+  <text x="230" y="82" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="var(--cu-text)">Types a character</text>
+  <line x1="380" y1="133" x2="622" y2="133" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l27-seq-arrow)"/>
+  <text x="505" y="118" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="10.5" fill="var(--cu-text)">onChange fires, calls</text>
+  <text x="505" y="130" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="10.5" fill="var(--cu-text)">setName(e.target.value)</text>
+  <path d="M630,156 C690,156 690,180 630,180" fill="none" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l27-seq-arrow)"/>
+  <text x="665" y="200" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10" fill="var(--cu-text)">State updates,</text>
+  <text x="665" y="213" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10" fill="var(--cu-text)">re-renders</text>
+  <line x1="630" y1="233" x2="388" y2="233" stroke="var(--cu-muted)" stroke-width="2" stroke-dasharray="5 3" marker-end="url(#l27-seq-arrow)"/>
+  <text x="505" y="220" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="var(--cu-text)">New value prop passed down</text>
+  <text x="505" y="232" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="10" fill="var(--cu-text)">(value={name})</text>
+  <line x1="380" y1="272" x2="93" y2="272" stroke="var(--cu-muted)" stroke-width="2" stroke-dasharray="5 3" marker-end="url(#l27-seq-arrow)"/>
+  <text x="230" y="264" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="var(--cu-text)">Displays the updated text</text>
+</svg>
+</div>
 
 !!! tip "Uncontrolled components exist too"
     React also supports **uncontrolled components**, where the DOM itself keeps track of

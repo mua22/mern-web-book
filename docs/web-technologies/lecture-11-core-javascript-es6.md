@@ -91,22 +91,44 @@ can make a page feel frozen. Two attributes change this behavior:
   downloaded**, even if that interrupts HTML parsing. Scripts can run out of order. Use this for
   independent scripts that do not touch the page, like analytics trackers.
 
-```mermaid
-sequenceDiagram
-    participant HTML as HTML Parser
-    participant Net as Network
-    participant JS as JS Engine
-    Note over HTML,JS: defer
-    HTML->>Net: request script (in background)
-    HTML->>HTML: keep parsing page
-    Net-->>HTML: script downloaded
-    HTML->>JS: run script (after parsing finishes)
-    Note over HTML,JS: async
-    HTML->>Net: request script (in background)
-    HTML->>HTML: keep parsing page
-    Net-->>JS: script downloaded
-    JS->>JS: run script immediately (parsing pauses)
-```
+<div class="cu-svg-diagram" markdown>
+<svg viewBox="0 0 800 480" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<marker id="l11-defer-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+<path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/>
+</marker>
+</defs>
+<rect x="20" y="10" width="160" height="50" rx="8" fill="#2B2B7A"/>
+<text x="100" y="40" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">HTML Parser</text>
+<rect x="340" y="10" width="140" height="50" rx="8" fill="#C9680F"/>
+<text x="410" y="40" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">Network</text>
+<rect x="630" y="10" width="140" height="50" rx="8" fill="#6C4FF5"/>
+<text x="700" y="40" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">JS Engine</text>
+<line x1="100" y1="60" x2="100" y2="460" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="410" y1="60" x2="410" y2="460" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="700" y1="60" x2="700" y2="460" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="4 3"/>
+<rect x="230" y="75" width="340" height="28" rx="14" fill="#FFF7E0" stroke="#E0C457" stroke-width="1"/>
+<text x="400" y="93" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="11.5" fill="#6B5A00">defer</text>
+<line x1="100" y1="125" x2="402" y2="125" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l11-defer-arrow)"/>
+<text x="250" y="117" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="var(--cu-text)">request script (in background)</text>
+<path d="M100,145 C165,145 165,167 100,167" fill="none" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l11-defer-arrow)"/>
+<text x="165" y="138" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="var(--cu-text)">keep parsing page</text>
+<line x1="410" y1="205" x2="108" y2="205" stroke="var(--cu-muted)" stroke-width="2" stroke-dasharray="5 3" marker-end="url(#l11-defer-arrow)"/>
+<text x="260" y="197" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="var(--cu-text)">script downloaded</text>
+<line x1="100" y1="245" x2="692" y2="245" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l11-defer-arrow)"/>
+<text x="395" y="237" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="var(--cu-text)">run script (after parsing finishes)</text>
+<rect x="230" y="275" width="340" height="28" rx="14" fill="#FFF7E0" stroke="#E0C457" stroke-width="1"/>
+<text x="400" y="293" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="11.5" fill="#6B5A00">async</text>
+<line x1="100" y1="325" x2="402" y2="325" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l11-defer-arrow)"/>
+<text x="250" y="317" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="var(--cu-text)">request script (in background)</text>
+<path d="M100,345 C165,345 165,367 100,367" fill="none" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l11-defer-arrow)"/>
+<text x="165" y="338" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="var(--cu-text)">keep parsing page</text>
+<line x1="410" y1="405" x2="692" y2="405" stroke="var(--cu-muted)" stroke-width="2" stroke-dasharray="5 3" marker-end="url(#l11-defer-arrow)"/>
+<text x="555" y="397" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="var(--cu-text)">script downloaded</text>
+<path d="M700,425 C640,425 640,447 700,447" fill="none" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l11-defer-arrow)"/>
+<text x="670" y="418" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10" fill="var(--cu-text)">run script immediately (parsing pauses)</text>
+</svg>
+</div>
 
 !!! tip "Rule of thumb"
     Put `defer` on almost every script you write. Reach for `async` only for scripts that do not

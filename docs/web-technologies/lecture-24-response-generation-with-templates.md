@@ -39,21 +39,45 @@ with JavaScript, and the *browser* runs that JavaScript (often fetching data fro
 to build the visible content after the page loads. This is how single-page applications
 built with React work — you'll cover that approach later in this course.
 
-```mermaid
-flowchart LR
-    subgraph SSR["Server-Side Rendering"]
-      direction TB
-      A1[Browser requests page] --> A2[Server fetches data\nfrom database]
-      A2 --> A3[Server fills template\nwith data]
-      A3 --> A4[Complete HTML sent\nto browser]
-    end
-    subgraph CSR["Client-Side Rendering"]
-      direction TB
-      B1[Browser requests page] --> B2[Server sends near-empty\nHTML + JS bundle]
-      B2 --> B3[Browser runs JS,\nfetches data from API]
-      B3 --> B4[JS builds HTML\nin the browser]
-    end
-```
+<div class="cu-svg-diagram" markdown>
+<svg viewBox="0 0 760 470" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="l24-ssr-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/></marker>
+  </defs>
+  <rect x="20" y="10" width="340" height="440" rx="12" fill="none" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="190" y="35" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="var(--cu-text)">Server-Side Rendering</text>
+  <rect x="400" y="10" width="340" height="440" rx="12" fill="none" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="570" y="35" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="var(--cu-text)">Client-Side Rendering</text>
+  <line x1="190" y1="130" x2="190" y2="153" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l24-ssr-arrow)"/>
+  <line x1="190" y1="230" x2="190" y2="253" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l24-ssr-arrow)"/>
+  <line x1="190" y1="330" x2="190" y2="353" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l24-ssr-arrow)"/>
+  <line x1="570" y1="130" x2="570" y2="153" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l24-ssr-arrow)"/>
+  <line x1="570" y1="230" x2="570" y2="253" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l24-ssr-arrow)"/>
+  <line x1="570" y1="330" x2="570" y2="353" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l24-ssr-arrow)"/>
+  <rect x="50" y="55" width="280" height="75" rx="10" fill="#2B2B7A"/>
+  <text x="190" y="97" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12.5" fill="#FFFFFF">Browser requests page</text>
+  <rect x="50" y="155" width="280" height="75" rx="10" fill="#1C7293"/>
+  <text x="190" y="188" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12.5" fill="#FFFFFF">Server fetches data</text>
+  <text x="190" y="206" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#D2EEF5">from database</text>
+  <rect x="50" y="255" width="280" height="75" rx="10" fill="#6C4FF5"/>
+  <text x="190" y="288" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12.5" fill="#FFFFFF">Server fills template</text>
+  <text x="190" y="306" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#E8E3FF">with data</text>
+  <rect x="50" y="355" width="280" height="75" rx="10" fill="#3FA66B"/>
+  <text x="190" y="388" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12.5" fill="#FFFFFF">Complete HTML sent</text>
+  <text x="190" y="406" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#E3F7EB">to browser</text>
+  <rect x="430" y="55" width="280" height="75" rx="10" fill="#2B2B7A"/>
+  <text x="570" y="97" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12.5" fill="#FFFFFF">Browser requests page</text>
+  <rect x="430" y="155" width="280" height="75" rx="10" fill="#1C7293"/>
+  <text x="570" y="188" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12.5" fill="#FFFFFF">Server sends near-empty</text>
+  <text x="570" y="206" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#D2EEF5">HTML + JS bundle</text>
+  <rect x="430" y="255" width="280" height="75" rx="10" fill="#6C4FF5"/>
+  <text x="570" y="288" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12.5" fill="#FFFFFF">Browser runs JS,</text>
+  <text x="570" y="306" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#E8E3FF">fetches data from API</text>
+  <rect x="430" y="355" width="280" height="75" rx="10" fill="#3FA66B"/>
+  <text x="570" y="388" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12.5" fill="#FFFFFF">JS builds HTML</text>
+  <text x="570" y="406" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#E3F7EB">in the browser</text>
+</svg>
+</div>
 
 This lecture is entirely about the SSR side: how Express, using a template engine,
 generates full HTML pages on the server.

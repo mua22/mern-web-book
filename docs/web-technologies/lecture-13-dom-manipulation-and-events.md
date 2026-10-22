@@ -42,15 +42,37 @@ redraws the page to match.
 </html>
 ```
 
-```mermaid
-graph TD
-    Doc[document] --> HTML[html]
-    HTML --> Body[body]
-    Body --> H1[h1: 'My Page']
-    Body --> P[p]
-    P --> Text1["Text: 'Hello '"]
-    P --> Strong[strong: 'world']
-```
+<div class="cu-svg-diagram" markdown>
+<svg viewBox="0 0 700 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="l13-dom-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/>
+    </marker>
+  </defs>
+  <rect x="300" y="15" width="140" height="44" rx="8" fill="#2B2B7A"/>
+  <text x="370" y="42" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-weight="700" font-size="13" fill="#FFFFFF">document</text>
+  <line x1="370" y1="59" x2="370" y2="99" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l13-dom-arrow)"/>
+  <rect x="300" y="99" width="140" height="44" rx="8" fill="#1C7293"/>
+  <text x="370" y="126" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-weight="700" font-size="13" fill="#FFFFFF">&lt;html&gt;</text>
+  <line x1="370" y1="143" x2="370" y2="183" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l13-dom-arrow)"/>
+  <rect x="300" y="183" width="140" height="44" rx="8" fill="#1C7293"/>
+  <text x="370" y="210" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-weight="700" font-size="13" fill="#FFFFFF">&lt;body&gt;</text>
+  <line x1="330" y1="227" x2="220" y2="267" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l13-dom-arrow)"/>
+  <line x1="410" y1="227" x2="520" y2="267" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l13-dom-arrow)"/>
+  <rect x="130" y="267" width="170" height="54" rx="8" fill="#3FA66B"/>
+  <text x="215" y="291" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-weight="700" font-size="13" fill="#FFFFFF">&lt;h1&gt;</text>
+  <text x="215" y="310" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-style="italic" font-size="11" fill="#E4F5EB">'My Page'</text>
+  <rect x="450" y="267" width="140" height="44" rx="8" fill="#3FA66B"/>
+  <text x="520" y="294" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-weight="700" font-size="13" fill="#FFFFFF">&lt;p&gt;</text>
+  <line x1="490" y1="311" x2="420" y2="351" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l13-dom-arrow)"/>
+  <line x1="550" y1="311" x2="610" y2="351" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l13-dom-arrow)"/>
+  <rect x="320" y="351" width="200" height="44" rx="8" fill="var(--cu-surface)" stroke="var(--cu-border-soft)" stroke-width="2" stroke-dasharray="5 3"/>
+  <text x="420" y="378" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-style="italic" font-size="12" fill="var(--cu-text)">Text: 'Hello '</text>
+  <rect x="530" y="351" width="150" height="44" rx="8" fill="#3FA66B"/>
+  <text x="605" y="371" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-weight="700" font-size="12.5" fill="#FFFFFF">&lt;strong&gt;</text>
+  <text x="605" y="388" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-style="italic" font-size="10.5" fill="#E4F5EB">'world'</text>
+</svg>
+</div>
 
 A few important vocabulary words:
 
@@ -231,19 +253,42 @@ called the event's **life cycle**:
 3. **Bubbling phase**: the event then travels back **up** the tree, through the same ancestors,
    in reverse order, all the way back to `document`.
 
-```mermaid
-flowchart TD
-    subgraph Capturing["1. Capturing (top to bottom)"]
-        D1[document] --> B1[body] --> U1[ul]
-    end
-    subgraph Target["2. Target"]
-        L1["li (target)"]
-    end
-    subgraph Bubbling["3. Bubbling (bottom to top)"]
-        U2[ul] --> B2[body] --> D2[document]
-    end
-    Capturing --> Target --> Bubbling
-```
+<div class="cu-svg-diagram" markdown>
+<svg viewBox="0 0 820 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="l13-lifecycle-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/>
+    </marker>
+  </defs>
+  <rect x="20" y="30" width="220" height="330" rx="10" fill="var(--cu-surface)" stroke="var(--cu-border-soft)" stroke-width="1.5"/>
+  <text x="130" y="52" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="11.5" fill="var(--cu-muted)">1. Capturing (top to bottom)</text>
+  <rect x="75" y="68" width="110" height="38" rx="7" fill="#2B2B7A"/>
+  <text x="130" y="92" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="12" fill="#FFFFFF">document</text>
+  <line x1="130" y1="106" x2="130" y2="146" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l13-lifecycle-arrow)"/>
+  <rect x="75" y="146" width="110" height="38" rx="7" fill="#1C7293"/>
+  <text x="130" y="170" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="12" fill="#FFFFFF">&lt;body&gt;</text>
+  <line x1="130" y1="184" x2="130" y2="224" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l13-lifecycle-arrow)"/>
+  <rect x="75" y="224" width="110" height="38" rx="7" fill="#3FA66B"/>
+  <text x="130" y="248" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="12" fill="#FFFFFF">&lt;ul&gt;</text>
+  <line x1="240" y1="243" x2="300" y2="243" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l13-lifecycle-arrow)"/>
+  <rect x="300" y="30" width="180" height="330" rx="10" fill="var(--cu-surface)" stroke="var(--cu-border-soft)" stroke-width="1.5"/>
+  <text x="390" y="52" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="11.5" fill="var(--cu-muted)">2. Target</text>
+  <rect x="330" y="195" width="120" height="50" rx="8" fill="#C9680F" stroke="#FFFFFF" stroke-width="2.5"/>
+  <text x="390" y="217" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-weight="700" font-size="12" fill="#FFFFFF">li</text>
+  <text x="390" y="234" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10" fill="#FDE8D2">(target)</text>
+  <line x1="480" y1="220" x2="540" y2="220" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l13-lifecycle-arrow)"/>
+  <rect x="540" y="30" width="260" height="330" rx="10" fill="var(--cu-surface)" stroke="var(--cu-border-soft)" stroke-width="1.5"/>
+  <text x="670" y="52" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="11.5" fill="var(--cu-muted)">3. Bubbling (bottom to top)</text>
+  <rect x="615" y="224" width="110" height="38" rx="7" fill="#3FA66B"/>
+  <text x="670" y="248" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="12" fill="#FFFFFF">&lt;ul&gt;</text>
+  <line x1="670" y1="224" x2="670" y2="184" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l13-lifecycle-arrow)"/>
+  <rect x="615" y="146" width="110" height="38" rx="7" fill="#1C7293"/>
+  <text x="670" y="170" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="12" fill="#FFFFFF">&lt;body&gt;</text>
+  <line x1="670" y1="146" x2="670" y2="106" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l13-lifecycle-arrow)"/>
+  <rect x="615" y="68" width="110" height="38" rx="7" fill="#2B2B7A"/>
+  <text x="670" y="92" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="12" fill="#FFFFFF">document</text>
+</svg>
+</div>
 
 By default, `addEventListener` only reacts during the **target** and **bubbling** phases. You can
 make it react during the **capturing** phase instead by passing `true` (or
@@ -436,16 +481,32 @@ Since almost every unobtrusive script only needs the *elements* to exist (not th
 them), `DOMContentLoaded` fires sooner and is the right choice for the vast majority of
 "wait until the page is ready" code.
 
-```mermaid
-sequenceDiagram
-    participant HTML as HTML parsed
-    participant DCL as DOMContentLoaded
-    participant IMG as Images/CSS finish loading
-    participant OL as window.onload
-    HTML->>DCL: fires immediately
-    DCL->>IMG: images keep loading in the background
-    IMG->>OL: fires only once EVERYTHING is done
-```
+<div class="cu-svg-diagram" markdown>
+<svg viewBox="0 0 940 180" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="l13-dcl-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/>
+    </marker>
+  </defs>
+  <rect x="15" y="55" width="150" height="60" rx="10" fill="#2B2B7A"/>
+  <text x="90" y="90" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12.5" fill="#FFFFFF">HTML parsed</text>
+  <line x1="165" y1="85" x2="260" y2="85" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l13-dcl-arrow)"/>
+  <text x="212" y="70" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="var(--cu-text)">fires immediately</text>
+  <rect x="260" y="55" width="180" height="60" rx="10" fill="#1C7293"/>
+  <text x="350" y="90" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-weight="700" font-size="12" fill="#FFFFFF">DOMContentLoaded</text>
+  <line x1="440" y1="85" x2="560" y2="85" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l13-dcl-arrow)"/>
+  <text x="500" y="62" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10" fill="var(--cu-text)">images keep loading</text>
+  <text x="500" y="75" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10" fill="var(--cu-text)">in the background</text>
+  <rect x="560" y="55" width="190" height="60" rx="10" fill="#C9680F"/>
+  <text x="655" y="82" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="11.5" fill="#FFFFFF">Images/CSS finish</text>
+  <text x="655" y="99" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="11.5" fill="#FFFFFF">loading</text>
+  <line x1="750" y1="85" x2="800" y2="85" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l13-dcl-arrow)"/>
+  <text x="862" y="60" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="9.5" fill="var(--cu-text)">fires only once</text>
+  <text x="862" y="72" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="9.5" fill="var(--cu-text)">EVERYTHING is done</text>
+  <rect x="800" y="55" width="125" height="60" rx="10" fill="#6C4FF5"/>
+  <text x="862" y="90" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-weight="700" font-size="12" fill="#FFFFFF">window.onload</text>
+</svg>
+</div>
 
 !!! tip "How to choose"
     Use `addEventListener("DOMContentLoaded", ...)` for almost everything — selecting elements,

@@ -80,19 +80,32 @@ inside the parent document instead of living in a separate table.
 Here, Ayesha's orders are stored *inside* her user document — no separate table and no
 JOIN needed to read them together.
 
-```mermaid
-flowchart LR
-    subgraph Relational["Relational (PostgreSQL)"]
-      direction TB
-      T1["users table\nid | name | email"]
-      T2["orders table\nid | user_id | total"]
-      T1 -- "foreign key\nJOIN" --> T2
-    end
-    subgraph Document["Document (MongoDB)"]
-      direction TB
-      D1["users collection\n{ name, email,\n  orders: [ {...}, {...} ] }"]
-    end
-```
+<div class="cu-svg-diagram" markdown>
+<svg viewBox="0 0 700 330" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<marker id="l22-flow-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+<path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/>
+</marker>
+</defs>
+<rect x="20" y="20" width="300" height="290" rx="12" fill="none" stroke="var(--cu-border-soft)" stroke-width="1.5"/>
+<text x="170" y="45" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13.5" fill="var(--cu-text)">Relational (PostgreSQL)</text>
+<rect x="50" y="65" width="240" height="70" rx="8" fill="#2B2B7A"/>
+<text x="170" y="92" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">users table</text>
+<text x="170" y="112" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="11" fill="#E9EDFB">id | name | email</text>
+<line x1="170" y1="135" x2="170" y2="205" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l22-flow-arrow)"/>
+<text x="245" y="162" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="var(--cu-text)">foreign key</text>
+<text x="245" y="177" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="var(--cu-text)">JOIN</text>
+<rect x="50" y="205" width="240" height="70" rx="8" fill="#1C7293"/>
+<text x="170" y="232" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">orders table</text>
+<text x="170" y="252" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="11" fill="#D2EEF5">id | user_id | total</text>
+<rect x="380" y="20" width="300" height="290" rx="12" fill="none" stroke="var(--cu-border-soft)" stroke-width="1.5"/>
+<text x="530" y="45" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13.5" fill="var(--cu-text)">Document (MongoDB)</text>
+<rect x="410" y="120" width="240" height="110" rx="8" fill="#C9680F"/>
+<text x="530" y="148" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">users collection</text>
+<text x="530" y="172" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="10.5" fill="#FDE8D2">{ name, email,</text>
+<text x="530" y="190" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="10.5" fill="#FDE8D2">orders: [ {...}, {...} ] }</text>
+</svg>
+</div>
 
 ### Comparing the Two
 
@@ -221,18 +234,34 @@ async function getUsers() {
     connections) even though you only call `client.connect()` once. You rarely need to
     configure this yourself unless you're tuning a high-traffic production application.
 
-```mermaid
-sequenceDiagram
-    participant App as Express App
-    participant Pool as Connection Pool
-    participant DB as Database Server
-
-    App->>Pool: request a connection
-    Pool-->>App: hands out an existing connection
-    App->>DB: run query
-    DB-->>App: return results
-    App->>Pool: release connection back to pool
-```
+<div class="cu-svg-diagram" markdown>
+<svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<marker id="l22-seq-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+<path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/>
+</marker>
+</defs>
+<rect x="20" y="10" width="170" height="42" rx="8" fill="#2B2B7A"/>
+<text x="105" y="36" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">Express App</text>
+<rect x="285" y="10" width="170" height="42" rx="8" fill="#6C4FF5"/>
+<text x="370" y="36" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12.5" fill="#FFFFFF">Connection Pool</text>
+<rect x="550" y="10" width="150" height="42" rx="8" fill="#1C7293"/>
+<text x="625" y="36" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">Database Server</text>
+<line x1="105" y1="52" x2="105" y2="275" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="370" y1="52" x2="370" y2="275" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="625" y1="52" x2="625" y2="275" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="105" y1="90" x2="362" y2="90" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l22-seq-arrow)"/>
+<text x="235" y="80" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="var(--cu-text)">request a connection</text>
+<line x1="370" y1="125" x2="113" y2="125" stroke="var(--cu-muted)" stroke-width="2" stroke-dasharray="5 3" marker-end="url(#l22-seq-arrow)"/>
+<text x="235" y="115" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="var(--cu-text)">hands out an existing connection</text>
+<line x1="105" y1="165" x2="617" y2="165" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l22-seq-arrow)"/>
+<text x="360" y="155" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="11" fill="var(--cu-text)">run query</text>
+<line x1="625" y1="200" x2="113" y2="200" stroke="var(--cu-muted)" stroke-width="2" stroke-dasharray="5 3" marker-end="url(#l22-seq-arrow)"/>
+<text x="360" y="190" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="var(--cu-text)">return results</text>
+<line x1="105" y1="240" x2="362" y2="240" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l22-seq-arrow)"/>
+<text x="235" y="230" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="var(--cu-text)">release connection back to pool</text>
+</svg>
+</div>
 
 ## CRUD Operations
 

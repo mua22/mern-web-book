@@ -27,16 +27,45 @@ client-server model; HTML gave you structure; CSS gave you presentation; JavaScr
 you behavior and logic; and server-side programming (which you just started) gives that
 logic a second home — on a computer you control, not just in the user's browser.
 
-```mermaid
-flowchart TD
-    A["Unit 1: Web Fundamentals<br/>Internet vs. Web, client-server model,<br/>HTTP/HTTPS, DNS, tiered architecture"] --> B["Unit 2: HTML<br/>Structure and content:<br/>elements, semantics, forms"]
-    B --> C["Unit 3: CSS<br/>Presentation:<br/>box model, positioning, Flexbox/Grid, responsive design"]
-    C --> D["Unit 4: JavaScript (ES6+)<br/>Behavior: syntax, arrays, DOM,<br/>events, regex/JSON, async/fetch"]
-    D --> E["Unit 5 (started): Server-Side Programming<br/>Node.js runtime, Express.js,<br/>your first web server"]
-
-    A -. "defines the request/response<br/>pattern used everywhere" .-> D
-    D -. "fetch() on the client calls<br/>the server you just learned to build" .-> E
-```
+<div class="cu-svg-diagram" markdown>
+<svg viewBox="0 0 820 500" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="l17-concept-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/>
+    </marker>
+  </defs>
+  <rect x="40" y="10" width="420" height="76" rx="10" fill="#2B2B7A"/>
+  <text x="250" y="34" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">Unit 1: Web Fundamentals</text>
+  <text x="250" y="54" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#D9D9F2">Internet vs. Web, client-server model,</text>
+  <text x="250" y="70" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#D9D9F2">HTTP/HTTPS, DNS, tiered architecture</text>
+  <line x1="250" y1="86" x2="250" y2="104" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l17-concept-arrow)"/>
+  <rect x="40" y="106" width="420" height="76" rx="10" fill="#1C7293"/>
+  <text x="250" y="130" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">Unit 2: HTML</text>
+  <text x="250" y="150" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#D2EEF5">Structure and content:</text>
+  <text x="250" y="166" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#D2EEF5">elements, semantics, forms</text>
+  <line x1="250" y1="182" x2="250" y2="200" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l17-concept-arrow)"/>
+  <rect x="40" y="202" width="420" height="76" rx="10" fill="#C9680F"/>
+  <text x="250" y="226" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">Unit 3: CSS</text>
+  <text x="250" y="246" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#FDE8D2">Presentation:</text>
+  <text x="250" y="262" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#FDE8D2">box model, positioning, Flexbox/Grid, responsive design</text>
+  <line x1="250" y1="278" x2="250" y2="296" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l17-concept-arrow)"/>
+  <rect x="40" y="298" width="420" height="76" rx="10" fill="#6C4FF5"/>
+  <text x="250" y="322" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">Unit 4: JavaScript (ES6+)</text>
+  <text x="250" y="342" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#EDE7FD">Behavior: syntax, arrays, DOM,</text>
+  <text x="250" y="358" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#EDE7FD">events, regex/JSON, async/fetch</text>
+  <line x1="250" y1="374" x2="250" y2="392" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l17-concept-arrow)"/>
+  <rect x="40" y="394" width="420" height="76" rx="10" fill="#3FA66B"/>
+  <text x="250" y="414" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12.5" fill="#FFFFFF">Unit 5 (started): Server-Side Programming</text>
+  <text x="250" y="438" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#E4F4EC">Node.js runtime, Express.js,</text>
+  <text x="250" y="454" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#E4F4EC">your first web server</text>
+  <path d="M460,48 C 660,48 660,336 460,336" fill="none" stroke="var(--cu-muted)" stroke-width="2" stroke-dasharray="4 3" marker-end="url(#l17-concept-arrow)"/>
+  <text x="665" y="184" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="var(--cu-muted)">defines the request/response</text>
+  <text x="665" y="199" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="var(--cu-muted)">pattern used everywhere</text>
+  <path d="M460,336 C 580,336 580,432 460,432" fill="none" stroke="var(--cu-muted)" stroke-width="2" stroke-dasharray="4 3" marker-end="url(#l17-concept-arrow)"/>
+  <text x="590" y="378" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="var(--cu-muted)">fetch() on the client calls</text>
+  <text x="590" y="393" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="var(--cu-muted)">the server you just learned to build</text>
+</svg>
+</div>
 
 Notice the thread running through all of it: the **client-server, request-response**
 model from Lecture 1 never went away. HTML and CSS build what the *client* shows.

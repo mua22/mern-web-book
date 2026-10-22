@@ -50,19 +50,43 @@ code modules), and one does not require the other.
     process. That would be **one tier** (everything deployed together) but **multiple
     layers** (well-organized code). Tiers and layers are independent design decisions.
 
-```mermaid
-flowchart LR
-    subgraph "Tiers = physical deployment"
-        T1[Machine 1] -.network.-> T2[Machine 2]
-    end
-```
+<div class="cu-svg-diagram" markdown>
+<svg viewBox="0 0 560 170" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="l02-flow1-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/>
+    </marker>
+  </defs>
+  <rect x="15" y="15" width="530" height="140" rx="10" fill="none" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <text x="30" y="36" font-family="Calibri, Arial, sans-serif" font-size="12" fill="var(--cu-muted)">Tiers = physical deployment</text>
+  <rect x="60" y="75" width="160" height="55" rx="8" fill="#2B2B7A"/>
+  <text x="140" y="108" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="14" fill="#FFFFFF">Machine 1</text>
+  <rect x="340" y="75" width="160" height="55" rx="8" fill="#2B2B7A"/>
+  <text x="420" y="108" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="14" fill="#FFFFFF">Machine 2</text>
+  <line x1="220" y1="102" x2="332" y2="102" stroke="var(--cu-muted)" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#l02-flow1-arrow)"/>
+  <text x="276" y="94" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="var(--cu-text)">network</text>
+</svg>
+</div>
 
-```mermaid
-flowchart LR
-    subgraph "Layers = logical code organization"
-        L1[Presentation Layer] --> L2[Business Logic Layer] --> L3[Data Access Layer]
-    end
-```
+<div class="cu-svg-diagram" markdown>
+<svg viewBox="0 0 700 170" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="l02-flow2-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/>
+    </marker>
+  </defs>
+  <rect x="15" y="15" width="670" height="140" rx="10" fill="none" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <text x="30" y="36" font-family="Calibri, Arial, sans-serif" font-size="12" fill="var(--cu-muted)">Layers = logical code organization</text>
+  <rect x="40" y="75" width="180" height="55" rx="8" fill="#2B2B7A"/>
+  <text x="130" y="108" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">Presentation Layer</text>
+  <rect x="260" y="75" width="200" height="55" rx="8" fill="#1C7293"/>
+  <text x="360" y="108" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">Business Logic Layer</text>
+  <rect x="500" y="75" width="180" height="55" rx="8" fill="#C9680F"/>
+  <text x="590" y="108" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">Data Access Layer</text>
+  <line x1="220" y1="102" x2="254" y2="102" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l02-flow2-arrow)"/>
+  <line x1="460" y1="102" x2="494" y2="102" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l02-flow2-arrow)"/>
+</svg>
+</div>
 
 With that distinction clear, let's look at the main tiered architectures used in web
 development, from simplest to most complex.
@@ -100,10 +124,25 @@ and a **server** (runs elsewhere, typically hosting both the business logic and 
 data). The client and server communicate over a network — this is the client-server
 model you learned about in Lecture 1, now viewed as an architecture pattern.
 
-```mermaid
-flowchart LR
-    C["Client<br/>(UI)"] <-- network --> S["Server<br/>(Business Logic + Data)"]
-```
+<div class="cu-svg-diagram" markdown>
+<svg viewBox="0 0 520 160" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="l02-flow3-arrow-end" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/>
+    </marker>
+    <marker id="l02-flow3-arrow-start" markerWidth="10" markerHeight="10" refX="2" refY="3" orient="auto-start-reverse">
+      <path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/>
+    </marker>
+  </defs>
+  <rect x="30" y="55" width="160" height="60" rx="10" fill="#2B2B7A"/>
+  <text x="110" y="92" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="14" fill="#FFFFFF">Client (UI)</text>
+  <rect x="330" y="55" width="160" height="60" rx="10" fill="#1C7293"/>
+  <text x="410" y="80" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">Server</text>
+  <text x="410" y="98" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#D2EEF5">(Business Logic + Data)</text>
+  <line x1="194" y1="85" x2="326" y2="85" stroke="var(--cu-muted)" stroke-width="2" marker-start="url(#l02-flow3-arrow-start)" marker-end="url(#l02-flow3-arrow-end)"/>
+  <text x="260" y="75" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="var(--cu-text)">network</text>
+</svg>
+</div>
 
 A classic real-world example is an early desktop database application: a Windows program
 installed on each employee's PC (the client) that connects directly to a shared database
@@ -145,11 +184,31 @@ giving three tiers total:
 3. **Data Tier** — a separate server dedicated to storing and managing data (e.g., a
    MongoDB or PostgreSQL database server).
 
-```mermaid
-flowchart LR
-    P["Presentation Tier<br/>(Browser / React UI)"] <-- HTTP/JSON --> A["Application Tier<br/>(API Server / Business Logic)"]
-    A <-- queries --> D["Data Tier<br/>(Database Server)"]
-```
+<div class="cu-svg-diagram" markdown>
+<svg viewBox="0 0 740 170" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="l02-flow4-arrow-end" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/>
+    </marker>
+    <marker id="l02-flow4-arrow-start" markerWidth="10" markerHeight="10" refX="2" refY="3" orient="auto-start-reverse">
+      <path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/>
+    </marker>
+  </defs>
+  <rect x="20" y="55" width="190" height="60" rx="10" fill="#2B2B7A"/>
+  <text x="115" y="80" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">Presentation Tier</text>
+  <text x="115" y="98" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="#D6D9F2">(Browser / React UI)</text>
+  <rect x="275" y="55" width="210" height="60" rx="10" fill="#1C7293"/>
+  <text x="380" y="80" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">Application Tier</text>
+  <text x="380" y="98" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="#D2EEF5">(API Server / Business Logic)</text>
+  <rect x="550" y="55" width="170" height="60" rx="10" fill="#C9680F"/>
+  <text x="635" y="80" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">Data Tier</text>
+  <text x="635" y="98" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="#FDE8D2">(Database Server)</text>
+  <line x1="214" y1="85" x2="271" y2="85" stroke="var(--cu-muted)" stroke-width="2" marker-start="url(#l02-flow4-arrow-start)" marker-end="url(#l02-flow4-arrow-end)"/>
+  <text x="242" y="75" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="10.5" fill="var(--cu-text)">HTTP/JSON</text>
+  <line x1="489" y1="85" x2="546" y2="85" stroke="var(--cu-muted)" stroke-width="2" marker-start="url(#l02-flow4-arrow-start)" marker-end="url(#l02-flow4-arrow-end)"/>
+  <text x="518" y="75" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="var(--cu-text)">queries</text>
+</svg>
+</div>
 
 This is exactly the shape of the MERN-style stack you will build later in this course:
 a React front end (presentation), an Express/Node.js API (application), and MongoDB
@@ -165,16 +224,37 @@ system might add:
   traffic.
 - A separate **authentication tier** dedicated to verifying user identity.
 
-```mermaid
-flowchart LR
-    P[Presentation Tier] <--> LB[Load Balancer]
-    LB <--> A1[App Server 1]
-    LB <--> A2[App Server 2]
-    A1 <--> Cache[Caching Tier]
-    A2 <--> Cache
-    A1 <--> D[Data Tier]
-    A2 <--> D
-```
+<div class="cu-svg-diagram" markdown>
+<svg viewBox="0 0 770 320" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="l02-flow5-arrow-end" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/>
+    </marker>
+    <marker id="l02-flow5-arrow-start" markerWidth="10" markerHeight="10" refX="2" refY="3" orient="auto-start-reverse">
+      <path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/>
+    </marker>
+  </defs>
+  <line x1="350" y1="145" x2="400" y2="75" stroke="var(--cu-muted)" stroke-width="2" marker-start="url(#l02-flow5-arrow-start)" marker-end="url(#l02-flow5-arrow-end)"/>
+  <line x1="350" y1="175" x2="400" y2="245" stroke="var(--cu-muted)" stroke-width="2" marker-start="url(#l02-flow5-arrow-start)" marker-end="url(#l02-flow5-arrow-end)"/>
+  <line x1="160" y1="160" x2="210" y2="160" stroke="var(--cu-muted)" stroke-width="2" marker-start="url(#l02-flow5-arrow-start)" marker-end="url(#l02-flow5-arrow-end)"/>
+  <line x1="540" y1="75" x2="600" y2="75" stroke="var(--cu-muted)" stroke-width="2" marker-start="url(#l02-flow5-arrow-start)" marker-end="url(#l02-flow5-arrow-end)"/>
+  <line x1="540" y1="245" x2="600" y2="245" stroke="var(--cu-muted)" stroke-width="2" marker-start="url(#l02-flow5-arrow-start)" marker-end="url(#l02-flow5-arrow-end)"/>
+  <line x1="540" y1="100" x2="600" y2="220" stroke="var(--cu-muted)" stroke-width="2" marker-start="url(#l02-flow5-arrow-start)" marker-end="url(#l02-flow5-arrow-end)"/>
+  <line x1="540" y1="220" x2="600" y2="100" stroke="var(--cu-muted)" stroke-width="2" marker-start="url(#l02-flow5-arrow-start)" marker-end="url(#l02-flow5-arrow-end)"/>
+  <rect x="20" y="135" width="140" height="50" rx="8" fill="#2B2B7A"/>
+  <text x="90" y="165" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12" fill="#FFFFFF">Presentation Tier</text>
+  <rect x="210" y="135" width="140" height="50" rx="8" fill="#6C4FF5"/>
+  <text x="280" y="165" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12" fill="#FFFFFF">Load Balancer</text>
+  <rect x="400" y="50" width="140" height="50" rx="8" fill="#1C7293"/>
+  <text x="470" y="80" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12" fill="#FFFFFF">App Server 1</text>
+  <rect x="400" y="220" width="140" height="50" rx="8" fill="#1C7293"/>
+  <text x="470" y="250" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12" fill="#FFFFFF">App Server 2</text>
+  <rect x="600" y="50" width="140" height="50" rx="8" fill="#3FA66B"/>
+  <text x="670" y="80" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12" fill="#FFFFFF">Caching Tier</text>
+  <rect x="600" y="220" width="140" height="50" rx="8" fill="#C9680F"/>
+  <text x="670" y="250" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12" fill="#FFFFFF">Data Tier</text>
+</svg>
+</div>
 
 ### Advantages of Three-Tier / N-Tier
 
@@ -224,13 +304,26 @@ their code into three logical layers:
    reading or writing records. This layer doesn't know or care about business rules or
    how the UI looks — it just stores and retrieves data.
 
-```mermaid
-flowchart TB
-    P["Presentation Layer<br/>(routes/controllers, or UI components)"]
-    B["Business Logic Layer<br/>(services: validation, calculations, rules)"]
-    D["Data Access Layer<br/>(models/repositories: database queries)"]
-    P --> B --> D
-```
+<div class="cu-svg-diagram" markdown>
+<svg viewBox="0 0 430 330" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="l02-flow6-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/>
+    </marker>
+  </defs>
+  <rect x="30" y="10" width="340" height="60" rx="10" fill="#2B2B7A"/>
+  <text x="200" y="35" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="14" fill="#FFFFFF">Presentation Layer</text>
+  <text x="200" y="54" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="#D6D9F2">(routes/controllers, or UI components)</text>
+  <line x1="200" y1="70" x2="200" y2="128" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l02-flow6-arrow)"/>
+  <rect x="30" y="130" width="340" height="60" rx="10" fill="#1C7293"/>
+  <text x="200" y="155" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="14" fill="#FFFFFF">Business Logic Layer</text>
+  <text x="200" y="174" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="#D2EEF5">(services: validation, calculations, rules)</text>
+  <line x1="200" y1="190" x2="200" y2="248" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l02-flow6-arrow)"/>
+  <rect x="30" y="250" width="340" height="60" rx="10" fill="#C9680F"/>
+  <text x="200" y="275" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="14" fill="#FFFFFF">Data Access Layer</text>
+  <text x="200" y="294" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="#FDE8D2">(models/repositories: database queries)</text>
+</svg>
+</div>
 
 A request flows *down* through the layers, and the response flows back *up* — each
 layer only ever talks to the layer directly next to it, never skipping ahead.
@@ -308,23 +401,40 @@ Tiers and layers are independent, but real applications use both together:
   *both* the business logic layer and the data access layer, which then makes network
   calls to the separate Data Tier.
 
-```mermaid
-flowchart TB
-    subgraph "Presentation Tier"
-        UI[React UI]
-    end
-    subgraph "Application Tier"
-        direction TB
-        BL[Business Logic Layer]
-        DAL[Data Access Layer]
-        BL --> DAL
-    end
-    subgraph "Data Tier"
-        DB[(Database)]
-    end
-    UI <-- HTTP/JSON --> BL
-    DAL <-- queries --> DB
-```
+<div class="cu-svg-diagram" markdown>
+<svg viewBox="0 0 480 550" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="l02-flow7-arrow-end" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/>
+    </marker>
+    <marker id="l02-flow7-arrow-start" markerWidth="10" markerHeight="10" refX="2" refY="3" orient="auto-start-reverse">
+      <path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/>
+    </marker>
+    <marker id="l02-flow7-arrow-mid" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/>
+    </marker>
+  </defs>
+  <rect x="130" y="15" width="220" height="100" rx="10" fill="none" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <text x="145" y="35" font-family="Calibri, Arial, sans-serif" font-size="12" fill="var(--cu-muted)">Presentation Tier</text>
+  <rect x="170" y="55" width="140" height="50" rx="8" fill="#2B2B7A"/>
+  <text x="240" y="85" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">React UI</text>
+  <rect x="70" y="155" width="340" height="230" rx="10" fill="none" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <text x="85" y="175" font-family="Calibri, Arial, sans-serif" font-size="12" fill="var(--cu-muted)">Application Tier</text>
+  <rect x="170" y="195" width="140" height="50" rx="8" fill="#1C7293"/>
+  <text x="240" y="225" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="11.5" fill="#FFFFFF">Business Logic Layer</text>
+  <line x1="240" y1="245" x2="240" y2="298" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l02-flow7-arrow-mid)"/>
+  <rect x="170" y="300" width="140" height="50" rx="8" fill="#C9680F"/>
+  <text x="240" y="330" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="11.5" fill="#FFFFFF">Data Access Layer</text>
+  <rect x="140" y="415" width="200" height="110" rx="10" fill="none" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <text x="150" y="435" font-family="Calibri, Arial, sans-serif" font-size="12" fill="var(--cu-muted)">Data Tier</text>
+  <rect x="170" y="455" width="140" height="50" rx="25" fill="#C9680F"/>
+  <text x="240" y="485" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">Database</text>
+  <line x1="240" y1="105" x2="240" y2="193" stroke="var(--cu-muted)" stroke-width="2" marker-start="url(#l02-flow7-arrow-start)" marker-end="url(#l02-flow7-arrow-end)"/>
+  <text x="310" y="152" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="10.5" fill="var(--cu-text)">HTTP/JSON</text>
+  <line x1="240" y1="350" x2="240" y2="453" stroke="var(--cu-muted)" stroke-width="2" marker-start="url(#l02-flow7-arrow-start)" marker-end="url(#l02-flow7-arrow-end)"/>
+  <text x="290" y="405" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="var(--cu-text)">queries</text>
+</svg>
+</div>
 
 !!! note "A naming trap: 'N-layer' vs. 'N-tier'"
     You will sometimes see "layered architecture" called **N-layer architecture** —

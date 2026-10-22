@@ -153,18 +153,36 @@ that doesn't sanitize input: an attacker posts a comment containing
 app stores this comment as-is and later renders it into another user's page without
 encoding it, that script runs in *every visitor's* browser who views the comment.
 
-```mermaid
-sequenceDiagram
-    participant A as Attacker
-    participant S as Server / Database
-    participant V as Victim's Browser
-
-    A->>S: Posts comment containing a &lt;script&gt; tag
-    S->>S: Stores comment as-is (no sanitization)
-    V->>S: Requests the page with comments
-    S->>V: Sends HTML including the malicious script
-    V->>V: Browser executes the script<br/>(steals cookies, makes requests as the victim)
-```
+<div class="cu-svg-diagram" markdown>
+<svg viewBox="0 0 820 440" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<marker id="l31-seq1-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+<path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/>
+</marker>
+</defs>
+<rect x="20" y="10" width="150" height="42" rx="8" fill="#D9534F"/>
+<text x="95" y="36" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">Attacker</text>
+<rect x="300" y="10" width="200" height="42" rx="8" fill="#1C7293"/>
+<text x="400" y="36" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12.5" fill="#FFFFFF">Server / Database</text>
+<rect x="610" y="10" width="170" height="42" rx="8" fill="#3FA66B"/>
+<text x="695" y="36" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12" fill="#FFFFFF">Victim's Browser</text>
+<line x1="95" y1="52" x2="95" y2="410" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="400" y1="52" x2="400" y2="410" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="695" y1="52" x2="695" y2="410" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="95" y1="90" x2="392" y2="90" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l31-seq1-arrow)"/>
+<text x="247" y="80" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="var(--cu-text)">Posts comment containing a &lt;script&gt; tag</text>
+<path d="M400,115 C470,115 470,137 400,137" fill="none" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l31-seq1-arrow)"/>
+<text x="435" y="108" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10" fill="var(--cu-text)">Stores comment as-is (no sanitization)</text>
+<line x1="695" y1="185" x2="408" y2="185" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l31-seq1-arrow)"/>
+<text x="551" y="175" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="var(--cu-text)">Requests the page with comments</text>
+<line x1="408" y1="225" x2="687" y2="225" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l31-seq1-arrow)"/>
+<text x="547" y="215" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="var(--cu-text)">Sends HTML including the malicious script</text>
+<path d="M695,265 C760,265 760,287 695,287" fill="none" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l31-seq1-arrow)"/>
+<text x="727" y="235" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10" fill="var(--cu-text)">Browser executes the script</text>
+<text x="727" y="248" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10" fill="var(--cu-text)">(steals cookies, makes</text>
+<text x="727" y="261" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10" fill="var(--cu-text)">requests as the victim)</text>
+</svg>
+</div>
 
 ### Reflected XSS
 
@@ -269,18 +287,36 @@ form submission automatically — because from the browser's point of view, it's
 normal request to `yourbank.com`. The bank's server sees a validly authenticated
 request and processes the transfer, even though the real user never clicked "transfer."
 
-```mermaid
-sequenceDiagram
-    participant V as Victim (logged into YourBank)
-    participant E as evil.com
-    participant B as yourbank.com
-
-    V->>E: Visits malicious page
-    E->>V: Page auto-submits a hidden form
-    V->>B: Browser sends POST /transfer<br/>(cookie attached automatically)
-    B->>B: Sees valid session cookie, processes transfer
-    Note over V,B: The victim never intended to make this request
-```
+<div class="cu-svg-diagram" markdown>
+<svg viewBox="0 0 820 400" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<marker id="l31-seq2-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+<path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/>
+</marker>
+</defs>
+<rect x="20" y="10" width="230" height="42" rx="8" fill="#2B2B7A"/>
+<text x="135" y="36" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12" fill="#FFFFFF">Victim (logged into YourBank)</text>
+<rect x="330" y="10" width="150" height="42" rx="8" fill="#D9534F"/>
+<text x="405" y="36" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">evil.com</text>
+<rect x="560" y="10" width="200" height="42" rx="8" fill="#3FA66B"/>
+<text x="660" y="36" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">yourbank.com</text>
+<line x1="135" y1="52" x2="135" y2="370" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="405" y1="52" x2="405" y2="370" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="660" y1="52" x2="660" y2="370" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="135" y1="90" x2="397" y2="90" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l31-seq2-arrow)"/>
+<text x="270" y="80" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="var(--cu-text)">Visits malicious page</text>
+<line x1="405" y1="125" x2="143" y2="125" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l31-seq2-arrow)"/>
+<text x="270" y="115" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="var(--cu-text)">Page auto-submits a hidden form</text>
+<line x1="135" y1="180" x2="652" y2="180" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l31-seq2-arrow)"/>
+<text x="397" y="157" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="10.5" fill="var(--cu-text)">Browser sends POST /transfer</text>
+<text x="397" y="171" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="var(--cu-text)">(cookie attached automatically)</text>
+<path d="M660,210 C725,210 725,232 660,232" fill="none" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l31-seq2-arrow)"/>
+<text x="693" y="196" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="9.5" fill="var(--cu-text)">Sees valid session cookie,</text>
+<text x="693" y="208" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="9.5" fill="var(--cu-text)">processes transfer</text>
+<rect x="60" y="255" width="660" height="50" rx="8" fill="#FFF7E0" stroke="#E0C457" stroke-width="1"/>
+<text x="390" y="285" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#6B5A00">The victim never intended to make this request</text>
+</svg>
+</div>
 
 ### Preventing CSRF: Anti-CSRF Tokens
 

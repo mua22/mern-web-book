@@ -563,16 +563,44 @@ be expected to hand-write prefixes for most modern properties (like `border-radi
 when you see them in older code, and understand *why* cross-browser testing still matters:
 not every visitor uses the newest version of Chrome.
 
-```mermaid
-flowchart LR
-    A["You write CSS3 code"] --> B{"Is it a new / experimental feature?"}
-    B -- "Yes" --> C["Add vendor prefixes\n-webkit- -moz- -ms- -o-"]
-    B -- "No, well supported" --> D["Use the standard property directly"]
-    C --> E["Standard property last"]
-    E --> F["Test in multiple browsers"]
-    D --> F
-    F --> G["Consistent look across Chrome, Firefox, Safari, Edge"]
-```
+<div class="cu-svg-diagram" markdown>
+<svg viewBox="0 0 1150 360" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="l08-flow-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/>
+    </marker>
+  </defs>
+  <rect x="10" y="150" width="110" height="50" rx="8" fill="#2B2B7A"/>
+  <text x="65" y="170" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="11" fill="#FFFFFF">You write</text>
+  <text x="65" y="186" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="11" fill="#FFFFFF">CSS3 code</text>
+  <polygon points="220,120 290,175 220,230 150,175" fill="#6C4FF5"/>
+  <text x="220" y="170" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="10" fill="#FFFFFF">New / experimental</text>
+  <text x="220" y="184" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="10" fill="#FFFFFF">feature?</text>
+  <rect x="360" y="30" width="170" height="65" rx="8" fill="#C9680F"/>
+  <text x="445" y="56" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12" fill="#FFFFFF">Add vendor prefixes</text>
+  <text x="445" y="76" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="10" fill="#FDE8D2">-webkit- -moz- -ms- -o-</text>
+  <rect x="360" y="255" width="190" height="60" rx="8" fill="#1C7293"/>
+  <text x="455" y="280" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12" fill="#FFFFFF">Use the standard</text>
+  <text x="455" y="298" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12" fill="#FFFFFF">property directly</text>
+  <rect x="580" y="35" width="150" height="50" rx="8" fill="#3FA66B"/>
+  <text x="655" y="64" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12" fill="#FFFFFF">Standard property last</text>
+  <rect x="790" y="150" width="150" height="55" rx="8" fill="#1C7293"/>
+  <text x="865" y="182" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12" fill="#FFFFFF">Test in multiple browsers</text>
+  <rect x="980" y="140" width="160" height="75" rx="8" fill="#3FA66B"/>
+  <text x="1060" y="172" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="11" fill="#FFFFFF">Consistent look across</text>
+  <text x="1060" y="190" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="11" fill="#FFFFFF">Chrome, Firefox, Safari,</text>
+  <text x="1060" y="206" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="11" fill="#FFFFFF">Edge</text>
+  <line x1="120" y1="175" x2="148" y2="175" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l08-flow-arrow)"/>
+  <line x1="245" y1="152" x2="358" y2="68" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l08-flow-arrow)"/>
+  <text x="290" y="110" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="var(--cu-text)">Yes</text>
+  <line x1="245" y1="198" x2="358" y2="275" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l08-flow-arrow)"/>
+  <text x="300" y="245" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="var(--cu-text)">No, well supported</text>
+  <line x1="530" y1="62" x2="576" y2="60" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l08-flow-arrow)"/>
+  <line x1="655" y1="85" x2="845" y2="150" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l08-flow-arrow)"/>
+  <line x1="550" y1="285" x2="845" y2="205" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l08-flow-arrow)"/>
+  <line x1="940" y1="177" x2="976" y2="177" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l08-flow-arrow)"/>
+</svg>
+</div>
 
 ## Try It Yourself
 

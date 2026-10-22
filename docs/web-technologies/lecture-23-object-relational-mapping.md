@@ -40,12 +40,30 @@ driver calls.
 The most widely used ODM for MongoDB in the Node.js world is **Mongoose**. For SQL
 databases, popular ORMs include **Sequelize** and **Prisma**.
 
-```mermaid
-flowchart LR
-    A[Your JavaScript Code\nUser.find, post.save] --> B[ORM / ODM\ne.g. Mongoose, Sequelize]
-    B --> C[Database Driver]
-    C --> D[(Database\nMongoDB / PostgreSQL)]
-```
+<div class="cu-svg-diagram" markdown>
+<svg viewBox="0 0 980 160" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="l23-orm-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/>
+    </marker>
+  </defs>
+  <rect x="20" y="40" width="200" height="80" rx="10" fill="#2B2B7A"/>
+  <text x="120" y="76" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12" fill="#FFFFFF">Your JavaScript Code</text>
+  <text x="120" y="94" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="11" fill="#FFFFFF">User.find, post.save</text>
+  <line x1="220" y1="80" x2="278" y2="80" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l23-orm-arrow)"/>
+  <rect x="280" y="40" width="220" height="80" rx="10" fill="#1C7293"/>
+  <text x="390" y="76" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">ORM / ODM</text>
+  <text x="390" y="94" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#FFFFFF">e.g. Mongoose, Sequelize</text>
+  <line x1="500" y1="80" x2="558" y2="80" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l23-orm-arrow)"/>
+  <rect x="560" y="40" width="180" height="80" rx="10" fill="#C9680F"/>
+  <text x="650" y="85" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">Database Driver</text>
+  <line x1="740" y1="80" x2="798" y2="80" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l23-orm-arrow)"/>
+  <path d="M810,50 a70,10 0 0 1 140,0 l0,60 a70,10 0 0 1 -140,0 z" fill="#6C4FF5"/>
+  <path d="M810,50 a70,10 0 0 0 140,0" fill="none" stroke="#5a3fd1" stroke-width="1.5"/>
+  <text x="880" y="82" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12" fill="#FFFFFF">Database</text>
+  <text x="880" y="98" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10" fill="#FFFFFF">(MongoDB / PostgreSQL)</text>
+</svg>
+</div>
 
 Why bother with an extra layer? An ORM/ODM typically gives you:
 
@@ -246,20 +264,33 @@ it, Mongoose runs a second query behind the scenes and replaces that ID with the
 `User` document — conceptually similar to a SQL `JOIN`, though implemented as a separate
 query rather than a single combined one.
 
-```mermaid
-erDiagram
-    USER ||--o{ POST : "author of"
-    USER {
-        ObjectId _id
-        string name
-        string email
-    }
-    POST {
-        ObjectId _id
-        string title
-        ObjectId author "references User._id"
-    }
-```
+<div class="db-diagram" markdown>
+<p class="db-diagram-label">User references Post via a foreign key</p>
+<div class="db-erd" markdown>
+<div class="db-entity" markdown>
+<div class="db-entity-name">User</div>
+<ul class="db-entity-attrs">
+<li class="db-pk">_id</li>
+<li>name</li>
+<li>email</li>
+</ul>
+</div>
+<div class="db-relate" markdown>
+<div class="db-relate-line"></div>
+<div class="db-relate-name">author of</div>
+<div class="db-relate-line"></div>
+<div class="db-relate-card"><span class="db-badge db-badge-teal">1</span><span class="db-badge db-badge-orange">N</span></div>
+</div>
+<div class="db-entity" markdown>
+<div class="db-entity-name">Post</div>
+<ul class="db-entity-attrs">
+<li class="db-pk">_id</li>
+<li>title</li>
+<li class="db-fk">author (references User._id)</li>
+</ul>
+</div>
+</div>
+</div>
 
 !!! note
     In a SQL ORM like Sequelize, the equivalent idea is called an **association**
