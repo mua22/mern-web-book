@@ -3754,22 +3754,50 @@ domain at them.</p>
 <p>When you type <code>example.com</code> into your browser, a chain of lookups happens before your
 computer even sends the first request to the actual website. This process is called
 <strong>DNS resolution</strong>.</p>
-<pre class="mermaid"><code>sequenceDiagram
-    participant Browser
-    participant Resolver as Recursive DNS Resolver&lt;br/&gt;(e.g., your ISP or 8.8.8.8)
-    participant Root as Root Nameserver
-    participant TLD as .com TLD Nameserver
-    participant Auth as Authoritative Nameserver&lt;br/&gt;(for example.com)
-
-    Browser-&gt;&gt;Resolver: Where is example.com?
-    Resolver-&gt;&gt;Root: Where is example.com?
-    Root-&gt;&gt;Resolver: Ask the .com nameservers
-    Resolver-&gt;&gt;TLD: Where is example.com?
-    TLD-&gt;&gt;Resolver: Ask example.com's nameservers
-    Resolver-&gt;&gt;Auth: Where is example.com?
-    Auth-&gt;&gt;Resolver: It's at 93.184.216.34 (an A record)
-    Resolver-&gt;&gt;Browser: 93.184.216.34
-    Browser-&gt;&gt;Browser: Connects directly to 93.184.216.34</code></pre>
+<div class="cu-svg-diagram">
+<p><svg viewBox="0 0 940 530" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<marker id="l32-dns-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+<path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/>
+</marker>
+</defs>
+<rect x="20" y="10" width="140" height="50" rx="8" fill="#2B2B7A"/>
+<text x="90" y="40" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">Browser</text>
+<rect x="205" y="10" width="210" height="50" rx="8" fill="#1C7293"/>
+<text x="310" y="32" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="11.5" fill="#FFFFFF">Recursive DNS Resolver</text>
+<text x="310" y="48" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10" fill="#FFFFFF">(e.g., your ISP or 8.8.8.8)</text>
+<rect x="430" y="10" width="140" height="50" rx="8" fill="#C9680F"/>
+<text x="500" y="40" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12" fill="#FFFFFF">Root Nameserver</text>
+<rect x="590" y="10" width="140" height="50" rx="8" fill="#3FA66B"/>
+<text x="660" y="40" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="11.5" fill="#FFFFFF">.com TLD Nameserver</text>
+<rect x="765" y="10" width="170" height="50" rx="8" fill="#6C4FF5"/>
+<text x="850" y="32" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="11.5" fill="#FFFFFF">Authoritative Nameserver</text>
+<text x="850" y="48" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10" fill="#FFFFFF">(for example.com)</text>
+<line x1="90" y1="60" x2="90" y2="505" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="310" y1="60" x2="310" y2="505" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="500" y1="60" x2="500" y2="505" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="660" y1="60" x2="660" y2="505" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="850" y1="60" x2="850" y2="505" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="90" y1="95" x2="302" y2="95" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l32-dns-arrow)"/>
+<text x="196" y="87" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="var(--cu-text)">Where is example.com?</text>
+<line x1="310" y1="143" x2="492" y2="143" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l32-dns-arrow)"/>
+<text x="401" y="135" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="var(--cu-text)">Where is example.com?</text>
+<line x1="500" y1="191" x2="318" y2="191" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l32-dns-arrow)"/>
+<text x="409" y="183" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="var(--cu-text)">Ask the .com nameservers</text>
+<line x1="310" y1="239" x2="652" y2="239" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l32-dns-arrow)"/>
+<text x="481" y="231" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="var(--cu-text)">Where is example.com?</text>
+<line x1="660" y1="287" x2="318" y2="287" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l32-dns-arrow)"/>
+<text x="489" y="279" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="var(--cu-text)">Ask example.com's nameservers</text>
+<line x1="310" y1="335" x2="842" y2="335" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l32-dns-arrow)"/>
+<text x="576" y="327" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="var(--cu-text)">Where is example.com?</text>
+<line x1="850" y1="383" x2="318" y2="383" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l32-dns-arrow)"/>
+<text x="584" y="375" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="var(--cu-text)">It's at 93.184.216.34 (an A record)</text>
+<line x1="310" y1="431" x2="98" y2="431" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l32-dns-arrow)"/>
+<text x="204" y="423" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="11" fill="var(--cu-text)">93.184.216.34</text>
+<path d="M90,451 C150,451 150,473 90,473" fill="none" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l32-dns-arrow)"/>
+<text x="120" y="444" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="var(--cu-text)">Connects directly to 93.184.216.34</text>
+</svg></p>
+</div>
 <p>A few important pieces of vocabulary from this diagram:</p>
 <ul>
 <li>A <strong>recursive DNS resolver</strong> is the server that does the legwork of this whole chain
@@ -3809,8 +3837,33 @@ a stale, cached answer for hours.</p>
 <p>Once your domain points somewhere, something has to actually run your application and
 answer those requests. There are several broad categories of hosting, each with a
 different balance of control, effort, and cost.</p>
-<pre class="mermaid"><code>flowchart LR
-    Shared["Shared Hosting&lt;br/&gt;(least control, least effort)"] --&gt; VPS["VPS&lt;br/&gt;(more control)"] --&gt; PaaS["PaaS&lt;br/&gt;(managed, developer-friendly)"] --&gt; Serverless["Serverless&lt;br/&gt;(no server management)"]</code></pre>
+<div class="cu-svg-diagram">
+<p><svg viewBox="0 0 930 140" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<marker id="l32-hosting-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+<path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/>
+</marker>
+</defs>
+<rect x="10" y="20" width="195" height="90" rx="10" fill="#C9680F"/>
+<text x="107" y="58" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">Shared Hosting</text>
+<text x="107" y="75" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="#FDE8D2">least control,</text>
+<text x="107" y="89" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="#FDE8D2">least effort</text>
+<rect x="245" y="20" width="195" height="90" rx="10" fill="#2B2B7A"/>
+<text x="342" y="58" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">VPS</text>
+<text x="342" y="82" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="#CFCFF0">more control</text>
+<rect x="480" y="20" width="195" height="90" rx="10" fill="#1C7293"/>
+<text x="577" y="58" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">PaaS</text>
+<text x="577" y="75" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="#D2EEF5">managed,</text>
+<text x="577" y="89" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="#D2EEF5">developer-friendly</text>
+<rect x="715" y="20" width="205" height="90" rx="10" fill="#3FA66B"/>
+<text x="817" y="58" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">Serverless</text>
+<text x="817" y="75" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="#D7F2E3">no server</text>
+<text x="817" y="89" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="#D7F2E3">management</text>
+<line x1="205" y1="65" x2="243" y2="65" stroke="var(--cu-muted)" stroke-width="2.5" marker-end="url(#l32-hosting-arrow)"/>
+<line x1="440" y1="65" x2="478" y2="65" stroke="var(--cu-muted)" stroke-width="2.5" marker-end="url(#l32-hosting-arrow)"/>
+<line x1="675" y1="65" x2="713" y2="65" stroke="var(--cu-muted)" stroke-width="2.5" marker-end="url(#l32-hosting-arrow)"/>
+</svg></p>
+</div>
 <ul>
 <li><strong>Shared hosting</strong> puts your website on a server alongside many other, unrelated
   websites, all sharing the same computing resources. It's cheap and simple (often just
@@ -3878,13 +3931,41 @@ different balance of control, effort, and cost.</p>
 <p>With the concepts in place, here's the practical workflow for shipping a typical MERN
 project: a React frontend and an Express backend, deployed separately, each to a
 platform suited for it.</p>
-<pre class="mermaid"><code>flowchart LR
-    Dev["Write code locally"] --&gt; Push["git push to GitHub"]
-    Push --&gt; BuildFE["Frontend platform&lt;br/&gt;builds React app&lt;br/&gt;(e.g., Vercel/Netlify)"]
-    Push --&gt; BuildBE["Backend platform&lt;br/&gt;builds Express app&lt;br/&gt;(e.g., Render)"]
-    BuildFE --&gt; LiveFE["Frontend live&lt;br/&gt;on CDN"]
-    BuildBE --&gt; LiveBE["Backend live&lt;br/&gt;as a running server"]
-    LiveFE &lt;-- "API calls (HTTPS)" --&gt; LiveBE</code></pre>
+<div class="cu-svg-diagram">
+<p><svg viewBox="0 0 880 260" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<marker id="l32-deploy-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+<path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/>
+</marker>
+</defs>
+<rect x="20" y="95" width="140" height="60" rx="8" fill="var(--cu-surface)" stroke="var(--cu-border-soft)" stroke-width="2"/>
+<text x="90" y="129" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="11.5" fill="var(--cu-text)">Write code locally</text>
+<rect x="200" y="95" width="150" height="60" rx="8" fill="#1C7293"/>
+<text x="275" y="129" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="11.5" fill="#FFFFFF">git push to GitHub</text>
+<rect x="390" y="20" width="170" height="70" rx="8" fill="#2B2B7A"/>
+<text x="475" y="42" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="11" fill="#FFFFFF">Frontend platform</text>
+<text x="475" y="57" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="#FFFFFF">builds React app</text>
+<text x="475" y="72" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="#FFFFFF">(e.g., Vercel/Netlify)</text>
+<rect x="390" y="170" width="170" height="70" rx="8" fill="#C9680F"/>
+<text x="475" y="192" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="11" fill="#FFFFFF">Backend platform</text>
+<text x="475" y="207" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="#FFFFFF">builds Express app</text>
+<text x="475" y="222" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="#FFFFFF">(e.g., Render)</text>
+<rect x="620" y="20" width="160" height="70" rx="8" fill="#3FA66B"/>
+<text x="700" y="50" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12" fill="#FFFFFF">Frontend live</text>
+<text x="700" y="66" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="#FFFFFF">on CDN</text>
+<rect x="620" y="170" width="160" height="70" rx="8" fill="#3FA66B"/>
+<text x="700" y="200" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12" fill="#FFFFFF">Backend live</text>
+<text x="700" y="216" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="#FFFFFF">as a running server</text>
+<line x1="160" y1="125" x2="198" y2="125" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l32-deploy-arrow)"/>
+<line x1="350" y1="112" x2="388" y2="58" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l32-deploy-arrow)"/>
+<line x1="350" y1="138" x2="388" y2="202" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l32-deploy-arrow)"/>
+<line x1="560" y1="55" x2="618" y2="55" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l32-deploy-arrow)"/>
+<line x1="560" y1="205" x2="618" y2="205" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l32-deploy-arrow)"/>
+<line x1="700" y1="92" x2="700" y2="168" stroke="var(--cu-muted)" stroke-width="2" marker-start="url(#l32-deploy-arrow)" marker-end="url(#l32-deploy-arrow)"/>
+<text x="715" y="126" text-anchor="start" font-family="&quot;Courier New&quot;, monospace" font-size="10" fill="var(--cu-text)">API calls</text>
+<text x="715" y="139" text-anchor="start" font-family="&quot;Courier New&quot;, monospace" font-size="10" fill="var(--cu-text)">(HTTPS)</text>
+</svg></p>
+</div>
 <h3 id="build-and-environment-configuration">Build and Environment Configuration<a class="headerlink" href="#build-and-environment-configuration" title="Permanent link">&para;</a></h3>
 <p>Before deploying, understand the difference between your <strong>development</strong> environment
 and your <strong>production</strong> environment.</p>
@@ -3952,10 +4033,29 @@ service running continuously) are for.</p>
 receiving all incoming requests first and then forwarding them to the right place. Most
 hosting platforms (and many production setups you'd configure yourself on a VPS, using
 software like <strong>Nginx</strong>) use one, even if you never interact with it directly.</p>
-<pre class="mermaid"><code>flowchart LR
-    Client[Browser] --&gt; Proxy["Reverse Proxy&lt;br/&gt;(e.g., Nginx)"]
-    Proxy --&gt; App1["App Server Instance 1"]
-    Proxy --&gt; App2["App Server Instance 2"]</code></pre>
+<div class="cu-svg-diagram">
+<p><svg viewBox="0 0 760 220" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<marker id="l32-proxy-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+<path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/>
+</marker>
+</defs>
+<rect x="20" y="75" width="150" height="60" rx="8" fill="#2B2B7A"/>
+<text x="95" y="110" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">Browser</text>
+<rect x="290" y="75" width="180" height="60" rx="8" fill="#1C7293"/>
+<text x="380" y="100" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12.5" fill="#FFFFFF">Reverse Proxy</text>
+<text x="380" y="117" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="#FFFFFF">(e.g., Nginx)</text>
+<rect x="580" y="10" width="160" height="60" rx="8" fill="#6C4FF5"/>
+<text x="660" y="36" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="11.5" fill="#FFFFFF">App Server</text>
+<text x="660" y="52" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="#FFFFFF">Instance 1</text>
+<rect x="580" y="150" width="160" height="60" rx="8" fill="#6C4FF5"/>
+<text x="660" y="176" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="11.5" fill="#FFFFFF">App Server</text>
+<text x="660" y="192" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="#FFFFFF">Instance 2</text>
+<line x1="170" y1="105" x2="288" y2="105" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l32-proxy-arrow)"/>
+<line x1="470" y1="90" x2="578" y2="42" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l32-proxy-arrow)"/>
+<line x1="470" y1="120" x2="578" y2="178" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l32-proxy-arrow)"/>
+</svg></p>
+</div>
 <p>Reverse proxies commonly handle several jobs at once:</p>
 <ul>
 <li><strong>Terminating SSL/TLS</strong> — the proxy manages the HTTPS certificate and encrypted
@@ -4086,7 +4186,7 @@ frontend and backend together — that's exactly what the <strong>Advanced Web T
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 4, 2026 21:02:03 UTC">September 4, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="October 22, 2026 21:11:27 UTC">October 22, 2026</span>
   </span>
 
     

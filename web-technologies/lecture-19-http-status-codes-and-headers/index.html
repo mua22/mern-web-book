@@ -3492,11 +3492,29 @@ servers, mobile apps) expect. This lecture is your reference guide to both.</p>
 <p>An HTTP <strong>status code</strong> is a three-digit number sent at the start of every response,
 telling the client, at a glance, what kind of outcome occurred. The <em>first digit</em>
 determines which of five families it belongs to.</p>
-<pre class="mermaid"><code>flowchart LR
-    A["1xx&lt;br/&gt;Informational"] --- B["2xx&lt;br/&gt;Success"]
-    B --- C["3xx&lt;br/&gt;Redirection"]
-    C --- D["4xx&lt;br/&gt;Client Error"]
-    D --- E["5xx&lt;br/&gt;Server Error"]</code></pre>
+<div class="cu-svg-diagram">
+<p><svg viewBox="0 0 900 120" xmlns="http://www.w3.org/2000/svg">
+  <line x1="175" y1="60" x2="200" y2="60" stroke="var(--cu-muted)" stroke-width="2"/>
+  <line x1="350" y1="60" x2="375" y2="60" stroke="var(--cu-muted)" stroke-width="2"/>
+  <line x1="525" y1="60" x2="550" y2="60" stroke="var(--cu-muted)" stroke-width="2"/>
+  <line x1="700" y1="60" x2="725" y2="60" stroke="var(--cu-muted)" stroke-width="2"/>
+  <rect x="25" y="25" width="150" height="70" rx="10" fill="var(--cu-surface)" stroke="var(--cu-border-soft)" stroke-width="2"/>
+  <text x="100" y="56" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-weight="700" font-size="14" fill="var(--cu-text)">1xx</text>
+  <text x="100" y="75" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="var(--cu-muted)">Informational</text>
+  <rect x="200" y="25" width="150" height="70" rx="10" fill="#3FA66B"/>
+  <text x="275" y="56" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-weight="700" font-size="14" fill="#FFFFFF">2xx</text>
+  <text x="275" y="75" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#FFFFFF">Success</text>
+  <rect x="375" y="25" width="150" height="70" rx="10" fill="#1C7293"/>
+  <text x="450" y="56" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-weight="700" font-size="14" fill="#FFFFFF">3xx</text>
+  <text x="450" y="75" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#FFFFFF">Redirection</text>
+  <rect x="550" y="25" width="150" height="70" rx="10" fill="#C9680F"/>
+  <text x="625" y="56" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-weight="700" font-size="14" fill="#FFFFFF">4xx</text>
+  <text x="625" y="75" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#FFFFFF">Client Error</text>
+  <rect x="725" y="25" width="150" height="70" rx="10" fill="#D9534F"/>
+  <text x="800" y="56" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-weight="700" font-size="14" fill="#FFFFFF">5xx</text>
+  <text x="800" y="75" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#FFFFFF">Server Error</text>
+</svg></p>
+</div>
 <table>
 <thead>
 <tr>
@@ -3746,15 +3764,33 @@ that (and on what it's actually able to produce).</p>
 <code>Accept: text/html,application/xhtml+xml,...</code>, hoping for an HTML page back. A JavaScript
 app calling your API with <code>fetch</code> might instead send <code>Accept: application/json</code>, expecting
 raw data rather than a full page.</p>
-<pre class="mermaid"><code>sequenceDiagram
-    participant Client
-    participant Server as Express Server
-
-    Client-&gt;&gt;Server: GET /api/books&lt;br/&gt;Accept: application/json
-    Server--&gt;&gt;Client: 200 OK&lt;br/&gt;Content-Type: application/json&lt;br/&gt;{"books": [...]}
-
-    Client-&gt;&gt;Server: GET /books&lt;br/&gt;Accept: text/html
-    Server--&gt;&gt;Client: 200 OK&lt;br/&gt;Content-Type: text/html&lt;br/&gt;&lt;html&gt;...&lt;/html&gt;</code></pre>
+<div class="cu-svg-diagram">
+<p><svg viewBox="0 0 640 310" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="l19-cn-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/></marker>
+  </defs>
+  <rect x="40" y="10" width="150" height="42" rx="8" fill="#2B2B7A"/>
+  <text x="115" y="36" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">Client</text>
+  <rect x="400" y="10" width="190" height="42" rx="8" fill="#1C7293"/>
+  <text x="495" y="36" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">Express Server</text>
+  <line x1="115" y1="52" x2="115" y2="300" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <line x1="495" y1="52" x2="495" y2="300" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <line x1="115" y1="95" x2="487" y2="95" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l19-cn-arrow)"/>
+  <text x="307" y="76" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="10.5" fill="var(--cu-text)">GET /api/books</text>
+  <text x="307" y="89" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="10.5" fill="var(--cu-text)">Accept: application/json</text>
+  <line x1="495" y1="150" x2="123" y2="150" stroke="var(--cu-muted)" stroke-width="2" stroke-dasharray="5 3" marker-end="url(#l19-cn-arrow)"/>
+  <text x="307" y="131" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="10.5" fill="var(--cu-text)">200 OK</text>
+  <text x="307" y="144" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="10.5" fill="var(--cu-text)">Content-Type: application/json</text>
+  <text x="307" y="163" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="9.5" fill="var(--cu-muted)">{"books": [...]}</text>
+  <line x1="115" y1="215" x2="487" y2="215" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l19-cn-arrow)"/>
+  <text x="307" y="196" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="10.5" fill="var(--cu-text)">GET /books</text>
+  <text x="307" y="209" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="10.5" fill="var(--cu-text)">Accept: text/html</text>
+  <line x1="495" y1="270" x2="123" y2="270" stroke="var(--cu-muted)" stroke-width="2" stroke-dasharray="5 3" marker-end="url(#l19-cn-arrow)"/>
+  <text x="307" y="251" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="10.5" fill="var(--cu-text)">200 OK</text>
+  <text x="307" y="264" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="10.5" fill="var(--cu-text)">Content-Type: text/html</text>
+  <text x="307" y="283" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="9.5" fill="var(--cu-muted)">&lt;html&gt;...&lt;/html&gt;</text>
+</svg></p>
+</div>
 <p>Express provides <code>res.format()</code> to respond differently depending on what the client
 requested via <code>Accept</code>:</p>
 <div class="language-javascript highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/books&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
@@ -3858,7 +3894,7 @@ based on what the specific client asked for.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 4, 2026 21:02:03 UTC">September 4, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="October 22, 2026 21:11:27 UTC">October 22, 2026</span>
   </span>
 
     

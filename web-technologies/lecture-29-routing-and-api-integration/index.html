@@ -3820,12 +3820,32 @@ content is rendered wherever <code>App</code> places an <code>&lt;Outlet /&gt;</
 <p><code>Navbar</code> and <code>Footer</code> render on every page, while <code>&lt;Outlet /&gt;</code> is replaced with <code>Home</code>,
 <code>Products</code>, or <code>ProductDetails</code> depending on the current URL. This avoids repeating shared
 UI in every page component.</p>
-<pre class="mermaid"><code>flowchart TD
-    Root["/  → App (layout: Navbar + Outlet + Footer)"]
-    Root --&gt; Home["index → Home"]
-    Root --&gt; Products["/products → Products"]
-    Root --&gt; Details["/products/:id → ProductDetails"]
-    Root --&gt; NotFound["* → NotFound"]</code></pre>
+<div class="cu-svg-diagram">
+<p><svg viewBox="0 0 900 260" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="l29-tree-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/></marker>
+  </defs>
+  <path d="M450,70 L135,150" fill="none" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l29-tree-arrow)"/>
+  <path d="M450,70 L345,150" fill="none" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l29-tree-arrow)"/>
+  <path d="M450,70 L555,150" fill="none" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l29-tree-arrow)"/>
+  <path d="M450,70 L765,150" fill="none" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l29-tree-arrow)"/>
+  <rect x="270" y="10" width="360" height="60" rx="10" fill="#2B2B7A"/>
+  <text x="450" y="35" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-weight="700" font-size="14" fill="#FFFFFF">/ → App</text>
+  <text x="450" y="54" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="#E8E8F7">(layout: Navbar + Outlet + Footer)</text>
+  <rect x="40" y="150" width="190" height="70" rx="10" fill="#1C7293"/>
+  <text x="135" y="178" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-weight="700" font-size="13" fill="#FFFFFF">index</text>
+  <text x="135" y="198" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11.5" fill="#FFFFFF">→ Home</text>
+  <rect x="250" y="150" width="190" height="70" rx="10" fill="#1C7293"/>
+  <text x="345" y="178" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-weight="700" font-size="13" fill="#FFFFFF">/products</text>
+  <text x="345" y="198" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11.5" fill="#FFFFFF">→ Products</text>
+  <rect x="460" y="150" width="190" height="70" rx="10" fill="#1C7293"/>
+  <text x="555" y="178" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-weight="700" font-size="13" fill="#FFFFFF">/products/:id</text>
+  <text x="555" y="198" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11.5" fill="#FFFFFF">→ ProductDetails</text>
+  <rect x="670" y="150" width="190" height="70" rx="10" fill="#C9680F"/>
+  <text x="765" y="178" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-weight="700" font-size="13" fill="#FFFFFF">*</text>
+  <text x="765" y="198" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11.5" fill="#FFFFFF">→ NotFound</text>
+</svg></p>
+</div>
 <h3 id="a-not-found-route">A Not-Found Route<a class="headerlink" href="#a-not-found-route" title="Permanent link">&para;</a></h3>
 <p>The special path <code>"*"</code> matches any URL that did not match an earlier route, making it the
 perfect catch-all for a <strong>404 / not-found</strong> page:</p>
@@ -3996,22 +4016,47 @@ loading flag, and an error.</p>
 </span><span id="__span-13-35"><a id="__codelineno-13-35" name="__codelineno-13-35" href="#__codelineno-13-35"></a><span class="w">  </span><span class="p">);</span>
 </span><span id="__span-13-36"><a id="__codelineno-13-36" name="__codelineno-13-36" href="#__codelineno-13-36"></a><span class="p">}</span>
 </span></code></pre></div>
-<pre class="mermaid"><code>sequenceDiagram
-    participant Component as Products component
-    participant Effect as useEffect
-    participant API as Express REST API (Lecture 25)
-    Component-&gt;&gt;Effect: Mounts, effect runs (dependency array = [])
-    Effect-&gt;&gt;Effect: setIsLoading(true), setError(null)
-    Effect-&gt;&gt;API: GET /api/products
-    alt Request succeeds
-        API--&gt;&gt;Effect: 200 OK + JSON array
-        Effect-&gt;&gt;Component: setProducts(data), setIsLoading(false)
-        Component-&gt;&gt;Component: Re-renders, shows product list
-    else Request fails
-        API--&gt;&gt;Effect: Network error or non-2xx status
-        Effect-&gt;&gt;Component: setError(message), setIsLoading(false)
-        Component-&gt;&gt;Component: Re-renders, shows error message
-    end</code></pre>
+<div class="cu-svg-diagram">
+<p><svg viewBox="0 0 820 560" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="l29-fetch-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/></marker>
+  </defs>
+  <line x1="120" y1="52" x2="120" y2="540" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <line x1="410" y1="52" x2="410" y2="540" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <line x1="690" y1="52" x2="690" y2="540" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <rect x="20" y="10" width="200" height="42" rx="8" fill="#2B2B7A"/>
+  <text x="120" y="36" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12.5" fill="#FFFFFF">Products component</text>
+  <rect x="320" y="10" width="180" height="42" rx="8" fill="#1C7293"/>
+  <text x="410" y="36" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">useEffect</text>
+  <rect x="580" y="10" width="220" height="42" rx="8" fill="#6C4FF5"/>
+  <text x="690" y="30" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="11.5" fill="#FFFFFF">Express REST API</text>
+  <text x="690" y="45" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="#E8E8F7">(Lecture 25)</text>
+  <line x1="120" y1="85" x2="402" y2="85" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l29-fetch-arrow)"/>
+  <text x="265" y="77" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10" fill="var(--cu-text)">Mounts, effect runs (dependency array = [])</text>
+  <path d="M410,110 C470,110 470,132 410,132" fill="none" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l29-fetch-arrow)"/>
+  <text x="440" y="102" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10" fill="var(--cu-text)">setIsLoading(true), setError(null)</text>
+  <line x1="410" y1="175" x2="682" y2="175" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l29-fetch-arrow)"/>
+  <text x="550" y="167" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="10.5" fill="var(--cu-text)">GET /api/products</text>
+  <rect x="15" y="200" width="790" height="335" rx="12" fill="none" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <line x1="15" y1="365" x2="805" y2="365" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <rect x="30" y="210" width="170" height="26" rx="13" fill="#3FA66B"/>
+  <text x="115" y="228" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="11" fill="#FFFFFF">Request succeeds</text>
+  <rect x="30" y="380" width="150" height="26" rx="13" fill="#D9534F"/>
+  <text x="105" y="398" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="11" fill="#FFFFFF">Request fails</text>
+  <line x1="690" y1="255" x2="418" y2="255" stroke="var(--cu-muted)" stroke-width="2" stroke-dasharray="5 3" marker-end="url(#l29-fetch-arrow)"/>
+  <text x="550" y="247" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10" fill="var(--cu-text)">200 OK + JSON array</text>
+  <line x1="410" y1="300" x2="128" y2="300" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l29-fetch-arrow)"/>
+  <text x="265" y="292" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10" fill="var(--cu-text)">setProducts(data), setIsLoading(false)</text>
+  <path d="M120,318 C180,318 180,340 120,340" fill="none" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l29-fetch-arrow)"/>
+  <text x="150" y="310" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10" fill="var(--cu-text)">Re-renders, shows product list</text>
+  <line x1="690" y1="425" x2="418" y2="425" stroke="var(--cu-muted)" stroke-width="2" stroke-dasharray="5 3" marker-end="url(#l29-fetch-arrow)"/>
+  <text x="550" y="417" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10" fill="var(--cu-text)">Network error or non-2xx status</text>
+  <line x1="410" y1="470" x2="128" y2="470" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l29-fetch-arrow)"/>
+  <text x="265" y="462" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10" fill="var(--cu-text)">setError(message), setIsLoading(false)</text>
+  <path d="M120,488 C180,488 180,510 120,510" fill="none" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#l29-fetch-arrow)"/>
+  <text x="150" y="480" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10" fill="var(--cu-text)">Re-renders, shows error message</text>
+</svg></p>
+</div>
 <h3 id="a-custom-data-fetching-hook">A Custom Data-Fetching Hook<a class="headerlink" href="#a-custom-data-fetching-hook" title="Permanent link">&para;</a></h3>
 <p>Because "loading, error, data" shows up in almost every component that talks to an API,
 it is a great candidate for a <strong>custom hook</strong> (Lecture 28), so you don't repeat this logic
@@ -4181,7 +4226,7 @@ Lecture 25) so the browser allows these requests during development.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 4, 2026 21:02:03 UTC">September 4, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="October 22, 2026 21:11:27 UTC">October 22, 2026</span>
   </span>
 
     
