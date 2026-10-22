@@ -221,7 +221,7 @@ Promise.resolve().then(() => {
 
 async function asyncFn() {
   console.log("4: async start");
-  await null;
+  await Promise.resolve();
   console.log("5: async resumed");
 }
 asyncFn();
@@ -313,7 +313,7 @@ Even with the timer's delay set to `0`, the real console output is **`1, 4, 6, 3
     '',
     'async function asyncFn() {',
     '  console.log("4: async start");',
-    '  await null;',
+    '  await Promise.resolve();',
     '  console.log("5: async resumed");',
     '}',
     'asyncFn();',
@@ -329,7 +329,7 @@ Even with the timer's delay set to `0`, the real console output is **`1, 4, 6, 3
     { hl: [7, 8, 9], stack: ['main()'], webapi: ['setTimeout (0ms)'], micro: ['Promise .then()'], macro: [], out: ['1: start'], note: 'Promise.resolve() is already fulfilled, so its .then() callback goes straight into the Microtask Queue.' },
     { hl: [16], stack: ['main()', 'asyncFn()'], webapi: ['setTimeout (0ms)'], micro: ['Promise .then()'], macro: [], out: ['1: start'], note: 'asyncFn() is called — a new frame is pushed onto the call stack.' },
     { hl: [12], stack: ['main()', 'asyncFn()'], webapi: ['setTimeout (0ms)'], micro: ['Promise .then()'], macro: [], out: ['1: start', '4: async start'], note: "Inside asyncFn, console.log('4: async start') runs synchronously, same as any normal function call." },
-    { hl: [13], stack: ['main()'], webapi: ['setTimeout (0ms)'], micro: ['Promise .then()', 'asyncFn (after await)'], macro: [], out: ['1: start', '4: async start'], note: "await null pauses asyncFn right here. Everything AFTER it is scheduled as a microtask, and asyncFn's frame pops off — control returns to main()." },
+    { hl: [13], stack: ['main()'], webapi: ['setTimeout (0ms)'], micro: ['Promise .then()', 'asyncFn (after await)'], macro: [], out: ['1: start', '4: async start'], note: "await pauses asyncFn right here, on an already-resolved promise. Everything AFTER it is scheduled as a microtask, and asyncFn's frame pops off — control returns to main()." },
     { hl: [18], stack: ['main()'], webapi: ['setTimeout (0ms)'], micro: ['Promise .then()', 'asyncFn (after await)'], macro: [], out: ['1: start', '4: async start', '6: end'], note: "console.log('6: end') runs — the last line of synchronous code in the script." },
     { hl: [], stack: [], webapi: ['setTimeout (0ms)'], micro: ['Promise .then()', 'asyncFn (after await)'], macro: [], out: ['1: start', '4: async start', '6: end'], note: 'Synchronous script finished — main() pops off. The call stack is now completely EMPTY.' },
     { hl: [8], stack: ['Promise .then()'], webapi: ['setTimeout (0ms)'], micro: ['asyncFn (after await)'], macro: [], out: ['1: start', '4: async start', '6: end'], note: 'Event loop: stack is empty, so it checks the Microtask Queue FIRST — before the Callback Queue — and takes the oldest microtask.' },

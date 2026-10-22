@@ -63,22 +63,43 @@ JavaScript manages this with a mechanism called the **event loop**:
 - The **event loop** constantly checks: *is the call stack empty?* If yes, it takes the next
   item from the queue and pushes it onto the call stack to run.
 
-```mermaid
-sequenceDiagram
-    participant Stack as Call Stack
-    participant Browser as Browser / Web APIs
-    participant Queue as Task Queue
-    participant Loop as Event Loop
-
-    Stack->>Stack: console.log("1")
-    Stack->>Browser: setTimeout(fn, 1000) handed off
-    Stack->>Stack: console.log("3")
-    Note over Stack: Call stack now empty
-    Browser->>Queue: after 1000ms, fn is queued
-    Loop->>Queue: checks queue (stack is empty)
-    Queue->>Stack: fn moved to call stack
-    Stack->>Stack: console.log("2") runs
-```
+<div class="cu-svg-diagram" markdown>
+<svg viewBox="0 0 760 460" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="el-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/>
+    </marker>
+  </defs>
+  <rect x="20" y="10" width="140" height="40" rx="8" fill="#2B2B7A"/>
+  <text x="90" y="35" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">Call Stack</text>
+  <rect x="220" y="10" width="140" height="40" rx="8" fill="#1C7293"/>
+  <text x="290" y="35" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="12.5" fill="#FFFFFF">Browser / Web APIs</text>
+  <rect x="420" y="10" width="140" height="40" rx="8" fill="#C9680F"/>
+  <text x="490" y="35" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">Task Queue</text>
+  <rect x="600" y="10" width="140" height="40" rx="8" fill="#6C4FF5"/>
+  <text x="670" y="35" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">Event Loop</text>
+  <line x1="90" y1="50" x2="90" y2="430" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <line x1="290" y1="50" x2="290" y2="430" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <line x1="490" y1="50" x2="490" y2="430" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <line x1="670" y1="50" x2="670" y2="430" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <path d="M90,83 C150,83 150,100 90,100" fill="none" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#el-arrow)"/>
+  <text x="130" y="76" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="11" fill="var(--cu-text)">console.log("1")</text>
+  <line x1="90" y1="148" x2="282" y2="148" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#el-arrow)"/>
+  <text x="190" y="140" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="var(--cu-text)">setTimeout(fn, 1000) handed off</text>
+  <path d="M90,183 C150,183 150,200 90,200" fill="none" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#el-arrow)"/>
+  <text x="130" y="176" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="11" fill="var(--cu-text)">console.log("3")</text>
+  <rect x="20" y="218" width="140" height="34" rx="6" fill="#FFF7E0" stroke="#E0C457" stroke-width="1"/>
+  <text x="90" y="239" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="#6B5A00">Call stack now empty</text>
+  <line x1="290" y1="278" x2="482" y2="278" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#el-arrow)"/>
+  <text x="390" y="270" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="var(--cu-text)">after 1000ms, fn is queued</text>
+  <line x1="670" y1="316" x2="498" y2="316" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#el-arrow)"/>
+  <text x="580" y="308" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="var(--cu-text)">checks queue (stack is empty)</text>
+  <line x1="490" y1="354" x2="98" y2="354" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#el-arrow)"/>
+  <text x="290" y="346" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="var(--cu-text)">fn moved to call stack</text>
+  <path d="M90,388 C150,388 150,405 90,405" fill="none" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#el-arrow)"/>
+  <text x="155" y="381" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="11" fill="var(--cu-text)">console.log("2") runs</text>
+</svg>
+</div>
 
 !!! note "Microtasks run before macrotasks"
     Promise callbacks (`.then`, `async`/`await`) go into a special **microtask queue** that the
@@ -114,14 +135,34 @@ being prepared.
 
 ### The Three States
 
-```mermaid
-stateDiagram-v2
-    [*] --> Pending: Promise created
-    Pending --> Fulfilled: operation succeeds
-    Pending --> Rejected: operation fails
-    Fulfilled --> [*]
-    Rejected --> [*]
-```
+<div class="cu-svg-diagram" markdown>
+<svg viewBox="0 0 640 220" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="ps-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/>
+    </marker>
+  </defs>
+  <circle cx="40" cy="110" r="8" fill="var(--cu-muted)"/>
+  <line x1="48" y1="110" x2="122" y2="110" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#ps-arrow)"/>
+  <text x="85" y="98" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="var(--cu-muted)">Promise created</text>
+  <rect x="130" y="80" width="150" height="60" rx="10" fill="var(--cu-surface)" stroke="var(--cu-border-soft)" stroke-width="2"/>
+  <text x="205" y="115" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="15" fill="var(--cu-text)">Pending</text>
+  <line x1="280" y1="95" x2="400" y2="45" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#ps-arrow)"/>
+  <text x="340" y="55" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="var(--cu-text)">operation succeeds</text>
+  <line x1="280" y1="125" x2="400" y2="175" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#ps-arrow)"/>
+  <text x="340" y="175" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="11" fill="var(--cu-text)">operation fails</text>
+  <rect x="410" y="15" width="150" height="60" rx="10" fill="#3FA66B"/>
+  <text x="485" y="50" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="15" fill="#FFFFFF">Fulfilled</text>
+  <rect x="410" y="145" width="150" height="60" rx="10" fill="#D9534F"/>
+  <text x="485" y="180" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="15" fill="#FFFFFF">Rejected</text>
+  <line x1="560" y1="45" x2="610" y2="45" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#ps-arrow)"/>
+  <circle cx="618" cy="45" r="7" fill="none" stroke="var(--cu-muted)" stroke-width="2"/>
+  <circle cx="618" cy="45" r="3" fill="var(--cu-muted)"/>
+  <line x1="560" y1="175" x2="610" y2="175" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#ps-arrow)"/>
+  <circle cx="618" cy="175" r="7" fill="none" stroke="var(--cu-muted)" stroke-width="2"/>
+  <circle cx="618" cy="175" r="3" fill="var(--cu-muted)"/>
+</svg>
+</div>
 
 - **Pending**: the initial state — neither succeeded nor failed yet.
 - **Fulfilled**: the operation completed successfully, and the promise now holds a result value.
@@ -329,15 +370,30 @@ running on one **origin** (a combination of protocol + domain + port, e.g.
 `https://myapp.com`) from freely reading responses from a **different origin**
 (e.g. `https://api.example.com`), unless that other server explicitly allows it.
 
-```mermaid
-sequenceDiagram
-    participant Browser
-    participant API as api.example.com
-
-    Browser->>API: fetch("https://api.example.com/data")
-    API-->>Browser: response + header "Access-Control-Allow-Origin: https://myapp.com"
-    Note over Browser: Browser checks the header.<br/>If myapp.com is allowed, JS can read the response.<br/>If not, the browser blocks JS from reading it.
-```
+<div class="cu-svg-diagram" markdown>
+<svg viewBox="0 0 640 230" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="cors-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="var(--cu-muted)"/>
+    </marker>
+  </defs>
+  <rect x="40" y="10" width="160" height="42" rx="8" fill="#2B2B7A"/>
+  <text x="120" y="36" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">Browser</text>
+  <rect x="400" y="10" width="160" height="42" rx="8" fill="#1C7293"/>
+  <text x="480" y="36" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">api.example.com</text>
+  <line x1="120" y1="52" x2="120" y2="215" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <line x1="480" y1="52" x2="480" y2="215" stroke="var(--cu-border-soft)" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <line x1="120" y1="85" x2="472" y2="85" stroke="var(--cu-muted)" stroke-width="2" marker-end="url(#cors-arrow)"/>
+  <text x="300" y="77" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="10.5" fill="var(--cu-text)">fetch("https://api.example.com/data")</text>
+  <line x1="480" y1="125" x2="128" y2="125" stroke="var(--cu-muted)" stroke-width="2" stroke-dasharray="5 3" marker-end="url(#cors-arrow)"/>
+  <text x="300" y="112" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="var(--cu-text)">response + header</text>
+  <text x="300" y="124" text-anchor="middle" font-family="&quot;Courier New&quot;, monospace" font-size="9.5" fill="var(--cu-text)">Access-Control-Allow-Origin: https://myapp.com</text>
+  <rect x="30" y="150" width="260" height="70" rx="8" fill="#E9EDFB" stroke="#6C7FD6" stroke-width="1.5"/>
+  <text x="160" y="172" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="#262b40">Browser checks the header.</text>
+  <text x="160" y="190" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="#262b40">If myapp.com is allowed, JS can read it.</text>
+  <text x="160" y="208" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-size="10.5" fill="#262b40">If not, the browser blocks JS from reading it.</text>
+</svg>
+</div>
 
 - The **server** decides who is allowed, by sending back an `Access-Control-Allow-Origin` header.
 - If that header doesn't permit your page's origin, the browser blocks your JavaScript from
