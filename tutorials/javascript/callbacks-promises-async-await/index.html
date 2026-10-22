@@ -1,0 +1,3640 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Free textbooks, lecture slides, and runnable code for undergraduate Computer Science — Algorithms & Data Structures, Web Technologies, and Advanced Web Technologies — from the Department of Computer Science, COMSATS University Islamabad, Lahore Campus.">
+      
+      
+        <meta name="author" content="Usman Akram">
+      
+      
+        <link rel="canonical" href="https://cuinotes.com/tutorials/javascript/callbacks-promises-async-await/">
+      
+      
+        <link rel="prev" href="../event-lifecycle-app/">
+      
+      
+        <link rel="next" href="../../express/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/logo.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Tutorial: Callbacks, Promises, and Async/Await - cuinotes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+  
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+  
+  <style>:root{--md-admonition-icon--note:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M20%2011h3v2h-3zM1%2011h3v2H1zM13%201v3h-2V1zM4.92%203.5l2.13%202.14-1.42%201.41L3.5%204.93zm12.03%202.13%202.12-2.13%201.43%201.43-2.13%202.12zM12%206a6%206%200%200%201%206%206c0%202.22-1.21%204.16-3%205.2V19a1%201%200%200%201-1%201h-4a1%201%200%200%201-1-1v-1.8c-1.79-1.04-3-2.98-3-5.2a6%206%200%200%201%206-6m2%2015v1a1%201%200%200%201-1%201h-2a1%201%200%200%201-1-1v-1zm-3-3h2v-2.13c1.73-.44%203-2.01%203-3.87a4%204%200%200%200-4-4%204%204%200%200%200-4%204c0%201.86%201.27%203.43%203%203.87z%22/%3E%3C/svg%3E');--md-admonition-icon--tip:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M12%203%201%209l4%202.18v6L12%2021l7-3.82v-6l2-1.09V17h2V9zm6.82%206L12%2012.72%205.18%209%2012%205.28zM17%2016l-5%202.72L7%2016v-3.73L12%2015l5-2.73z%22/%3E%3C/svg%3E');--md-admonition-icon--warning:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M12%202%201%2021h22M12%206l7.53%2013H4.47M11%2010v4h2v-4m-2%206v2h2v-2%22/%3E%3C/svg%3E');--md-admonition-icon--example:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M19%203H5c-1.1%200-2%20.9-2%202v14c0%201.1.9%202%202%202h14c1.1%200%202-.9%202-2V5c0-1.1-.9-2-2-2m-8%205H9v2c0%201.1-.9%202-2%202%201.1%200%202%20.9%202%202v2h2v2H9c-1.1%200-2-.9-2-2v-1c0-1.1-.9-2-2-2v-2c1.1%200%202-.9%202-2V8c0-1.1.9-2%202-2h2zm8%205c-1.1%200-2%20.9-2%202v1c0%201.1-.9%202-2%202h-2v-2h2v-2c0-1.1.9-2%202-2-1.1%200-2-.9-2-2V8h-2V6h2c1.1%200%202%20.9%202%202v1c0%201.1.9%202%202%202z%22/%3E%3C/svg%3E');}</style>
+
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sora:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Sora";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&display=swap">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="cuinotes">
+<meta property="og:title" content="Tutorial: Callbacks, Promises, and Async/Await">
+<meta property="og:description" content="Free textbooks, lecture slides, and runnable code for undergraduate Computer Science — Algorithms & Data Structures, Web Technologies, and Advanced Web Technologies — from the Department of Computer Science, COMSATS University Islamabad, Lahore Campus.">
+<meta property="og:url" content="https://cuinotes.com/tutorials/javascript/callbacks-promises-async-await/">
+<meta property="og:image" content="https://cuinotes.com/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Tutorial: Callbacks, Promises, and Async/Await">
+<meta name="twitter:description" content="Free textbooks, lecture slides, and runnable code for undergraduate Computer Science — Algorithms & Data Structures, Web Technologies, and Advanced Web Technologies — from the Department of Computer Science, COMSATS University Islamabad, Lahore Campus.">
+<meta name="twitter:image" content="https://cuinotes.com/assets/og-image.png">
+
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XCX5GHHFLZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-XCX5GHHFLZ');
+</script>
+
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="teal">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#callbacks-promises-and-asyncawait" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="cuinotes" class="md-header__button md-logo" aria-label="cuinotes" data-md-component="logo">
+      
+  <img src="../../../assets/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            cuinotes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Tutorial: Callbacks, Promises, and Async/Await
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="teal"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="teal"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+
+
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+        
+          
+        
+          
+        
+        
+          
+          
+            
+          
+            
+          
+          
+            
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+          
+        
+      
+        
+        
+          
+            
+          
+        
+          
+        
+        
+          
+          
+        
+      
+        
+        
+          
+        
+          
+        
+        
+          
+          
+            
+              
+            
+          
+            
+          
+          
+            
+              
+              
+              
+                
+              
+                
+              
+                
+                  
+                  
+                
+              
+                
+                  
+                  
+                
+              
+                
+                  
+                  
+                
+              
+                
+                  
+                  
+                
+              
+                
+                  
+                  
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+              
+              
+              <li class="md-tabs__item md-tabs__item--dropdown">
+                <a href="../../../courses/" class="md-tabs__link">
+                  Courses
+                </a>
+                <ul class="md-tabs__submenu">
+                  
+                    <li>
+  <a href="../../../algorithms-and-data-structures/">Algorithms and Data Structures (CSC211)</a>
+</li>
+                  
+                    <li>
+  <a href="../../../web-technologies/">Web Technologies (CSC336)</a>
+</li>
+                  
+                    <li>
+  <a href="../../../advanced-web-technologies/">Advanced Web Technologies (CSC337)</a>
+</li>
+                  
+                    <li>
+  <a href="../../../database-systems/">Database Systems (CSC270)</a>
+</li>
+                  
+                    <li>
+  <a href="../../../operating-systems/">Operating Systems (CSC323)</a>
+</li>
+                  
+                </ul>
+              </li>
+            
+          
+        
+      
+        
+        
+          
+        
+          
+        
+        
+          
+          
+            
+              
+            
+          
+            
+          
+          
+            
+          
+        
+      
+        
+        
+          
+        
+          
+        
+        
+          
+          
+            
+              
+            
+          
+            
+          
+          
+            
+          
+        
+      
+        
+        
+          
+        
+          
+        
+        
+          
+          
+            
+              
+            
+          
+            
+          
+          
+            
+          
+        
+      
+        
+        
+          
+        
+          
+        
+        
+          
+          
+            
+              
+            
+          
+            
+          
+          
+            
+          
+        
+      
+        
+        
+          
+        
+          
+            
+          
+        
+        
+          
+          
+        
+      
+        
+        
+          
+        
+          
+        
+        
+          
+          
+            
+          
+            
+              
+            
+          
+          
+            
+              
+              
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+                  
+                  
+                
+              
+                
+                  
+                  
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+              
+              
+              <li class="md-tabs__item md-tabs__item--dropdown">
+                <a href="../../../labs/" class="md-tabs__link">
+                  Labs
+                </a>
+                <ul class="md-tabs__submenu">
+                  
+                    <li>
+  <a href="../../../labs/web-technologies/">Web Technologies (CSC336) Labs</a>
+</li>
+                  
+                    <li>
+  <a href="../../../labs/database-systems/">Database Systems (CSC270) Labs</a>
+</li>
+                  
+                </ul>
+              </li>
+            
+          
+        
+      
+        
+        
+          
+        
+          
+        
+        
+          
+          
+            
+          
+            
+              
+            
+          
+          
+            
+          
+        
+      
+        
+        
+          
+        
+          
+        
+        
+          
+          
+            
+          
+            
+          
+          
+            
+  
+  
+  
+  
+    
+    
+    <li class="md-tabs__item md-tabs__item--dropdown">
+      <a href="../../../demos/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Helping Material
+
+      </a>
+      
+        <ul class="md-tabs__submenu">
+          
+            <li>
+  <a href="../../../demos/">Demos</a>
+</li>
+          
+            <li>
+  <a href="../../../downloads/">Downloads</a>
+</li>
+          
+            <li>
+  <a href="../../../lecture-slides/">Lecture Slides</a>
+</li>
+          
+        </ul>
+      
+    </li>
+  
+
+          
+        
+      
+        
+        
+          
+        
+          
+        
+        
+          
+          
+            
+          
+            
+          
+          
+            
+  
+  
+  
+    
+  
+  
+    
+    
+    <li class="md-tabs__item md-tabs__item--active md-tabs__item--dropdown">
+      <a href="../../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Tutorials
+
+      </a>
+      
+        <ul class="md-tabs__submenu">
+          
+            <li>
+  <a href="../../">Overview</a>
+</li>
+          
+            <li>
+  <a href="../../html-css/">HTML & CSS</a>
+</li>
+          
+            <li>
+  <a href="../">JavaScript</a>
+</li>
+          
+            <li>
+  <a href="../../express/">Express</a>
+</li>
+          
+            <li>
+  <a href="../../react/">React</a>
+</li>
+          
+            <li>
+  <a href="../../devops/">DevOps</a>
+</li>
+          
+        </ul>
+      
+    </li>
+  
+
+          
+        
+      
+        
+        
+          
+        
+          
+        
+        
+          
+          
+            
+          
+            
+          
+          
+            
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../tags/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Tags
+
+      </a>
+    </li>
+  
+
+          
+        
+      
+        
+        
+          
+        
+          
+        
+        
+          
+          
+            
+          
+            
+          
+          
+            
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://usmanlive.com" class="md-tabs__link">
+        
+  
+  
+    
+  
+  usmanlive.com
+
+      </a>
+    </li>
+  
+
+          
+        
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="cuinotes" class="md-nav__button md-logo" aria-label="cuinotes" data-md-component="logo">
+      
+  <img src="../../../assets/logo.svg" alt="logo">
+
+    </a>
+    cuinotes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../courses/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Courses
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../algorithms-and-data-structures/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Algorithms and Data Structures (CSC211)
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../web-technologies/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Web Technologies (CSC336)
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../advanced-web-technologies/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced Web Technologies (CSC337)
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../database-systems/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Database Systems (CSC270)
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../operating-systems/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operating Systems (CSC323)
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../labs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Labs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../labs/web-technologies/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Web Technologies (CSC336) Labs
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../labs/database-systems/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Database Systems (CSC270) Labs
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../demos/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Helping Material
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutorials
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_12" id="__nav_12_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_12_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_12">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tutorials
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../html-css/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    HTML & CSS
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_12_2" id="__nav_12_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_12_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_12_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    HTML & CSS
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../html-css/first-html-css-app/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Your First HTML + CSS Page
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../html-css/layout-designing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Layout Designing: div, span, and Float
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../html-css/css-positioning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CSS Positioning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../html-css/flexbox/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Flexbox Layout
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../html-css/multilevel-navigation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multilevel Navigation with Positioning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../html-css/full-page-layout/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Complete Page Layout: Float + Positioning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../html-css/css-animations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CSS Transitions and Animations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../html-css/responsive-design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Responsive Web Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12_3" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    JavaScript
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_12_3" id="__nav_12_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_12_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_12_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    JavaScript
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../first-javascript-app/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Your First JavaScript Program
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../todo-list-app/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build a Dynamic To-Do List
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../countdown-timer-app/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build a Countdown Timer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../event-lifecycle-app/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build an Event Inspector
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Callbacks, Promises, and Async/Await
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Callbacks, Promises, and Async/Await
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#in-this-tutorial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        In This Tutorial
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-1-callbacks-the-original-async-tool" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 1: Callbacks — the Original Async Tool
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 1: Callbacks — the Original Async Tool">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#callback-hell" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Callback Hell
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-2-promises-a-flat-chain-instead-of-a-pyramid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 2: Promises — a Flat Chain Instead of a Pyramid
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 2: Promises — a Flat Chain Instead of a Pyramid">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#chaining-fixes-the-pyramid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chaining Fixes the Pyramid
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#promiseall-running-several-at-once" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Promise.all — Running Several at Once
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-3-asyncawait-promises-that-read-like-sync-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 3: async/await — Promises That Read Like Sync Code
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 3: async/await — Promises That Read Like Sync Code">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#error-handling-with-trycatch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Error Handling with try...catch
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-4-the-event-loop-visualized" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 4: The Event Loop, Visualized
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#try-it-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try It Yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Takeaways
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../express/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Express
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_12_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_12_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Express
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../react/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    React
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_12_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_12_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    React
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../devops/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DevOps
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_12_6" id="__nav_12_6_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_12_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_12_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    DevOps
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../devops/environment-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MERN Environment Setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../devops/git-and-github/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git and GitHub
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../devops/assignment-submission/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Submitting Coursework via GitHub
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tags
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://usmanlive.com" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    usmanlive.com
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#in-this-tutorial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        In This Tutorial
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-1-callbacks-the-original-async-tool" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 1: Callbacks — the Original Async Tool
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 1: Callbacks — the Original Async Tool">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#callback-hell" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Callback Hell
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-2-promises-a-flat-chain-instead-of-a-pyramid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 2: Promises — a Flat Chain Instead of a Pyramid
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 2: Promises — a Flat Chain Instead of a Pyramid">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#chaining-fixes-the-pyramid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chaining Fixes the Pyramid
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#promiseall-running-several-at-once" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Promise.all — Running Several at Once
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-3-asyncawait-promises-that-read-like-sync-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 3: async/await — Promises That Read Like Sync Code
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 3: async/await — Promises That Read Like Sync Code">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#error-handling-with-trycatch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Error Handling with try...catch
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-4-the-event-loop-visualized" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 4: The Event Loop, Visualized
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#try-it-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try It Yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Takeaways
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="Navigation" >
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../../.." class="md-path__link">
+        
+  <span class="md-ellipsis">
+    Home
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    JavaScript
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <a href="../../../tags/#tag:async" class="md-tag">Async</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../tags/#tag:event-loop" class="md-tag">Event Loop</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../tags/#tag:intermediate-project" class="md-tag">Intermediate Project</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../tags/#tag:javascript" class="md-tag">JavaScript</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../tags/#tag:promises" class="md-tag">Promises</a>
+      
+    
+  </nav>
+
+
+
+<h1 id="callbacks-promises-and-asyncawait">Callbacks, Promises, and Async/Await<a class="headerlink" href="#callbacks-promises-and-asyncawait" title="Permanent link">&para;</a></h1>
+<p>Three different pieces of syntax, one single problem underneath all of them: how do you write code
+that has to <em>wait</em> — for a timer, a file, a server — without freezing everything else on the page
+while it waits? <strong>Callbacks</strong>, <strong>Promises</strong>, and <strong><code>async</code>/<code>await</code></strong> are three generations of the
+same answer, each one fixing a real problem with the generation before it. This tutorial walks
+through all three side by side, then puts a live, interactive visualizer right on this page so you
+can <em>watch</em> the mechanism underneath all of them — the <strong>event loop</strong> — actually run, instead of
+just reading about it.</p>
+<p><strong>Prerequisites:</strong> <a href="../first-javascript-app/">Your First JavaScript Program</a> and
+<a href="../../../web-technologies/lecture-15-async-javascript-promises-fetch/">Lecture 15: Asynchronous JavaScript</a>
+— this tutorial assumes you're comfortable with functions and arrow functions, and it builds
+directly on Lecture 15's introduction to the call stack, the microtask queue, and the callback
+(task) queue, rather than re-explaining them from scratch.</p>
+<h2 id="in-this-tutorial">In This Tutorial<a class="headerlink" href="#in-this-tutorial" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Why callbacks were JavaScript's original async tool, and the real problem with them —
+  <strong>callback hell</strong></li>
+<li>How Promises fix that problem: three states, <code>.then</code>/<code>.catch</code>/<code>.finally</code>, and chaining</li>
+<li>How <code>async</code>/<code>await</code> is the same Promise machinery, written to <em>read</em> like synchronous code</li>
+<li>A live, interactive <strong>event loop visualizer</strong>, embedded right on this page, that steps through a
+  real mix of all three — synchronous code, a <code>setTimeout</code>, a Promise, and an <code>async</code> function —
+  one engine action at a time</li>
+<li>Why the console output order (<code>1, 4, 6, 3, 5, 2</code>) is <em>not</em> the order the code is written in, and
+  exactly why not</li>
+</ul>
+<hr />
+<h2 id="part-1-callbacks-the-original-async-tool">Part 1: Callbacks — the Original Async Tool<a class="headerlink" href="#part-1-callbacks-the-original-async-tool" title="Permanent link">&para;</a></h2>
+<p>A <strong>callback</strong> is just a function you hand to another function, to be called <em>later</em>, once some
+work finishes:</p>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kd">function</span><span class="w"> </span><span class="nx">loadUser</span><span class="p">(</span><span class="nx">id</span><span class="p">,</span><span class="w"> </span><span class="nx">onDone</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nx">setTimeout</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="c1">// pretend this took a real network request</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="nx">onDone</span><span class="p">({</span><span class="w"> </span><span class="nx">id</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Ayesha&quot;</span><span class="w"> </span><span class="p">});</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">  </span><span class="p">},</span><span class="w"> </span><span class="mf">500</span><span class="p">);</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="p">}</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="nx">loadUser</span><span class="p">(</span><span class="mf">7</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">user</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Loaded:&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">user</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="p">});</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Request sent — not waiting around for it.&quot;</span><span class="p">);</span>
+</span></code></pre></div>
+<p><code>loadUser</code> returns immediately; <code>onDone</code> only runs once the (simulated) work is actually done,
+500ms later. This is the entire idea behind every async pattern in this tutorial — the difference
+between callbacks, Promises, and <code>async</code>/<code>await</code> is never <em>whether</em> the program waits without
+blocking, only <em>how readable</em> the waiting code is.</p>
+<h3 id="callback-hell">Callback Hell<a class="headerlink" href="#callback-hell" title="Permanent link">&para;</a></h3>
+<p>The trouble starts the moment one async step needs the <em>result</em> of the previous one. Each new step
+has to be nested <strong>inside</strong> the previous callback, because that's the only place its result is
+available:</p>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nx">loadUser</span><span class="p">(</span><span class="mf">7</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">user</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="nx">loadOrders</span><span class="p">(</span><span class="nx">user</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">orders</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="nx">loadOrderDetails</span><span class="p">(</span><span class="nx">orders</span><span class="p">[</span><span class="mf">0</span><span class="p">].</span><span class="nx">id</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">details</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">      </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">details</span><span class="p">);</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">      </span><span class="c1">// ...and every additional step nests one level deeper</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">    </span><span class="p">},</span><span class="w"> </span><span class="nx">handleError</span><span class="p">);</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">  </span><span class="p">},</span><span class="w"> </span><span class="nx">handleError</span><span class="p">);</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="p">},</span><span class="w"> </span><span class="nx">handleError</span><span class="p">);</span>
+</span></code></pre></div>
+<p>This is <strong>callback hell</strong> (or the "pyramid of doom") — the indentation keeps marching to the
+right, error handling has to be repeated at every level, and reading the sequence of steps means
+reading the code inside-out. Promises exist specifically to fix this.</p>
+<div class="admonition note">
+<p class="admonition-title">Not every callback is 'callback hell'</p>
+<p><code>loadUser(7, onDone)</code> by itself is a perfectly ordinary, fine callback — plenty of built-in
+APIs still work exactly this way (<code>addEventListener</code>, <code>setTimeout</code>). The <em>hell</em> only shows up
+once callbacks start nesting inside callbacks because each step depends on the last one's
+result — a structural problem, not a callback problem.</p>
+</div>
+<h2 id="part-2-promises-a-flat-chain-instead-of-a-pyramid">Part 2: Promises — a Flat Chain Instead of a Pyramid<a class="headerlink" href="#part-2-promises-a-flat-chain-instead-of-a-pyramid" title="Permanent link">&para;</a></h2>
+<p>A <strong>Promise</strong> is an object representing a value that doesn't exist yet, but will — either
+successfully (<strong>fulfilled</strong>) or with an error (<strong>rejected</strong>). It starts <strong>pending</strong> and can only
+change state once, after which it's permanently <strong>settled</strong>.</p>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kd">function</span><span class="w"> </span><span class="nx">loadUser</span><span class="p">(</span><span class="nx">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">,</span><span class="w"> </span><span class="nx">reject</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="nx">setTimeout</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">id</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mf">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">        </span><span class="nx">reject</span><span class="p">(</span><span class="ow">new</span><span class="w"> </span><span class="ne">Error</span><span class="p">(</span><span class="s2">&quot;Invalid user id&quot;</span><span class="p">));</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">        </span><span class="k">return</span><span class="p">;</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">      </span><span class="p">}</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">      </span><span class="nx">resolve</span><span class="p">({</span><span class="w"> </span><span class="nx">id</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Ayesha&quot;</span><span class="w"> </span><span class="p">});</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">    </span><span class="p">},</span><span class="w"> </span><span class="mf">500</span><span class="p">);</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">  </span><span class="p">});</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="p">}</span>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="nx">loadUser</span><span class="p">(</span><span class="mf">7</span><span class="p">)</span>
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="w">  </span><span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">user</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Loaded:&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">user</span><span class="p">.</span><span class="nx">name</span><span class="p">))</span>
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="w">  </span><span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s2">&quot;Failed:&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">error</span><span class="p">.</span><span class="nx">message</span><span class="p">))</span>
+</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="w">  </span><span class="p">.</span><span class="k">finally</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Request finished, either way&quot;</span><span class="p">));</span>
+</span></code></pre></div>
+<ul>
+<li><strong><code>.then(onFulfilled)</code></strong> runs when the promise succeeds.</li>
+<li><strong><code>.catch(onRejected)</code></strong> runs when it fails.</li>
+<li><strong><code>.finally(fn)</code></strong> runs regardless — ideal for cleanup, like hiding a loading spinner.</li>
+</ul>
+<h3 id="chaining-fixes-the-pyramid">Chaining Fixes the Pyramid<a class="headerlink" href="#chaining-fixes-the-pyramid" title="Permanent link">&para;</a></h3>
+<p>Every <code>.then()</code> returns a <strong>new</strong> Promise, so the nested pyramid from Part 1 flattens into a
+single, readable sequence — with <strong>one</strong> <code>.catch()</code> at the end catching a failure from <em>any</em> step
+above it:</p>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nx">loadUser</span><span class="p">(</span><span class="mf">7</span><span class="p">)</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">user</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">loadOrders</span><span class="p">(</span><span class="nx">user</span><span class="p">.</span><span class="nx">id</span><span class="p">))</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">orders</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">loadOrderDetails</span><span class="p">(</span><span class="nx">orders</span><span class="p">[</span><span class="mf">0</span><span class="p">].</span><span class="nx">id</span><span class="p">))</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span><span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">details</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">details</span><span class="p">))</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">  </span><span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s2">&quot;Something failed:&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">error</span><span class="p">.</span><span class="nx">message</span><span class="p">));</span>
+</span></code></pre></div>
+<h3 id="promiseall-running-several-at-once"><code>Promise.all</code> — Running Several at Once<a class="headerlink" href="#promiseall-running-several-at-once" title="Permanent link">&para;</a></h3>
+<p><code>Promise.all</code> takes an array of promises and resolves once <strong>every</strong> one of them has — with an
+array of their results, in the same order — or rejects immediately if any single one rejects.</p>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kd">const</span><span class="w"> </span><span class="nx">results</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nb">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">([</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="nx">loadUser</span><span class="p">(</span><span class="mf">1</span><span class="p">),</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span><span class="nx">loadUser</span><span class="p">(</span><span class="mf">2</span><span class="p">),</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">  </span><span class="nx">loadUser</span><span class="p">(</span><span class="mf">3</span><span class="p">),</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="p">]);</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">results</span><span class="p">);</span><span class="w"> </span><span class="c1">// all three, together, in ~500ms total — not 1500ms</span>
+</span></code></pre></div>
+<p>Reach for <code>Promise.all</code> whenever you need several <em>independent</em> pieces of data before continuing —
+loading a profile, its posts, and its settings all at once, instead of one after another.</p>
+<h2 id="part-3-asyncawait-promises-that-read-like-sync-code">Part 3: <code>async</code>/<code>await</code> — Promises That Read Like Sync Code<a class="headerlink" href="#part-3-asyncawait-promises-that-read-like-sync-code" title="Permanent link">&para;</a></h2>
+<p><code>async</code>/<code>await</code> doesn't replace Promises — it's syntax built directly on top of them, letting
+Promise-based code <em>read</em> top-to-bottom like ordinary synchronous code, while staying just as
+non-blocking underneath.</p>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">loadOrderSummary</span><span class="p">(</span><span class="nx">userId</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">loadUser</span><span class="p">(</span><span class="nx">userId</span><span class="p">);</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">orders</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">loadOrders</span><span class="p">(</span><span class="nx">user</span><span class="p">.</span><span class="nx">id</span><span class="p">);</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">details</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">loadOrderDetails</span><span class="p">(</span><span class="nx">orders</span><span class="p">[</span><span class="mf">0</span><span class="p">].</span><span class="nx">id</span><span class="p">);</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">details</span><span class="p">;</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>Two rules, and that's the whole feature:</p>
+<ul>
+<li><strong><code>async</code></strong> in front of a function makes it always return a Promise, and unlocks <code>await</code> inside
+  it.</li>
+<li><strong><code>await</code></strong> pauses <em>that function only</em> (never the whole program) until the Promise it's waiting
+  on settles — then "unwraps" the resolved value, or throws if the Promise rejected.</li>
+</ul>
+<h3 id="error-handling-with-trycatch">Error Handling with <code>try...catch</code><a class="headerlink" href="#error-handling-with-trycatch" title="Permanent link">&para;</a></h3>
+<p>Because a rejected <code>await</code> throws, you catch it exactly like any other exception — no <code>.catch()</code>
+chain required:</p>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">loadOrderSummary</span><span class="p">(</span><span class="nx">userId</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">loadUser</span><span class="p">(</span><span class="nx">userId</span><span class="p">);</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">orders</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">loadOrders</span><span class="p">(</span><span class="nx">user</span><span class="p">.</span><span class="nx">id</span><span class="p">);</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">loadOrderDetails</span><span class="p">(</span><span class="nx">orders</span><span class="p">[</span><span class="mf">0</span><span class="p">].</span><span class="nx">id</span><span class="p">);</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s2">&quot;Could not load order summary:&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">error</span><span class="p">.</span><span class="nx">message</span><span class="p">);</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="p">}</span>
+</span></code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Three tools, one engine</p>
+<p>Callbacks, <code>.then()</code> chains, and <code>async</code>/<code>await</code> are not three different ways of being
+asynchronous — they're three different pieces of <em>syntax</em> sitting on top of the exact same
+underlying machine: the <strong>event loop</strong>. Part 4 makes that machine visible.</p>
+</div>
+<h2 id="part-4-the-event-loop-visualized">Part 4: The Event Loop, Visualized<a class="headerlink" href="#part-4-the-event-loop-visualized" title="Permanent link">&para;</a></h2>
+<p>JavaScript runs on a single thread — it can only execute one thing at a time, on one <strong>call
+stack</strong>. Every <code>setTimeout</code>, every Promise callback, every <code>await</code> continuation has to wait its
+turn to get back onto that stack, and the <strong>event loop</strong> is the mechanism that decides <em>when</em> and
+<em>in what order</em> that happens. The rule, in one sentence:</p>
+<blockquote>
+<p>Run all synchronous code first. Once the call stack is empty, drain the <strong>entire</strong> microtask
+queue (Promises, <code>async</code>/<code>await</code>) before running even one task from the callback queue
+(<code>setTimeout</code>, <code>setInterval</code>, DOM events).</p>
+</blockquote>
+<p>That single rule explains output that looks baffling at first glance. Here's the exact code the
+visualizer below runs, step by step:</p>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;1: start&quot;</span><span class="p">);</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="nx">setTimeout</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;2: timeout callback&quot;</span><span class="p">);</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="p">},</span><span class="w"> </span><span class="mf">0</span><span class="p">);</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="nb">Promise</span><span class="p">.</span><span class="nx">resolve</span><span class="p">().</span><span class="nx">then</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;3: promise callback&quot;</span><span class="p">);</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="p">});</span>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">asyncFn</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;4: async start&quot;</span><span class="p">);</span>
+</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="w">  </span><span class="k">await</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+</span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;5: async resumed&quot;</span><span class="p">);</span>
+</span><span id="__span-7-15"><a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="p">}</span>
+</span><span id="__span-7-16"><a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a><span class="nx">asyncFn</span><span class="p">();</span>
+</span><span id="__span-7-17"><a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a>
+</span><span id="__span-7-18"><a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;6: end&quot;</span><span class="p">);</span>
+</span></code></pre></div>
+<p>Even with the timer's delay set to <code>0</code>, the real console output is <strong><code>1, 4, 6, 3, 5, 2</code></strong> — never
+<code>1, 2, 3, 4, 5, 6</code>. Step through it below, one engine action at a time, and watch exactly why.</p>
+<div class="elv-widget" id="elv-widget">
+<div class="elv-code-pane">
+<div class="elv-code-title">script.js</div>
+<pre class="elv-code" id="elv-code"></pre>
+</div>
+<div class="elv-main">
+<div class="elv-panels">
+<div class="elv-panel elv-panel-stack">
+<div class="elv-panel-title">Call Stack</div>
+<div class="elv-stack" id="elv-stack"></div>
+</div>
+<div class="elv-panel">
+<div class="elv-panel-title">Web APIs</div>
+<div class="elv-list" id="elv-webapi"></div>
+</div>
+<div class="elv-panel">
+<div class="elv-panel-title">Microtask Queue</div>
+<div class="elv-list" id="elv-micro"></div>
+</div>
+<div class="elv-panel">
+<div class="elv-panel-title">Callback Queue</div>
+<div class="elv-list" id="elv-macro"></div>
+</div>
+</div>
+<div class="elv-console">
+<div class="elv-panel-title">Console Output</div>
+<div class="elv-console-lines" id="elv-console-lines"></div>
+</div>
+</div>
+<div class="elv-note" id="elv-note">Click <strong>Next</strong> (or <strong>Play</strong>) to start executing the script, one step at a time.</div>
+<div class="elv-controls">
+<button type="button" id="elv-reset">&#8634; Reset</button>
+<button type="button" id="elv-prev">&#9664; Prev</button>
+<button type="button" id="elv-play">&#9654; Play</button>
+<button type="button" id="elv-next">Next &#9654;</button>
+<span class="elv-counter" id="elv-counter"></span>
+</div>
+</div>
+<style>
+.elv-widget{border:1px solid var(--cu-border-soft,#D8DCE3);border-radius:14px;padding:1.2rem;margin:1.4rem 0;background:var(--cu-surface,#F7F8FA);font-family:Arial,Helvetica,sans-serif;}
+.elv-code-pane{margin-bottom:1rem;}
+.elv-code-title{font-size:0.75rem;font-weight:700;letter-spacing:0.05em;color:var(--cu-faint,#7A8496);text-transform:uppercase;margin-bottom:0.4rem;}
+.elv-code{background:#1F2429;color:#E8EAED;border-radius:8px;padding:0.9rem 1rem;font-family:"Courier New",Courier,monospace;font-size:0.82rem;line-height:1.55;overflow-x:auto;margin:0;}
+.elv-code .elv-line{display:block;padding:0 0.4rem;border-radius:4px;white-space:pre;}
+.elv-code .elv-line.elv-active{background:#c9680f55;outline:1px solid #c9680f;}
+.elv-main{display:flex;flex-direction:column;gap:0.9rem;}
+.elv-panels{display:grid;grid-template-columns:repeat(4,1fr);gap:0.7rem;}
+.elv-panel{background:var(--cu-card,#FFFFFF);border:1px solid var(--cu-border-soft,#D8DCE3);border-radius:10px;padding:0.6rem;min-height:150px;}
+.elv-panel-title{font-size:0.72rem;font-weight:700;letter-spacing:0.04em;color:var(--cu-faint,#7A8496);text-transform:uppercase;margin-bottom:0.5rem;}
+.elv-stack{display:flex;flex-direction:column-reverse;gap:0.3rem;min-height:100px;}
+.elv-list{display:flex;flex-direction:column;gap:0.3rem;min-height:100px;}
+.elv-frame{background:#2b2b7a;color:#fff;border-radius:6px;padding:0.35rem 0.5rem;font-size:0.76rem;font-family:"Courier New",Courier,monospace;animation:elv-pop-in 0.25s ease;}
+.elv-frame-webapi{background:#1C7293;}
+.elv-frame-micro{background:#3FA66B;}
+.elv-frame-macro{background:#B9720E;}
+@keyframes elv-pop-in{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+.elv-console{background:var(--cu-card,#FFFFFF);border:1px solid var(--cu-border-soft,#D8DCE3);border-radius:10px;padding:0.6rem;}
+.elv-console-lines{font-family:"Courier New",Courier,monospace;font-size:0.8rem;color:#1F2429;min-height:2rem;}
+.elv-console-lines div{padding:0.1rem 0;}
+.elv-note{margin-top:1rem;background:#E9EDFB;border:1px solid #6C7FD6;color:#262b40;border-radius:8px;padding:0.6rem 0.8rem;font-size:0.85rem;min-height:1.4em;}
+.elv-controls{display:flex;align-items:center;gap:0.5rem;margin-top:0.8rem;flex-wrap:wrap;}
+.elv-controls button{background:#c9680f;color:#fff;border:none;border-radius:6px;padding:0.4rem 0.8rem;font-weight:700;font-size:0.8rem;cursor:pointer;}
+.elv-controls button:disabled{background:#ccc;cursor:not-allowed;}
+.elv-counter{margin-left:auto;font-size:0.8rem;color:var(--cu-faint,#7A8496);font-family:"Courier New",Courier,monospace;}
+@media screen and (max-width:52em){.elv-panels{grid-template-columns:repeat(2,1fr);}}
+</style>
+<script>
+(function () {
+  var CODE_LINES = [
+    'console.log("1: start");',
+    '',
+    'setTimeout(() => {',
+    '  console.log("2: timeout callback");',
+    '}, 0);',
+    '',
+    'Promise.resolve().then(() => {',
+    '  console.log("3: promise callback");',
+    '});',
+    '',
+    'async function asyncFn() {',
+    '  console.log("4: async start");',
+    '  await null;',
+    '  console.log("5: async resumed");',
+    '}',
+    'asyncFn();',
+    '',
+    'console.log("6: end");'
+  ];
+
+  var STEPS = [
+    { hl: [], stack: [], webapi: [], micro: [], macro: [], out: [], note: 'Click Next (or Play) to start executing the script, one step at a time.' },
+    { hl: [1], stack: ['main()', 'console.log()'], webapi: [], micro: [], macro: [], out: ['1: start'], note: "console.log('1: start') runs immediately — call stack: main() → console.log()." },
+    { hl: [1], stack: ['main()'], webapi: [], micro: [], macro: [], out: ['1: start'], note: 'console.log() returns and is popped off the stack. Line 1 is done.' },
+    { hl: [3, 4, 5], stack: ['main()'], webapi: ['setTimeout (0ms)'], micro: [], macro: [], out: ['1: start'], note: "setTimeout hands its callback to the browser's Web APIs and returns immediately — it does NOT block for 0ms." },
+    { hl: [7, 8, 9], stack: ['main()'], webapi: ['setTimeout (0ms)'], micro: ['Promise .then()'], macro: [], out: ['1: start'], note: 'Promise.resolve() is already fulfilled, so its .then() callback goes straight into the Microtask Queue.' },
+    { hl: [16], stack: ['main()', 'asyncFn()'], webapi: ['setTimeout (0ms)'], micro: ['Promise .then()'], macro: [], out: ['1: start'], note: 'asyncFn() is called — a new frame is pushed onto the call stack.' },
+    { hl: [12], stack: ['main()', 'asyncFn()'], webapi: ['setTimeout (0ms)'], micro: ['Promise .then()'], macro: [], out: ['1: start', '4: async start'], note: "Inside asyncFn, console.log('4: async start') runs synchronously, same as any normal function call." },
+    { hl: [13], stack: ['main()'], webapi: ['setTimeout (0ms)'], micro: ['Promise .then()', 'asyncFn (after await)'], macro: [], out: ['1: start', '4: async start'], note: "await null pauses asyncFn right here. Everything AFTER it is scheduled as a microtask, and asyncFn's frame pops off — control returns to main()." },
+    { hl: [18], stack: ['main()'], webapi: ['setTimeout (0ms)'], micro: ['Promise .then()', 'asyncFn (after await)'], macro: [], out: ['1: start', '4: async start', '6: end'], note: "console.log('6: end') runs — the last line of synchronous code in the script." },
+    { hl: [], stack: [], webapi: ['setTimeout (0ms)'], micro: ['Promise .then()', 'asyncFn (after await)'], macro: [], out: ['1: start', '4: async start', '6: end'], note: 'Synchronous script finished — main() pops off. The call stack is now completely EMPTY.' },
+    { hl: [8], stack: ['Promise .then()'], webapi: ['setTimeout (0ms)'], micro: ['asyncFn (after await)'], macro: [], out: ['1: start', '4: async start', '6: end'], note: 'Event loop: stack is empty, so it checks the Microtask Queue FIRST — before the Callback Queue — and takes the oldest microtask.' },
+    { hl: [8], stack: [], webapi: ['setTimeout (0ms)'], micro: ['asyncFn (after await)'], macro: [], out: ['1: start', '4: async start', '6: end', '3: promise callback'], note: 'That microtask runs, logs its message, and the stack empties again.' },
+    { hl: [14], stack: ['asyncFn (resumed)'], webapi: ['setTimeout (0ms)'], micro: [], macro: [], out: ['1: start', '4: async start', '6: end', '3: promise callback'], note: 'The Microtask Queue still had one more item — the event loop ALWAYS drains it completely before ever touching the Callback Queue.' },
+    { hl: [14], stack: [], webapi: ['setTimeout (0ms)'], micro: [], macro: [], out: ['1: start', '4: async start', '6: end', '3: promise callback', '5: async resumed'], note: 'asyncFn resumes right after its await and logs its final line.' },
+    { hl: [3, 4, 5], stack: [], webapi: [], micro: [], macro: ['setTimeout callback'], out: ['1: start', '4: async start', '6: end', '3: promise callback', '5: async resumed'], note: 'The Microtask Queue is finally empty. NOW the event loop looks at the Callback Queue — the timer already elapsed, so its callback moves there.' },
+    { hl: [4], stack: ['setTimeout callback'], webapi: [], micro: [], macro: [], out: ['1: start', '4: async start', '6: end', '3: promise callback', '5: async resumed'], note: 'The stack is empty, so the event loop finally takes a task from the Callback Queue and runs it.' },
+    { hl: [], stack: [], webapi: [], micro: [], macro: [], out: ['1: start', '4: async start', '6: end', '3: promise callback', '5: async resumed', '2: timeout callback'], note: 'Done! Final order: 1, 4, 6, 3, 5, 2 — all synchronous code, then every microtask, then the one macrotask. That’s the whole trick behind the event loop.' }
+  ];
+
+  var codeEl = document.getElementById('elv-code');
+  var stackEl = document.getElementById('elv-stack');
+  var webapiEl = document.getElementById('elv-webapi');
+  var microEl = document.getElementById('elv-micro');
+  var macroEl = document.getElementById('elv-macro');
+  var consoleEl = document.getElementById('elv-console-lines');
+  var noteEl = document.getElementById('elv-note');
+  var counterEl = document.getElementById('elv-counter');
+  var prevBtn = document.getElementById('elv-prev');
+  var nextBtn = document.getElementById('elv-next');
+  var playBtn = document.getElementById('elv-play');
+  var resetBtn = document.getElementById('elv-reset');
+
+  if (!codeEl) { return; }
+
+  CODE_LINES.forEach(function (line, i) {
+    var div = document.createElement('div');
+    div.className = 'elv-line';
+    div.id = 'elv-line-' + (i + 1);
+    div.textContent = line.length ? line : ' ';
+    codeEl.appendChild(div);
+  });
+
+  var current = 0;
+  var playTimer = null;
+
+  function renderList(el, items, frameClass) {
+    el.innerHTML = '';
+    items.forEach(function (text) {
+      var div = document.createElement('div');
+      div.className = 'elv-frame ' + frameClass;
+      div.textContent = text;
+      el.appendChild(div);
+    });
+  }
+
+  function render() {
+    var step = STEPS[current];
+
+    for (var i = 1; i <= CODE_LINES.length; i++) {
+      var lineEl = document.getElementById('elv-line-' + i);
+      if (lineEl) { lineEl.classList.remove('elv-active'); }
+    }
+    step.hl.forEach(function (n) {
+      var lineEl = document.getElementById('elv-line-' + n);
+      if (lineEl) { lineEl.classList.add('elv-active'); }
+    });
+
+    renderList(stackEl, step.stack.slice().reverse(), 'elv-frame-stack');
+    renderList(webapiEl, step.webapi, 'elv-frame-webapi');
+    renderList(microEl, step.micro, 'elv-frame-micro');
+    renderList(macroEl, step.macro, 'elv-frame-macro');
+
+    consoleEl.innerHTML = '';
+    step.out.forEach(function (line) {
+      var div = document.createElement('div');
+      div.textContent = '› ' + line;
+      consoleEl.appendChild(div);
+    });
+
+    noteEl.textContent = step.note;
+    counterEl.textContent = 'Step ' + current + ' / ' + (STEPS.length - 1);
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === STEPS.length - 1;
+    if (current === STEPS.length - 1) { stopPlay(); }
+  }
+
+  function goNext() {
+    if (current < STEPS.length - 1) { current++; render(); }
+  }
+  function goPrev() {
+    if (current > 0) { current--; render(); }
+  }
+  function reset() {
+    stopPlay();
+    current = 0;
+    render();
+  }
+  function stopPlay() {
+    if (playTimer) { clearInterval(playTimer); playTimer = null; playBtn.textContent = '▶ Play'; }
+  }
+  function togglePlay() {
+    if (playTimer) {
+      stopPlay();
+      return;
+    }
+    playBtn.textContent = '⏸ Pause';
+    playTimer = setInterval(function () {
+      if (current >= STEPS.length - 1) { stopPlay(); return; }
+      goNext();
+    }, 1400);
+  }
+
+  nextBtn.addEventListener('click', goNext);
+  prevBtn.addEventListener('click', goPrev);
+  resetBtn.addEventListener('click', reset);
+  playBtn.addEventListener('click', togglePlay);
+
+  render();
+})();
+</script>
+
+<div class="admonition tip">
+<p class="admonition-title">Nothing here is specific to this one example</p>
+<p>Swap in any mix of <code>setTimeout</code>, <code>.then()</code>, and <code>await</code> and the same two rules still decide
+the order: synchronous code runs first, then the <em>entire</em> microtask queue drains, then one
+task from the callback queue runs — and the loop repeats. That's the complete mental model,
+for any program you'll ever read or write.</p>
+</div>
+<h2 id="try-it-yourself">Try It Yourself<a class="headerlink" href="#try-it-yourself" title="Permanent link">&para;</a></h2>
+<ol>
+<li>In the code above, change the timer's delay from <code>0</code> to a very large number like <code>5000</code> in your
+   head — does the <em>order</em> of the six log lines change at all? (It doesn't — the callback queue is
+   only ever checked <em>after</em> the microtask queue is empty, no matter how short the delay is.)</li>
+<li>Add a second <code>Promise.resolve().then(() =&gt; console.log("7: second promise"))</code> right after the
+   first one. Predict where <code>"7"</code> lands in the final order before checking — it should land
+   immediately after <code>"3"</code>, since the microtask queue is first-in-first-out and both are already
+   sitting in it before the stack ever empties.</li>
+<li>In a real file, write a <code>loadUser</code>/<code>loadOrders</code>/<code>loadOrderDetails</code> callback chain like Part 1's,
+   then rewrite it twice — once with Promise chaining, once with <code>async</code>/<code>await</code> and
+   <code>try...catch</code>. All three should produce identical output; only the readability changes.</li>
+<li>Using <code>Promise.all</code>, write a function that loads three independent pieces of data at once and
+   logs how long the whole thing took with <code>console.time</code>/<code>console.timeEnd</code> — compare that against
+   loading the same three things with three separate <code>await</code> calls in sequence.</li>
+</ol>
+<h2 id="key-takeaways">Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permanent link">&para;</a></h2>
+<ul>
+<li>A <strong>callback</strong> is a function handed to another function to run later; nesting callbacks whose
+  results depend on each other produces <strong>callback hell</strong> — the problem Promises exist to solve.</li>
+<li>A <strong>Promise</strong> is pending, then settles exactly once, into fulfilled or rejected.
+  <code>.then()</code>/<code>.catch()</code>/<code>.finally()</code> react to that settlement, and chaining <code>.then()</code> calls flattens
+  what used to be a nested pyramid into a single, linear sequence.</li>
+<li><strong><code>async</code>/<code>await</code></strong> is the same Promise machinery, written to read top-to-bottom like synchronous
+  code — <code>await</code> only pauses the function it's inside, never the whole program, and errors are
+  handled with ordinary <code>try...catch</code>.</li>
+<li>The <strong>event loop</strong>'s whole job is one rule: finish all synchronous code, then drain the
+  <strong>entire</strong> microtask queue (Promises, <code>await</code>), then run <strong>one</strong> task from the callback queue
+  (<code>setTimeout</code>, DOM events) — then repeat.</li>
+<li>This is exactly why a <code>Promise.resolve().then(...)</code> always runs before a <code>setTimeout(..., 0)</code>,
+  no matter how the code is ordered on the page — microtasks are a strictly higher-priority queue,
+  not just a faster timer.</li>
+</ul>
+
+
+<div class="cu-share">
+  <span class="cu-share-label">// share</span>
+  <div class="cu-share-links">
+    <a class="cu-share-btn cu-share-whatsapp"
+       href="https://wa.me/?text=Tutorial%3A%20Callbacks%2C%20Promises%2C%20and%20Async/Await%20https%3A//cuinotes.com/tutorials/javascript/callbacks-promises-async-await/"
+       target="_blank" rel="noopener" title="Share on WhatsApp" aria-label="Share on WhatsApp">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157m-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1s56.2 81.2 56.1 130.5c0 101.8-84.9 184.6-186.6 184.6m101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8s-14.3 18-17.6 21.8c-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7s-12.5-30.1-17.1-41.2c-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2s-9.7 1.4-14.8 6.9c-5.1 5.6-19.4 19-19.4 46.3s19.9 53.7 22.6 57.4c2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4s4.6-24.1 3.2-26.4c-1.3-2.5-5-3.9-10.5-6.6"/></svg>
+    </a>
+    <a class="cu-share-btn cu-share-facebook"
+       href="https://www.facebook.com/sharer/sharer.php?u=https%3A//cuinotes.com/tutorials/javascript/callbacks-promises-async-await/"
+       target="_blank" rel="noopener" title="Share on Facebook" aria-label="Share on Facebook">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M512 256C512 114.6 397.4 0 256 0S0 114.6 0 256c0 120 82.7 220.8 194.2 248.5V334.2h-52.8V256h52.8v-33.7c0-87.1 39.4-127.5 125-127.5 16.2 0 44.2 3.2 55.7 6.4V172c-6-.6-16.5-1-29.6-1-42 0-58.2 15.9-58.2 57.2V256h83.6l-14.4 78.2H287v175.9C413.8 494.8 512 386.9 512 256"/></svg>
+    </a>
+    <a class="cu-share-btn cu-share-x"
+       href="https://twitter.com/intent/tweet?text=Tutorial%3A%20Callbacks%2C%20Promises%2C%20and%20Async/Await&amp;url=https%3A//cuinotes.com/tutorials/javascript/callbacks-promises-async-await/"
+       target="_blank" rel="noopener" title="Share on X (Twitter)" aria-label="Share on X (Twitter)">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M357.2 48h70.6L273.6 224.2 455 464H313L201.7 318.6 74.5 464H3.8l164.9-188.5L-5.2 48h145.6l100.5 132.9zm-24.8 373.8h39.1L119.1 88h-42z"/></svg>
+    </a>
+    <a class="cu-share-btn cu-share-linkedin"
+       href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//cuinotes.com/tutorials/javascript/callbacks-promises-async-await/"
+       target="_blank" rel="noopener" title="Share on LinkedIn" aria-label="Share on LinkedIn">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77m282.1 320h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  </div>
+</div>
+
+
+
+
+
+
+
+  
+    
+  
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="October 22, 2026 20:20:31 UTC">October 22, 2026</span>
+  </span>
+
+    
+    
+    
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../event-lifecycle-app/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Build an Event Inspector">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Build an Event Inspector
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../express/" class="md-footer__link md-footer__link--next" aria-label="Next: Overview">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Overview
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 cuinotes.com · Usman Akram &amp; Asif Shehzad, COMSATS University Islamabad — Lahore Campus
+    </div>
+  
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/in/usman-akram-21400327" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77m282.1 320h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://usmanlive.com" target="_blank" rel="noopener" title="usmanlive.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M351.9 280H161c2.9 64.5 17.2 123.9 37.5 167.4 11.4 24.5 23.7 41.8 35.1 52.4 11.2 10.5 18.9 12.2 22.9 12.2s11.7-1.7 22.9-12.2c11.4-10.6 23.7-28 35.1-52.4 20.3-43.5 34.6-102.9 37.5-167.4zm-191-48h190.9c-2.8-64.5-17.1-123.9-37.4-167.4-11.4-24.4-23.7-41.8-35.1-52.4C268.1 1.7 260.4 0 256.4 0s-11.7 1.7-22.9 12.2c-11.4 10.6-23.7 28-35.1 52.4-20.3 43.5-34.6 102.9-37.5 167.4m-48 0c3.5-85.6 25.6-165.1 57.9-217.3C78.7 47.3 10.9 131.2 1.5 232zM1.5 280c9.4 100.8 77.2 184.7 169.3 217.3-32.3-52.2-54.4-131.7-57.9-217.3zm398.4 0c-3.5 85.6-25.6 165.1-57.9 217.3 92.1-32.7 159.9-116.5 169.3-217.3zm111.4-48C501.9 131.2 434.1 47.3 342 14.7c32.3 52.2 54.4 131.7 57.9 217.3z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.indexes", "navigation.top", "navigation.footer", "navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.prune", "navigation.path", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "header.autohide"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
