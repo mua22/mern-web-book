@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stories CRUD</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Stories</h1>
+      <p class="subtitle">
+        A single-page CRUD app, talking to a real REST API with fetch — no frameworks.
+      </p>
+    </header>
+
+    <main>
+      <section class="panel">
+        <h2>Add a New Story</h2>
+        <form id="storyForm" novalidate>
+          <div class="field">
+            <label for="titleInput">Title</label>
+            <input type="text" id="titleInput" name="title" placeholder="A short, punchy title">
+            <p class="field-error" id="titleError"></p>
+          </div>
+          <div class="field">
+            <label for="contentInput">Content</label>
+            <textarea id="contentInput" name="content" rows="3" placeholder="What's the story?"></textarea>
+            <p class="field-error" id="contentError"></p>
+          </div>
+          <div class="form-actions">
+            <button type="submit" id="submitBtn">Add Story</button>
+            <span class="form-status" id="formStatus"></span>
+          </div>
+        </form>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>All Stories</h2>
+          <button type="button" id="refreshBtn">Refresh</button>
+        </div>
+        <p class="list-status" id="listStatus">Loading stories&hellip;</p>
+        <ul class="story-list" id="storyList"></ul>
+      </section>
+    </main>
+
+    <footer>
+      <p>Built with HTML, CSS, and plain JavaScript — talking to a real API with fetch.</p>
+    </footer>
+  </div>
+</body>
+</html>
