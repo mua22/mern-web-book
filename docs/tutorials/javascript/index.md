@@ -21,7 +21,7 @@ Tool-focused tutorials on the JavaScript language itself — beyond what's alrea
 Build a small interactive page — a live preview, a greeting, a theme switcher, and dark mode — binding every event with plain HTML attributes.
 
 <div class="cu-card-foot" markdown>
-<span>1 of 5</span>
+<span>1 of 6</span>
 <span class="cu-go">Start tutorial →</span>
 </div>
 </div>
@@ -37,7 +37,7 @@ Build a small interactive page — a live preview, a greeting, a theme switcher,
 Create, toggle, and delete tasks by building real DOM elements from a JavaScript array — the pattern behind most real to-do lists and shopping carts.
 
 <div class="cu-card-foot" markdown>
-<span>2 of 5</span>
+<span>2 of 6</span>
 <span class="cu-go">Start tutorial →</span>
 </div>
 </div>
@@ -53,7 +53,7 @@ Create, toggle, and delete tasks by building real DOM elements from a JavaScript
 Start, pause, and reset a ticking countdown using setInterval — the first project in this series driven by time instead of clicks.
 
 <div class="cu-card-foot" markdown>
-<span>3 of 5</span>
+<span>3 of 6</span>
 <span class="cu-go">Start tutorial →</span>
 </div>
 </div>
@@ -69,7 +69,7 @@ Start, pause, and reset a ticking countdown using setInterval — the first proj
 Log capturing, target, and bubbling live, build a delegated task list, and convert the whole project to unobtrusive JavaScript with DOMContentLoaded.
 
 <div class="cu-card-foot" markdown>
-<span>4 of 5</span>
+<span>4 of 6</span>
 <span class="cu-go">Start tutorial →</span>
 </div>
 </div>
@@ -85,7 +85,23 @@ Log capturing, target, and bubbling live, build a delegated task list, and conve
 Callback hell, Promise chaining, and async/await side by side, plus a live interactive visualizer that steps through exactly how the event loop orders it all.
 
 <div class="cu-card-foot" markdown>
-<span>5 of 5</span>
+<span>5 of 6</span>
+<span class="cu-go">Start tutorial →</span>
+</div>
+</div>
+
+<div class="cu-card" markdown>
+<a class="cu-card-link" href="stories-crud-fetch/" aria-label="Open Single-Page CRUD with Fetch tutorial"></a>
+<div class="cu-tut-top" markdown>
+<span class="cu-chip cu-chip-orange">Intermediate</span>
+</div>
+
+### Single-Page CRUD with Fetch
+
+A validated form, inline edit, and delete buttons -- all four REST operations against a real live API, using nothing but fetch and vanilla JavaScript.
+
+<div class="cu-card-foot" markdown>
+<span>6 of 6</span>
 <span class="cu-go">Start tutorial →</span>
 </div>
 </div>

@@ -20,6 +20,7 @@ how JavaScript manages that waiting, and how to fetch real data from a server.
 - Synchronous vs. asynchronous execution, and the event loop, task queue, and "callback hell"
 - Promises: their three states, `.then/.catch/.finally`, chaining, and `Promise.all`
 - `async`/`await`, and error handling with `try...catch`
+- REST APIs and HTTP methods (`GET`/`POST`/`PUT`/`PATCH`/`DELETE`), with a real example API
 - Making real network requests with the Fetch API: GET/POST, headers, response parsing, and CORS
 
 ## Synchronous vs. Asynchronous Execution
@@ -282,6 +283,63 @@ JSON, not XML) is the general technique of a web page requesting data from a ser
 background, without a full page reload. The modern, built-in tool for doing this is the
 **Fetch API**.
 
+### REST APIs and HTTP Methods
+
+Most servers you'll talk to expose a **REST API** (Representational State Transfer) — a convention
+where each kind of data is a **resource** living at its own URL (`/stories`, `/stories/5`), and the
+**HTTP method** you send tells the server *what to do* with that resource, instead of cramming the
+action into the URL itself (`/getStories`, `/deleteStory5` — the pre-REST, non-RESTful style you
+still see in older code).
+
+| Method | CRUD operation | Typical use | Sends a body? |
+|---|---|---|---|
+| `GET` | Read | Fetch one resource or a whole collection | No |
+| `POST` | Create | Add a brand-new resource | Yes |
+| `PUT` | Update | Replace a resource's fields entirely | Yes |
+| `PATCH` | Update | Change only some of a resource's fields | Yes |
+| `DELETE` | Delete | Remove a resource | No |
+
+The same URL, hit with different methods, does something completely different — that's the whole
+idea. A `GET /stories/5` reads story 5; a `PUT /stories/5` replaces it; a `DELETE /stories/5`
+removes it. Nothing in the URL changed — only the method.
+
+!!! note "`PUT` vs. `PATCH`"
+    `PUT` is specified to replace the *entire* resource — any field you don't send is supposed to
+    be cleared. `PATCH` updates only the fields you send, leaving the rest alone. In practice, many
+    real APIs (including the one below) treat `PUT` more like `PATCH` always expecting the full
+    object anyway — always check a specific API's actual behavior rather than assuming the spec is
+    followed exactly.
+
+#### A Real Example: the Fake Stories API
+
+To make this concrete, here's a small, real, public REST API you can hit from your own code right
+now — no sign-up required — built for exactly this kind of practice:
+**[usmanlive.com/fake-stories-restful-api](https://usmanlive.com/fake-stories-restful-api/)**, base
+URL `https://usmanlive.com/wp-json/api`. Every "story" is just `{ id, title, content }`:
+
+| Method | Endpoint | Body | Returns |
+|---|---|---|---|
+| `GET` | `/stories` | — | An array of every story |
+| `GET` | `/stories/:id` | — | One story, or a 404 if that id doesn't exist |
+| `POST` | `/stories` | `{ "title": "...", "content": "..." }` | `{ "message": "...", "story_id": 11149 }` |
+| `PUT` | `/stories/:id` | `{ "title": "...", "content": "..." }` | `{ "message": "Story updated successfully" }` |
+| `DELETE` | `/stories/:id` | — | `{ "message": "Story deleted successfully" }` |
+
+A real response from `GET /stories` looks like this:
+
+```json
+[
+  { "id": "11139", "title": "Mock Story 1", "content": "Lorem ipsum dolor sit amet..." },
+  { "id": "11140", "title": "Mock Story 2", "content": "Sed do eiusmod tempor incididunt..." }
+]
+```
+
+!!! warning "This API does not validate anything server-side"
+    `POST /stories` with an empty `{}` body is accepted and silently creates a story with blank
+    fields — the server trusts whatever you send. This is common with small or practice APIs, and
+    it means **your client-side form validation is the only thing protecting the data** — the exact
+    problem you'll solve in the hands-on CRUD tutorial that goes with this lecture.
+
 ### A GET Request
 
 ```javascript
@@ -417,6 +475,12 @@ running on one **origin** (a combination of protocol + domain + port, e.g.
    and logs both results only once **both** have arrived. Then deliberately point one URL at a
    non-existent server and observe how the `.catch` (or `try...catch`) handles the failure of the
    whole group.
+3. Using the Fake Stories API (`https://usmanlive.com/wp-json/api`), write four small `async`
+   functions — `getStories()`, `addStory(title, content)`, `updateStory(id, title, content)`, and
+   `deleteStory(id)` — one per HTTP method from the table above. Call each one from the console and
+   confirm with `getStories()` that the data actually changed. For a complete, polished version of
+   exactly this — with a real form, inline edit/delete buttons, and validation — see the
+   [Single-Page CRUD with Fetch](../tutorials/javascript/stories-crud-fetch.md) tutorial.
 
 ## Key Takeaways
 
@@ -431,6 +495,8 @@ running on one **origin** (a combination of protocol + domain + port, e.g.
   any one rejects).
 - `async`/`await` is Promise-based syntax that reads like synchronous code; errors are handled
   with ordinary `try...catch`.
+- A REST API uses the HTTP method, not the URL, to say what to do: `GET` reads, `POST` creates,
+  `PUT`/`PATCH` update, `DELETE` removes — the same URL behaves differently depending on the verb.
 - The Fetch API makes network requests; check `response.ok` before parsing, since `fetch` only
   rejects on true network failure, not on HTTP error status codes.
 - CORS is a browser security rule enforced by checking response headers from the server — it
