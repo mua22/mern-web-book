@@ -121,9 +121,18 @@ function renderStories(stories) {
 async function loadStories() {
   const status = document.getElementById("listStatus");
   const list = document.getElementById("storyList");
-  status.textContent = "Loading stories…";
-  status.hidden = false;
-  list.innerHTML = "";
+
+  // Only show "Loading…" (and only then) when there's nothing on
+  // screen yet — the very first load, or after a failed fetch. On a
+  // refresh after add/edit/delete, the existing cards stay exactly
+  // as they are — visible, not cleared — until the new data is
+  // ready to replace them in one swap. Clearing the list up front
+  // was the flicker: every mutation blanked the whole list and
+  // flashed "Loading…" before the (often near-instant) GET returned.
+  if (list.children.length === 0) {
+    status.textContent = "Loading stories…";
+    status.hidden = false;
+  }
 
   try {
     const stories = await apiGetStories();

@@ -318,9 +318,15 @@ one.
 async function loadStories() {
   const status = document.getElementById("listStatus");
   const list = document.getElementById("storyList");
-  status.textContent = "Loading stories…";
-  status.hidden = false;
-  list.innerHTML = "";
+
+  // Only show "Loading…" when there's nothing on screen yet — the
+  // very first load, or after a failed fetch. On a refresh after
+  // add/edit/delete, the existing cards stay visible, untouched,
+  // until the new data is ready to replace them in one swap.
+  if (list.children.length === 0) {
+    status.textContent = "Loading stories…";
+    status.hidden = false;
+  }
 
   try {
     const stories = await apiGetStories();
@@ -338,6 +344,14 @@ after a create, an update, or a delete, instead of trying to patch the existing 
 page just asks the server for the truth again. That's a deliberate simplification: re-fetching
 means the list on screen can never silently drift out of sync with what's actually saved, at the
 cost of one extra network request per change — a trade worth making for a page this size.
+
+!!! warning "Don't clear the list before you have something to replace it with"
+    An earlier version of this function cleared `#storyList` (`list.innerHTML = ""`) and showed
+    "Loading…" on *every* call, including refreshes after an edit or delete. That's a real,
+    visible bug: the whole list would blank out and flash a loading message for every single
+    operation, even though almost nothing on screen had actually changed. The fix is the
+    `list.children.length === 0` check above — the list only ever gets cleared once new data has
+    actually arrived to replace it (inside `renderStories`), never a moment before.
 
 ### Handling the "Add a New Story" form
 
