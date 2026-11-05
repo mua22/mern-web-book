@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shelf</title>
+<style>
+  :root { --ink:#14181f; --muted:#5b6577; --line:#e2e5eb; --accent:#0c8c76; --bad:#b42318; font-family: system-ui, sans-serif; }
+  body { max-width: 40rem; margin: 2rem auto; padding: 0 1rem; color: var(--ink); }
+  h1 { margin-bottom: .25rem } .sub { color: var(--muted); margin-top: 0 }
+  form { display: grid; gap: .6rem; padding: 1rem; border: 1px solid var(--line); border-radius: 12px; }
+  label { display: grid; gap: .2rem; font-size: .9rem; font-weight: 600 }
+  input { padding: .5rem .6rem; border: 1px solid var(--line); border-radius: 8px; font: inherit }
+  input:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
+  button { padding: .55rem .9rem; border: 0; border-radius: 8px; background: var(--accent); color: #fff; font-weight: 700; cursor: pointer }
+  .err { color: var(--bad); font-size: .8rem; min-height: 1em; font-weight: 500 }
+  ul { list-style: none; padding: 0 } .book { padding: .6rem 0; border-bottom: 1px solid var(--line) }
+  .by { color: var(--muted) } .tag { font-size: .75rem; border: 1px solid var(--line); border-radius: 999px; padding: .05rem .5rem }
+  .stars { color: #b9720e } .empty, .error { color: var(--muted); padding: .8rem 0 } .error { color: var(--bad) }
+  .skeleton { height: 1.4rem; margin: .6rem 0; border-radius: 6px; background: linear-gradient(90deg, #eceff4 25%, #f7f8fa 37%, #eceff4 63%); background-size: 400% 100%; animation: shimmer 1.2s infinite }
+  @keyframes shimmer { to { background-position: -400% 0 } }
+  @media (prefers-reduced-motion: reduce) { .skeleton { animation: none } }
+</style>
+<h1>Shelf</h1>
+<p class="sub">A tiny reading list. Client and server share one validator.</p>
+<label>API key (only if the server requires one) <input id="key" type="password" autocomplete="off"></label>
+<form id="add" novalidate>
+  <label>Title <input name="title"><span class="err" id="err-title"></span></label>
+  <label>Author <input name="author"><span class="err" id="err-author"></span></label>
+  <label>Pages (optional) <input name="pages" inputmode="numeric"><span class="err" id="err-pages"></span></label>
+  <span class="err" id="err-form"></span>
+  <button>Add book</button>
+</form>
+<h2>Your books</h2>
+<ul id="list" aria-live="polite"></ul>
+<script type="module" src="/web/app.js"></script>

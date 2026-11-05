@@ -1,0 +1,4042 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Free textbooks, lecture slides, and runnable code for undergraduate Computer Science — Algorithms & Data Structures, Web Technologies, and Advanced Web Technologies — from the Department of Computer Science, COMSATS University Islamabad, Lahore Campus.">
+      
+      
+        <meta name="author" content="Usman Akram">
+      
+      
+        <link rel="canonical" href="https://cuinotes.com/claude-code-handbook/05-prompting-and-plan-mode/">
+      
+      
+        <link rel="prev" href="../04-project-memory/">
+      
+      
+        <link rel="next" href="../06-context-and-cost/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/logo.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>5. Prompting and Plan Mode - cuinotes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+  
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+  
+  <style>:root{--md-admonition-icon--note:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M20%2011h3v2h-3zM1%2011h3v2H1zM13%201v3h-2V1zM4.92%203.5l2.13%202.14-1.42%201.41L3.5%204.93zm12.03%202.13%202.12-2.13%201.43%201.43-2.13%202.12zM12%206a6%206%200%200%201%206%206c0%202.22-1.21%204.16-3%205.2V19a1%201%200%200%201-1%201h-4a1%201%200%200%201-1-1v-1.8c-1.79-1.04-3-2.98-3-5.2a6%206%200%200%201%206-6m2%2015v1a1%201%200%200%201-1%201h-2a1%201%200%200%201-1-1v-1zm-3-3h2v-2.13c1.73-.44%203-2.01%203-3.87a4%204%200%200%200-4-4%204%204%200%200%200-4%204c0%201.86%201.27%203.43%203%203.87z%22/%3E%3C/svg%3E');--md-admonition-icon--tip:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M12%203%201%209l4%202.18v6L12%2021l7-3.82v-6l2-1.09V17h2V9zm6.82%206L12%2012.72%205.18%209%2012%205.28zM17%2016l-5%202.72L7%2016v-3.73L12%2015l5-2.73z%22/%3E%3C/svg%3E');--md-admonition-icon--warning:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M12%202%201%2021h22M12%206l7.53%2013H4.47M11%2010v4h2v-4m-2%206v2h2v-2%22/%3E%3C/svg%3E');--md-admonition-icon--example:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M19%203H5c-1.1%200-2%20.9-2%202v14c0%201.1.9%202%202%202h14c1.1%200%202-.9%202-2V5c0-1.1-.9-2-2-2m-8%205H9v2c0%201.1-.9%202-2%202%201.1%200%202%20.9%202%202v2h2v2H9c-1.1%200-2-.9-2-2v-1c0-1.1-.9-2-2-2v-2c1.1%200%202-.9%202-2V8c0-1.1.9-2%202-2h2zm8%205c-1.1%200-2%20.9-2%202v1c0%201.1-.9%202-2%202h-2v-2h2v-2c0-1.1.9-2%202-2-1.1%200-2-.9-2-2V8h-2V6h2c1.1%200%202%20.9%202%202v1c0%201.1.9%202%202%202z%22/%3E%3C/svg%3E');}</style>
+
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sora:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Sora";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&display=swap">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="cuinotes">
+<meta property="og:title" content="5. Prompting and Plan Mode">
+<meta property="og:description" content="Free textbooks, lecture slides, and runnable code for undergraduate Computer Science — Algorithms & Data Structures, Web Technologies, and Advanced Web Technologies — from the Department of Computer Science, COMSATS University Islamabad, Lahore Campus.">
+<meta property="og:url" content="https://cuinotes.com/claude-code-handbook/05-prompting-and-plan-mode/">
+<meta property="og:image" content="https://cuinotes.com/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="5. Prompting and Plan Mode">
+<meta name="twitter:description" content="Free textbooks, lecture slides, and runnable code for undergraduate Computer Science — Algorithms & Data Structures, Web Technologies, and Advanced Web Technologies — from the Department of Computer Science, COMSATS University Islamabad, Lahore Campus.">
+<meta name="twitter:image" content="https://cuinotes.com/assets/og-image.png">
+
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XCX5GHHFLZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-XCX5GHHFLZ');
+</script>
+
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="teal">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#5-prompting-and-plan-mode" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="cuinotes" class="md-header__button md-logo" aria-label="cuinotes" data-md-component="logo">
+      
+  <img src="../../assets/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            cuinotes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              5. Prompting and Plan Mode
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="teal"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="teal"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+
+
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+        
+          
+        
+          
+        
+        
+          
+          
+            
+          
+            
+          
+          
+            
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+          
+        
+      
+        
+        
+          
+            
+          
+        
+          
+        
+        
+          
+          
+        
+      
+        
+        
+          
+        
+          
+        
+        
+          
+          
+            
+              
+            
+          
+            
+          
+          
+            
+              
+              
+              
+                
+              
+                
+              
+                
+                  
+                  
+                
+              
+                
+                  
+                  
+                
+              
+                
+                  
+                  
+                
+              
+                
+                  
+                  
+                
+              
+                
+                  
+                  
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+              
+              
+              <li class="md-tabs__item md-tabs__item--dropdown">
+                <a href="../../courses/" class="md-tabs__link">
+                  Courses
+                </a>
+                <ul class="md-tabs__submenu">
+                  
+                    <li>
+  <a href="../../algorithms-and-data-structures/">Algorithms and Data Structures (CSC211)</a>
+</li>
+                  
+                    <li>
+  <a href="../../web-technologies/">Web Technologies (CSC336)</a>
+</li>
+                  
+                    <li>
+  <a href="../../advanced-web-technologies/">Advanced Web Technologies (CSC337)</a>
+</li>
+                  
+                    <li>
+  <a href="../../database-systems/">Database Systems (CSC270)</a>
+</li>
+                  
+                    <li>
+  <a href="../../operating-systems/">Operating Systems (CSC323)</a>
+</li>
+                  
+                </ul>
+              </li>
+            
+          
+        
+      
+        
+        
+          
+        
+          
+        
+        
+          
+          
+            
+              
+            
+          
+            
+          
+          
+            
+          
+        
+      
+        
+        
+          
+        
+          
+        
+        
+          
+          
+            
+              
+            
+          
+            
+          
+          
+            
+          
+        
+      
+        
+        
+          
+        
+          
+        
+        
+          
+          
+            
+              
+            
+          
+            
+          
+          
+            
+          
+        
+      
+        
+        
+          
+        
+          
+        
+        
+          
+          
+            
+              
+            
+          
+            
+          
+          
+            
+          
+        
+      
+        
+        
+          
+        
+          
+            
+          
+        
+        
+          
+          
+        
+      
+        
+        
+          
+        
+          
+        
+        
+          
+          
+            
+          
+            
+              
+            
+          
+          
+            
+              
+              
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+                  
+                  
+                
+              
+                
+                  
+                  
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+              
+              
+              <li class="md-tabs__item md-tabs__item--dropdown">
+                <a href="../../labs/" class="md-tabs__link">
+                  Labs
+                </a>
+                <ul class="md-tabs__submenu">
+                  
+                    <li>
+  <a href="../../labs/web-technologies/">Web Technologies (CSC336) Labs</a>
+</li>
+                  
+                    <li>
+  <a href="../../labs/database-systems/">Database Systems (CSC270) Labs</a>
+</li>
+                  
+                </ul>
+              </li>
+            
+          
+        
+      
+        
+        
+          
+        
+          
+        
+        
+          
+          
+            
+          
+            
+              
+            
+          
+          
+            
+          
+        
+      
+        
+        
+          
+        
+          
+        
+        
+          
+          
+            
+          
+            
+          
+          
+            
+  
+  
+  
+  
+    
+    
+    <li class="md-tabs__item md-tabs__item--dropdown">
+      <a href="../../demos/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Helping Material
+
+      </a>
+      
+        <ul class="md-tabs__submenu">
+          
+            <li>
+  <a href="../../demos/">Demos</a>
+</li>
+          
+            <li>
+  <a href="../../downloads/">Downloads</a>
+</li>
+          
+            <li>
+  <a href="../../lecture-slides/">Lecture Slides</a>
+</li>
+          
+        </ul>
+      
+    </li>
+  
+
+          
+        
+      
+        
+        
+          
+        
+          
+        
+        
+          
+          
+            
+          
+            
+          
+          
+            
+  
+  
+  
+  
+    
+    
+    <li class="md-tabs__item md-tabs__item--dropdown">
+      <a href="../../tutorials/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Tutorials
+
+      </a>
+      
+        <ul class="md-tabs__submenu">
+          
+            <li>
+  <a href="../../tutorials/">Overview</a>
+</li>
+          
+            <li>
+  <a href="../../tutorials/html-css/">HTML & CSS</a>
+</li>
+          
+            <li>
+  <a href="../../tutorials/javascript/">JavaScript</a>
+</li>
+          
+            <li>
+  <a href="../../tutorials/express/">Express</a>
+</li>
+          
+            <li>
+  <a href="../../tutorials/react/">React</a>
+</li>
+          
+            <li>
+  <a href="../../tutorials/devops/">DevOps</a>
+</li>
+          
+        </ul>
+      
+    </li>
+  
+
+          
+        
+      
+        
+        
+          
+        
+          
+        
+        
+          
+          
+            
+          
+            
+          
+          
+            
+  
+  
+  
+    
+  
+  
+    
+    
+    <li class="md-tabs__item md-tabs__item--active md-tabs__item--dropdown">
+      <a href="../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Claude Code Handbook
+
+      </a>
+      
+        <ul class="md-tabs__submenu">
+          
+            <li>
+  <a href="../">Introduction</a>
+</li>
+          
+            <li>
+  <a href="../01-start-here/">Part 1 — Orientation</a>
+</li>
+          
+            <li>
+  <a href="../02-coding-agents-explained/">Part 2 — Claude Code Fundamentals</a>
+</li>
+          
+            <li>
+  <a href="../11-idea-to-scope/">Part 3 — Plan a Real Project</a>
+</li>
+          
+            <li>
+  <a href="../14-authentication/">Part 4 — Auth, Security, Testing</a>
+</li>
+          
+            <li>
+  <a href="../17-building-crud/">Part 5–6 — Building Features</a>
+</li>
+          
+            <li>
+  <a href="../19-ai-features/">Part 7 — AI Features</a>
+</li>
+          
+            <li>
+  <a href="../20-email-integration/">Part 8 — Email</a>
+</li>
+          
+            <li>
+  <a href="../21-shipping-to-production/">Part 9 — Ship It</a>
+</li>
+          
+            <li>
+  <a href="../appendix-a-cheat-sheet/">Appendices</a>
+</li>
+          
+        </ul>
+      
+    </li>
+  
+
+          
+        
+      
+        
+        
+          
+        
+          
+        
+        
+          
+          
+            
+          
+            
+          
+          
+            
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../tags/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Tags
+
+      </a>
+    </li>
+  
+
+          
+        
+      
+        
+        
+          
+        
+          
+        
+        
+          
+          
+            
+          
+            
+          
+          
+            
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://usmanlive.com" class="md-tabs__link">
+        
+  
+  
+    
+  
+  usmanlive.com
+
+      </a>
+    </li>
+  
+
+          
+        
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="cuinotes" class="md-nav__button md-logo" aria-label="cuinotes" data-md-component="logo">
+      
+  <img src="../../assets/logo.svg" alt="logo">
+
+    </a>
+    cuinotes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../courses/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Courses
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../algorithms-and-data-structures/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Algorithms and Data Structures (CSC211)
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../web-technologies/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Web Technologies (CSC336)
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../advanced-web-technologies/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced Web Technologies (CSC337)
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../database-systems/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Database Systems (CSC270)
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../operating-systems/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operating Systems (CSC323)
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../labs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Labs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../labs/web-technologies/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Web Technologies (CSC336) Labs
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../labs/database-systems/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Database Systems (CSC270) Labs
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../demos/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Helping Material
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../tutorials/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutorials
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Claude Code Handbook
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_13" id="__nav_13_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_13_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_13">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Claude Code Handbook
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_13_2" id="__nav_13_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 1 — Orientation
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_13_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_13_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 1 — Orientation
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-start-here/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Start Here
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_13_3" id="__nav_13_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 2 — Claude Code Fundamentals
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_13_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_13_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 2 — Claude Code Fundamentals
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-coding-agents-explained/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Coding Agents Explained
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-install-and-first-session/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Install and First Session
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-project-memory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Project Memory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Prompting and Plan Mode
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Prompting and Plan Mode
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#anatomy-of-a-good-prompt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Anatomy of a good prompt
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Anatomy of a good prompt">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#give-context-with" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Give context with @
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#say-what-not-to-do" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Say what not to do
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fix-the-cause-not-the-symptom" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fix the cause, not the symptom
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#work-in-small-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Work in small steps
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#plan-mode-think-first-edit-later" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Plan mode: think first, edit later
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Plan mode: think first, edit later">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-planning-pagination-for-shelf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worked example — planning pagination for Shelf
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#after-the-change-verify-like-an-engineer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        After the change: verify like an engineer
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-mistakes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common mistakes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-context-and-cost/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Context and Cost
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-mcp-and-skills/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. MCP and Skills
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-checkpoints-subagents-review/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Checkpoints, Subagents, Review
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-permissions-and-hooks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Permissions and Hooks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-future-of-engineering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. The Future of Engineering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_13_4" id="__nav_13_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 3 — Plan a Real Project
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_13_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_13_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 3 — Plan a Real Project
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11-idea-to-scope/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. From Idea to Scope
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12-stack-and-plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Stack and Plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13-project-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Setting Up the Project
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_13_5" id="__nav_13_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 4 — Auth, Security, Testing
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_13_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_13_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 4 — Auth, Security, Testing
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14-authentication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. Authentication and Sessions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15-login-validation-roles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15. Forms, Validation, Roles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../16-audit-and-e2e/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16. Security Audits and E2E
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_13_6" id="__nav_13_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 5–6 — Building Features
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_13_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_13_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 5–6 — Building Features
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../17-building-crud/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17. Building CRUD Features
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../18-lists-details-xss/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    18. Lists, Details, Safe Output
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_13_7" id="__nav_13_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 7 — AI Features
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_13_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_13_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 7 — AI Features
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../19-ai-features/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    19. Adding AI Features
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_13_8" id="__nav_13_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 8 — Email
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_13_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_13_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 8 — Email
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../20-email-integration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20. Email Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_13_9" id="__nav_13_9_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 9 — Ship It
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_13_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_13_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 9 — Ship It
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../21-shipping-to-production/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    21. Shipping to Production
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../22-claude-in-github-and-final-thoughts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    22. Claude in GitHub, Final Thoughts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_13_10" id="__nav_13_10_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendices
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_13_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_13_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Appendices
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../appendix-a-cheat-sheet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    A. Cheat Sheet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../appendix-b-troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    B. Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../appendix-c-glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    C. Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../appendix-d-prompt-library/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    D. Prompt Library
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../appendix-e-exercises/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    E. Exercises
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tags
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://usmanlive.com" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    usmanlive.com
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#anatomy-of-a-good-prompt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Anatomy of a good prompt
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Anatomy of a good prompt">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#give-context-with" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Give context with @
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#say-what-not-to-do" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Say what not to do
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fix-the-cause-not-the-symptom" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fix the cause, not the symptom
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#work-in-small-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Work in small steps
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#plan-mode-think-first-edit-later" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Plan mode: think first, edit later
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Plan mode: think first, edit later">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-planning-pagination-for-shelf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worked example — planning pagination for Shelf
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#after-the-change-verify-like-an-engineer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        After the change: verify like an engineer
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-mistakes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common mistakes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="Navigation" >
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../.." class="md-path__link">
+        
+  <span class="md-ellipsis">
+    Home
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Claude Code Handbook
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../02-coding-agents-explained/" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Part 2 — Claude Code Fundamentals
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <a href="../../tags/#tag:plan-mode" class="md-tag">Plan Mode</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../tags/#tag:prompting" class="md-tag">Prompting</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../tags/#tag:review" class="md-tag">Review</a>
+      
+    
+  </nav>
+
+
+
+<h1 id="5-prompting-and-plan-mode">5. Prompting and Plan Mode<a class="headerlink" href="#5-prompting-and-plan-mode" title="Permanent link">&para;</a></h1>
+<div class="admonition abstract">
+<p class="admonition-title">Video map</p>
+<p>Section 2 — Effective Prompting · Using the Plan Mode</p>
+</div>
+<p>Two skills do more for your results than any setting: <strong>writing a clear request</strong> and <strong>reviewing what comes back</strong>.</p>
+<h2 id="anatomy-of-a-good-prompt">Anatomy of a good prompt<a class="headerlink" href="#anatomy-of-a-good-prompt" title="Permanent link">&para;</a></h2>
+<p>A coding agent is not a person you must be polite to; it is a tool that does what you ask. So be <em>specific</em>, <em>short</em> and <em>checkable</em>.</p>
+<div class="cu-svg-diagram">
+<p><svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Anatomy of a good prompt"><title>Anatomy of a good prompt</title><desc>Goal, context, constraints and a definition of done</desc><defs><marker id="h-teal" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 Z" fill="var(--cu-teal)"/></marker><marker id="h-purple" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 Z" fill="var(--cu-purple)"/></marker><marker id="h-orange" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 Z" fill="var(--cu-orange)"/></marker><marker id="h-plain" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 Z" fill="var(--cu-faint)"/></marker><marker id="h-red" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 Z" fill="#E5484D"/></marker></defs><rect x="20" y="20" width="230" height="52" rx="12" fill="var(--cu-teal)" fill-opacity="0.12" stroke="var(--cu-teal)" stroke-width="1.6"/><text x="135.0" y="41.4625" text-anchor="middle" font-family="Sora, 'Segoe UI', Inter, Arial, sans-serif" font-size="13" font-weight="700" fill="var(--cu-text)" opacity="1">Goal</text><text x="135.0" y="59.6375" text-anchor="middle" font-family="Sora, 'Segoe UI', Inter, Arial, sans-serif" font-size="10.5" font-weight="500" fill="var(--cu-muted)" opacity="1">what outcome you want</text><path d="M250,46 L290,46" fill="none" stroke="var(--cu-faint)" stroke-width="1.8" stroke-linejoin="round" marker-end="url(#h-plain)"/><rect x="294" y="20" width="446" height="52" rx="12" fill="var(--cu-bg)" stroke="var(--cu-border-soft)" stroke-width="1.5" opacity="1"/><text x="312" y="51" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace" font-size="13" font-weight="600" fill="var(--cu-text)" opacity="1">Add a stats endpoint</text><rect x="20" y="86" width="230" height="52" rx="12" fill="var(--cu-purple)" fill-opacity="0.12" stroke="var(--cu-purple)" stroke-width="1.6"/><text x="135.0" y="107.4625" text-anchor="middle" font-family="Sora, 'Segoe UI', Inter, Arial, sans-serif" font-size="13" font-weight="700" fill="var(--cu-text)" opacity="1">Context</text><text x="135.0" y="125.6375" text-anchor="middle" font-family="Sora, 'Segoe UI', Inter, Arial, sans-serif" font-size="10.5" font-weight="500" fill="var(--cu-muted)" opacity="1">where to look, what exists</text><path d="M250,112 L290,112" fill="none" stroke="var(--cu-faint)" stroke-width="1.8" stroke-linejoin="round" marker-end="url(#h-plain)"/><rect x="294" y="86" width="446" height="52" rx="12" fill="var(--cu-bg)" stroke="var(--cu-border-soft)" stroke-width="1.5" opacity="1"/><text x="312" y="117" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace" font-size="13" font-weight="600" fill="var(--cu-text)" opacity="1">@src/store.js already has list()</text><rect x="20" y="152" width="230" height="52" rx="12" fill="var(--cu-orange)" fill-opacity="0.12" stroke="var(--cu-orange)" stroke-width="1.6"/><text x="135.0" y="173.4625" text-anchor="middle" font-family="Sora, 'Segoe UI', Inter, Arial, sans-serif" font-size="13" font-weight="700" fill="var(--cu-text)" opacity="1">Constraints</text><text x="135.0" y="191.63750000000002" text-anchor="middle" font-family="Sora, 'Segoe UI', Inter, Arial, sans-serif" font-size="10.5" font-weight="500" fill="var(--cu-muted)" opacity="1">rules to respect</text><path d="M250,178 L290,178" fill="none" stroke="var(--cu-faint)" stroke-width="1.8" stroke-linejoin="round" marker-end="url(#h-plain)"/><rect x="294" y="152" width="446" height="52" rx="12" fill="var(--cu-bg)" stroke="var(--cu-border-soft)" stroke-width="1.5" opacity="1"/><text x="312" y="183" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace" font-size="13" font-weight="600" fill="var(--cu-text)" opacity="1">no new dependencies</text><rect x="20" y="218" width="230" height="52" rx="12" fill="var(--cu-teal)" fill-opacity="0.12" stroke="var(--cu-teal)" stroke-width="1.6"/><text x="135.0" y="239.4625" text-anchor="middle" font-family="Sora, 'Segoe UI', Inter, Arial, sans-serif" font-size="13" font-weight="700" fill="var(--cu-text)" opacity="1">Done when</text><text x="135.0" y="257.6375" text-anchor="middle" font-family="Sora, 'Segoe UI', Inter, Arial, sans-serif" font-size="10.5" font-weight="500" fill="var(--cu-muted)" opacity="1">how to verify</text><path d="M250,244 L290,244" fill="none" stroke="var(--cu-faint)" stroke-width="1.8" stroke-linejoin="round" marker-end="url(#h-plain)"/><rect x="294" y="218" width="446" height="52" rx="12" fill="var(--cu-bg)" stroke="var(--cu-border-soft)" stroke-width="1.5" opacity="1"/><text x="312" y="249" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace" font-size="13" font-weight="600" fill="var(--cu-text)" opacity="1">npm test passes + new test</text></svg></p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Ingredient</th>
+<th>Why it matters</th>
+<th>Weak</th>
+<th>Strong</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Goal</strong></td>
+<td>Defines success</td>
+<td>"Improve the API"</td>
+<td>"Add a <code>/stats</code> endpoint returning counts by status"</td>
+</tr>
+<tr>
+<td><strong>Context</strong></td>
+<td>Points at what exists</td>
+<td>(nothing)</td>
+<td>"<code>@src/store.js</code> already has <code>list()</code>"</td>
+</tr>
+<tr>
+<td><strong>Constraints</strong></td>
+<td>Prevents surprises</td>
+<td>(nothing)</td>
+<td>"No new dependencies; keep rules out of <code>app.js</code>"</td>
+</tr>
+<tr>
+<td><strong>Done when</strong></td>
+<td>Lets the agent verify</td>
+<td>"Make it work"</td>
+<td>"<code>npm test</code> passes and there is a new test"</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">Drop the pleasantries</p>
+<p>"Hey Claude, could you please kindly help me…" adds tokens, not quality. Write the request the way you would write a ticket.</p>
+</div>
+<h3 id="give-context-with">Give context with <code>@</code><a class="headerlink" href="#give-context-with" title="Permanent link">&para;</a></h3>
+<p>Type <code>@</code> and a path to attach a file: <code>@src/validate.js</code>. If the file is already open in your editor, Claude often sees it automatically.
+Within one conversation it also remembers files it has read, so you do not have to repeat them.</p>
+<h3 id="say-what-not-to-do">Say what <em>not</em> to do<a class="headerlink" href="#say-what-not-to-do" title="Permanent link">&para;</a></h3>
+<p>Agents love to be helpful by doing <em>extra</em>: creating additional endpoints, adding libraries, reformatting unrelated files. Add a line such as
+"Change only what is needed for this task" — and verify in the diff that it listened.</p>
+<h2 id="fix-the-cause-not-the-symptom">Fix the cause, not the symptom<a class="headerlink" href="#fix-the-cause-not-the-symptom" title="Permanent link">&para;</a></h2>
+<p>The most valuable review skill is noticing a <em>plausible but shallow</em> fix. Here is a real moment from building Shelf.</p>
+<p>The rule is: <strong>only finished books can carry a rating.</strong> The first version of <code>validateBook</code> checked it like this:</p>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kd">const</span><span class="w"> </span><span class="nx">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">out</span><span class="p">.</span><span class="nx">status</span><span class="w"> </span><span class="o">??</span><span class="w"> </span><span class="nx">body</span><span class="p">.</span><span class="nx">status</span><span class="p">;</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="s2">&quot;rating&quot;</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nx">out</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">status</span><span class="w"> </span><span class="o">!==</span><span class="w"> </span><span class="kc">undefined</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">status</span><span class="w"> </span><span class="o">!==</span><span class="w"> </span><span class="s2">&quot;done&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="cm">/* error */</span><span class="w"> </span><span class="p">}</span>
+</span></code></pre></div>
+<p>A test then showed that creating a book with a rating but <strong>no status</strong> was <em>accepted</em> — because <code>status</code> was <code>undefined</code>, so the check was skipped.
+Two possible fixes:</p>
+<table>
+<thead>
+<tr>
+<th>Fix</th>
+<th>What it does</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Symptom:</strong> add <code>if (!body.status &amp;&amp; body.rating) …</code> in the route handler</td>
+<td>Patches this one path</td>
+<td>Duplicates the rule in the wrong layer; the next path will miss it</td>
+</tr>
+<tr>
+<td><strong>Cause:</strong> treat a missing status on <em>create</em> as the default <code>"to-read"</code> inside the validator</td>
+<td>One rule, in one place</td>
+<td>✔ Correct</td>
+</tr>
+</tbody>
+</table>
+<p>The fix that shipped:</p>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1">// On create, a missing status means the default &quot;to-read&quot;; on partial updates it is unknown here.</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kd">const</span><span class="w"> </span><span class="nx">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">out</span><span class="p">.</span><span class="nx">status</span><span class="w"> </span><span class="o">??</span><span class="w"> </span><span class="p">(</span><span class="nx">partial</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="kc">undefined</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;to-read&quot;</span><span class="p">);</span>
+</span></code></pre></div>
+<p>When Claude gives a first fix, ask yourself: <strong>does this treat the problem or hide it?</strong> Then steer with a follow-up:</p>
+<blockquote>
+<p>That works for this route, but the rule belongs in <code>validate.js</code> so every entry point gets it. Move it there.</p>
+</blockquote>
+<h2 id="work-in-small-steps">Work in small steps<a class="headerlink" href="#work-in-small-steps" title="Permanent link">&para;</a></h2>
+<p>Ask for <strong>one thing at a time</strong>, review the diff, then commit. If you ask for ten things, you will get a ten-file diff you cannot review honestly — the "vibe-coding trap". Small steps also teach Claude your <em>patterns</em>: when the first endpoint follows your style, the second one usually copies it.</p>
+<div class="cu-svg-diagram">
+<p><svg viewBox="0 0 760 215" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The human review loop"><title>The human review loop</title><desc>Prompt, inspect the diff, give a follow-up, then commit</desc><defs><marker id="h-teal" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 Z" fill="var(--cu-teal)"/></marker><marker id="h-purple" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 Z" fill="var(--cu-purple)"/></marker><marker id="h-orange" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 Z" fill="var(--cu-orange)"/></marker><marker id="h-plain" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 Z" fill="var(--cu-faint)"/></marker><marker id="h-red" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 Z" fill="#E5484D"/></marker></defs><rect x="14" y="80" width="126" height="70" rx="12" fill="var(--cu-teal)" fill-opacity="0.12" stroke="var(--cu-teal)" stroke-width="1.6"/><text x="77.0" y="110.4625" text-anchor="middle" font-family="Sora, 'Segoe UI', Inter, Arial, sans-serif" font-size="13" font-weight="700" fill="var(--cu-text)" opacity="1">Prompt</text><text x="77.0" y="128.63750000000002" text-anchor="middle" font-family="Sora, 'Segoe UI', Inter, Arial, sans-serif" font-size="10.5" font-weight="500" fill="var(--cu-muted)" opacity="1">one small task</text><rect x="162" y="80" width="126" height="70" rx="12" fill="var(--cu-purple)" fill-opacity="0.12" stroke="var(--cu-purple)" stroke-width="1.6"/><text x="225.0" y="110.4625" text-anchor="middle" font-family="Sora, 'Segoe UI', Inter, Arial, sans-serif" font-size="13" font-weight="700" fill="var(--cu-text)" opacity="1">Diff</text><text x="225.0" y="128.63750000000002" text-anchor="middle" font-family="Sora, 'Segoe UI', Inter, Arial, sans-serif" font-size="10.5" font-weight="500" fill="var(--cu-muted)" opacity="1">read every change</text><path d="M142,115 L160,115" fill="none" stroke="var(--cu-faint)" stroke-width="1.8" stroke-linejoin="round" marker-end="url(#h-plain)"/><rect x="310" y="80" width="126" height="70" rx="12" fill="var(--cu-orange)" fill-opacity="0.12" stroke="var(--cu-orange)" stroke-width="1.6"/><text x="373.0" y="110.4625" text-anchor="middle" font-family="Sora, 'Segoe UI', Inter, Arial, sans-serif" font-size="13" font-weight="700" fill="var(--cu-text)" opacity="1">Judge</text><text x="373.0" y="128.63750000000002" text-anchor="middle" font-family="Sora, 'Segoe UI', Inter, Arial, sans-serif" font-size="10.5" font-weight="500" fill="var(--cu-muted)" opacity="1">right fix or symptom?</text><path d="M290,115 L308,115" fill="none" stroke="var(--cu-faint)" stroke-width="1.8" stroke-linejoin="round" marker-end="url(#h-plain)"/><rect x="458" y="80" width="126" height="70" rx="12" fill="var(--cu-teal)" fill-opacity="0.12" stroke="var(--cu-teal)" stroke-width="1.6"/><text x="521.0" y="110.4625" text-anchor="middle" font-family="Sora, 'Segoe UI', Inter, Arial, sans-serif" font-size="13" font-weight="700" fill="var(--cu-text)" opacity="1">Follow-up</text><text x="521.0" y="128.63750000000002" text-anchor="middle" font-family="Sora, 'Segoe UI', Inter, Arial, sans-serif" font-size="10.5" font-weight="500" fill="var(--cu-muted)" opacity="1">steer the design</text><path d="M438,115 L456,115" fill="none" stroke="var(--cu-faint)" stroke-width="1.8" stroke-linejoin="round" marker-end="url(#h-plain)"/><rect x="606" y="80" width="126" height="70" rx="12" fill="var(--cu-purple)" fill-opacity="0.12" stroke="var(--cu-purple)" stroke-width="1.6"/><text x="669.0" y="110.4625" text-anchor="middle" font-family="Sora, 'Segoe UI', Inter, Arial, sans-serif" font-size="13" font-weight="700" fill="var(--cu-text)" opacity="1">Commit</text><text x="669.0" y="128.63750000000002" text-anchor="middle" font-family="Sora, 'Segoe UI', Inter, Arial, sans-serif" font-size="10.5" font-weight="500" fill="var(--cu-muted)" opacity="1">save a checkpoint</text><path d="M586,115 L604,115" fill="none" stroke="var(--cu-faint)" stroke-width="1.8" stroke-linejoin="round" marker-end="url(#h-plain)"/><path d="M470,80 L470,40 L225,40 L225,76" fill="none" stroke="var(--cu-orange)" stroke-width="1.8" stroke-linejoin="round" marker-end="url(#h-orange)" stroke-dasharray="5 4"/><text x="348" y="32" text-anchor="middle" font-family="Sora, 'Segoe UI', Inter, Arial, sans-serif" font-size="11" font-weight="600" fill="var(--cu-muted)" opacity="1">fix the cause, not the symptom</text><text x="14" y="184" text-anchor="start" font-family="Sora, 'Segoe UI', Inter, Arial, sans-serif" font-size="12.5" font-weight="600" fill="var(--cu-muted)" opacity="1">Small steps + a commit after each good one = every mistake is cheap to undo.</text></svg></p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Commit <em>before</em> the next prompt</p>
+<p>A clean commit between prompts lets you see exactly what the <em>next</em> change did (<code>git diff</code>) and undo it cleanly.</p>
+</div>
+<h2 id="plan-mode-think-first-edit-later">Plan mode: think first, edit later<a class="headerlink" href="#plan-mode-think-first-edit-later" title="Permanent link">&para;</a></h2>
+<p>For anything bigger than a few lines, switch to <strong>plan mode</strong> (<code>Shift + Tab</code> until the mode label says <em>plan</em>). In plan mode Claude may <strong>read and search</strong> but <strong>may not edit</strong>. It explores the code and returns a written plan for you to approve.</p>
+<div class="cu-svg-diagram">
+<p><svg viewBox="0 0 760 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Plan mode workflow"><title>Plan mode workflow</title><desc>Explore read-only, draft a plan, review, approve, execute, verify</desc><defs><marker id="h-teal" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 Z" fill="var(--cu-teal)"/></marker><marker id="h-purple" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 Z" fill="var(--cu-purple)"/></marker><marker id="h-orange" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 Z" fill="var(--cu-orange)"/></marker><marker id="h-plain" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 Z" fill="var(--cu-faint)"/></marker><marker id="h-red" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 Z" fill="#E5484D"/></marker></defs><rect x="14" y="70" width="100" height="70" rx="12" fill="var(--cu-teal)" fill-opacity="0.12" stroke="var(--cu-teal)" stroke-width="1.6"/><text x="64.0" y="100.625" text-anchor="middle" font-family="Sora, 'Segoe UI', Inter, Arial, sans-serif" font-size="12.5" font-weight="700" fill="var(--cu-text)" opacity="1">Explore</text><text x="64.0" y="118.125" text-anchor="middle" font-family="Sora, 'Segoe UI', Inter, Arial, sans-serif" font-size="10.0" font-weight="500" fill="var(--cu-muted)" opacity="1">read-only</text><rect x="138" y="70" width="100" height="70" rx="12" fill="var(--cu-teal)" fill-opacity="0.12" stroke="var(--cu-teal)" stroke-width="1.6"/><text x="188.0" y="100.625" text-anchor="middle" font-family="Sora, 'Segoe UI', Inter, Arial, sans-serif" font-size="12.5" font-weight="700" fill="var(--cu-text)" opacity="1">Draft plan</text><text x="188.0" y="118.125" text-anchor="middle" font-family="Sora, 'Segoe UI', Inter, Arial, sans-serif" font-size="10.0" font-weight="500" fill="var(--cu-muted)" opacity="1">steps + files</text><path d="M116,105 L135,105" fill="none" stroke="var(--cu-faint)" stroke-width="1.8" stroke-linejoin="round" marker-end="url(#h-plain)"/><rect x="262" y="70" width="100" height="70" rx="12" fill="var(--cu-orange)" fill-opacity="0.12" stroke="var(--cu-orange)" stroke-width="1.6"/><text x="312.0" y="100.625" text-anchor="middle" font-family="Sora, 'Segoe UI', Inter, Arial, sans-serif" font-size="12.5" font-weight="700" fill="var(--cu-text)" opacity="1">You review</text><text x="312.0" y="118.125" text-anchor="middle" font-family="Sora, 'Segoe UI', Inter, Arial, sans-serif" font-size="10.0" font-weight="500" fill="var(--cu-muted)" opacity="1">edit or reject</text><path d="M240,105 L259,105" fill="none" stroke="var(--cu-faint)" stroke-width="1.8" stroke-linejoin="round" marker-end="url(#h-plain)"/><rect x="386" y="70" width="100" height="70" rx="12" fill="var(--cu-purple)" fill-opacity="0.12" stroke="var(--cu-purple)" stroke-width="1.6"/><text x="436.0" y="100.625" text-anchor="middle" font-family="Sora, 'Segoe UI', Inter, Arial, sans-serif" font-size="12.5" font-weight="700" fill="var(--cu-text)" opacity="1">Approve</text><text x="436.0" y="118.125" text-anchor="middle" font-family="Sora, 'Segoe UI', Inter, Arial, sans-serif" font-size="10.0" font-weight="500" fill="var(--cu-muted)" opacity="1">leave plan mode</text><path d="M364,105 L383,105" fill="none" stroke="var(--cu-faint)" stroke-width="1.8" stroke-linejoin="round" marker-end="url(#h-plain)"/><rect x="510" y="70" width="100" height="70" rx="12" fill="var(--cu-purple)" fill-opacity="0.12" stroke="var(--cu-purple)" stroke-width="1.6"/><text x="560.0" y="100.625" text-anchor="middle" font-family="Sora, 'Segoe UI', Inter, Arial, sans-serif" font-size="12.5" font-weight="700" fill="var(--cu-text)" opacity="1">Execute</text><text x="560.0" y="118.125" text-anchor="middle" font-family="Sora, 'Segoe UI', Inter, Arial, sans-serif" font-size="10.0" font-weight="500" fill="var(--cu-muted)" opacity="1">edits allowed</text><path d="M488,105 L507,105" fill="none" stroke="var(--cu-faint)" stroke-width="1.8" stroke-linejoin="round" marker-end="url(#h-plain)"/><rect x="634" y="70" width="100" height="70" rx="12" fill="var(--cu-teal)" fill-opacity="0.12" stroke="var(--cu-teal)" stroke-width="1.6"/><text x="684.0" y="100.625" text-anchor="middle" font-family="Sora, 'Segoe UI', Inter, Arial, sans-serif" font-size="12.5" font-weight="700" fill="var(--cu-text)" opacity="1">Verify</text><text x="684.0" y="118.125" text-anchor="middle" font-family="Sora, 'Segoe UI', Inter, Arial, sans-serif" font-size="10.0" font-weight="500" fill="var(--cu-muted)" opacity="1">run tests</text><path d="M612,105 L631,105" fill="none" stroke="var(--cu-faint)" stroke-width="1.8" stroke-linejoin="round" marker-end="url(#h-plain)"/><path d="M446,140 L446,180 L194,180 L194,144" fill="none" stroke="var(--cu-orange)" stroke-width="1.8" stroke-linejoin="round" marker-end="url(#h-orange)" stroke-dasharray="5 4"/><text x="320" y="200" text-anchor="middle" font-family="Sora, 'Segoe UI', Inter, Arial, sans-serif" font-size="11" font-weight="600" fill="var(--cu-muted)" opacity="1">plan not right? revise before any code is written</text><text x="14" y="38" text-anchor="start" font-family="Sora, 'Segoe UI', Inter, Arial, sans-serif" font-size="12.5" font-weight="600" fill="var(--cu-muted)" opacity="1">Use for multi-file changes, unfamiliar code, or anything you would not want to undo.</text></svg></p>
+</div>
+<h3 id="worked-example-planning-pagination-for-shelf">Worked example — planning pagination for Shelf<a class="headerlink" href="#worked-example-planning-pagination-for-shelf" title="Permanent link">&para;</a></h3>
+<p>Prompt (in plan mode):</p>
+<blockquote>
+<p>Add <code>limit</code> and <code>offset</code> paging to <code>GET /books</code>. Return the total count in a response header. Keep rules out of <code>app.js</code>. Write tests first.</p>
+</blockquote>
+<p>A good plan looks something like this (yours will differ):</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Plan
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>1. store.js: add query({limit, offset, ...filters}) that calls list() then slices; clamp limit to 1..100.
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>2. app.js: call store.query() for GET /books; send total in the `x-total-count` header.
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>3. Tests: paging window, default limit, clamping, header value.
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>Verify: npm test; GET /books?limit=2&amp;offset=2.
+</span></code></pre></div>
+<p><strong>How to review a plan</strong> — ask four questions before approving:</p>
+<ol>
+<li>Does it touch only the files it should? (Here: <code>store.js</code>, <code>app.js</code>, tests.)</li>
+<li>Is each step small enough to review?</li>
+<li>Does it include <strong>how to verify</strong>?</li>
+<li>Is anything surprising — a new dependency, a rewrite, a renamed file?</li>
+</ol>
+<p>If not, reply in plan mode: <em>"Also clamp negative offsets to 0, and keep the response a plain array so existing clients still work."</em> Claude revises the plan <strong>without touching code.</strong></p>
+<p>When the plan is right you choose how to proceed — typically <strong>approve and auto-accept edits</strong>, or approve with <strong>manual</strong> edit approval, or ask for changes. If the work is unrelated to the earlier conversation you can also start with a <strong>fresh context</strong> to save tokens.</p>
+<p>The finished implementation is small and reviewable:</p>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="w">  </span><span class="cm">/** Same filters as list(), plus limit/offset. Returns the page and the unpaged total. */</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="nx">query</span><span class="p">({</span><span class="w"> </span><span class="nx">limit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">20</span><span class="p">,</span><span class="w"> </span><span class="nx">offset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="p">...</span><span class="nx">filters</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{})</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">all</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">list</span><span class="p">(</span><span class="nx">filters</span><span class="p">);</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">lim</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">min</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nb">Number</span><span class="p">.</span><span class="nb">parseInt</span><span class="p">(</span><span class="nx">limit</span><span class="p">,</span><span class="w"> </span><span class="mf">10</span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="mf">20</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">),</span><span class="w"> </span><span class="mf">100</span><span class="p">);</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">off</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nb">Number</span><span class="p">.</span><span class="nb">parseInt</span><span class="p">(</span><span class="nx">offset</span><span class="p">,</span><span class="w"> </span><span class="mf">10</span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">);</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">items</span><span class="o">:</span><span class="w"> </span><span class="nx">all</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="nx">off</span><span class="p">,</span><span class="w"> </span><span class="nx">off</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">lim</span><span class="p">),</span><span class="w"> </span><span class="nx">total</span><span class="o">:</span><span class="w"> </span><span class="nx">all</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span><span class="w"> </span><span class="nx">limit</span><span class="o">:</span><span class="w"> </span><span class="nx">lim</span><span class="p">,</span><span class="w"> </span><span class="nx">offset</span><span class="o">:</span><span class="w"> </span><span class="nx">off</span><span class="w"> </span><span class="p">};</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">  </span><span class="p">}</span>
+</span></code></pre></div>
+<p>…and the test that proves it:</p>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nx">test</span><span class="p">(</span><span class="s2">&quot;limit/offset paging with total in a header&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">boot</span><span class="p">({});</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">let</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mf">5</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">app</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="s2">&quot;/books&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">body</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="sb">`Book </span><span class="si">${</span><span class="nx">i</span><span class="si">}</span><span class="sb">`</span><span class="p">,</span><span class="w"> </span><span class="nx">author</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;A&quot;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">});</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">app</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="s2">&quot;/books?limit=2&amp;offset=2&amp;sort=title&quot;</span><span class="p">);</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">    </span><span class="nx">assert</span><span class="p">.</span><span class="nx">deepEqual</span><span class="p">(</span><span class="nx">r</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">b</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">b</span><span class="p">.</span><span class="nx">title</span><span class="p">),</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Book 3&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Book 4&quot;</span><span class="p">]);</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">    </span><span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">r</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">&quot;x-total-count&quot;</span><span class="p">),</span><span class="w"> </span><span class="s2">&quot;5&quot;</span><span class="p">);</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">    </span><span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">((</span><span class="k">await</span><span class="w"> </span><span class="nx">app</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="s2">&quot;/books?limit=9999&quot;</span><span class="p">)).</span><span class="nx">body</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span><span class="w"> </span><span class="mf">5</span><span class="p">);</span><span class="w"> </span><span class="c1">// clamped to 100 max</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">finally</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">app</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="p">});</span>
+</span></code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Which mode when?</p>
+<p><strong>Normal</strong> — you approve each edit; best when learning or on risky code.
+<strong>Accept edits</strong> — fewer prompts; fine when the task is small and you will review the diff after.
+<strong>Plan</strong> — new features and anything touching several files. Costs a little time, saves a lot of rework.</p>
+</div>
+<h2 id="after-the-change-verify-like-an-engineer">After the change: verify like an engineer<a class="headerlink" href="#after-the-change-verify-like-an-engineer" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Run it.</strong> Did the behaviour actually change? (<code>curl</code> the endpoint.)</li>
+<li><strong>Run the tests.</strong></li>
+<li><strong>Read the diff</strong>, file by file. Ask Claude to explain anything you do not understand.</li>
+<li><strong>Look for the <em>extra</em></strong> — files or lines you did not ask for.</li>
+</ol>
+<h2 id="common-mistakes">Common mistakes<a class="headerlink" href="#common-mistakes" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>One giant prompt</strong> ("build the whole backend"). You cannot review it, and patterns drift across files.</li>
+<li><strong>Accepting the first fix</strong> because the symptom disappeared.</li>
+<li><strong>Skipping plan mode on multi-file work</strong>, then discovering the agent rewired something you did not want touched.</li>
+<li><strong>Vague success criteria</strong>, so "done" is whatever the agent decides.</li>
+<li><strong>Not committing between steps.</strong></li>
+</ul>
+<h2 id="check-yourself">Check yourself<a class="headerlink" href="#check-yourself" title="Permanent link">&para;</a></h2>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> I can write a prompt with goal, context, constraints and a verification step.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> I can explain "fix the cause, not the symptom" using the rating example.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> I used plan mode for a multi-file change and reviewed the plan with the four questions.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> I committed after each reviewed step.</li>
+</ul>
+
+
+<div class="cu-share">
+  <span class="cu-share-label">// share</span>
+  <div class="cu-share-links">
+    <a class="cu-share-btn cu-share-whatsapp"
+       href="https://wa.me/?text=5.%20Prompting%20and%20Plan%20Mode%20https%3A//cuinotes.com/claude-code-handbook/05-prompting-and-plan-mode/"
+       target="_blank" rel="noopener" title="Share on WhatsApp" aria-label="Share on WhatsApp">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157m-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1s56.2 81.2 56.1 130.5c0 101.8-84.9 184.6-186.6 184.6m101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8s-14.3 18-17.6 21.8c-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7s-12.5-30.1-17.1-41.2c-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2s-9.7 1.4-14.8 6.9c-5.1 5.6-19.4 19-19.4 46.3s19.9 53.7 22.6 57.4c2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4s4.6-24.1 3.2-26.4c-1.3-2.5-5-3.9-10.5-6.6"/></svg>
+    </a>
+    <a class="cu-share-btn cu-share-facebook"
+       href="https://www.facebook.com/sharer/sharer.php?u=https%3A//cuinotes.com/claude-code-handbook/05-prompting-and-plan-mode/"
+       target="_blank" rel="noopener" title="Share on Facebook" aria-label="Share on Facebook">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M512 256C512 114.6 397.4 0 256 0S0 114.6 0 256c0 120 82.7 220.8 194.2 248.5V334.2h-52.8V256h52.8v-33.7c0-87.1 39.4-127.5 125-127.5 16.2 0 44.2 3.2 55.7 6.4V172c-6-.6-16.5-1-29.6-1-42 0-58.2 15.9-58.2 57.2V256h83.6l-14.4 78.2H287v175.9C413.8 494.8 512 386.9 512 256"/></svg>
+    </a>
+    <a class="cu-share-btn cu-share-x"
+       href="https://twitter.com/intent/tweet?text=5.%20Prompting%20and%20Plan%20Mode&amp;url=https%3A//cuinotes.com/claude-code-handbook/05-prompting-and-plan-mode/"
+       target="_blank" rel="noopener" title="Share on X (Twitter)" aria-label="Share on X (Twitter)">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M357.2 48h70.6L273.6 224.2 455 464H313L201.7 318.6 74.5 464H3.8l164.9-188.5L-5.2 48h145.6l100.5 132.9zm-24.8 373.8h39.1L119.1 88h-42z"/></svg>
+    </a>
+    <a class="cu-share-btn cu-share-linkedin"
+       href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//cuinotes.com/claude-code-handbook/05-prompting-and-plan-mode/"
+       target="_blank" rel="noopener" title="Share on LinkedIn" aria-label="Share on LinkedIn">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77m282.1 320h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  </div>
+</div>
+
+
+
+
+
+
+
+  
+    
+  
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="November 5, 2026 06:18:03 UTC">November 5, 2026</span>
+  </span>
+
+    
+    
+    
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../04-project-memory/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 4. Project Memory">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                4. Project Memory
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../06-context-and-cost/" class="md-footer__link md-footer__link--next" aria-label="Next: 6. Context and Cost">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                6. Context and Cost
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 cuinotes.com · Usman Akram &amp; Asif Shehzad, COMSATS University Islamabad — Lahore Campus
+    </div>
+  
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/in/usman-akram-21400327" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77m282.1 320h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://usmanlive.com" target="_blank" rel="noopener" title="usmanlive.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M351.9 280H161c2.9 64.5 17.2 123.9 37.5 167.4 11.4 24.5 23.7 41.8 35.1 52.4 11.2 10.5 18.9 12.2 22.9 12.2s11.7-1.7 22.9-12.2c11.4-10.6 23.7-28 35.1-52.4 20.3-43.5 34.6-102.9 37.5-167.4zm-191-48h190.9c-2.8-64.5-17.1-123.9-37.4-167.4-11.4-24.4-23.7-41.8-35.1-52.4C268.1 1.7 260.4 0 256.4 0s-11.7 1.7-22.9 12.2c-11.4 10.6-23.7 28-35.1 52.4-20.3 43.5-34.6 102.9-37.5 167.4m-48 0c3.5-85.6 25.6-165.1 57.9-217.3C78.7 47.3 10.9 131.2 1.5 232zM1.5 280c9.4 100.8 77.2 184.7 169.3 217.3-32.3-52.2-54.4-131.7-57.9-217.3zm398.4 0c-3.5 85.6-25.6 165.1-57.9 217.3 92.1-32.7 159.9-116.5 169.3-217.3zm111.4-48C501.9 131.2 434.1 47.3 342 14.7c32.3 52.2 54.4 131.7 57.9 217.3z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.indexes", "navigation.top", "navigation.footer", "navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.prune", "navigation.path", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "header.autohide"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../javascripts/guru-config.js"></script>
+      
+        <script src="../../javascripts/chat.js"></script>
+      
+    
+  </body>
+</html>

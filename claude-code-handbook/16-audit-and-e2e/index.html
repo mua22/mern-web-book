@@ -1,0 +1,4105 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Free textbooks, lecture slides, and runnable code for undergraduate Computer Science — Algorithms & Data Structures, Web Technologies, and Advanced Web Technologies — from the Department of Computer Science, COMSATS University Islamabad, Lahore Campus.">
+      
+      
+        <meta name="author" content="Usman Akram">
+      
+      
+        <link rel="canonical" href="https://cuinotes.com/claude-code-handbook/16-audit-and-e2e/">
+      
+      
+        <link rel="prev" href="../15-login-validation-roles/">
+      
+      
+        <link rel="next" href="../17-building-crud/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/logo.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>16. Security Audits and End-to-End Tests - cuinotes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+  
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+  
+  <style>:root{--md-admonition-icon--note:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M20%2011h3v2h-3zM1%2011h3v2H1zM13%201v3h-2V1zM4.92%203.5l2.13%202.14-1.42%201.41L3.5%204.93zm12.03%202.13%202.12-2.13%201.43%201.43-2.13%202.12zM12%206a6%206%200%200%201%206%206c0%202.22-1.21%204.16-3%205.2V19a1%201%200%200%201-1%201h-4a1%201%200%200%201-1-1v-1.8c-1.79-1.04-3-2.98-3-5.2a6%206%200%200%201%206-6m2%2015v1a1%201%200%200%201-1%201h-2a1%201%200%200%201-1-1v-1zm-3-3h2v-2.13c1.73-.44%203-2.01%203-3.87a4%204%200%200%200-4-4%204%204%200%200%200-4%204c0%201.86%201.27%203.43%203%203.87z%22/%3E%3C/svg%3E');--md-admonition-icon--tip:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M12%203%201%209l4%202.18v6L12%2021l7-3.82v-6l2-1.09V17h2V9zm6.82%206L12%2012.72%205.18%209%2012%205.28zM17%2016l-5%202.72L7%2016v-3.73L12%2015l5-2.73z%22/%3E%3C/svg%3E');--md-admonition-icon--warning:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M12%202%201%2021h22M12%206l7.53%2013H4.47M11%2010v4h2v-4m-2%206v2h2v-2%22/%3E%3C/svg%3E');--md-admonition-icon--example:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M19%203H5c-1.1%200-2%20.9-2%202v14c0%201.1.9%202%202%202h14c1.1%200%202-.9%202-2V5c0-1.1-.9-2-2-2m-8%205H9v2c0%201.1-.9%202-2%202%201.1%200%202%20.9%202%202v2h2v2H9c-1.1%200-2-.9-2-2v-1c0-1.1-.9-2-2-2v-2c1.1%200%202-.9%202-2V8c0-1.1.9-2%202-2h2zm8%205c-1.1%200-2%20.9-2%202v1c0%201.1-.9%202-2%202h-2v-2h2v-2c0-1.1.9-2%202-2-1.1%200-2-.9-2-2V8h-2V6h2c1.1%200%202%20.9%202%202v1c0%201.1.9%202%202%202z%22/%3E%3C/svg%3E');}</style>
+
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sora:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Sora";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&display=swap">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="cuinotes">
+<meta property="og:title" content="16. Security Audits and End-to-End Tests">
+<meta property="og:description" content="Free textbooks, lecture slides, and runnable code for undergraduate Computer Science — Algorithms & Data Structures, Web Technologies, and Advanced Web Technologies — from the Department of Computer Science, COMSATS University Islamabad, Lahore Campus.">
+<meta property="og:url" content="https://cuinotes.com/claude-code-handbook/16-audit-and-e2e/">
+<meta property="og:image" content="https://cuinotes.com/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="16. Security Audits and End-to-End Tests">
+<meta name="twitter:description" content="Free textbooks, lecture slides, and runnable code for undergraduate Computer Science — Algorithms & Data Structures, Web Technologies, and Advanced Web Technologies — from the Department of Computer Science, COMSATS University Islamabad, Lahore Campus.">
+<meta name="twitter:image" content="https://cuinotes.com/assets/og-image.png">
+
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XCX5GHHFLZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-XCX5GHHFLZ');
+</script>
+
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="teal">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#16-security-audits-and-end-to-end-tests" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="cuinotes" class="md-header__button md-logo" aria-label="cuinotes" data-md-component="logo">
+      
+  <img src="../../assets/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            cuinotes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              16. Security Audits and End-to-End Tests
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="teal"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="teal"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+
+
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+        
+          
+        
+          
+        
+        
+          
+          
+            
+          
+            
+          
+          
+            
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+          
+        
+      
+        
+        
+          
+            
+          
+        
+          
+        
+        
+          
+          
+        
+      
+        
+        
+          
+        
+          
+        
+        
+          
+          
+            
+              
+            
+          
+            
+          
+          
+            
+              
+              
+              
+                
+              
+                
+              
+                
+                  
+                  
+                
+              
+                
+                  
+                  
+                
+              
+                
+                  
+                  
+                
+              
+                
+                  
+                  
+                
+              
+                
+                  
+                  
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+              
+              
+              <li class="md-tabs__item md-tabs__item--dropdown">
+                <a href="../../courses/" class="md-tabs__link">
+                  Courses
+                </a>
+                <ul class="md-tabs__submenu">
+                  
+                    <li>
+  <a href="../../algorithms-and-data-structures/">Algorithms and Data Structures (CSC211)</a>
+</li>
+                  
+                    <li>
+  <a href="../../web-technologies/">Web Technologies (CSC336)</a>
+</li>
+                  
+                    <li>
+  <a href="../../advanced-web-technologies/">Advanced Web Technologies (CSC337)</a>
+</li>
+                  
+                    <li>
+  <a href="../../database-systems/">Database Systems (CSC270)</a>
+</li>
+                  
+                    <li>
+  <a href="../../operating-systems/">Operating Systems (CSC323)</a>
+</li>
+                  
+                </ul>
+              </li>
+            
+          
+        
+      
+        
+        
+          
+        
+          
+        
+        
+          
+          
+            
+              
+            
+          
+            
+          
+          
+            
+          
+        
+      
+        
+        
+          
+        
+          
+        
+        
+          
+          
+            
+              
+            
+          
+            
+          
+          
+            
+          
+        
+      
+        
+        
+          
+        
+          
+        
+        
+          
+          
+            
+              
+            
+          
+            
+          
+          
+            
+          
+        
+      
+        
+        
+          
+        
+          
+        
+        
+          
+          
+            
+              
+            
+          
+            
+          
+          
+            
+          
+        
+      
+        
+        
+          
+        
+          
+            
+          
+        
+        
+          
+          
+        
+      
+        
+        
+          
+        
+          
+        
+        
+          
+          
+            
+          
+            
+              
+            
+          
+          
+            
+              
+              
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+                  
+                  
+                
+              
+                
+                  
+                  
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+              
+              
+              <li class="md-tabs__item md-tabs__item--dropdown">
+                <a href="../../labs/" class="md-tabs__link">
+                  Labs
+                </a>
+                <ul class="md-tabs__submenu">
+                  
+                    <li>
+  <a href="../../labs/web-technologies/">Web Technologies (CSC336) Labs</a>
+</li>
+                  
+                    <li>
+  <a href="../../labs/database-systems/">Database Systems (CSC270) Labs</a>
+</li>
+                  
+                </ul>
+              </li>
+            
+          
+        
+      
+        
+        
+          
+        
+          
+        
+        
+          
+          
+            
+          
+            
+              
+            
+          
+          
+            
+          
+        
+      
+        
+        
+          
+        
+          
+        
+        
+          
+          
+            
+          
+            
+          
+          
+            
+  
+  
+  
+  
+    
+    
+    <li class="md-tabs__item md-tabs__item--dropdown">
+      <a href="../../demos/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Helping Material
+
+      </a>
+      
+        <ul class="md-tabs__submenu">
+          
+            <li>
+  <a href="../../demos/">Demos</a>
+</li>
+          
+            <li>
+  <a href="../../downloads/">Downloads</a>
+</li>
+          
+            <li>
+  <a href="../../lecture-slides/">Lecture Slides</a>
+</li>
+          
+        </ul>
+      
+    </li>
+  
+
+          
+        
+      
+        
+        
+          
+        
+          
+        
+        
+          
+          
+            
+          
+            
+          
+          
+            
+  
+  
+  
+  
+    
+    
+    <li class="md-tabs__item md-tabs__item--dropdown">
+      <a href="../../tutorials/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Tutorials
+
+      </a>
+      
+        <ul class="md-tabs__submenu">
+          
+            <li>
+  <a href="../../tutorials/">Overview</a>
+</li>
+          
+            <li>
+  <a href="../../tutorials/html-css/">HTML & CSS</a>
+</li>
+          
+            <li>
+  <a href="../../tutorials/javascript/">JavaScript</a>
+</li>
+          
+            <li>
+  <a href="../../tutorials/express/">Express</a>
+</li>
+          
+            <li>
+  <a href="../../tutorials/react/">React</a>
+</li>
+          
+            <li>
+  <a href="../../tutorials/devops/">DevOps</a>
+</li>
+          
+        </ul>
+      
+    </li>
+  
+
+          
+        
+      
+        
+        
+          
+        
+          
+        
+        
+          
+          
+            
+          
+            
+          
+          
+            
+  
+  
+  
+    
+  
+  
+    
+    
+    <li class="md-tabs__item md-tabs__item--active md-tabs__item--dropdown">
+      <a href="../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Claude Code Handbook
+
+      </a>
+      
+        <ul class="md-tabs__submenu">
+          
+            <li>
+  <a href="../">Introduction</a>
+</li>
+          
+            <li>
+  <a href="../01-start-here/">Part 1 — Orientation</a>
+</li>
+          
+            <li>
+  <a href="../02-coding-agents-explained/">Part 2 — Claude Code Fundamentals</a>
+</li>
+          
+            <li>
+  <a href="../11-idea-to-scope/">Part 3 — Plan a Real Project</a>
+</li>
+          
+            <li>
+  <a href="../14-authentication/">Part 4 — Auth, Security, Testing</a>
+</li>
+          
+            <li>
+  <a href="../17-building-crud/">Part 5–6 — Building Features</a>
+</li>
+          
+            <li>
+  <a href="../19-ai-features/">Part 7 — AI Features</a>
+</li>
+          
+            <li>
+  <a href="../20-email-integration/">Part 8 — Email</a>
+</li>
+          
+            <li>
+  <a href="../21-shipping-to-production/">Part 9 — Ship It</a>
+</li>
+          
+            <li>
+  <a href="../appendix-a-cheat-sheet/">Appendices</a>
+</li>
+          
+        </ul>
+      
+    </li>
+  
+
+          
+        
+      
+        
+        
+          
+        
+          
+        
+        
+          
+          
+            
+          
+            
+          
+          
+            
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../tags/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Tags
+
+      </a>
+    </li>
+  
+
+          
+        
+      
+        
+        
+          
+        
+          
+        
+        
+          
+          
+            
+          
+            
+          
+          
+            
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://usmanlive.com" class="md-tabs__link">
+        
+  
+  
+    
+  
+  usmanlive.com
+
+      </a>
+    </li>
+  
+
+          
+        
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="cuinotes" class="md-nav__button md-logo" aria-label="cuinotes" data-md-component="logo">
+      
+  <img src="../../assets/logo.svg" alt="logo">
+
+    </a>
+    cuinotes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../courses/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Courses
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../algorithms-and-data-structures/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Algorithms and Data Structures (CSC211)
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../web-technologies/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Web Technologies (CSC336)
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../advanced-web-technologies/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced Web Technologies (CSC337)
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../database-systems/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Database Systems (CSC270)
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../operating-systems/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operating Systems (CSC323)
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../labs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Labs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../labs/web-technologies/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Web Technologies (CSC336) Labs
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../labs/database-systems/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Database Systems (CSC270) Labs
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../demos/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Helping Material
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../tutorials/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutorials
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Claude Code Handbook
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_13" id="__nav_13_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_13_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_13">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Claude Code Handbook
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_13_2" id="__nav_13_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 1 — Orientation
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_13_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_13_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 1 — Orientation
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-start-here/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Start Here
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_13_3" id="__nav_13_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 2 — Claude Code Fundamentals
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_13_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_13_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 2 — Claude Code Fundamentals
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-coding-agents-explained/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Coding Agents Explained
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-install-and-first-session/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Install and First Session
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-project-memory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Project Memory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-prompting-and-plan-mode/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Prompting and Plan Mode
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-context-and-cost/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Context and Cost
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-mcp-and-skills/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. MCP and Skills
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-checkpoints-subagents-review/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Checkpoints, Subagents, Review
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-permissions-and-hooks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Permissions and Hooks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-future-of-engineering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. The Future of Engineering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_13_4" id="__nav_13_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 3 — Plan a Real Project
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_13_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_13_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 3 — Plan a Real Project
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11-idea-to-scope/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. From Idea to Scope
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12-stack-and-plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Stack and Plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13-project-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Setting Up the Project
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_13_5" id="__nav_13_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 4 — Auth, Security, Testing
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_13_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_13_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 4 — Auth, Security, Testing
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14-authentication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. Authentication and Sessions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15-login-validation-roles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15. Forms, Validation, Roles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16. Security Audits and E2E
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16. Security Audits and E2E
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#fresh-eyes-why-the-builder-should-not-be-the-reviewer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fresh eyes: why the builder should not be the reviewer
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Fresh eyes: why the builder should not be the reviewer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#run-it-in-the-background" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Run it in the background
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#triage-the-findings-do-not-obey-them" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Triage the findings; do not obey them
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-the-fixes-look-like-in-shelf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What the fixes look like in Shelf
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-the-app-will-not-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When the app will not start
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#automated-tests-why-e2e" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Automated tests: why E2E
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Automated tests: why E2E">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#test-the-setup-not-just-the-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Test the setup, not just the tests
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-testing-agent-keeps-the-details-out-of-your-way" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A testing agent keeps the details out of your way
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="A testing agent keeps the details out of your way">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reviewing-ai-written-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reviewing AI-written tests
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-mistakes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common mistakes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_13_6" id="__nav_13_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 5–6 — Building Features
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_13_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_13_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 5–6 — Building Features
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../17-building-crud/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17. Building CRUD Features
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../18-lists-details-xss/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    18. Lists, Details, Safe Output
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_13_7" id="__nav_13_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 7 — AI Features
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_13_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_13_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 7 — AI Features
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../19-ai-features/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    19. Adding AI Features
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_13_8" id="__nav_13_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 8 — Email
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_13_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_13_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 8 — Email
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../20-email-integration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20. Email Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_13_9" id="__nav_13_9_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 9 — Ship It
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_13_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_13_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 9 — Ship It
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../21-shipping-to-production/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    21. Shipping to Production
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../22-claude-in-github-and-final-thoughts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    22. Claude in GitHub, Final Thoughts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_13_10" id="__nav_13_10_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendices
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_13_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_13_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Appendices
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../appendix-a-cheat-sheet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    A. Cheat Sheet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../appendix-b-troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    B. Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../appendix-c-glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    C. Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../appendix-d-prompt-library/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    D. Prompt Library
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../appendix-e-exercises/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    E. Exercises
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tags
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://usmanlive.com" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    usmanlive.com
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#fresh-eyes-why-the-builder-should-not-be-the-reviewer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fresh eyes: why the builder should not be the reviewer
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Fresh eyes: why the builder should not be the reviewer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#run-it-in-the-background" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Run it in the background
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#triage-the-findings-do-not-obey-them" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Triage the findings; do not obey them
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-the-fixes-look-like-in-shelf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What the fixes look like in Shelf
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-the-app-will-not-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When the app will not start
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#automated-tests-why-e2e" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Automated tests: why E2E
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Automated tests: why E2E">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#test-the-setup-not-just-the-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Test the setup, not just the tests
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-testing-agent-keeps-the-details-out-of-your-way" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A testing agent keeps the details out of your way
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="A testing agent keeps the details out of your way">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reviewing-ai-written-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reviewing AI-written tests
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-mistakes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common mistakes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="Navigation" >
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../.." class="md-path__link">
+        
+  <span class="md-ellipsis">
+    Home
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Claude Code Handbook
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../14-authentication/" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Part 4 — Auth, Security, Testing
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <a href="../../tags/#tag:e2e" class="md-tag">E2E</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../tags/#tag:security" class="md-tag">Security</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../tags/#tag:subagents" class="md-tag">Subagents</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../tags/#tag:testing" class="md-tag">Testing</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../tags/#tag:troubleshooting" class="md-tag">Troubleshooting</a>
+      
+    
+  </nav>
+
+
+
+<h1 id="16-security-audits-and-end-to-end-tests">16. Security Audits and End-to-End Tests<a class="headerlink" href="#16-security-audits-and-end-to-end-tests" title="Permanent link">&para;</a></h1>
+<div class="admonition abstract">
+<p class="admonition-title">Video map</p>
+<p>Covers Section 4, lessons 4.13–4.20: creating a security-audit agent, running the audit, troubleshooting startup problems, setting up Playwright, reviewing the setup, creating a testing agent, writing and reviewing E2E tests.</p>
+</div>
+<p>Part 4 ends with two habits that separate hobby projects from dependable ones: <strong>review the work with fresh eyes</strong>, and <strong>test it automatically so it keeps working.</strong></p>
+<h2 id="fresh-eyes-why-the-builder-should-not-be-the-reviewer">Fresh eyes: why the builder should not be the reviewer<a class="headerlink" href="#fresh-eyes-why-the-builder-should-not-be-the-reviewer" title="Permanent link">&para;</a></h2>
+<p>If you wrote a piece of code and then reviewed it, you would be biased — you would gloss over problems and justify your choices. A model that wrote the code in the current conversation has the same weakness: its context is full of its own reasoning. A <strong>subagent</strong> starts clean, with only the rules you give it (<a href="../08-checkpoints-subagents-review/">chapter 8</a>).</p>
+<div class="cu-svg-diagram">
+<p><svg viewBox="0 0 760 215" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The human review loop"><title>The human review loop</title><desc>Prompt, inspect the diff, give a follow-up, then commit</desc><defs><marker id="h-teal" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 Z" fill="var(--cu-teal)"/></marker><marker id="h-purple" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 Z" fill="var(--cu-purple)"/></marker><marker id="h-orange" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 Z" fill="var(--cu-orange)"/></marker><marker id="h-plain" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 Z" fill="var(--cu-faint)"/></marker><marker id="h-red" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 Z" fill="#E5484D"/></marker></defs><rect x="14" y="80" width="126" height="70" rx="12" fill="var(--cu-teal)" fill-opacity="0.12" stroke="var(--cu-teal)" stroke-width="1.6"/><text x="77.0" y="110.4625" text-anchor="middle" font-family="Sora, 'Segoe UI', Inter, Arial, sans-serif" font-size="13" font-weight="700" fill="var(--cu-text)" opacity="1">Prompt</text><text x="77.0" y="128.63750000000002" text-anchor="middle" font-family="Sora, 'Segoe UI', Inter, Arial, sans-serif" font-size="10.5" font-weight="500" fill="var(--cu-muted)" opacity="1">one small task</text><rect x="162" y="80" width="126" height="70" rx="12" fill="var(--cu-purple)" fill-opacity="0.12" stroke="var(--cu-purple)" stroke-width="1.6"/><text x="225.0" y="110.4625" text-anchor="middle" font-family="Sora, 'Segoe UI', Inter, Arial, sans-serif" font-size="13" font-weight="700" fill="var(--cu-text)" opacity="1">Diff</text><text x="225.0" y="128.63750000000002" text-anchor="middle" font-family="Sora, 'Segoe UI', Inter, Arial, sans-serif" font-size="10.5" font-weight="500" fill="var(--cu-muted)" opacity="1">read every change</text><path d="M142,115 L160,115" fill="none" stroke="var(--cu-faint)" stroke-width="1.8" stroke-linejoin="round" marker-end="url(#h-plain)"/><rect x="310" y="80" width="126" height="70" rx="12" fill="var(--cu-orange)" fill-opacity="0.12" stroke="var(--cu-orange)" stroke-width="1.6"/><text x="373.0" y="110.4625" text-anchor="middle" font-family="Sora, 'Segoe UI', Inter, Arial, sans-serif" font-size="13" font-weight="700" fill="var(--cu-text)" opacity="1">Judge</text><text x="373.0" y="128.63750000000002" text-anchor="middle" font-family="Sora, 'Segoe UI', Inter, Arial, sans-serif" font-size="10.5" font-weight="500" fill="var(--cu-muted)" opacity="1">right fix or symptom?</text><path d="M290,115 L308,115" fill="none" stroke="var(--cu-faint)" stroke-width="1.8" stroke-linejoin="round" marker-end="url(#h-plain)"/><rect x="458" y="80" width="126" height="70" rx="12" fill="var(--cu-teal)" fill-opacity="0.12" stroke="var(--cu-teal)" stroke-width="1.6"/><text x="521.0" y="110.4625" text-anchor="middle" font-family="Sora, 'Segoe UI', Inter, Arial, sans-serif" font-size="13" font-weight="700" fill="var(--cu-text)" opacity="1">Follow-up</text><text x="521.0" y="128.63750000000002" text-anchor="middle" font-family="Sora, 'Segoe UI', Inter, Arial, sans-serif" font-size="10.5" font-weight="500" fill="var(--cu-muted)" opacity="1">steer the design</text><path d="M438,115 L456,115" fill="none" stroke="var(--cu-faint)" stroke-width="1.8" stroke-linejoin="round" marker-end="url(#h-plain)"/><rect x="606" y="80" width="126" height="70" rx="12" fill="var(--cu-purple)" fill-opacity="0.12" stroke="var(--cu-purple)" stroke-width="1.6"/><text x="669.0" y="110.4625" text-anchor="middle" font-family="Sora, 'Segoe UI', Inter, Arial, sans-serif" font-size="13" font-weight="700" fill="var(--cu-text)" opacity="1">Commit</text><text x="669.0" y="128.63750000000002" text-anchor="middle" font-family="Sora, 'Segoe UI', Inter, Arial, sans-serif" font-size="10.5" font-weight="500" fill="var(--cu-muted)" opacity="1">save a checkpoint</text><path d="M586,115 L604,115" fill="none" stroke="var(--cu-faint)" stroke-width="1.8" stroke-linejoin="round" marker-end="url(#h-plain)"/><path d="M470,80 L470,40 L225,40 L225,76" fill="none" stroke="var(--cu-orange)" stroke-width="1.8" stroke-linejoin="round" marker-end="url(#h-orange)" stroke-dasharray="5 4"/><text x="348" y="32" text-anchor="middle" font-family="Sora, 'Segoe UI', Inter, Arial, sans-serif" font-size="11" font-weight="600" fill="var(--cu-muted)" opacity="1">fix the cause, not the symptom</text><text x="14" y="184" text-anchor="start" font-family="Sora, 'Segoe UI', Inter, Arial, sans-serif" font-size="12.5" font-weight="600" fill="var(--cu-muted)" opacity="1">Small steps + a commit after each good one = every mistake is cheap to undo.</text></svg></p>
+</div>
+<p>Shelf's auditor is a short file that is deliberately <strong>read-only</strong> (<code>tools: Read, Grep, Glob</code>):</p>
+<div class="language-markdown highlight"><span class="filename">.claude/agents/security-auditor.md</span><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>---
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>name: security-auditor
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>description: Fresh-eyes security reviewer for Shelf. Use after authentication, input handling, or any new endpoint is added. Read-only.
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="gu">tools: Read, Grep, Glob</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="gu">---</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>You are a security reviewer who has never seen this code before. You did NOT write it, so do not assume anything is safe because it looks intentional.
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>Audit <span class="sb">`src/`</span> and <span class="sb">`web/`</span> for:
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="k">1.</span> <span class="gs">**Authentication**</span> — every route except <span class="sb">`/health`</span>, <span class="sb">`/`</span>, and the static allow-list requires a valid key; comparisons are constant-time.
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="k">2.</span> <span class="gs">**Authorization**</span> — owners can only reach their own books (404, not 403); <span class="sb">`/admin/*`</span> requires the admin role; no role can be set by a client.
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="k">3.</span> <span class="gs">**Input**</span> — every request body goes through validation and a size limit; no value reaches <span class="sb">`eval`</span>, a shell, or a file path.
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="k">4.</span> <span class="gs">**Output**</span> — user-supplied text is escaped wherever it becomes HTML; CSP and <span class="sb">`nosniff`</span> headers are set.
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="k">5.</span> <span class="gs">**Secrets &amp; config**</span> — no secrets in code or examples; production refuses weak or missing config.
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="k">6.</span> <span class="gs">**Abuse**</span> — rate limiting covers all authenticated routes; webhooks verify a signature.
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>Report findings grouped as <span class="gs">**Critical / High / Medium / Low**</span>. For each: <span class="sb">`file:line — what is wrong — how it could be exploited — suggested fix`</span>.
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>Do not report style issues. Do not edit any file. If a category is clean, say so in one line.
+</span></code></pre></div>
+<p>Notice what it does:</p>
+<ul>
+<li>It declares a <strong>checklist</strong> (authentication, authorization, input, output, secrets, abuse) so every audit covers the same ground.</li>
+<li>It demands <strong>severity levels</strong> and an <em>exploit sentence</em> for each finding. "How could someone use this?" filters out vague worries.</li>
+<li>It forbids editing. Finding problems and fixing them are separate steps, and you stay in the loop between them.</li>
+</ul>
+<h3 id="run-it-in-the-background">Run it in the background<a class="headerlink" href="#run-it-in-the-background" title="Permanent link">&para;</a></h3>
+<p>An audit can take minutes. In the terminal you can send a running agent to the <strong>background</strong> (the video uses <code>Ctrl+B</code>) and carry on with other work. Parallel work is a real advantage of agents — but only if the tasks do not touch the same files.</p>
+<h3 id="triage-the-findings-do-not-obey-them">Triage the findings; do not obey them<a class="headerlink" href="#triage-the-findings-do-not-obey-them" title="Permanent link">&para;</a></h3>
+<p>The video's audit returned critical, high and medium findings — for example an <strong>example secret</strong> in <code>.env.example</code> that someone might deploy unchanged, and <strong>missing rate limiting</strong> on login. Handle a report like this:</p>
+<ol>
+<li><strong>Sort</strong>: which are real? Reproduce critical ones before fixing.</li>
+<li><strong>Decide</strong>: some findings are trade-offs (a limit of N requests per window is a judgement; the video picks a number it can defend).</li>
+<li><strong>Fix in small steps</strong>, each with a test.</li>
+<li><strong>Commit</strong> — "Improve security" — and re-audit if the change was large.</li>
+</ol>
+<div class="admonition warning">
+<p class="admonition-title">An AI audit is a second opinion, not a certificate</p>
+<p>Models miss things and sometimes invent problems. Use the audit to find issues you would not have looked for, not to prove you have none.</p>
+</div>
+<h3 id="what-the-fixes-look-like-in-shelf">What the fixes look like in Shelf<a class="headerlink" href="#what-the-fixes-look-like-in-shelf" title="Permanent link">&para;</a></h3>
+<p>Rate limiting, constant-time comparison, escaped output and signed webhooks all exist because of this kind of review. The limiter is small enough to read in a minute and is tested without any real clock:</p>
+<div class="language-js highlight"><span class="filename">src/security.js</span><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">export</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">RateLimiter</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="n">#hits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Map</span><span class="p">();</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span><span class="kr">constructor</span><span class="p">({</span><span class="w"> </span><span class="nx">limit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">60</span><span class="p">,</span><span class="w"> </span><span class="nx">windowMs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">60</span><span class="nx">_000</span><span class="p">,</span><span class="w"> </span><span class="nx">now</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{})</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="nb">Object</span><span class="p">.</span><span class="nx">assign</span><span class="p">(</span><span class="k">this</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">limit</span><span class="p">,</span><span class="w"> </span><span class="nx">windowMs</span><span class="p">,</span><span class="w"> </span><span class="nx">now</span><span class="w"> </span><span class="p">});</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">  </span><span class="cm">/** @returns {{ allowed: boolean, remaining: number, retryAfterSec: number }} */</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">  </span><span class="nx">check</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">now</span><span class="p">();</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="n">#hits</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">key</span><span class="p">);</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">w</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">t</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">w</span><span class="p">.</span><span class="nx">start</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">windowMs</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">      </span><span class="nx">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">start</span><span class="o">:</span><span class="w"> </span><span class="nx">t</span><span class="p">,</span><span class="w"> </span><span class="nx">count</span><span class="o">:</span><span class="w"> </span><span class="mf">0</span><span class="w"> </span><span class="p">};</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="w">      </span><span class="k">this</span><span class="p">.</span><span class="n">#hits</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span><span class="w"> </span><span class="nx">w</span><span class="p">);</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="w">    </span><span class="nx">w</span><span class="p">.</span><span class="nx">count</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mf">1</span><span class="p">;</span>
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">allowed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">w</span><span class="p">.</span><span class="nx">count</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">limit</span><span class="p">;</span>
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="w">      </span><span class="nx">allowed</span><span class="p">,</span>
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="w">      </span><span class="nx">remaining</span><span class="o">:</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">limit</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">w</span><span class="p">.</span><span class="nx">count</span><span class="p">),</span>
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="w">      </span><span class="nx">retryAfterSec</span><span class="o">:</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">ceil</span><span class="p">((</span><span class="nx">w</span><span class="p">.</span><span class="nx">start</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">windowMs</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">t</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">1000</span><span class="p">),</span>
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="w">    </span><span class="p">};</span>
+</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>(The <code>now</code> function is injectable, so a test can "move time" instead of sleeping.)</p>
+<h2 id="when-the-app-will-not-start">When the app will not start<a class="headerlink" href="#when-the-app-will-not-start" title="Permanent link">&para;</a></h2>
+<p>The video devotes a lesson to a problem that will happen to you: the server runs but the client does not, and the terminal says nothing useful. The techniques are general:</p>
+<ol>
+<li><strong>Reproduce in your own terminal</strong>, outside the agent. You see all the output.</li>
+<li><strong>Read the first error, not the last.</strong> Later errors are often consequences.</li>
+<li><strong>Check the boring things</strong>: is the port already taken? Is a stale process still running? Did an environment variable change?</li>
+<li><strong>Reduce</strong>: start each half separately to learn which one is broken.</li>
+<li><strong>Restart cleanly</strong> — in the video, signing out, signing back in and restarting the tools made it work.</li>
+</ol>
+<p>The full tree is in <a href="../appendix-b-troubleshooting/">Appendix B</a>. And remember to <em>tell</em> the agent exactly what you saw ("the client exits silently, the server is on port 3000") instead of "it doesn't work."</p>
+<h2 id="automated-tests-why-e2e">Automated tests: why E2E<a class="headerlink" href="#automated-tests-why-e2e" title="Permanent link">&para;</a></h2>
+<p>You have already seen unit and API tests. <strong>End-to-end (E2E)</strong> tests drive a real browser against a real running app, the way a user would.</p>
+<table>
+<thead>
+<tr>
+<th>Test type</th>
+<th>Speed</th>
+<th>What it catches</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Unit</td>
+<td>Milliseconds</td>
+<td>A rule is wrong</td>
+</tr>
+<tr>
+<td>API / integration</td>
+<td>Tens of ms</td>
+<td>Two parts disagree</td>
+</tr>
+<tr>
+<td><strong>E2E</strong></td>
+<td>Seconds</td>
+<td>The whole journey is broken</td>
+</tr>
+</tbody>
+</table>
+<p>E2E tests are the slowest and the most fragile, so write <strong>few</strong> of them, for the journeys that matter, and keep everything else as fast tests. Shelf's smoke test covers one story: empty list → invalid form → add a book → hostile input is rendered inert → the server still rejects bad data.</p>
+<div class="language-js highlight"><span class="filename">e2e/smoke.e2e.mjs</span><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="w">  </span><span class="k">await</span><span class="w"> </span><span class="nx">step</span><span class="p">(</span><span class="s2">&quot;a valid book is added and listed&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="nx">page</span><span class="p">.</span><span class="nx">fill</span><span class="p">(</span><span class="s2">&quot;input[name=title]&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Dune&quot;</span><span class="p">);</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="nx">page</span><span class="p">.</span><span class="nx">fill</span><span class="p">(</span><span class="s2">&quot;input[name=author]&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Frank Herbert&quot;</span><span class="p">);</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="nx">page</span><span class="p">.</span><span class="nx">click</span><span class="p">(</span><span class="s2">&quot;button&quot;</span><span class="p">);</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="nx">page</span><span class="p">.</span><span class="nx">waitForSelector</span><span class="p">(</span><span class="s2">&quot;li.book&quot;</span><span class="p">);</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">    </span><span class="nx">assert</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="k">await</span><span class="w"> </span><span class="nx">page</span><span class="p">.</span><span class="nx">textContent</span><span class="p">(</span><span class="s2">&quot;li.book&quot;</span><span class="p">),</span><span class="w"> </span><span class="sr">/Dune/</span><span class="p">);</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">    </span><span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="k">await</span><span class="w"> </span><span class="nx">page</span><span class="p">.</span><span class="nx">textContent</span><span class="p">(</span><span class="s2">&quot;#err-title&quot;</span><span class="p">),</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">);</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">  </span><span class="p">});</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">  </span><span class="k">await</span><span class="w"> </span><span class="nx">step</span><span class="p">(</span><span class="s2">&quot;hostile input is rendered as text, never executed&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="nx">page</span><span class="p">.</span><span class="nx">fill</span><span class="p">(</span><span class="s2">&quot;input[name=title]&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;&lt;img src=x onerror=alert(1)&gt;&quot;</span><span class="p">);</span>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="nx">page</span><span class="p">.</span><span class="nx">fill</span><span class="p">(</span><span class="s2">&quot;input[name=author]&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Eve&quot;</span><span class="p">);</span>
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="nx">page</span><span class="p">.</span><span class="nx">click</span><span class="p">(</span><span class="s2">&quot;button&quot;</span><span class="p">);</span>
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="nx">page</span><span class="p">.</span><span class="nx">waitForFunction</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="s2">&quot;li.book&quot;</span><span class="p">).</span><span class="nx">length</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="mf">2</span><span class="p">);</span>
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="w">    </span><span class="nx">assert</span><span class="p">.</span><span class="nx">ok</span><span class="p">((</span><span class="k">await</span><span class="w"> </span><span class="nx">page</span><span class="p">.</span><span class="nx">textContent</span><span class="p">(</span><span class="s2">&quot;#list&quot;</span><span class="p">)).</span><span class="nx">includes</span><span class="p">(</span><span class="s2">&quot;&lt;img src=x onerror=alert(1)&gt;&quot;</span><span class="p">));</span>
+</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="w">    </span><span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="k">await</span><span class="w"> </span><span class="nx">page</span><span class="p">.</span><span class="nx">locator</span><span class="p">(</span><span class="s2">&quot;#list img&quot;</span><span class="p">).</span><span class="nx">count</span><span class="p">(),</span><span class="w"> </span><span class="mf">0</span><span class="p">);</span>
+</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="w">    </span><span class="nx">assert</span><span class="p">.</span><span class="nx">deepEqual</span><span class="p">(</span><span class="nx">dialogs</span><span class="p">,</span><span class="w"> </span><span class="p">[]);</span>
+</span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a><span class="w">  </span><span class="p">});</span>
+</span></code></pre></div>
+<p>Run it with <code>node e2e/smoke.e2e.mjs</code> after the one-time Playwright install shown at the top of the file.</p>
+<h3 id="test-the-setup-not-just-the-tests">Test the setup, not just the tests<a class="headerlink" href="#test-the-setup-not-just-the-tests" title="Permanent link">&para;</a></h3>
+<p>The video's setup lesson makes decisions you should copy:</p>
+<ul>
+<li>A <strong>separate test database</strong> (and a throwaway data file in Shelf) — E2E tests must never touch real data.</li>
+<li><strong>Rate limiting disabled outside production</strong>, driven by an environment variable, or your own tests lock themselves out.</li>
+<li><strong>Global setup/teardown</strong> to seed known users and clean up.</li>
+<li><strong>Test artifacts (traces, reports) in <code>.gitignore</code>.</strong></li>
+<li>Updating <strong>project memory</strong> with the test commands, ports and folders.</li>
+</ul>
+<h2 id="a-testing-agent-keeps-the-details-out-of-your-way">A testing agent keeps the details out of your way<a class="headerlink" href="#a-testing-agent-keeps-the-details-out-of-your-way" title="Permanent link">&para;</a></h2>
+<p>Writing E2E tests is fiddly, and failing runs can eat hours. The video moves the know-how into a <strong>test-writer subagent</strong> and leaves <code>CLAUDE.md</code> with just one line: <em>"use the e2e-writer agent for Playwright tests."</em> Shelf's version:</p>
+<div class="language-markdown highlight"><span class="filename">.claude/agents/e2e-writer.md</span><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>---
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>name: e2e-writer
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>description: Writes and runs the browser end-to-end tests in e2e/. Use for any request to add or fix an E2E test.
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="gu">tools: Read, Grep, Glob, Edit, Write, Bash</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="gu">---</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>You write end-to-end tests for Shelf with Playwright. Keep the details here so <span class="sb">`CLAUDE.md`</span> stays short.
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>Rules:
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="k">-</span><span class="w"> </span>Tests live in <span class="sb">`e2e/`</span> and run with <span class="sb">`node e2e/&lt;name&gt;.e2e.mjs`</span>.
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="k">-</span><span class="w"> </span>Start the server on a <span class="gs">**throwaway data file**</span> and a random free port; never touch <span class="sb">`data.json`</span>.
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="k">-</span><span class="w"> </span>Find elements by accessible role or label, not by CSS class.
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="k">-</span><span class="w"> </span>Cover only <span class="gs">**user journeys**</span> (add a book, see validation errors, see the list update). Rules that can be checked without a browser belong in <span class="sb">`test/`</span> as fast unit tests.
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="k">-</span><span class="w"> </span>Never use fixed sleeps; wait for a visible condition.
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="k">-</span><span class="w"> </span>Print one line per step so a failure shows where it stopped.
+</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="k">-</span><span class="w"> </span>When a test fails, decide first whether the <span class="gs">**test**</span> or the <span class="gs">**app**</span> is wrong. Report which, with evidence, before changing anything.
+</span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a>
+</span><span id="__span-3-19"><a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a>When done, run the test and report pass/fail honestly, including any flaky behaviour you saw.
+</span></code></pre></div>
+<p>Two rules in it are worth stealing: <em>"decide whether the <strong>test</strong> or the <strong>app</strong> is wrong before changing anything,"</em> and <em>"never use fixed sleeps."</em> Together they prevent the two classic failures of AI-written tests — rewriting a test until it passes while hiding a real bug, and flaky timing.</p>
+<h3 id="reviewing-ai-written-tests">Reviewing AI-written tests<a class="headerlink" href="#reviewing-ai-written-tests" title="Permanent link">&para;</a></h3>
+<p>When the agent writes tests, read them like production code:</p>
+<ul>
+<li><strong>Does each test assert something meaningful?</strong> (e.g. the alert text <em>and</em> that you are still on the login page)</li>
+<li><strong>Are helpers clear?</strong> A <code>login(page, user)</code> helper keeps tests readable.</li>
+<li><strong>Can the test fail?</strong> Break the code on purpose and watch it go red.</li>
+<li><strong>Does it clean up after itself?</strong></li>
+</ul>
+<h2 id="common-mistakes">Common mistakes<a class="headerlink" href="#common-mistakes" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Reviewing with the same session that wrote the code.</strong></li>
+<li><strong>Treating the audit report as a to-do list</strong> instead of triaging it.</li>
+<li><strong>Too many E2E tests</strong>, slow and flaky.</li>
+<li><strong>Tests that share the development database.</strong></li>
+<li><strong>Letting the agent "fix" a failing test by weakening it.</strong></li>
+</ul>
+<h2 id="check-yourself">Check yourself<a class="headerlink" href="#check-yourself" title="Permanent link">&para;</a></h2>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> I can explain why a subagent gives a better review than the session that wrote the code.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> I wrote a read-only auditor agent with a checklist and severity levels.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> I triaged findings instead of applying them blindly.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> I can say which behaviours belong in unit tests and which in E2E.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> I ran an E2E test and broke the app on purpose to see it fail.</li>
+</ul>
+
+
+<div class="cu-share">
+  <span class="cu-share-label">// share</span>
+  <div class="cu-share-links">
+    <a class="cu-share-btn cu-share-whatsapp"
+       href="https://wa.me/?text=16.%20Security%20Audits%20and%20End-to-End%20Tests%20https%3A//cuinotes.com/claude-code-handbook/16-audit-and-e2e/"
+       target="_blank" rel="noopener" title="Share on WhatsApp" aria-label="Share on WhatsApp">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157m-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1s56.2 81.2 56.1 130.5c0 101.8-84.9 184.6-186.6 184.6m101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8s-14.3 18-17.6 21.8c-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7s-12.5-30.1-17.1-41.2c-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2s-9.7 1.4-14.8 6.9c-5.1 5.6-19.4 19-19.4 46.3s19.9 53.7 22.6 57.4c2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4s4.6-24.1 3.2-26.4c-1.3-2.5-5-3.9-10.5-6.6"/></svg>
+    </a>
+    <a class="cu-share-btn cu-share-facebook"
+       href="https://www.facebook.com/sharer/sharer.php?u=https%3A//cuinotes.com/claude-code-handbook/16-audit-and-e2e/"
+       target="_blank" rel="noopener" title="Share on Facebook" aria-label="Share on Facebook">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M512 256C512 114.6 397.4 0 256 0S0 114.6 0 256c0 120 82.7 220.8 194.2 248.5V334.2h-52.8V256h52.8v-33.7c0-87.1 39.4-127.5 125-127.5 16.2 0 44.2 3.2 55.7 6.4V172c-6-.6-16.5-1-29.6-1-42 0-58.2 15.9-58.2 57.2V256h83.6l-14.4 78.2H287v175.9C413.8 494.8 512 386.9 512 256"/></svg>
+    </a>
+    <a class="cu-share-btn cu-share-x"
+       href="https://twitter.com/intent/tweet?text=16.%20Security%20Audits%20and%20End-to-End%20Tests&amp;url=https%3A//cuinotes.com/claude-code-handbook/16-audit-and-e2e/"
+       target="_blank" rel="noopener" title="Share on X (Twitter)" aria-label="Share on X (Twitter)">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M357.2 48h70.6L273.6 224.2 455 464H313L201.7 318.6 74.5 464H3.8l164.9-188.5L-5.2 48h145.6l100.5 132.9zm-24.8 373.8h39.1L119.1 88h-42z"/></svg>
+    </a>
+    <a class="cu-share-btn cu-share-linkedin"
+       href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//cuinotes.com/claude-code-handbook/16-audit-and-e2e/"
+       target="_blank" rel="noopener" title="Share on LinkedIn" aria-label="Share on LinkedIn">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77m282.1 320h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  </div>
+</div>
+
+
+
+
+
+
+
+  
+    
+  
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="November 5, 2026 06:18:03 UTC">November 5, 2026</span>
+  </span>
+
+    
+    
+    
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../15-login-validation-roles/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 15. Forms, Validation, Roles">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                15. Forms, Validation, Roles
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../17-building-crud/" class="md-footer__link md-footer__link--next" aria-label="Next: 17. Building CRUD Features">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                17. Building CRUD Features
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 cuinotes.com · Usman Akram &amp; Asif Shehzad, COMSATS University Islamabad — Lahore Campus
+    </div>
+  
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/in/usman-akram-21400327" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77m282.1 320h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://usmanlive.com" target="_blank" rel="noopener" title="usmanlive.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M351.9 280H161c2.9 64.5 17.2 123.9 37.5 167.4 11.4 24.5 23.7 41.8 35.1 52.4 11.2 10.5 18.9 12.2 22.9 12.2s11.7-1.7 22.9-12.2c11.4-10.6 23.7-28 35.1-52.4 20.3-43.5 34.6-102.9 37.5-167.4zm-191-48h190.9c-2.8-64.5-17.1-123.9-37.4-167.4-11.4-24.4-23.7-41.8-35.1-52.4C268.1 1.7 260.4 0 256.4 0s-11.7 1.7-22.9 12.2c-11.4 10.6-23.7 28-35.1 52.4-20.3 43.5-34.6 102.9-37.5 167.4m-48 0c3.5-85.6 25.6-165.1 57.9-217.3C78.7 47.3 10.9 131.2 1.5 232zM1.5 280c9.4 100.8 77.2 184.7 169.3 217.3-32.3-52.2-54.4-131.7-57.9-217.3zm398.4 0c-3.5 85.6-25.6 165.1-57.9 217.3 92.1-32.7 159.9-116.5 169.3-217.3zm111.4-48C501.9 131.2 434.1 47.3 342 14.7c32.3 52.2 54.4 131.7 57.9 217.3z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.indexes", "navigation.top", "navigation.footer", "navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.prune", "navigation.path", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "header.autohide"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../javascripts/guru-config.js"></script>
+      
+        <script src="../../javascripts/chat.js"></script>
+      
+    
+  </body>
+</html>
