@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": ["Bash(npm test)", "Bash(npm run *)", "Bash(git diff *)", "Bash(git status)"],
+    "deny": ["Read(./data.json)", "Bash(rm -rf *)", "Bash(git push *)"]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [{ "type": "command", "command": "npm test --silent" }]
+      }
+    ]
+  }
+}

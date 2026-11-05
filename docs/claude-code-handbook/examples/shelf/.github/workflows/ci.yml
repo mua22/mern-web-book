@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [20, 22]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - run: npm test
+
+  image:
+    needs: test
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -t shelf:${{ github.sha }} .
+      - name: Smoke test the image
+        run: |
+          # Production mode refuses to start without keys and a webhook secret, so give it throwaway CI values.
+          docker run -d --name shelf -p 3000:3000 -e SHELF_KEYS=ci:ci:admin -e EMAIL_WEBHOOK_SECRET=ci-only shelf:${{ github.sha }}
+          for i in $(seq 1 10); do curl -fs http://localhost:3000/health && exit 0; sleep 1; done
+          docker logs shelf; exit 1
