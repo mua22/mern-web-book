@@ -247,6 +247,31 @@ When you install a package with npm, it downloads the package's code into a fold
 Node.js project — it is never committed to version control (it's excluded via
 `.gitignore`) because it can be regenerated at any time by re-running the install command.
 
+### Understanding Version Numbers
+
+Notice the dependency line above: `"express": "^4.19.2"`. npm packages follow
+**semantic versioning** (semver): a version number is always `MAJOR.MINOR.PATCH`. For
+`4.19.2`, that's major version `4`, minor version `19`, patch version `2`. By convention,
+a **MAJOR** bump means breaking changes, a **MINOR** bump adds new features without
+breaking anything, and a **PATCH** bump is a bug fix.
+
+The symbol in front of the version number controls how far `npm install` (or `npm
+update`) is allowed to upgrade that package the next time it resolves dependencies:
+
+- **`^4.19.2`** (caret, npm's default when you run `npm install express`) — allows any
+  newer **MINOR** or **PATCH** release, so `4.20.0` or `4.19.5` are both fine, but never
+  `5.0.0`.
+- **`~4.19.2`** (tilde) — more conservative: allows only newer **PATCH** releases, like
+  `4.19.5`, but not `4.20.0`.
+- **`4.19.2`** (no symbol, an exact pin) — installs exactly that version, every time, with
+  no automatic upgrades at all.
+
+In practice, npm also creates a **`package-lock.json`** file the first time you install
+anything. It records the *exact* resolved version of every package (and every package
+those packages depend on), so that everyone on your team — and your deployment server —
+installs the identical dependency tree, regardless of which versions `^` or `~` would
+otherwise allow.
+
 ## Setting Up an Express.js Project
 
 **Express.js** (usually just "Express") is the most widely used **web framework** for
@@ -343,6 +368,43 @@ Let's unpack each piece:
   incoming network connections on the given **port** — think of a port as a specific
   numbered "door" on your computer that a program listens at. Nothing happens on the
   network until you call `.listen()`.
+
+### How `require()` Works
+
+`require('express')` and `require('./math')` look similar, but they load two different
+kinds of things:
+
+- **`require('express')`** — no `./` prefix, so Node treats `'express'` as a **package
+  name** and looks for it inside the `node_modules` folder (where `npm install` put it).
+- **`require('./math')`** — starts with `./`, so Node treats it as a **path to one of
+  your own files**, relative to the file doing the requiring.
+
+To see this with your own code, create a second file, `math.js`, right next to
+`index.js`:
+
+```javascript title="math.js"
+function add(a, b) {
+  return a + b;
+}
+
+module.exports = add;
+```
+
+Every file in Node's module system has a special `module.exports` object. Whatever you
+assign to it is exactly what another file receives when it `require()`s this file.
+
+Now `index.js` can load and use it:
+
+```javascript title="index.js (excerpt)"
+const add = require('./math');     // local file -- starts with ./
+const express = require('express'); // installed package -- no ./
+
+console.log(add(2, 3));  // 5
+```
+
+This is the same mechanism Express itself uses: Express's own source code ends with
+something like `module.exports = express;`, which is exactly what makes
+`const express = require('express')` work.
 
 Run the server from your terminal:
 
