@@ -22,7 +22,7 @@ Hands-on tutorials for Express.js, the "E" in MERN: routing, middleware, request
 The smallest possible Node server, routing and JSON responses by hand, and a small Tasks API -- so the next tutorial's Express version means something.
 
 <div class="cu-card-foot" markdown>
-<span>1 of 3</span>
+<span>1 of 4</span>
 <span class="cu-go">Start tutorial →</span>
 </div>
 </div>
@@ -38,7 +38,7 @@ The smallest possible Node server, routing and JSON responses by hand, and a sma
 The same Tasks API from the http-module tutorial, rewritten in Express with full CRUD -- routes, route params, express.json(), and a 404 handler.
 
 <div class="cu-card-foot" markdown>
-<span>2 of 3</span>
+<span>2 of 4</span>
 <span class="cu-go">Start tutorial →</span>
 </div>
 </div>
@@ -54,7 +54,23 @@ The same Tasks API from the http-module tutorial, rewritten in Express with full
 Server-rendered pages with EJS, a shared layout via express-ejs-layouts, and a complete add/toggle/delete Tasks app with zero client-side JavaScript.
 
 <div class="cu-card-foot" markdown>
-<span>3 of 3</span>
+<span>3 of 4</span>
+<span class="cu-go">Start tutorial →</span>
+</div>
+</div>
+
+<div class="cu-card" markdown>
+<a class="cu-card-link" href="static-site-to-express-ejs/" aria-label="Open Convert a Static Site to Express + EJS tutorial"></a>
+<div class="cu-tut-top" markdown>
+<span class="cu-chip cu-chip-orange">Intermediate</span>
+</div>
+
+### Convert a Static Site to Express + EJS
+
+Take a 3-page static HTML/CSS/JS storefront and convert it into a server-rendered Express + EJS app with express-ejs-layouts -- one shared layout instead of three copies of the same header and footer.
+
+<div class="cu-card-foot" markdown>
+<span>4 of 4</span>
 <span class="cu-go">Start tutorial →</span>
 </div>
 </div>
