@@ -2072,6 +2072,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="npm: The Node Package Manager">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#understanding-version-numbers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Understanding Version Numbers
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2093,6 +2110,23 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Building Your First Web Server">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-require-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How require() Works
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -3525,6 +3559,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="npm: The Node Package Manager">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#understanding-version-numbers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Understanding Version Numbers
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -3546,6 +3597,23 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Building Your First Web Server">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-require-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How require() Works
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -3934,6 +4002,28 @@ world's largest registry of JavaScript packages, at <a href="https://www.npmjs.c
 <strong><code>node_modules</code></strong> and records it in <code>package.json</code>. You will see <code>node_modules</code> in every
 Node.js project — it is never committed to version control (it's excluded via
 <code>.gitignore</code>) because it can be regenerated at any time by re-running the install command.</p>
+<h3 id="understanding-version-numbers">Understanding Version Numbers<a class="headerlink" href="#understanding-version-numbers" title="Permanent link">&para;</a></h3>
+<p>Notice the dependency line above: <code>"express": "^4.19.2"</code>. npm packages follow
+<strong>semantic versioning</strong> (semver): a version number is always <code>MAJOR.MINOR.PATCH</code>. For
+<code>4.19.2</code>, that's major version <code>4</code>, minor version <code>19</code>, patch version <code>2</code>. By convention,
+a <strong>MAJOR</strong> bump means breaking changes, a <strong>MINOR</strong> bump adds new features without
+breaking anything, and a <strong>PATCH</strong> bump is a bug fix.</p>
+<p>The symbol in front of the version number controls how far <code>npm install</code> (or <code>npm
+update</code>) is allowed to upgrade that package the next time it resolves dependencies:</p>
+<ul>
+<li><strong><code>^4.19.2</code></strong> (caret, npm's default when you run <code>npm install express</code>) — allows any
+  newer <strong>MINOR</strong> or <strong>PATCH</strong> release, so <code>4.20.0</code> or <code>4.19.5</code> are both fine, but never
+  <code>5.0.0</code>.</li>
+<li><strong><code>~4.19.2</code></strong> (tilde) — more conservative: allows only newer <strong>PATCH</strong> releases, like
+  <code>4.19.5</code>, but not <code>4.20.0</code>.</li>
+<li><strong><code>4.19.2</code></strong> (no symbol, an exact pin) — installs exactly that version, every time, with
+  no automatic upgrades at all.</li>
+</ul>
+<p>In practice, npm also creates a <strong><code>package-lock.json</code></strong> file the first time you install
+anything. It records the <em>exact</em> resolved version of every package (and every package
+those packages depend on), so that everyone on your team — and your deployment server —
+installs the identical dependency tree, regardless of which versions <code>^</code> or <code>~</code> would
+otherwise allow.</p>
 <h2 id="setting-up-an-expressjs-project">Setting Up an Express.js Project<a class="headerlink" href="#setting-up-an-expressjs-project" title="Permanent link">&para;</a></h2>
 <p><strong>Express.js</strong> (usually just "Express") is the most widely used <strong>web framework</strong> for
 Node.js. A framework is a collection of tools and conventions that handle common, repeated
@@ -4013,8 +4103,36 @@ your <code>node_modules</code> folder exactly by running <code>npm install</code
   numbered "door" on your computer that a program listens at. Nothing happens on the
   network until you call <code>.listen()</code>.</li>
 </ul>
+<h3 id="how-require-works">How <code>require()</code> Works<a class="headerlink" href="#how-require-works" title="Permanent link">&para;</a></h3>
+<p><code>require('express')</code> and <code>require('./math')</code> look similar, but they load two different
+kinds of things:</p>
+<ul>
+<li><strong><code>require('express')</code></strong> — no <code>./</code> prefix, so Node treats <code>'express'</code> as a <strong>package
+  name</strong> and looks for it inside the <code>node_modules</code> folder (where <code>npm install</code> put it).</li>
+<li><strong><code>require('./math')</code></strong> — starts with <code>./</code>, so Node treats it as a <strong>path to one of
+  your own files</strong>, relative to the file doing the requiring.</li>
+</ul>
+<p>To see this with your own code, create a second file, <code>math.js</code>, right next to
+<code>index.js</code>:</p>
+<div class="language-javascript highlight"><span class="filename">math.js</span><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kd">function</span><span class="w"> </span><span class="nx">add</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="w"> </span><span class="nx">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">b</span><span class="p">;</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="p">}</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">add</span><span class="p">;</span>
+</span></code></pre></div>
+<p>Every file in Node's module system has a special <code>module.exports</code> object. Whatever you
+assign to it is exactly what another file receives when it <code>require()</code>s this file.</p>
+<p>Now <code>index.js</code> can load and use it:</p>
+<div class="language-javascript highlight"><span class="filename">index.js (excerpt)</span><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kd">const</span><span class="w"> </span><span class="nx">add</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./math&#39;</span><span class="p">);</span><span class="w">     </span><span class="c1">// local file -- starts with ./</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="kd">const</span><span class="w"> </span><span class="nx">express</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">);</span><span class="w"> </span><span class="c1">// installed package -- no ./</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">add</span><span class="p">(</span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="mf">3</span><span class="p">));</span><span class="w">  </span><span class="c1">// 5</span>
+</span></code></pre></div>
+<p>This is the same mechanism Express itself uses: Express's own source code ends with
+something like <code>module.exports = express;</code>, which is exactly what makes
+<code>const express = require('express')</code> work.</p>
 <p>Run the server from your terminal:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>node<span class="w"> </span>index.js
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>node<span class="w"> </span>index.js
 </span></code></pre></div>
 <p>You should see <code>Server is running at http://localhost:3000</code> printed in your terminal. The
 program keeps running (it does not exit) because it is actively listening for requests.
@@ -4145,7 +4263,7 @@ port number.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="November 12, 2026 05:48:15 UTC">November 12, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="November 12, 2026 06:10:11 UTC">November 12, 2026</span>
   </span>
 
     
