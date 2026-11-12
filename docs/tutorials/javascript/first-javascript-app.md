@@ -18,6 +18,11 @@ no frameworks, no build tools, nothing to install. By the end, you'll understand
 *how* a line of HTML can trigger a JavaScript function, and you'll have a complete,
 working three-file project you built and understood line by line.
 
+!!! tip "Try it live"
+    Open the **[live demo](first-javascript-app-demo/index.html){: target="_blank" }** in
+    a new tab and try it for real before (or while) you read — it's the exact project
+    this tutorial builds, running as-is.
+
 **Prerequisites:** This tutorial assumes **basic JavaScript knowledge** — you're
 comfortable with variables (`let`, `const`), functions, and `if`/`else`, roughly what's
 covered in [Core JavaScript (ES6+)](../../web-technologies/lecture-11-core-javascript-es6.md).
@@ -508,20 +513,15 @@ the page (background, card color, inputs, counter text, footer text) from a sing
 
 ## Part 6: See It Running
 
-!!! tip "Try it live"
-    This project is deployed right here on the site — open the
-    **[live demo](first-javascript-app-demo/index.html){: target="_blank" }**
-    in a new tab and play with it for real before (or instead of) typing it out yourself.
-    It's the exact three files below, running with no build step of any kind.
-
-Open `index.html` directly in your own browser once you've built it. Type a name, click
+Open `index.html` directly in your own browser once you've built it (or just use the
+live demo linked at the top of this page). Type a name, click
 **Greet Me** a couple of times, switch the theme, and try the dark mode button — here's
 what it looks like after typing a name and clicking Greet Me once:
 
 ![Rendered output: a white card titled "Welcome Panel" on a light gray page, showing a name input with "Ayesha" typed in, a live preview reading "Preview: Ayesha", a "Greet Me" button, the message "Hello, Ayesha! Welcome to JavaScript.", a click counter reading 1, a theme color dropdown set to Indigo, and a "Turn On Dark Mode" button](../../assets/img/tutorials/first-javascript-app.png)
 
-A still image can't show the live behavior, but in your own browser (or the
-[live demo](first-javascript-app-demo/index.html){: target="_blank" } above) you'll see: the
+A still image can't show the live behavior, but in your own browser (or the live demo
+linked at the top of this page) you'll see: the
 preview text updating on every keystroke (before you even click anything), the click
 counter incrementing on each click, the header and buttons instantly switching color
 when you pick a different theme, and the whole page smoothly fading between light and

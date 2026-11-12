@@ -19,6 +19,11 @@ existed in your HTML file at all. By the end, you'll understand the single patte
 almost every real interactive list — a to-do app, a shopping cart, a comment thread —
 is built on.
 
+!!! tip "Try it live"
+    Open the **[live demo](todo-list-app-demo/index.html){: target="_blank" }** in a new
+    tab and try it for real before (or while) you read — it's the exact project this
+    tutorial builds, running as-is.
+
 **Prerequisites:** [Your First JavaScript Program](first-javascript-app.md) — this
 tutorial assumes you're comfortable with `document.getElementById`, `.value`,
 `.textContent`, and attribute-based event binding (`onclick`, `oninput`), and builds
@@ -592,13 +597,9 @@ like.**
 
 ## Part 6: See It Running
 
-!!! tip "Try it live"
-    This project is deployed right here on the site — open the
-    **[live demo](todo-list-app-demo/index.html){: target="_blank" }** in a new tab.
-    Add a few tasks, click one to mark it done, delete one, and try **Clear Completed**.
-    It's the exact three files above, running as-is.
-
-Here's the list after adding three tasks and marking one done:
+Add a few tasks, click one to mark it done, delete one, and try **Clear Completed** in
+the live demo linked at the top of this page — it's the exact three files above,
+running as-is. Here's the list after adding three tasks and marking one done:
 
 ![Rendered output: a white card titled "To-Do List" on a light gray page, showing a text input with placeholder "What do you need to do?" next to an "Add Task" button, three tasks listed below — "Buy groceries" shown with strikethrough text (marked done), "Walk the dog", and "Finish JavaScript tutorial" — each with a red "Delete" button, a summary line reading "2 tasks left", and a "Clear Completed" button](../../assets/img/tutorials/todo-list-app.png)
 

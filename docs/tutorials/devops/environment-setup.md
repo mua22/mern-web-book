@@ -143,6 +143,11 @@ tools like [nvm](https://github.com/nvm-sh/nvm) (macOS/Linux) or
 between several versions. You do not need this for this course — a single LTS install is
 enough — but it's worth knowing the tool exists for later.
 
+!!! tip "npm deserves its own deeper look"
+    This page only confirms npm is installed. For `package.json`, dependencies vs.
+    devDependencies, semantic versioning, and what `npm install` is actually doing, see
+    [npm and Package Management](npm-and-package-management.md).
+
 ---
 
 ## Part 3: nodemon

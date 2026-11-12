@@ -64,7 +64,8 @@ The language itself: closures and scope, modules, `this`, and patterns you'll le
 Routing, middleware, request/response handling, and connecting to MongoDB with Node's most-used web framework.
 
 <div class="cu-card-foot" markdown>
-<span>Coming soon</span>
+<span>3 tutorials</span>
+<span class="cu-go">Browse →</span>
 </div>
 </div>
 
@@ -98,7 +99,7 @@ Components and props, hooks and state, routing, and talking to a real API.
 Environment setup, Git and GitHub, version control fundamentals, and this course's own submission workflow.
 
 <div class="cu-card-foot" markdown>
-<span>3 tutorials</span>
+<span>4 tutorials</span>
 <span class="cu-go">Browse →</span>
 </div>
 </div>

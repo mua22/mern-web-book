@@ -405,6 +405,11 @@ response.
    `http://localhost:5000`. Then intentionally start two copies of the server at once
    (in two terminal windows) without stopping the first — read the error message you get,
    and explain in your own words why it happens.
+3. To see exactly what Express is doing for you under the hood, build the same kind of
+   server with nothing but Node's built-in `http` module first — see
+   [Build a Server with Node's http Module](../tutorials/express/node-http-server.md) —
+   then compare it against
+   [Build a REST API with Express](../tutorials/express/express-server-crud.md).
 
 ## Key Takeaways
 

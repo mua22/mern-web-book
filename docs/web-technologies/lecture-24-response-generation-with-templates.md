@@ -367,6 +367,10 @@ refreshing the `/items` page a second time will not show the message again.
    message and the text the user already typed. Deliberately type
    `<script>alert(1)</script>` into the field and confirm (using `<%= %>`) that it is
    displayed as harmless text rather than executed.
+3. For a complete, polished version of exactly this kind of app — with a shared layout,
+   a real add/toggle/delete form, and the Post/Redirect/Get pattern explained in full —
+   see the [EJS Views and express-ejs-layouts](../tutorials/express/ejs-views-and-layouts.md)
+   tutorial.
 
 ## Key Takeaways
 

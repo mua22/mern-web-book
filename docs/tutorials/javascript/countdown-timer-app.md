@@ -19,6 +19,11 @@ and it's also the pattern behind progress bars, auto-advancing slideshows, polli
 server for updates, and anything else that needs to happen "every N seconds" rather than
 "when the visitor does X."
 
+!!! tip "Try it live"
+    Open the **[live demo](countdown-timer-app-demo/index.html){: target="_blank" }** in
+    a new tab and try it for real before (or while) you read — it's the exact project
+    this tutorial builds, running as-is.
+
 **Prerequisites:** [Your First JavaScript Program](first-javascript-app.md) and
 [Build a Dynamic To-Do List](todo-list-app.md) — this tutorial assumes you're
 comfortable with attribute-based event binding (`onclick`), `document.getElementById`,
@@ -512,12 +517,8 @@ Two rules do real work here beyond basic appearance:
 
 ## Part 6: See It Running
 
-!!! tip "Try it live"
-    This project is deployed right here on the site — open the
-    **[live demo](countdown-timer-app-demo/index.html){: target="_blank" }** in a new
-    tab. Set the minutes, hit **Start**, and watch the display and progress bar update
-    once a second with nobody clicking anything.
-
+Set the minutes, hit **Start**, and watch the display and progress bar update once a
+second with nobody clicking anything, in the live demo linked at the top of this page.
 Here's the timer a few seconds after starting a 5-minute countdown:
 
 ![Rendered output: a white card titled "Countdown Timer" on a light gray page, showing a "Minutes" number input set to 5 (disabled/grayed out), a large countdown display reading "04:52", a progress bar partially filled in indigo, an empty status line, and three buttons — a grayed-out disabled "Start" button, an active indigo "Pause" button, and an active "Reset" button](../../assets/img/tutorials/countdown-timer-app.png)

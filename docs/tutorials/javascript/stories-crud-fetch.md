@@ -17,6 +17,11 @@ nothing but `fetch`, plain HTML, and vanilla JavaScript. By the end you'll have 
 stories from a server, adds new ones through a validated form, edits any story in place, and
 deletes it — with every change actually persisted on a real backend, not just in memory.
 
+!!! tip "Try it live"
+    Open the **[live demo](stories-crud-fetch-demo/index.html){: target="_blank" }** in
+    a new tab and try it for real before (or while) you read — it talks to the real API,
+    live, exactly as described below.
+
 **Prerequisites:** [Build a Dynamic To-Do List](todo-list-app.md) (building DOM elements from data),
 [Callbacks, Promises, and Async/Await](callbacks-promises-async-await.md), and
 [Lecture 15: Asynchronous JavaScript](../../web-technologies/lecture-15-async-javascript-promises-fetch.md)
@@ -773,13 +778,10 @@ Two rules do more work than they look like they do:
 
 ## Part 6: See It Running
 
-!!! tip "Try it live"
-    This project is deployed right here on the site, talking to the real API — open the
-    **[live demo](stories-crud-fetch-demo/index.html){: target="_blank" }** in a new tab. Add a
-    story, edit it in place, then delete it — every single one of those is a real HTTP request to
-    a real server, and refreshing the page proves it: whatever you changed is still there.
-
-Here's the page after loading the API's ten built-in mock stories:
+In the live demo linked at the top of this page, add a story, edit it in place, then
+delete it — every single one of those is a real HTTP request to a real server, and
+refreshing the page proves it: whatever you changed is still there. Here's the page
+after loading the API's ten built-in mock stories:
 
 ![Rendered output: a white card titled "Stories" on a light gray page, showing an "Add a New Story" form with Title and Content fields and an indigo "Add Story" button, followed by an "All Stories" section with a "Refresh" button and a scrollable list of story cards — each showing a bold title, a paragraph of body text, and teal "Edit" / red "Delete" buttons](../../assets/img/tutorials/stories-crud-fetch.png)
 

@@ -19,6 +19,11 @@ project makes that order visible by logging it live, and along the way switches 
 technique real production code uses instead of `onclick` attributes:
 `addEventListener`, attached entirely from a separate `.js` file.
 
+!!! tip "Try it live"
+    Open the **[live demo](event-lifecycle-app-demo/index.html){: target="_blank" }** in
+    a new tab and try it for real before (or while) you read — it's the exact project
+    this tutorial builds, running as-is.
+
 **Prerequisites:** [Your First JavaScript Program](first-javascript-app.md),
 [Build a Dynamic To-Do List](todo-list-app.md), and
 [Lecture 13: DOM Manipulation and Events](../../web-technologies/lecture-13-dom-manipulation-and-events.md)
@@ -630,15 +635,11 @@ box instead of growing the whole page taller forever.
 
 ## Part 6: See It Running
 
-!!! tip "Try it live"
-    This project is deployed right here on the site — open the
-    **[live demo](event-lifecycle-app-demo/index.html){: target="_blank" }** in a new
-    tab. Check "Also listen during the capturing phase," click the orange button, and
-    watch all six log lines appear in exactly the order Lecture 13 describes. Then add
-    a few tasks and click one — the delegated listener handles it even though that
-    `<li>` didn't exist when the page loaded.
-
-Here's the Event Inspector after checking the capturing-phase box:
+In the live demo linked at the top of this page, check "Also listen during the
+capturing phase," click the orange button, and watch all six log lines appear in
+exactly the order Lecture 13 describes. Then add a few tasks and click one — the
+delegated listener handles it even though that `<li>` didn't exist when the page
+loaded. Here's the Event Inspector after checking the capturing-phase box:
 
 ![Rendered output: a white card titled "Event Inspector" on a light gray page, with a "Capturing, Target, and Bubbling" panel showing a checked "Also listen during the capturing phase" checkbox above three nested boxes — a dark navy "outer" box containing a lighter indigo "middle" box containing an orange "Click me (target)" button](../../assets/img/tutorials/event-lifecycle-app.png)
 

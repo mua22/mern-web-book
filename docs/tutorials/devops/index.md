@@ -23,7 +23,23 @@ Everything here is tooling and workflow rather than a language or framework: get
 Installing VS Code (and essential extensions), Node.js/npm, nodemon, MongoDB (Atlas or local), and Git/GitHub Desktop.
 
 <div class="cu-card-foot" markdown>
-<span>1 of 3</span>
+<span>1 of 4</span>
+<span class="cu-go">Start tutorial →</span>
+</div>
+</div>
+
+<div class="cu-card" markdown>
+<a class="cu-card-link" href="npm-and-package-management/" aria-label="Open npm and Package Management tutorial"></a>
+<div class="cu-tut-top" markdown>
+<span class="cu-chip cu-chip-teal">Beginner</span>
+</div>
+
+### npm and Package Management
+
+package.json, dependencies vs. devDependencies, semantic versioning, package-lock.json, npm scripts, and npx -- what npm install is actually doing.
+
+<div class="cu-card-foot" markdown>
+<span>2 of 4</span>
 <span class="cu-go">Start tutorial →</span>
 </div>
 </div>
@@ -39,7 +55,7 @@ Installing VS Code (and essential extensions), Node.js/npm, nodemon, MongoDB (At
 Version control fundamentals, everyday Git commands, branching and merging, undoing mistakes, collaborating on GitHub with forks and pull requests, and GitHub Desktop / GUI alternatives.
 
 <div class="cu-card-foot" markdown>
-<span>2 of 3</span>
+<span>3 of 4</span>
 <span class="cu-go">Start tutorial →</span>
 </div>
 </div>
@@ -55,7 +71,7 @@ Version control fundamentals, everyday Git commands, branching and merging, undo
 This course's actual submission workflow: one repository, a required folder structure, and what counts as an on-time, valid submission.
 
 <div class="cu-card-foot" markdown>
-<span>3 of 3</span>
+<span>4 of 4</span>
 <span class="cu-go">Start tutorial →</span>
 </div>
 </div>
