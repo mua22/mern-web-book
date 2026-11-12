@@ -303,6 +303,39 @@ Here's `GET /tasks` opened directly in a browser:
 
 ![Rendered output: a browser window showing raw formatted JSON with a "Pretty-print" checkbox checked, displaying an array of two task objects, each with id, title, and done fields](../../assets/img/tutorials/node-http-server.png)
 
+### Testing with Postman
+
+A browser address bar can only send `GET` requests, and typing a `curl` command gets
+tedious fast once you're testing several routes back and forth. **Postman** is a GUI
+app built exactly for this: pick a method, type a URL, fill in a body if you need one,
+and click **Send** — no terminal required.
+
+**`GET /tasks`** — set the method dropdown to `GET`, type
+`http://localhost:3000/tasks` into the URL bar, and click **Send**. The response panel
+at the bottom shows the status (`200 OK`) and the JSON body, nicely color-highlighted:
+
+![Postman showing a GET request to http://localhost:3000/tasks, with a 200 OK response and a JSON array of two task objects in the body panel](../../assets/img/tutorials/postman-http-get-tasks.jpg)
+
+**`GET /tasks/1`** — route parameters work the same way as any other URL; just type the
+id straight into the path:
+
+![Postman showing a GET request to http://localhost:3000/tasks/1, with a 200 OK response and a single task object in the body panel](../../assets/img/tutorials/postman-http-get-task-by-id.jpg)
+
+**`POST /tasks`** — this is where Postman earns its keep over a browser. Switch the
+method dropdown to `POST`, then open the **Body** tab below the URL bar, select **raw**,
+and choose **JSON** from the format dropdown on the right. Type the request body as
+JSON (Postman sets the `Content-Type: application/json` header for you automatically
+when you pick "JSON"):
+
+```json
+{"title": "Add validation next"}
+```
+
+Click **Send**, and the new task comes back with `201 Created` and the `id` the server
+assigned it:
+
+![Postman showing a POST request to http://localhost:3000/tasks with a JSON body, a 201 Created response, and the newly created task object in the body panel](../../assets/img/tutorials/postman-http-post-tasks.jpg)
+
 ## Try It Yourself
 
 1. Add a `DELETE /tasks/:id` route yourself, reusing the same `singleTaskMatch` regex

@@ -232,6 +232,47 @@ browser:
 
 ![Rendered output: a browser window showing pretty-printed JSON, an array of three task objects -- "Learn Express" with done true, "Rewrite the http-module API" with done false, and "Add validation next" with done false](../../assets/img/tutorials/express-server.png)
 
+### Testing with Postman
+
+`curl` is fast once you know the flags, but **Postman** makes the same CRUD workflow
+easier to see and repeat while you're still learning it: every field — method, URL,
+headers, body — is its own labeled box on screen, and the response is highlighted and
+collapsible instead of one unbroken line of terminal text.
+
+**`POST /tasks`** — set the method to `POST` and the URL to
+`http://localhost:3001/tasks`. Open the **Body** tab, select **raw**, pick **JSON** from
+the format dropdown, and type:
+
+```json
+{"title": "Write the Express tutorial"}
+```
+
+Click **Send**: Express's `express.json()` middleware parses this exactly the same way
+it would parse a body from `curl -d`, and the new task comes back with `201 Created`:
+
+![Postman showing a POST request to http://localhost:3001/tasks with a JSON title field, a 201 Created response, and the new task object with id 3 in the body panel](../../assets/img/tutorials/postman-express-post-tasks.jpg)
+
+**`PUT /tasks/1`** — switch the method to `PUT`, point the URL at `/tasks/1`, and set the
+body to `{"done": true}`. The response shows task 1 with `done` flipped to `true`:
+
+![Postman showing a PUT request to http://localhost:3001/tasks/1 with a JSON done field, a 200 OK response, and the updated task object in the body panel](../../assets/img/tutorials/postman-express-put-tasks.jpg)
+
+**`DELETE /tasks/2`** — switch the method to `DELETE` and point the URL at `/tasks/2`.
+No body needed; the response echoes back the task that just got removed:
+
+![Postman showing a DELETE request to http://localhost:3001/tasks/2, a 200 OK response, and the deleted task object in the body panel](../../assets/img/tutorials/postman-express-delete-tasks.jpg)
+
+**`GET /tasks`** (final check) — switch back to `GET` with no body, and the list now
+reflects every change made above: task 1 updated, task 2 gone, task 3 added.
+
+![Postman showing a final GET request to http://localhost:3001/tasks, a 200 OK response, and the updated array of two remaining task objects in the body panel](../../assets/img/tutorials/postman-express-get-tasks-final.jpg)
+
+!!! tip "Save these as a collection"
+    Postman lets you save each request into a **Collection** so you don't have to
+    retype the method, URL, and body every time you want to re-test this API — click
+    **Save** next to the Send button once, and every request you build after that can
+    be reopened from the sidebar instead of rebuilt from scratch.
+
 ## Try It Yourself
 
 1. Add input validation to `PUT /tasks/:id` the same way `POST /tasks` validates
