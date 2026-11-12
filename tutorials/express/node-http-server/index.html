@@ -2501,6 +2501,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#testing-with-postman" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testing with Postman
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -3120,6 +3131,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#testing-with-postman" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testing with Postman
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -3503,6 +3525,28 @@ and <code>POST /tasks</code>, with an in-memory array standing in for a database
 </span></code></pre></div>
 <p>Here's <code>GET /tasks</code> opened directly in a browser:</p>
 <p><img alt="Rendered output: a browser window showing raw formatted JSON with a &quot;Pretty-print&quot; checkbox checked, displaying an array of two task objects, each with id, title, and done fields" src="../../../assets/img/tutorials/node-http-server.png" /></p>
+<h3 id="testing-with-postman">Testing with Postman<a class="headerlink" href="#testing-with-postman" title="Permanent link">&para;</a></h3>
+<p>A browser address bar can only send <code>GET</code> requests, and typing a <code>curl</code> command gets
+tedious fast once you're testing several routes back and forth. <strong>Postman</strong> is a GUI
+app built exactly for this: pick a method, type a URL, fill in a body if you need one,
+and click <strong>Send</strong> — no terminal required.</p>
+<p><strong><code>GET /tasks</code></strong> — set the method dropdown to <code>GET</code>, type
+<code>http://localhost:3000/tasks</code> into the URL bar, and click <strong>Send</strong>. The response panel
+at the bottom shows the status (<code>200 OK</code>) and the JSON body, nicely color-highlighted:</p>
+<p><img alt="Postman showing a GET request to http://localhost:3000/tasks, with a 200 OK response and a JSON array of two task objects in the body panel" src="../../../assets/img/tutorials/postman-http-get-tasks.jpg" /></p>
+<p><strong><code>GET /tasks/1</code></strong> — route parameters work the same way as any other URL; just type the
+id straight into the path:</p>
+<p><img alt="Postman showing a GET request to http://localhost:3000/tasks/1, with a 200 OK response and a single task object in the body panel" src="../../../assets/img/tutorials/postman-http-get-task-by-id.jpg" /></p>
+<p><strong><code>POST /tasks</code></strong> — this is where Postman earns its keep over a browser. Switch the
+method dropdown to <code>POST</code>, then open the <strong>Body</strong> tab below the URL bar, select <strong>raw</strong>,
+and choose <strong>JSON</strong> from the format dropdown on the right. Type the request body as
+JSON (Postman sets the <code>Content-Type: application/json</code> header for you automatically
+when you pick "JSON"):</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="p">{</span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Add validation next&quot;</span><span class="p">}</span>
+</span></code></pre></div>
+<p>Click <strong>Send</strong>, and the new task comes back with <code>201 Created</code> and the <code>id</code> the server
+assigned it:</p>
+<p><img alt="Postman showing a POST request to http://localhost:3000/tasks with a JSON body, a 201 Created response, and the newly created task object in the body panel" src="../../../assets/img/tutorials/postman-http-post-tasks.jpg" /></p>
 <h2 id="try-it-yourself">Try It Yourself<a class="headerlink" href="#try-it-yourself" title="Permanent link">&para;</a></h2>
 <ol>
 <li>Add a <code>DELETE /tasks/:id</code> route yourself, reusing the same <code>singleTaskMatch</code> regex
@@ -3577,7 +3621,7 @@ and <code>POST /tasks</code>, with an in-memory array standing in for a database
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="November 12, 2026 05:48:15 UTC">November 12, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="November 12, 2026 06:32:00 UTC">November 12, 2026</span>
   </span>
 
     

@@ -2540,6 +2540,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#testing-with-postman" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testing with Postman
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -3142,6 +3153,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#testing-with-postman" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testing with Postman
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -3462,6 +3484,35 @@ more regex matches to add there.</p>
 <p>Here's that final <code>GET /tasks</code> after a <code>PUT</code>, a <code>POST</code>, and a <code>DELETE</code>, open in a
 browser:</p>
 <p><img alt="Rendered output: a browser window showing pretty-printed JSON, an array of three task objects -- &quot;Learn Express&quot; with done true, &quot;Rewrite the http-module API&quot; with done false, and &quot;Add validation next&quot; with done false" src="../../../assets/img/tutorials/express-server.png" /></p>
+<h3 id="testing-with-postman">Testing with Postman<a class="headerlink" href="#testing-with-postman" title="Permanent link">&para;</a></h3>
+<p><code>curl</code> is fast once you know the flags, but <strong>Postman</strong> makes the same CRUD workflow
+easier to see and repeat while you're still learning it: every field — method, URL,
+headers, body — is its own labeled box on screen, and the response is highlighted and
+collapsible instead of one unbroken line of terminal text.</p>
+<p><strong><code>POST /tasks</code></strong> — set the method to <code>POST</code> and the URL to
+<code>http://localhost:3001/tasks</code>. Open the <strong>Body</strong> tab, select <strong>raw</strong>, pick <strong>JSON</strong> from
+the format dropdown, and type:</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="p">{</span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Write the Express tutorial&quot;</span><span class="p">}</span>
+</span></code></pre></div>
+<p>Click <strong>Send</strong>: Express's <code>express.json()</code> middleware parses this exactly the same way
+it would parse a body from <code>curl -d</code>, and the new task comes back with <code>201 Created</code>:</p>
+<p><img alt="Postman showing a POST request to http://localhost:3001/tasks with a JSON title field, a 201 Created response, and the new task object with id 3 in the body panel" src="../../../assets/img/tutorials/postman-express-post-tasks.jpg" /></p>
+<p><strong><code>PUT /tasks/1</code></strong> — switch the method to <code>PUT</code>, point the URL at <code>/tasks/1</code>, and set the
+body to <code>{"done": true}</code>. The response shows task 1 with <code>done</code> flipped to <code>true</code>:</p>
+<p><img alt="Postman showing a PUT request to http://localhost:3001/tasks/1 with a JSON done field, a 200 OK response, and the updated task object in the body panel" src="../../../assets/img/tutorials/postman-express-put-tasks.jpg" /></p>
+<p><strong><code>DELETE /tasks/2</code></strong> — switch the method to <code>DELETE</code> and point the URL at <code>/tasks/2</code>.
+No body needed; the response echoes back the task that just got removed:</p>
+<p><img alt="Postman showing a DELETE request to http://localhost:3001/tasks/2, a 200 OK response, and the deleted task object in the body panel" src="../../../assets/img/tutorials/postman-express-delete-tasks.jpg" /></p>
+<p><strong><code>GET /tasks</code></strong> (final check) — switch back to <code>GET</code> with no body, and the list now
+reflects every change made above: task 1 updated, task 2 gone, task 3 added.</p>
+<p><img alt="Postman showing a final GET request to http://localhost:3001/tasks, a 200 OK response, and the updated array of two remaining task objects in the body panel" src="../../../assets/img/tutorials/postman-express-get-tasks-final.jpg" /></p>
+<div class="admonition tip">
+<p class="admonition-title">Save these as a collection</p>
+<p>Postman lets you save each request into a <strong>Collection</strong> so you don't have to
+retype the method, URL, and body every time you want to re-test this API — click
+<strong>Save</strong> next to the Send button once, and every request you build after that can
+be reopened from the sidebar instead of rebuilt from scratch.</p>
+</div>
 <h2 id="try-it-yourself">Try It Yourself<a class="headerlink" href="#try-it-yourself" title="Permanent link">&para;</a></h2>
 <ol>
 <li>Add input validation to <code>PUT /tasks/:id</code> the same way <code>POST /tasks</code> validates
@@ -3538,7 +3589,7 @@ browser:</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="November 12, 2026 05:48:15 UTC">November 12, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="November 12, 2026 06:32:00 UTC">November 12, 2026</span>
   </span>
 
     
